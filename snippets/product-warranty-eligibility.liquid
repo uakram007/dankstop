@@ -1,0 +1,37 @@
+{%- comment -%}
+  Product Warranty Eligibility
+{%- if settings.display_warranty_eligibility == true -%}
+{%- endif -%}
+{%- endcomment -%}
+{%- assign warranty_eligible = false -%}
+{%- assign warranty_ineligible_tag = settings.warranty__ineligible_tag -%}
+{%- comment -%}
+  First check if product has the tag that makes it ineligible for warranty
+src="{{ lazyload_placeholder }}"
+{%- endcomment -%}
+{%- unless product.tags contains warranty_ineligible_tag -%}
+  {%- comment -%}
+    Then check if product is of a brand that is eligible for warranty
+  {%- endcomment -%}
+  {%- assign warranty_eligible_brands = settings.warranty__elibigle_brands | split: ", " -%}
+  {%- for warranty_eligible_brand in warranty_eligible_brands -%}
+    {%- if product.vendor == warranty_eligible_brand -%}
+      {%- assign warranty_eligible = true -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- comment -%}
+    If it is of an eligible brand, then check if its of a disqualifying type
+  {%- endcomment -%}
+  {%- if warranty_eligible -%}
+  {%- assign warranty_ineligible_types = settings.warranty__ineligible_types | split: ", " -%}
+  {%- for warranty_ineligible_type in warranty_ineligible_types -%}
+    {%- if product.type == warranty_ineligible_type -%}
+      {%- assign warranty_eligible = false -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- endif -%}
+{%- endunless -%}
+{%- assign warranty__show_in_product_details = settings.warranty__enable_in_product_details -%}
+{%- if warranty_eligible == true -%}
+<p class="pp-eligible" title="Eligible for PieceProtect Warranty Plan"><img width="36" height="36" class="lazyload" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2036%2036'%3E%3C/svg%3E" data-src="{{ 'piece-protect-warranty-eligigble-badge.png' | asset_img_url: '36x' }}" alt="PieceProtect Warrnaty Program eligible" title="PieceProtect Warrnaty Program eligible"><strong class="green">PieceProtect</strong> Eligible</p>
+{%- endif -%}

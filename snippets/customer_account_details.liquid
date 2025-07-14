@@ -1,0 +1,119 @@
+        <h4 class="box-title" {% if settings.enable_multilang %}data-translate="customer.account.details"{%endif%}>
+          {{ 'customer.account.details' | t }}
+        </h4>
+
+
+		<ul>
+          
+          <li>
+            <a href="/account" class="text-link">
+              My Orders
+            </a>
+          </li>
+
+        
+          {%- comment -%}
+          <!-- Bold - recurring / subscriptions -->
+          {%- endcomment -%}
+          <li>
+            <a href="/tools/checkout/front_end/login" class="text-link">
+              Manage Subscription
+            </a>
+          </li>
+
+        
+          {%- comment -%}
+          <!-- Warranties -->
+          {%- endcomment -%}
+          <li>
+            <a href="/account?view=warranties" class="text-link">
+              Manage Warranties
+            </a>
+          </li>
+
+          {%- comment -%}
+          <!-- Wish list -->
+          {%- endcomment -%}
+          <li>
+            <a href="/pages/wish-list" class="text-link">
+              My Wishlist
+            </a>
+          </li>
+
+        </ul>
+
+        
+        {%- comment -%}
+        {%- assign rewards_link_title = 'customer.rewards.link_title' | t -%}
+        {%- assign warranty_redeem_url = '/account?view=warranties' -%}
+        {%- assign warranties_link_title = 'customer.warranties.link_title' | t -%}
+        <ul>
+          <li><a href="/tools/checkout/front_end/login" class="text-link">Manage Subscription</a></li>
+          {%- for link in linklists['my-dankstop-menu'].links -%}
+          <li><a href="{{ link.url }}"><span>{{ link.title }}</span></a></li>
+          {%- comment -%}below if statement is unnecessary but saved for later use {%- endcomment -%}
+          {%- if customer_is_admin == true or warranty__show_in_product_details == true -%}
+          {%- endif -%}
+          {%- endfor -%}
+        </ul>
+        {%- endcomment -%}
+
+        
+        <h5 class="acc-name">{{ customer.name }}</h5>
+
+        {% if customer.default_address != nil %}
+        <div class="addr">
+          <span class="cus-addr">
+            {{ customer.default_address.address1 }}
+          </span>
+
+          {% if customer.default_address.address2 != "" %}
+          <span class="cus-addr">
+            {{ customer.default_address.address2 }}
+          </span>
+          {% endif %}
+
+          {% if customer.default_address.city != "" %}
+          <span class="cus-addr addr-city">
+            {{ customer.default_address.city }}
+          </span>
+          {% endif %}
+
+          {% if customer.default_address.province_code != "" %}
+          <span class="cus-addr addr-state">
+            {{ customer.default_address.province_code | upcase }}
+          </span>
+          {% endif %}
+
+          {% if customer.default_address.zip != "" %}
+          <span class="cus-addr addr-zip">
+            {{ customer.default_address.zip | upcase }}
+          </span>
+          {% endif %}
+
+          {% if customer.default_address.country != "" %}
+          <span class="cus-addr">
+            {{ customer.default_address.country }}
+          </span>
+          {% endif %}
+
+          {% if customer.default_address.phone != "" %}
+          <span class="cus-addr">
+            {{ customer.default_address.phone }}
+          </span>
+          {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="action-btn">
+          <a class="btn btn-padd42" href="/account/addresses">
+            <span {% if settings.enable_multilang %}data-translate="customer.account.view_addresses"{%endif%}>
+              {{ 'customer.account.view_addresses' | t }}
+            </span>
+            <span>
+              ({{ customer.addresses_count }})
+            </span>
+          </a>
+        </div>
+
+        <div id="wk-auction" cust-id="{{ customer.id }}"></div>

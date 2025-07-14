@@ -1,0 +1,1150 @@
+{
+  "general": {
+    "404": {
+      "title": "404 Page Not Found",
+      "subtext_html": "The page you requested does not exist.",
+      "click_here": "Click here",
+      "continue_shopping": " to continue shopping."
+    },
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "breadcrumbs": {
+      "home": "Home",
+      "cart": "Shopping cart",
+      "home_link_title": "Back to the frontpage"
+    },
+    "chat": {
+      "btn_chat": "Chat with us - Online now!",
+      "btn_chat_mobile": "Chat",
+      "btn_message": "Leave a Message",
+      "btn_message_mobile": "Message",
+      "not_available_alert": "Sorry! Chat is not available right now. Please try again later."
+    },
+    "newsletter_form": {
+      "newsletter_email": "your-email@example.com",
+      "submit": "Submit",
+      "newsletter_text": "enter your email address"
+    },
+    "search": {
+      "title": "Search for products on our site",
+      "placeholder": "Search",
+      "submit": "Search",
+      "no_results": "no results",
+      "view_results": "See all results"
+    },
+    "currency": {
+      "change_text": "The store's currency changed to",
+      "currency": "Currency"
+    },
+    "language": {
+      "language": "Language"
+    },
+    "sidebar": {
+      "sidebar_more": "Sidebar"
+    }
+  },
+  "blogs": {
+    "article": {
+      "author_on_date_html": "Posted on {{ date }} by {{ author }}",
+      "older_post": "Older Post",
+      "newer_post": "Newer Post",
+      "tags": "Tags",
+      "comment_meta_html": "{{ author }} on {{ date }}",
+      "read_more": "Read more"
+    },
+    "comments": {
+      "title": "Leave a comment",
+      "name": "Your Name",
+      "email": "Your Email",
+      "message": "Your Comment",
+      "post": "Post comment",
+      "moderated": "Please note, comments must be approved before they are published",
+      "success_moderated": "Your comment was posted successfully. We will publish it in a little while, as our blog is moderated.",
+      "success": "Your comment was posted successfully! Thank you!",
+      "note": "All blog comments are checked prior to publishing",
+      "comments_with_count": {
+        "one": "{{ count }} comment",
+        "other": "{{ count }} comments"
+      }
+    },
+    "sidebar": {
+      "recent_articles": "Recent Articles",
+      "tag_cloud": "Tag Cloud",
+      "categories": "Categories"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "My Cart",
+      "remove": "Remove",
+      "note": "Special instructions for seller",
+      "subtotal": "Subtotal",
+      "shipping_at_checkout": "Shipping & taxes calculated at checkout",
+      "update": "Update Cart",
+      "checkout": "Check Out",
+      "button_checkout": "Proceed to Checkout",
+      "empty": "Your cart is currently empty.",
+      "continue_browsing_html": "Continue browsing <a href=\"\/collections\/all\">here<\/a>.",
+      "view_cart": "View Cart",
+      "close_cart": "Close",
+      "shopping_cart": "Shopping Cart",
+      "cart_supermarket": "Cart",
+      "label": "Note",
+      "label_text": "Additional comments",
+      "shipping_insurance": {
+        "warning": "By opting out of Route coverage, you agree DankStop will not be responsible for lost, stolen, or damaged shipments.",
+        "title_html": "Shipping Insurance",
+        "line_1_html": "Protect your order if your package is lost during shipping",
+        "line_2_html": "Your replacement is fully covered",
+        "line_3_html": "Customer service guarantee",
+        "cart_item_text": "Shipping Insurance",
+        "add_to_cart_button_text": "Protect My Shipment"
+      },
+      "shipping_calculator_button": "Calculate Shipping",
+      "shipping_calculator_calculating": "Calculating...",
+      "shipping_calculator_error_message": "Error: Please enter right shipping information",
+      "shipping_calculator_success_many_rates": {
+        "there_are": "There are",
+        "shipping_rates_available_for": "shipping rates available for",
+        "starting_at": ", starting at"
+      },
+      "shipping_calculator_success_one_rate": "There is one shipping rate available for",
+      "shipping_calculator_success_no_rate": "There is no shipping rate available for this order and destination.",
+      "shipping_calculator_success_at": "at",
+      "order_minimum_message": "Your cart must be a total of ${{ order_minimum }} to checkout."
+    },
+    "label": {
+      "product": "Products",
+      "price": "Price",
+      "quantity": "Quantity",
+      "total": "Total",
+      "or": "or",
+      "quick_cart": "Quick Cart",
+      "your_order": "Your order",
+      "order_summary": "Order Summary"
+    },
+    "ajax_cart": {
+      "continue_shopping": "Continue Shopping",
+      "go_to_cart": "Go to cart",
+      "success_text": "is added to your shopping cart.",
+      "error": "Error",
+      "loading": "Loading",
+      "close": "Close",
+      "popup_cart_des": "The following items have been added to your cart:",
+      "items_in_your_cart": "items in your shopping cart "
+    }
+  },
+  "slideshow": {
+    "next_slide": "Next slide",
+    "previous_slide": "Previous slide",
+    "pause_slideshow": "Pause slideshow",
+    "play_slideshow": "Play slideshow",
+    "play_video": "Play video",
+    "close_video": "Close video"
+  },
+  "collections": {
+    "general": {
+      "title": "Collections",
+      "desc_show_more": "Show more",
+      "desc_show_less": "Show less",
+      "collection_reviews_1": "stars, ",
+      "collection_reviews_2": "reviews",
+      "no_matches": "Sorry, there are no products in this collection",
+      "link_title": "Browse our {{ title }} collection",
+      "grid_view": "Grid",
+      "list_view": "List",
+      "shop_now": "Shop Now",
+      "shop_the_collection": "Shop The Collection",
+      "show_more": "Show more",
+      "no_more_product": "No more product",
+      "items_count": {
+        "one": "product",
+        "other": "products"
+      },
+      "items_with_count": {
+        "one": "{{ count }} product",
+        "other": "{{ count }} products"
+      }
+    },
+    "sidebar": {
+      "types": "Product Types",
+      "vendors": "Vendors",
+      "tags": "Tags",
+      "clear": "Clear",
+      "clear_all": "Clear all",
+      "refined_by": "Active Filters",
+      "sidebar_more": "Filter",
+      "filters": "Filters",
+      "show_more": "+ Show more",
+      "show_less": "- Show less"
+    },
+    "sorting": {
+      "title": "Sort",
+      "featured": "Featured",
+      "best_selling": "Best Selling",
+      "az": "Alphabetically, A-Z",
+      "za": "Alphabetically, Z-A",
+      "price_ascending": "Price, low to high",
+      "price_descending": "Price, high to low",
+      "date_descending": "Date, new to old",
+      "date_ascending": "Date, old to new"
+    },
+    "toolbar": {
+      "view_as": "View",
+      "item_per_page": "Items Per Page",
+      "previous": "Prev",
+      "next": "Next",
+      "show": "Show",
+      "showing": "Showing",
+      "all": "All",
+      "of": "of"
+    }
+  },
+  "contact": {
+    "form": {
+      "name": "Your Name",
+      "email": "Your Email",
+      "address": "Your Address",
+      "phone": "Your Phone",
+      "message": " Your Comment",
+      "placeholder_message": "Please leave your comment here",
+      "send": "Send",
+      "submit_contact": "Submit Contact",
+      "send_question": "Send Question",
+      "post_success": "Thanks for contacting us. We'll get back to you as soon as possible."
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "My Account",
+      "details": "Account Details",
+      "view_addresses": "View Addresses",
+      "return": "Return to Account Details"
+    },
+    "activate_account": {
+      "title": "Activate Account",
+      "subtext": "Create your password to activate your account.",
+      "password": "Password",
+      "password_confirm": "Confirm Password",
+      "submit": "Activate Account",
+      "cancel": "Decline Invitation"
+    },
+    "addresses": {
+      "title": "Customer Address Book",
+      "default": "Default",
+      "add_new": "Add New Address",
+      "edit_address": "Edit address",
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "company": "Company",
+      "address1": "Address1",
+      "address2": "Address2",
+      "city": "City",
+      "country": "Country",
+      "province": "Province",
+      "zip": "Postal\/Zip Code",
+      "phone": "Phone",
+      "set_default": "Set as default address",
+      "add": "Add Address",
+      "update": "Update Address",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Remove",
+      "delete_message": "Are you sure you wish to delete this address?"
+    },
+    "logout": {
+      "title": "Customer"
+    },
+    "login": {
+      "title": "Customer Login",
+      "account": "Account",
+      "returning_customer": "Returning Customer",
+      "new_customer": "New Customer",
+      "email": "Email Address",
+      "password": "Password",
+      "forgot_password": "Forgot your password?",
+      "sign_in": "Sign In",
+      "login": "Login",
+      "cancel": "Return to Store",
+      "subtitle_social": "Login with social",
+      "subtitle_dankstop": "Login with your email",
+      "or": "or",
+      "login_for_rewards": "Please login to enjoy your Rewards.",
+      "guest_title": "Continue as a guest",
+      "guest_continue": "Continue"
+    },
+    "orders": {
+      "title": "Order History",
+      "order_number": "Order",
+      "date": "Date",
+      "payment_status": "Payment Status",
+      "fulfillment_status": "Fulfillment Status",
+      "total": "Total",
+      "none": "You haven't placed any orders yet."
+    },
+    "order": {
+      "title": "Order {{ name }}",
+      "date": "Placed on {{ date }}",
+      "cancelled": "Order Cancelled on {{ date }}",
+      "cancelled_reason": "Reason: {{ reason }}",
+      "billing_address": "Billing Address",
+      "payment_status": "Payment Status",
+      "shipping_address": "Shipping Address",
+      "fulfillment_status": "Fulfillment Status",
+      "discount": "Discount",
+      "shipping": "Shipping",
+      "tax": "Tax",
+      "product": "Product",
+      "sku": "SKU",
+      "price": "Price",
+      "quantity": "Quantity",
+      "total": "Total",
+      "fulfilled_at": "Fulfilled {{ date }}",
+      "subtotal": "Subtotal"
+    },
+    "recover_password": {
+      "title": "Reset your password",
+      "email": "Email",
+      "submit": "Submit",
+      "cancel": "Cancel",
+      "subtext": "We will send you an email to reset your password.",
+      "success": "We've sent you an email with a link to update your password."
+    },
+    "reset_password": {
+      "title": "Reset account password",
+      "subtext": "Enter a new password for {{ email }}",
+      "password": "Password",
+      "password_confirm": "Confirm Password",
+      "submit": "Reset Password"
+    },
+    "register": {
+      "title": "Create An Account",
+      "register": "Register",
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "email": "Your Email Address",
+      "password": "Your Password",
+      "submit": "Create An Account",
+      "cancel": "Return to Store"
+    },
+    "form": {
+      "error_message": "Sorry, looks like something went wrong. Please correct the following and submit again:"
+    },
+    "warranties": {
+      "title": "My Warranties",
+      "link_title": "My Warranties"
+    }
+  },
+  "home_page": {
+    "sections": {
+      "frontpage_title": "Frontpage Collection",
+      "featured_title": "Featured Collections",
+      "news_title": "Latest News"
+    },
+    "onboarding": {
+      "modal_title": "Almost there...",
+      "no_products_html": "You have no products in your Frontpage collection. This placeholder will appear until you <a href=\"\/admin\/collections?tutorial=Frontpage\">add a product to this collection<\/a>.",
+      "add_product": "Add a Product",
+      "product_title": "Example Product Title",
+      "no_collections_html": "You don't have any collections to show here. <a href=\"\/admin\/custom_collections\">Add some collections<\/a> to go along with the default Frontpage.",
+      "add_collection": "Add a Collection",
+      "collection_title": "Example Collection Title"
+    },
+    "see_all": "See all {{ collection_title }}",
+    "show_more": "Show more",
+    "no_more_product": "No more product"
+  },
+  "layout": {
+    "cart": {
+      "title": "Cart",
+      "items_count": {
+        "one": "item",
+        "other": "items"
+      }
+    },
+    "customer": {
+      "account": "Account",
+      "logged_in_as_html": "Logged in as {{ first_name }}",
+      "log_out": "Log out",
+      "log_in": "Log in",
+      "sign_in": "Sign in",
+      "create_account": "Create an account",
+      "register": "Register",
+      "title": "My Account"
+    },
+    "footer": {
+      "linklist_title": "Quick Links",
+      "social_title": "Get Connected",
+      "newsletter_title": "Newsletter",
+      "accepted_payments": "Accepted Payments"
+    }
+  },
+  "products": {
+    "general": {
+      "previous_product_html": "&larr; Previous Product",
+      "next_product_html": "Next Product &rarr;",
+      "from": "From"
+    },
+    "bullet_points": {
+      "height_title": "Height",
+      "joint_title": "Joint Size",
+      "height_inches": "inches"
+    },
+    "delivery_est": {
+      "free_shipping": "Free Shipping",
+      "no_tax": "&nbsp;& No Tax",
+      "free_usa_shipping": "Free U.S.A Shipping",
+      "calc_shipping_est_html": "<i class=\"loading-spinner\"><\/i> Calculating delivery options and times"
+    },
+    "option_swatch": {
+      "choose_option": "{{ option_title }}: ",
+      "attachment_swatch_title": "Suggested Addons",
+      "show_all_addons": "Show all addons",
+      "show_addons_carousel": "Show carousel",
+      "attachment_default_included": "{{ free_product_title }} Included Free",
+      "attachment_default_included_title_only": "Included Free",
+      "attachment_included_free": "Free",
+      "attachment_add_for": "$",
+      "attachment_bundle_parent": "Bundle ID",
+      "attachment_bundle_child": "Bundle Addon",
+      "color_choice_property_name": "If unavailable",
+      "color_choice_title": "Color preference",
+      "color_choice_options": "Call Me | Text Me | Email Me",
+      "color_choice_no_pref_1": "No preference",
+      "color_choice_no_pref_2": "- Change",
+      "color_choice_choose_for_me": "Choose for me, weee!",
+      "color_choice_contact_me": "Contact me"
+    },
+    "watchlist": {
+      "sold_out": "Sold out",
+      "title": "Want to be notified when this {{ product_type }} is restocked?",
+      "title_mobile": "Notify Me When It's Back",
+      "sub_title": "Sign up for a spam-free, back in stock notification below.  We'll send you an email or a text when it's back in stock.",
+      "title_in_watchlist": "You will be notified when this {{ product_type }} is restocked",
+      "title_mobile_in_watchlist": "You Will Be Notified When It's Back",
+      "sub_title_in_watchlist": "You are already signed up for a spam-free, back in stock notification.  We'll send you an email or a text when it's back in stock.",
+      "by_email": "By Email",
+      "email_placeholder": "you@internet.com",
+      "and_or": "- and \/&nbsp;or -",
+      "via_text": "Via Text",
+      "tel_placeholder": "10 digits, numbers only, ex. 555-im-washing-my-hair",
+      "settings_link_html": "You can change your phone and email at <a href='https:\/\/dankstop.com\/account?view=watchlist#settings' target='_blank' rel='noopener'>Watchlist Settings<\/a>.",
+      "subscribe": "Also subscribe to the email mailing list for exclusive deals &amp; discounts",
+      "login_to_use": "Please log in or create an account to use the watchlist",
+      "btn_add": "Add To Watchlist",
+      "btn_remove": "Remove From Watchlist"
+    },
+    "reviews": {
+      "count_text": "{{ reviews_count }} Reviews",
+      "no_reviews_text": "Write a review"
+    },
+    "product": {
+      "sale": "Sale",
+      "subscribable": "Subscribe & Save",
+      "you_save": "You save",
+      "custom_label": "Custom Label",
+      "in_stock": "In stock",
+      "sold_out": "Sold Out",
+      "made_in_usa": "🇺🇸",
+      "on_sale_from_html": "<strong>On Sale<\/strong> from {{ price }}",
+      "unavailable": "Unavailable",
+      "compare_at": "Compare at",
+      "quantity": "Quantity",
+      "add_to_cart": "Add to Cart",
+      "add_all_to_cart": "Add all to Cart",
+      "buy_now": "Buy It Now",
+      "add": "Add",
+      "select_options": "Select options",
+      "quick_view": "Quick View",
+      "out_of_stock": "Out of stock",
+      "many_in_stock": "Many in stock",
+      "details": "Details",
+      "from": "from ",
+      "show_options": "Show Variants",
+      "hide_options": "Hide Variants",
+      "adding": "Adding",
+      "thank_you": "Thank You",
+      "add_more": "Add More",
+      "cart_feedback": "Added"
+    }
+  },
+  "warranty_program": {
+    "title": "Warranty Program",
+    "brand": "PieceProtect",
+    "full_title": "PieceProtect Warranty Program",
+    "product_details_title_html": "Protect your piece",
+    "product_details_info_html": "Add <strong class=\"green\">{{ warranty_name }}<\/strong> for only",
+    "product_details_tooltip_html": "Do not fear breaking your {{ product_type }}!  Add our {{ warranty_name }} protection warranty and we'll insure this purchase against future breakage. If you break this piece, your next one is 50% off! <a style='display:block;' class='warranty-page-anchor' href='\/pages\/pieceprotect-warranty-program' target='_blank'>Learn More About PieceProtect Protection<\/a>",
+    "cart_item_line_1_html": "Breakage and damage protection on your {{ warrantied_product_title_link }}.",
+    "cart_item_line_2_html": "If it breaks, your next piece is 50% off.",
+    "cart_item_link_text": "Find Out More "
+  },
+  "watchlist_page": {
+    "title": "Watch List",
+    "empty_subtitle": "Your watchlist is currently emtpy",
+    "empty_message": "Fill your watchlist with awesome bongs, bowls, hand pipes, dab rigs, and other products you like but don't want to buy right now - then return to them later.  Also, make sure you create a cutsomer account and have JavaScript enabled on your browser (as it could be disabled by ad-blockers and privacy apps like Ghostery or NoScript).",
+    "placeholder": "Some other watchlist text here, if need be",
+    "settings_title": "Watch List Settings",
+    "update_settings_btn": "Update Settings"
+  },
+  "free_gifts": {
+    "title": "Free Gifts",
+    "add_for_next_tier_html": "🎁Add just <b class=\"color-primary\">${{ amount_to_next_tier }}<\/b> to upgrade your free gift!  Browse all <a href=\"\/collections\/free-gift-eligible\">free gifts<\/a><!--<a href=\"{{ product_url }}\" target=\"_blank\" rel=\"noopener\" title=\"{{ product_title }}\">{{ product_title }}<\/a>, for free.--> 🎁",
+    "to_get_this_product_free_html": "Add <b>${{ amount_to_next_tier }}<\/b> to get one free!",
+    "final_tier_html": "You've reached the final free gifts tier!",
+    "add_to_get_free_html": "Add <b>${{ amount_to_free }}<\/b> to get it free.",
+    "free_product": "FREE!"
+  },
+  "wholesale": {
+    "title": "Wholesale Program",
+    "greeting_1": "Welcome to the",
+    "greeting_2": "DankStop Wholesale Program",
+    "paragraph_1": "We strive to offer competitive wholesale pricing on a variety of glass water pipes, dab rigs, hand pipes, vaporizers, glass adapters and other smoking accessories. Browse our selec- tion of high grade glassware and stock your store with our unique products.",
+    "paragraph_2": "Log in with your existing wholesale account or apply for a wholesale account today, it's fast and easy! You are logged in as a Wholesale Customer! Have fun shopping and making money with us! Please select a category below.",
+    "not_registered": "Signup for awesome wholesale deals!",
+    "not_registered_btn": "Register Wholesale Account",
+    "retail_customer": "We see you are already registered with DankStop.  Upgrade your account to Wholesale for awesome wholesale deals!",
+    "retail_customer_btn": "Upgrade Your Account",
+    "registered_not_approved": "We see you already registered.  Please allow us up to 24 hours to verify and approve your account.",
+    "wholesale_customer_approved_1": "You are logged in as an approved Wholesale Customer!",
+    "wholesale_customer_approved_2": "Feel free to browse and shop our awesome Wholesale deals.",
+    "categories_title": "Wholesale Categories",
+    "categories_subtitle": "Please select the category of our wholesale offerings that you'd like to peruse and shop.",
+    "category_title_1": "Wholesale Water Pipes",
+    "category_title_2": "Wholesale Dab Rigs",
+    "category_title_3": "Wholesale Recyclers",
+    "category_title_4": "Wholesale Hand Pipes",
+    "category_title_5": "Wholesale Glass Adapters and Parts",
+    "registration_title": "DankStop Wholesale Program Registration",
+    "registration_paragraph": "DankStop offers wholesale pricing to retailers and distributors world-wide. Interested in our smoke shop supplies? Fill out the contact form below and we will get you set up with a wholesale account. A wholesale account allows you to view wholesale pricing and shop online.",
+    "reg_form": {
+      "title": "Register Now",
+      "subject": "Subject:",
+      "subject_placeholder": "Wholesale Registration",
+      "contact": "Contact Name:",
+      "contact_first_placeholder": "enter first name",
+      "contact_last_placeholder": "enter last name",
+      "business_name": "Business Name:",
+      "business_name_placeholder": "enter the name of your business",
+      "email": "E-mail Address:",
+      "email_placeholder": "enter a contact email address",
+      "account_password": "Password:",
+      "account_password_placeholder": "create a password",
+      "phone": "Phone Number:",
+      "phone_placeholder": "enter a contact phone number",
+      "tax": "Tax ID:",
+      "tax_placeholder": "enter the Tax ID",
+      "address": "Business Address:",
+      "address_1_placeholder": "enter your business address - line 1",
+      "address_2_placeholder": "enter your business address - line 2",
+      "address_city_placeholder": "enter city",
+      "address_state_placeholder": "enter state",
+      "address_zip_placeholder": "enter zip code\/postal code",
+      "country_select": "select country:",
+      "source": "How'd you hear about DankStop?",
+      "source_select": "select a source:",
+      "source_1": "Customer referral",
+      "source_2": "Social network",
+      "source_3": "Online ad",
+      "source_4": "Blog post",
+      "source_5": "Magazine ad",
+      "source_6": "Other",
+      "notes": "Notes:",
+      "notes_placeholder": "your message...",
+      "submit": "Submit your registration",
+      "response": "You've just taken yet another big step towards great success, and for that we commend you.  You're all set up.  Feel free to shop around and make money with us.",
+      "response_pending_approval": "You've just taken yet another big step towards great success, and for that we commend you.  Please allow our staff up to 48 hours to process your application."
+    }
+  },
+  "gift_cards": {
+    "issued": {
+      "title": "Here's your {{ value }} gift card for {{ shop }}!",
+      "subtext": "Here's your gift card!",
+      "disabled": "Disabled",
+      "expired": "Expired on {{ expiry }}",
+      "active": "Expires on {{ expiry }}",
+      "redeem": "Use this code at checkout to redeem your gift card",
+      "shop_link": "Start shopping",
+      "print": "Print"
+    }
+  },
+  "date_formats": {
+    "month_day_year": "%B %d, %Y"
+  },
+  "wishlist": {
+    "general": {
+      "my_wishlist": "My Wish Lists",
+      "wishlist": "Wish Lists",
+      "product_image": "Image",
+      "product_name": "Product Name",
+      "unit_price": "Price",
+      "share_wishlist": "Share my Wishlist Via Email",
+      "no_login_html": "To create a wish list you must <a href=\"\/account\/login\">sign in<\/a> or <a href=\"\/account\/register\">create an account<\/a>.",
+      "add_to_wishlist": "Add to Wish List",
+      "remove_wishlist": "Remove Wish List",
+      "note": "Already in your wishlist, Go to wishlist",
+      "subtext": "To create a wish list you must",
+      "sign_in": "sign in",
+      "or": "or",
+      "wishlist_empty": "Looks like you haven't started a wishlist yet...",
+      "create_account": "create an account"
+    }
+  },
+  "shop_by": {
+    "page_title": "Categories",
+    "cat_title_1": "Glass",
+    "cat_title_2": "Vapes",
+    "cat_title_3": "Rolling Papers + Accessories",
+    "cat_title_4": "Glass Attachments",
+    "cat_title_5": "Concentrate Accessories",
+    "cat_title_6": "Culture \/ Apparel",
+    "cat_title_7": "Smoking Accessories",
+    "cat_title_8": "Shop By Category"
+  },
+  "about_us": {
+    "page_title": "About DankStop",
+    "about_us_title": "From humble beginnings...",
+    "about_us_text_1_html": "",
+    "about_us_text_2_html": "",
+    "about_us_text_3_html": "",
+    "about_us_text_4_html": "",
+    "about_us_text_5_a_html": "Our online headshop carries a wide selection of the highest quality <a href='http:\/\/dankstop.com\/glass-pipes\/' target='_blank' rel='noopener'>glass pipes<\/a> and <a href='http:\/\/dankstop.com\/smoking-accessories\/' target='_blank' rel='noopener'>smoking accessories<\/a>. We stock <a href='http:\/\/dankstop.com\/glass-water-pipes\/' target='_blank' rel='noopener'>water pipes<\/a>, ",
+    "about_us_text_5_b_html": "<a href='http:\/\/dankstop.com\/scientific-glass-bubblers\/' target='_blank' rel='noopener'>bubblers<\/a>, <a href='http:\/\/dankstop.com\/concentrate-pipes-and-dab-rigs\/' target='_blank' rel='noopener'>concentrate rigs<\/a>, <a href='http:\/\/dankstop.com\/glass-pipes\/' target='_blank' rel='noopener'>hand pipes<\/a>, ",
+    "about_us_text_5_c_html": "<a href='http:\/\/dankstop.com\/concentrate-nails-dabbers-and-carb-caps\/' target='_blank' rel='noopener'>dab nails<\/a>, <a href='http:\/\/dankstop.com\/vaporizers\/' target='_blank' rel='noopener'>vaporizers<\/a>, <a href='http:\/\/dankstop.com\/accessories\/' target='_blank' rel='noopener'>accessories<\/a>, ",
+    "about_us_text_5_d_html": "<a href='http:\/\/dankstop.com\/recycler-rigs\/' target='_blank' rel='noopener'>recyclers<\/a>, and so much more. DankStop is owned and operated by two young entrepreneurs and glass lovers here in the USA.",
+    "about_us_text_6_a_html": "We stock a long list of American brand names including <a href='http:\/\/dankstop.com\/brands\/Purr-Glass.html' target='_blank' rel='noopener'>Purr Glass<\/a>, <a href='http:\/\/dankstop.com\/brands\/One12-Glass.html' target='_blank' rel='noopener'>One12 Glass<\/a>, <a href='http:\/\/dankstop.com\/brands\/Black-Market-Glass.html' target='_blank' rel='noopener'>Black Market Glass<\/a>, ",
+    "about_us_text_6_b_html": "<a href='http:\/\/dankstop.com\/brands\/Pulse-Glass.html' target='_blank' rel='noopener'>Pulse Glass<\/a>, <a href='http:\/\/dankstop.com\/brands\/Chameleon-Glass.html' target='_blank' rel='noopener'>Chameleon Glass<\/a>, <a href='http:\/\/dankstop.com\/brands\/Santa-Cruz-Shredder.html' target='_blank' rel='noopener'>Santa Cruz Shredder<\/a>, <a href='http:\/\/dankstop.com\/brands\/Grav-Labs.html' target='_blank' rel='noopener'>Grav Labs<\/a>, ",
+    "about_us_text_6_c_html": "<a href='http:\/\/dankstop.com\/brands\/Raw.html' target='_blank' rel='noopener'>RAW<\/a>, <a href='http:\/\/dankstop.com\/brands\/High-Tech-Glassworks.html'>High Tech Glassworks<\/a>, <a href='http:\/\/dankstop.com\/brands\/C2-Custom-Creations.html' target='_blank' rel='noopener'>C2 Custom Creations<\/a>, <a href='http:\/\/dankstop.com\/brands\/JM-Flow.html' target='_blank' rel='noopener'>JM Flow<\/a>, <a href='http:\/\/dankstop.com\/brands\/AMG-Glass.html' target='_blank' rel='noopener'>AMG Glass<\/a>, ",
+    "about_us_text_6_d_html": "<a href='http:\/\/dankstop.com\/brands\/Nexus-Glass.html' target='_blank' rel='noopener'>Nexus Glass<\/a>, <a href='http:\/\/dankstop.com\/brands\/Silika-Glass.html' target='_blank' rel='noopener'>Silika<\/a>, <a href='http:\/\/dankstop.com\/brands\/Empire-Glassworks.html' target='_blank' rel='noopener'>Empire Glassworks<\/a>, and many more. We know everyone has different needs. That's why DankStop strives to offer a massive selection of products that are sure to satisfy everyone. ",
+    "about_us_text_6_e_html": "We offer everything from <a href='http:\/\/dankstop.com\/beakers-and-straight-tubes\/' target='_blank' rel='noopener'>beakers and straight tubes<\/a>, to <a href='http:\/\/dankstop.com\/scientific-glass-pipes\/' target='_blank' rel='noopener'>sleek scientific glass<\/a>, to extremely <a href='http:\/\/dankstop.com\/heady-glass\/' target='_blank' rel='noopener'>artistic heady glass<\/a>. From the art collectors and glass connoisseurs to the 'ballin' on a budget crew,' we got you covered. ",
+    "about_us_text_6_f_html": "Simply shop by price in the left menu, or give us a call to see what meets your budget.",
+    "about_us_text_7_html": "We started DankStop because just like you, we were tired of the unreliable online headshops out there. With the exception of few, local stores always seem to charge a fortune for limited selections of mediocre glass. We noticed that other online shops were sketchy, had terrible customer service, and you never knew if you'd actually receive your products. We decided to change that by offering the best customer service out there. Feel free to contact our support team by phone, email, <a href='http:\/\/www.facebook.com\/Dankstop' target='_blank' rel='noopener'>Facebook message<\/a>, <a href='http:\/\/instagram.com\/dankstop\/' target='_blank' rel='noopener'>Instagram DM<\/a>, snail mail, or send a pigeon. We will always respond within 24 hours.",
+    "about_us_text_8_html": "Dank Stop was created to revolutionize the online headshop market by offering a simple layout that's easy to navigate and locate exactly what you're looking for. By combining our easy to use site with only the best quality products, top notch service, and FREE shipping on all orders, we make sure every customer is satisfied.",
+    "about_us_text_9_html": "Keep up with us on social media for deals and giveaways, and read up on our <a href='http:\/\/dankstop.com\/blog\/' target='_blank' rel='noopener'>blog<\/a> and our <a href='http:\/\/dankstop.com\/dank-wiki\/' target='_blank' rel='noopener'>knowledge base<\/a> to learn about new products and industry updates. We love to hear from our customers! If you have any questions, please contact us!",
+    "about_us_text_10_html": "Shop Dankstop.com and see for yourself why we're the fastest growing online headshop.",
+    "based_in_title": "based in Edison, New Jersey",
+    "based_in_text": "We carry American made products, employ American workers, and support the US economy. Almost all of our glass products are made here in the USA, and any imported glass goes through a rigorous inspection to ensure it's of the highest quality before being stocked on our shelves. Our products are all carefully hand picked to offer a constantly expanding selection of high quality glass, and we stand behind all of them. If you're not 100% satisfied with your order, send it back!",
+    "guarantee_title_html": "<span>the<\/span> DankStop Guarantee",
+    "guarantee_1": "Packaged Lovingly",
+    "guarantee_2": "And Shipped Swiftly",
+    "guarantee_3": "To Our Happy Customers",
+    "guarantee_alt_1": "DankStop Online Headshop Packing Guarantee",
+    "guarantee_alt_2": "DankStop Online Headshop Shipping Guarantee",
+    "guarantee_alt_3": "DankStop Online Headshop Satisfaction Guarantee",
+    "the_team_title": "the team",
+    "team_member_1": "John Smith",
+    "team_member_role_1": "President CEO",
+    "team_member_2": "John Smith",
+    "team_member_role_2": "President CEO",
+    "team_member_3": "John Smith",
+    "team_member_role_3": "President CEO",
+    "team_member_4": "John Smith",
+    "team_member_role_4": "President CEO",
+    "team_member_5": "John Smith",
+    "team_member_role_5": "President CEO",
+    "team_member_6": "John Smith",
+    "team_member_role_6": "President CEO",
+    "quote_text": "Lorem ipsum dolor sit amet, habemus mentitum nominati ei eum, expetenda conclusionemque cu pri. Erant dissentiunt per ne. Mel ne meis rebum intellegebat, pri saepe civibus ex. Eu qui delenit explicari conceptam, sit error putent cotidieque in, in quando ornatus insolens eam.",
+    "quote_by": "-FELIX KHAYKIN, CO-FOUNDER",
+    "more_bigger_better": "More options. Bigger savings. Better service."
+  },
+  "why_shop_online": {
+    "page_title": "Why Shop at an Online Smoke Shop?",
+    "section_1_title": "Huge Selection",
+    "section_1_p1_html": "A big factor when making any purchase is the selection of products to choose from.&nbsp; As an online smoke shop, we focus on offering a large array of products so that every consumer can find the item perfectly fit for their needs.&nbsp; Store front smoke shops typically have a smaller selection leaving the customer with a rather “one dimensional” set of options.",
+    "section_1_p2_html": "It isn't just the diversity of the types of products we stock, but the quality brands we carry that set us apart from the typical brick and mortar shop.",
+    "section_1_p3_html": "Check out our wide variety of brands <a href='\/pages\/all-brands' target='_blank'>HERE<\/a>.",
+    "we_offer": "We offer:",
+    "we_offer_li_1_html": "<a href='\/collections\/bongs'>Water Pipes<\/a>",
+    "we_offer_li_2_html": "<a href='\/collections\/bubblers'>Bubblers<\/a>",
+    "we_offer_li_3_html": "<a href='\/collections\/recycler-rigs'>Recyclers<\/a>",
+    "we_offer_li_4_html": "<a href='\/collections\/dab-rigs-and-oil-rigs'>Concentrate\/Dab Rigs<\/a>",
+    "we_offer_li_5_html": "<a href='\/collections\/hand-pipes'>Hand Pipes<\/a>",
+    "we_offer_li_6_html": "<a href='\/collections\/ashcatchers'>Ash Catchers<\/a>",
+    "we_offer_li_7_html": "<a href='\/collections\/grinders'>Grinders<\/a>",
+    "we_offer_li_8_html": "<a href='\/collections\/vaporizers'>Vaporizers<\/a>",
+    "we_offer_li_9_html": "<a href='\/collections\/rolling-papers-machines-and-accessories'>Rolling Papers<\/a>",
+    "we_offer_li_10_html": "<a href='\/collections\/containers'>Cases<\/a>",
+    "we_offer_li_11_html": "<a href='\/collections\/accessories'>Accessories & More!<\/a>",
+    "section_2_title": "Low Prices",
+    "section_3_title": "Fast Shipping",
+    "section_4_title": "Five Star Customer Service",
+    "section_5_title": "Quick and Convenient",
+    "section_6_title": "Assured Quality Control",
+    "cat_title_8": "Sho By Category"
+  },
+  "features": {
+    "american_glass": {
+      "term": "american glass",
+      "definition": "This glass piece is certified to be hand blown right here in the USA. American glass has earned a reputation of being sturdy, reliable, and well-made"
+    },
+    "angle_cut_dome": {
+      "term": "angle cut dome",
+      "definition": "An angle-cut dome is a specific type of dome that features an angled design rather than the standard circular dome. This type of dome is handblown in a way that gives it an angled top for a distinct appearance"
+    },
+    "design_beaker": {
+      "term": "beaker",
+      "definition": "This water pipe features a scientific 'beaker' shape at the bottom of the neck. Easy to clean and hard to tip over, these are great coffee table bongs. "
+    },
+    "beaker": {
+      "term": "beaker",
+      "definition": "This water pipe features a scientific 'beaker' shape at the bottom of the neck. Easy to clean and hard to tip over, these are great coffee table bongs. "
+    },
+    "design_can": {
+      "term": "can chamber",
+      "definition": "This water pipe or dab rig features a can shaped chamber. The cylindrical chamber resembles exactly what the name implies; a can"
+    },
+    "can": {
+      "term": "can chamber",
+      "definition": "This water pipe or dab rig features a can shaped chamber. The cylindrical chamber resembles exactly what the name implies; a can"
+    },
+    "control": {
+      "term": "control",
+      "definition": ""
+    },
+    "design_puck": {
+      "term": "puck chamber",
+      "definition": "This concentrate pipe features a unique chamber that resembles a hockey puck. The flat circular chamber of the puck rig provides an awesome aesthetic as well as making sure the dab rig always has a flat sturdy base"
+    },
+    "puck": {
+      "term": "puck chamber",
+      "definition": "This concentrate pipe features a unique chamber that resembles a hockey puck. The flat circular chamber of the puck rig provides an awesome aesthetic as well as making sure the dab rig always has a flat sturdy base"
+    },
+    "design_straight_tube": {
+      "term": "straight tube",
+      "definition": "This water pipe is a straight tube, meaning it has a straight and vertical design from the circular base up to the mouthpiece. This type of water pipe is the easiest to clean and is great for a daily driver. "
+    },
+    "straight_tube": {
+      "term": "straight tube",
+      "definition": "This water pipe is a straight tube, meaning it has a straight and vertical design from the circular base up to the mouthpiece. This type of water pipe is the easiest to clean and is great for a daily driver. "
+    },
+    "bent_neck": {
+      "term": "bent neck",
+      "definition": "Bent neck designs offer aesthetic and functional qualities. Aesthetically, bent necks give a unique look to your glass water pipe. Functionally, bent necks act as a splashguard, keeping all of the water inside the pipe and outside of your mouth. They also extend the mouthpiece away from the heat source horizontally, providing a more safe position. "
+    },
+    "branded_glass": {
+      "term": "branded glass",
+      "definition": "This glass pipe features branded glass that can include logos or decals that verify it as an official product of this specific brand. Not all glass needs to have visual emblems to be considered as branded glass"
+    },
+    "color_glow_in_the_dark": {
+      "term": "glow in the dark",
+      "definition": "This piece glows in the dark. Turn the lights off and watch the amazing visual effect that comes from glow in the dark glass"
+    },
+    "clear_glass": {
+      "term": "clear glass",
+      "definition": "This piece features sleek and clean clear glass that allows you to watch this concentrate rig or water pipe function. Clear glass allows you to watch the bubbles stack as your smoke\/vapor percolates"
+    },
+    "colored_glass": {
+      "term": "colored glass",
+      "definition": "This piece features beautiful colored glass accents that give it a unique and aesthetically appealing appearance. Colored glass is one of the many features that can make this piece stand out in your glass collection"
+    },
+    "deep_bowl": {
+      "term": "deep bowl",
+      "definition": "This pipe features a deep bowl to allow for a large amount of dry herbs or tobacco to be packed at one time"
+    },
+    "dewars_joint": {
+      "term": "dewar's joint",
+      "definition": "A dewar’s joint is the small glass tube that connects the joint to the chamber. Its purpose is to reinforce the strength of the joint and to create additional support for the glass pipe"
+    },
+    "dichro_glass": {
+      "term": "dichroic glass",
+      "definition": "This glass piece features stunning dichroic glass. Dichro glass is worked colored glass with sparkles inside of it that are accentuated in certain lighting conditions"
+    },
+    "dichroic_glass": {
+      "term": "dichroic glass",
+      "definition": "This glass piece features stunning dichroic glass. Dichro glass is worked colored glass with sparkles inside of it that are accentuated in certain lighting conditions"
+    },
+    "diffused_downstem": {
+      "term": "diffused downstem",
+      "definition": "This type of downstem features multiple slits at the bottom, breaking your smoke up into smaller bubbles than a traditional single-hole downstem. More bubbles means more smoke touching the water, and that results in a cooler, smoother smoke. "
+    },
+    "direct_inject": {
+      "term": "direct inject",
+      "definition": "A direct inject design does exactly what the name would suggest; it directly injects vapor from the joint into the chamber "
+    },
+    "splashguard_dome": {
+      "term": "dome splashguard",
+      "definition": "A dome splashguard prevents water from splashing up into your mouth no matter how hard you pull."
+    },
+    "splashguard_donut": {
+      "term": "donut splashguard",
+      "definition": "This circle design with the hole in the middle makes sure water stays in the chamber but still allows all of your vapor to flow upwards through to the neck"
+    },
+    "fab_egg": {
+      "term": "fab egg",
+      "definition": "This piece has a faberge egg design. The fab egg chamber has a circular, egg shape with a hollow center and holes that provide a distinguished design. The holes function similar to a swiss perc."
+    },
+    "filter_tip": {
+      "term": "filter tip",
+      "definition": "This accessory is placed within one end of a rolled cigarette, behind all the dry herbs. The filter tip allows for a more comfortable grip on the rolled cigarette, as it more difficult to crumble. They also block pieces of dry herbs from getting into your mouth."
+    },
+    "frosted_glass": {
+      "term": "frosted glass",
+      "definition": "A type of glass that obscures vision behind its pane, and has more traction on its surface. The process of frosting glass is achieved through abrasion, often sand-blasting."
+    },
+    "fumed_glass": {
+      "term": "fumed glass",
+      "definition": "A type of glass created by heating silver and\/or gold to a high enough temperature, which releases fumes from the metals. These fumes bind to the glass surface and produce a semi-transparent, colorful visual. The color will appear differently based on whether the light has been refracted through or reflected by the fumed glass before reaching your eyes. Over a period of time, fumed glass changes color because of the exposure to heat from the flame."
+    },
+    "glass_opals": {
+      "term": "glass opals",
+      "definition": "This item features beautiful handblown glass opals. Glass opals are made from rare crystals and encases in a glass marble."
+    },
+    "color_slyme": {
+      "term": "slyme glass",
+      "definition": "Slyme glass is a specific type of colored glass that is highly sought after due to its unique and vibrant appearance. Slyme glass comes in multiple different colors including green, purple, and others"
+    },
+    "condenser_coil": {
+      "term": "condenser coil",
+      "definition": "When used in a bong, it is a removable chamber with a coil tube inside and filled with freezable glycerin that is connected to the neck and mouthpiece. Users remove and freeze this chamber in order to cool down smoke once it’s placed back on the bong. When utilized in handheld glass pipes, the user would freeze the entire pipe to achieve the desired effects\n\nThis removable, glycerin filled glass coil is used to cool down your smoke, similar to ice. Throw it in the freezer for a bit before use, and this coil will result in a chilled and delicious smoke. Unlike using traditional ice, it will never melt or raise the water level in your bong, preventing splashback and bong water drinkage. \n\n"
+    },
+    "heady_glass": {
+      "term": "heady glass",
+      "definition": "Heady glass means that this dab rig or water pipe is a limited edition collector’s item. It features an intricate and unique design that mixes exquisite form with ultimate function. These pieces are truly functioning art."
+    },
+    "hourglass_chamber": {
+      "term": "hourglass chamber",
+      "definition": "This water pipe or vapor rig features an hourglass chamber. The chamber indents in on each side, giving it a distinguishable hourglass shape that adds an impressive aesthetic quality"
+    },
+    "ice_catcher": {
+      "term": "ice catcher",
+      "definition": "An ice catcher is a pinched place in the neck of the water pipe that allows the user to put ice cubes into the pipe. The smoke passes through the ice and is cooled for smoother hits"
+    },
+    "inhalation_balloon_bag": {
+      "term": "balloon bag vaporizer",
+      "definition": "A desktop vaporizer that delivers its vapor into a plastic bag that the user detaches and inhales. These vaporizers have internal fans that push vapor upward into the bag until it’s filled."
+    },
+    "inhalation_direct_draw": {
+      "term": "direct draw vaporizer",
+      "definition": "A specific type of vaporizer that has a mouthpiece for direct inhalation of vapor. These vapes allow vapor to flow straight from the device to the user."
+    },
+    "inhalation_whip": {
+      "term": "whip vaporizer",
+      "definition": "A desktop vaporizer that delivers its vapor through a tube called a “whip”. Dry herbs are loaded into a glass wand that is then connected directly to the vaporizer’s heating element. Once vaporized, the user inhales through the whip. Most whip vaporizers are intended for dry herbs, but some have attachments that can make them compatible with concentrates and e-liquids."
+    },
+    "interface_analog": {
+      "term": "analog vaporizer",
+      "definition": "This vaporizer has an analog interface for a user-friendly vaping experience. Most analog vaporizers contain either a dial or a button to initiate and control vaporization."
+    },
+    "interface_digital": {
+      "term": "digital vaporizer",
+      "definition": "This vaporizer has a digital interface for an easier reading of temperature, battery, or other settings. Digital vaporizers generally have a screen to display this information."
+    },
+    "joint_angle_45_degrees": {
+      "term": "45° joint",
+      "definition": "This item features a joint at a diagonal 45º angle. Use with other 45º pipes and accessories. "
+    },
+    "joint_angle_90_degrees": {
+      "term": "90° joint",
+      "definition": "This item features a joint at a diagonal 90º angle. Use with other 90º pipes and accessories."
+    },
+    "joint_gender_female": {
+      "term": "female joint",
+      "definition": "This item features a female joint. It will fit all male jointed pipes and accessories of the same size. "
+    },
+    "joint_gender_male": {
+      "term": "male joint",
+      "definition": "This item features a male joint. It will fit all female jointed pipes and accessories of the same size. "
+    },
+    "joint_size_10mm": {
+      "term": "10mm joint",
+      "definition": "This item features a 10mm joint size. It will fit 10mm pipes\/accessories of the opposite gender."
+    },
+    "joint_size_14mm": {
+      "term": "14mm joint",
+      "definition": "This item features a 14mm joint size. It will fit 14mm pipes\/accessories of the opposite gender. "
+    },
+    "joint_size_18mm": {
+      "term": "18mm joint",
+      "definition": "This item features an 18mm joint size. It will fit other 18mm pipes\/accessories of the opposite gender."
+    },
+    "maria_rings": {
+      "term": "maria rings",
+      "definition": "Maria rings are circular protruding glass rings usually found on the neck or below the mouthpiece of a water pipe or dab rig"
+    },
+    "micro": {
+      "term": "micro",
+      "definition": "This water pipe, bubbler, or concentrate rig is a small and portable size that gives it a discreet appearance as well as makes it easily transportable."
+    },
+    "mini": {
+      "term": "mini",
+      "definition": "This water pipe, bubbler, or concentrate rig is a small and portable size that gives it a discreet appearance as well as makes it easily transportable."
+    },
+    "mouthpiece_flared": {
+      "term": "flared mouthpiece",
+      "definition": "Flared mouthpieces have elevated glass around the mouthpiece which make it conform perfectly to your mouth for superior comfort and an airtight seal while smoking."
+    },
+    "flared_mouthpiece": {
+      "term": "flared mouthpiece",
+      "definition": "Flared mouthpieces have elevated glass around the mouthpiece which make it conform perfectly to your mouth for superior comfort and an airtight seal while smoking."
+    },
+    "mouthpiece_removable": {
+      "term": "removable mouthpiece",
+      "definition": "A removable mouthpiece allows you to customize your rig with another detachable mouthpiece and allows for much easier cleaning."
+    },
+    "removable_mouthpiece": {
+      "term": "removable mouthpiece",
+      "definition": "A removable mouthpiece allows you to customize your rig with another detachable mouthpiece and allows for much easier cleaning."
+    },
+    "nano": {
+      "term": "nano",
+      "definition": "This water pipe, bubbler, or concentrate rig is a small and portable size that gives it a discreet appearance as well as makes it easily transportable."
+    },
+    "pendant": {
+      "term": "pendant",
+      "definition": "Pendants contain a small circle that you can put a string through. These tiny medallions can be worn around your neck for a unique look. Some of them can actually function as a glass pipe with easy transportation and portability!"
+    },
+    "perc_barrel": {
+      "term": "barrel perc",
+      "definition": "Barrel percolators are a specific type of perc that has a barrel shape with slits to filter your smoke consistently."
+    },
+    "perc_circ": {
+      "term": "circ perc",
+      "definition": "A circ perc is a circular percolator that usually contains numerous rings with spacing between them. This spacing and the holes\/slits of the perc allow for intense filtration."
+    },
+    "perc_cross": {
+      "term": "cross perc",
+      "definition": "This percolator has an intricate design with a center that has multiple circle pieces branching out from it. Each of these circles has slits in the form of a cross that leads to a tremendous amount of smoke filtration and a smoother hit with each inhale."
+    },
+    "perc_crystal_ball": {
+      "term": "crystal ball perc",
+      "definition": "Crystal ball percs are a circular perc with angled slits intertwining across it. Its shape and the connecting slits make the perc appear like a crystal ball."
+    },
+    "perc_disc": {
+      "term": "disc perc",
+      "definition": "Disc percolators are circular percs which resemble a disc. Disc percs have slits or holes around the outside for filtration and diffusion."
+    },
+    "perc_dome": {
+      "term": "dome perc",
+      "definition": "Dome percolators are called this because of their shape. They have slits and holes where the dome touches the bottom. Diffusion happens when the smoke passes through the dome, and separates when going through the holes or slits"
+    },
+    "perc_donut": {
+      "term": "donut perc",
+      "definition": "Donut percs are a circular perc that has a hole in the middle to provide extra filtering of the smoke and also stops water from splashing up towards the mouthpiece. This type of percolator gets its name because of it looks like a donut."
+    },
+    "perc_fixed_downstem": {
+      "term": "fixed downstem",
+      "definition": "The downstem is a glass tube that funnels smoke from the bowl towards the bottom of the bong. This specific type of downstem is fixed into the joint and functions as a perc by distilling smoke with its slits or holes."
+    },
+    "perc_honeycomb": {
+      "term": "honeycomb perc",
+      "definition": "Honeycomb percs are a type of disc perc, but they have more diffusion because they usually have at least 30 small holes through which the smoke must pass. The holes are crafted to be a perfect size because large holes won't filter the smoke efficiently and small holes will create too much drag."
+    },
+    "perc_inline": {
+      "term": "inline perc",
+      "definition": "Inline percolators are straight tubes consisting of slits or grids leading inside a perpendicular chamber."
+    },
+    "perc_inset": {
+      "term": "inset perc",
+      "definition": "Inset percs are contained inside the chamber of the water pipe and are an indented perc that creates a pocket. Inset percolators have slits around their circumference to filter and diffuse the smoke."
+    },
+    "perc_j_hook": {
+      "term": "j hook perc",
+      "definition": "A J-Hook perc gets its name because it has the shape of an upside-down J. It usually connects to a different type of perc for an extreme combination of filters"
+    },
+    "perc_matrix": {
+      "term": "matrix perc",
+      "definition": "Matrix percs are a cylindrical chamber with vertical and horizontal slits or grooves encompassing the outside of it."
+    },
+    "perc_ratchet": {
+      "term": "ratchet perc",
+      "definition": "Ratchet percs are a type of disc perc with holes lining the perimeter of the disc to increase filtration and the flow of smoke."
+    },
+    "perc_removable_downstem": {
+      "term": "removable downstem",
+      "definition": "A downstem is a glass tube that allows smoke to travel from the joint to a chamber of a bong. Removable downstems provide multiple benefits as they filter smoke with their slits or holes while their removability allows for an easier cleaning process."
+    },
+    "perc_reti": {
+      "term": "reti perc",
+      "definition": "Reti percolators consist of two cylinders, with a smaller one inside a larger one. Diffusion occurs when smoke passes through the slits of the cylinders"
+    },
+    "perc_showerhead": {
+      "term": "showerhead perc",
+      "definition": "Showerhead percolators have a thin vertical tube that widens into a round chamber. They have slits or holes for increased filtration and diffusion. Their name comes from their resemblance to a showerhead."
+    },
+    "perc_sprinkler": {
+      "term": "sprinkler perc",
+      "definition": "A sprinkler perc is a circular perc featuring multiple tubes branching out in all directions. Similar to a tree perc, the smoke goes through the circular part and leaves out through the many different arms. The separation of the smoke\/vapor causes filtration and diffusion for optimal pulls."
+    },
+    "perc_stemline": {
+      "term": "stemline perc",
+      "definition": "Stemline percs are a type of inline percolator that branches straight off of the joint"
+    },
+    "perc_stereo": {
+      "term": "stereo matrix perc",
+      "definition": "Stereo matrix percs consist of two smaller matrix percolators stacked on top of each other. This usually occurs in larger water pipes with two chambers, where one matrix perc is housed in each chamber"
+    },
+    "perc_swiss": {
+      "term": "swiss perc",
+      "definition": "Swiss percs are a vertical diffusion system with holes on a large disc. The name derives from the percolators resemblance to swiss cheese"
+    },
+    "perc_tongue": {
+      "term": "tongue perc",
+      "definition": "A tongue perc resembles a tongue and its unique design has slits and holes to rigorously diffuse and filter vapor and smoke."
+    },
+    "perc_tree": {
+      "term": "tree perc",
+      "definition": "When it comes to tree percs, the more arms it has the more diffusion that can happen, creating a larger separation of the smoke. The arms of the tree usually have slits on the side and are constructed with either a closed or open bottom. Smaller slits lead to smaller bubbles which results in more diffusion, filtration, and percolation."
+    },
+    "perc_turbine_disc": {
+      "term": "turbine perc",
+      "definition": "Turbine percs are a type of diffusion system consisting of a solid disc of angled slits placed inside the water chamber. The angled slits create a spinning effect which both cools and diffuses the smoke while forming a unique visual effect."
+    },
+    "perc_ufo": {
+      "term": "ufo perc",
+      "definition": "UFO percs feature a rounded top with a glass circle base. They have a series of slits around the circumference of the glass circle. Smoke passes through these slits to create serious diffusion and filtration."
+    },
+    "perc_waffle": {
+      "term": "waffle perc",
+      "definition": "Waffle percs are similar to disc percs except they have holes rather than slits. Their appearance is similar to that of a waffle fry"
+    },
+    "polished_joint": {
+      "term": "polished joint",
+      "definition": "A polished joint is a joint made from clear glass instead of the standard frosted glass you find on most joints. A polished joint gives a sleek and refined appearance to any water pipe."
+    },
+    "purple_slime_glass": {
+      "term": "purple slime glass",
+      "definition": "Purple slyme glass is a specific type of colored glass that is highly sought after due to its unique and vibrant appearance"
+    },
+    "type_reclaim_catcher": {
+      "term": "reclaim catcher",
+      "definition": "Reclaim catchers branch off of the joint, and contain a dish that connects to the bottom of the joint. When using a dab rig, oils will naturally trickle down into the joint causing dirty residue. In addition to making sure your joint doesn’t get dirty, the dish of the reclaim catcher will collect the excess concentrates so you can reuse them later\n\nThese attachments allow you to savor and \"reclaim\" that sweet, sweet oil! The reclaim catcher is placed on the water pipe's joint, and features a small, removable glass jar that will catch your oil! Not only do they help save wax, they also keep your rig clean. "
+    },
+    "dry_herb_recycler": {
+      "term": "dry herb recycler",
+      "definition": "This water pipe features a multiple chamber recycler design that cause your vapor\/smoke and water to loop in between the chambers before leaving the mouthpiece. This process causes your vapor\/smoke to pass through the perc, or percs, multiple times for optimally filtered and diffused hits. This specific recycler is intended for use with dry herbs"
+    },
+    "concentrate_recycler": {
+      "term": "concentrate recycler",
+      "definition": "This water pipe features a multiple chamber recycler design that cause your vapor\/smoke and water to loop in between the chambers before leaving the mouthpiece. This process causes your vapor\/smoke to pass through the perc, or percs, multiple times for optimally filtered and diffused hits. This specific recycler is intended for use with concentrates"
+    },
+    "dual_use_recycler": {
+      "term": "dual use recycler",
+      "definition": "This water pipe features a multiple chamber recycler design that cause your vapor\/smoke and water to loop in between the chambers before leaving the mouthpiece. This process causes your vapor\/smoke to pass through the perc, or percs, multiple times for optimally filtered and diffused hits. This specific recycler is intended for use with both dry herbs and concentrates"
+    },
+    "sandblasted_glass": {
+      "term": "sandblasted glass",
+      "definition": "Sandblasted glass is raised frosted glass visual feature that causes any glass piece to immediately stand out in your glass collection. Sandblasted glass generally is located on the chamber or the neck and showcases a themed design."
+    },
+    "scientific_glass": {
+      "term": "scientific glass",
+      "definition": "Scientific glass means this pipe is made from clear borosilicate glass. It features a “laboratory” design, and usually an overall shape that resembles scientific equipment (glass beaker chambers, straight tubes, etc.)"
+    },
+    "design_sidecar": {
+      "term": "sidecar",
+      "definition": "This piece has a sidecar design. This means it has a neck that branches off the side of the chamber and leads to the mouthpiece. Sidecars eliminate splashback and ensure all of the water stays inside the pipe and out of your mouth."
+    },
+    "design_snorkel": {
+      "term": "snorkel",
+      "definition": "This oil rig features a snorkel design that uses a standard nail but no dome. Instead, there is a curved glass piece that resides above the nail. As your concentrates vaporize on the nail and you inhale, the vapor is sucked upwards into the above glass tube and then flows into the dab rig"
+    },
+    "straight_neck": {
+      "term": "straight neck",
+      "definition": "Straight neck designs involve a neck branching vertically up into the mouthpiece from the chamber. They allow smoke or vapor to travel directly up to the mouthpiece"
+    },
+    "style_desktop": {
+      "term": "desktop vaporizer",
+      "definition": "A vaporizer designed for home use. Users inhale vapor through a tube or from a bag that collects the vapor"
+    },
+    "style_portable": {
+      "term": "portable vaporizer",
+      "definition": "A vaporizer designed to be carried around. These vaporizers are lighter and smaller than desktop vaporizers"
+    },
+    "style_vape_pen": {
+      "term": "vape pen",
+      "definition": "Otherwise known as a vaporizer pen, these slim portable vaporizers look similar to a cigarette. Most vape pens are for concentrates only, but some are compatible with dry herbs and tobacco"
+    },
+    "rubber_grommet": {
+      "term": "rubber grommet",
+      "definition": "A rubber ring with a hole in the center, which leads into the water pipe's main chamber. For use, a male bowl slide should be inserted into the center."
+    },
+    "temperature_adjustable": {
+      "term": "adjustable temperature",
+      "definition": "The temperature of this vape can be adjusted to tailor the user’s vaping session to their specific preference"
+    },
+    "temperature_fixed": {
+      "term": "fixed temperature",
+      "definition": "The temperature of this vaporizer is fixed to a temperature that is optimal for vaporization of the intended materials"
+    },
+    "themed_glass": {
+      "term": "themed glass",
+      "definition": "This vapor rig or water pipe contains a themed glass design. Carrying themed glass pieces is one way we cater to the varying interests of our consumer base"
+    },
+    "thick_glass": {
+      "term": "thick glass",
+      "definition": "This glass pipe contains thick glass which increases its durability and longevity. Thick glass pieces are less likely to break due to their heavy glass construction."
+    },
+    "unmarked_glass": {
+      "term": "unmarked glass",
+      "definition": "This pipe features unmarked glass. Some people prefer a completely clean look that has no logos or decals. Unmarked glass pieces allow you an uninhibited view of the function of your glass pipe’s many features."
+    },
+    "vape_kit": {
+      "term": "vape kit",
+      "definition": "This purchase includes multiple accessories compatible with this vaporizer. These accessories will vary based on the type of vaporizer being purchased. See product description for more details on the included accessories."
+    },
+    "vape_mod": {
+      "term": "vape mod",
+      "definition": "A more powerful and capable version of a vaporizer pen, often including a bulkier and more durable battery, vape mods enhance flavor and vapor production."
+    },
+    "vapor_stone": {
+      "term": "vapor stone",
+      "definition": "This concentrate pipe features a vapor stone. A vapor stone takes the place of a standard joint and sucks all of the vapor into the metal stone. This causes you to lose none of your valuable vapor as a vapor stone ensures all of it goes into the rig and none is emitted into the air"
+    },
+    "wig_wag": {
+      "term": "wig wag",
+      "definition": "This product features a detailed wig wag glass design. Wig wag glass is a beautiful swirl of multiple colors that add an incredible aesthetic touch to any piece."
+    },
+    "worked_glass": {
+      "term": "worked glass",
+      "definition": "This is a glassblowing technique which incorporates intricate colors into the glass itself, and can produce impressive 3D sculptures. The wig wag and inside-out styles are widely popular."
+    }
+  },
+  "shopify": {
+    "checkout": {
+      "contact": {
+        "phone_label": "Phone - Receive texts from our team",
+        "optional_phone_label": "Phone - Receive texts from our team"
+      },
+      "shipping": {
+        "shipping_line_delivery_phone_label": "Phone - Receive texts from our team"
+      }
+    }
+  },
+  "gempages": {
+    "Carousel": {
+      "no_slider": "No Slider"
+    },
+    "Newsletter": {
+      "err_msg_default": "Can’t send email. Please try again later.",
+      "success_msg_default": "Thanks for contacting us. We'll get back to you as soon as possible."
+    },
+    "IconListV2": {
+      "icons_not_found": "Icons not found"
+    },
+    "IconList": {
+      "icons_not_found": "Icons not found"
+    },
+    "IconListHoz": {
+      "icons_not_found": "Icons not found"
+    },
+    "Product": {
+      "product_not_found": "Product not found"
+    },
+    "ProductList": {
+      "product_not_found": "Product Not Found!",
+      "no_products_found": "No products found!",
+      "no_related_products": "No related products!"
+    },
+    "ProductTitle": {
+      "product_not_found": "Product Not Found"
+    },
+    "ProductVariants": {
+      "please_select": "Please select an option"
+    },
+    "StockCounter": {
+      "let_buy_now": "<mark>HURRY!<\/mark> LET BUY NOW"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{%- comment -%}
+  This use to be collection.liquid template content.
+  This is not the actual template. 
+  Only saving it here as the original collection.liquid template has been completely overwritten.
+{%- endcomment -%}
+
+
+
+{%- include 'lazyload-placeholder' -%} 
+
+{%- if settings.category_layout == "default" -%} 
+
+        {%- include 'collection-main' -%}
+
+{%- elsif settings.category_layout == "right_sidebar" -%}
+
+{%- include 'collection-right-sidebar' -%}
+
+{%- elsif settings.category_layout == "full_with" -%}
+
+{%- include 'collection-fullwidth' -%}
+
+{%- elsif settings.category_layout == "with_banner" -%}
+
+{%- include 'collection-with-banner' -%}
+
+{%- elsif settings.category_layout == "mansory" -%}
+
+{%- include 'collection-mansory' -%}
+
+{%- elsif settings.category_layout == "express_order" -%}
+
+{%- include 'collection-express-order' -%}
+
+{%- elsif settings.category_layout == "no_sidebar" -%}
+
+{%- include 'collection-no-sidebar' -%}
+
+{%- endif -%}
+
+{%- include 'collection--faq-json' -%} 
+{%- include 'schema-json-list', shopify_objects: collection.products -%}

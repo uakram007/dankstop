@@ -1,0 +1,19 @@
+<div class="ig-follower-count">
+  <a href="https://www.instagram.com/dankstop/" title="DankStop's Instagram" target="_blank" rel="noopener">
+    <div class="ig-css-icon">
+      {%- comment -%}
+      <i class="fa fa-instagram"></i>
+      {%- endcomment -%}
+      <svg aria-hidden="true" focusable="false" role="img"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#faInstagram"></use></svg>
+    </div>
+    <div class="ig-count triangle-border-left" style="">
+      {%- if shop.metafields.social.instagram_follows != blank -%}
+        {%- assign ig_follows_count_raw = shop.metafields.social.instagram_follows | times: 1 | abs -%}
+        {%- if ig_follows_count_raw > 999 -%}
+          {%- assign ig_follows_count = ig_follows_count_raw | divided_by: 1000.0 | round: 1 | append: 'k' -%}
+        {%- endif -%}
+      {%- endif -%}
+      <span data-ig-follows-count="{{ ig_follows_count_raw }}">{{ ig_follows_count }}</span>
+    </div>
+  </a>
+</div>

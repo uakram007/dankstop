@@ -1,0 +1,9 @@
+{{ 'vendor.min.css' | asset_url | stylesheet_tag }}
+{% if template.suffix contains 'gem' %}
+
+{% else %}
+{{ 'theme-styles.scss.css' | asset_url | stylesheet_tag }}
+{% endif %}
+{{ 'theme-styles-responsive.scss.css' | asset_url | stylesheet_tag }}
+
+{{ 'highlife.scss.css' | asset_url | stylesheet_tag }}

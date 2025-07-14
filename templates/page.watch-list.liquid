@@ -1,0 +1,48 @@
+{%- include 'breadcrumb' -%}
+
+<div class="grid">
+  <div class="grid-item large--two-thirds push--large--one-sixth">
+    <div class="section-header">
+      <h1 class="h1">{{ 'watch_list_page.page_title' | t }}</h1>
+    </div>
+    <div class="watch-list--product-grid grid-uniform">
+
+      {%- assign products_in_customer_watchlist = 0 -%}
+      {%- if customer -%}
+
+        {%- if customer.metafields.watchlist -%}
+
+          {%- if customer.metafields.watchlist.products and customer.metafields.watchlist.products != blank and customer.metafields.watchlist.products != ',' -%}
+
+          {%- assign watchlist_product_array = customer.metafields.watchlist.products | split: ',' -%}
+          {%- for wl_prod_handle in watchlist_product_array -%}
+          {%- unless wl_prod_handle == blank -%}
+          {%- assign products_in_customer_watchlist = products_in_customer_watchlist | plus: 1 -%}
+          {%- endunless -%}
+          {%- endfor -%}
+
+          {%- if products_in_customer_watchlist >= 1 -%}
+          {%- for product_handle in watchlist_product_array -%}
+            {%- unless product_handle == blank -%}
+              {%- assign product = all_products[product_handle] -%}
+              {%- include 'product-grid-item' -%}
+            {%- endunless -%}
+          {%- endfor -%}
+          {%- endif -%}
+
+          {%- endif -%}
+
+        {%- endif -%}
+
+      {%- endif -%}
+      
+      {%- unless products_in_customer_watchlist >= 1 -%}
+      <div class="grid-item">
+        <h2 class="h2">{{ 'watch_list_page.empty_watchlist_subtitle' | t }}</h2>
+        <p>{{ 'watch_list_page.empty_watchlist_message' | t }}</p>
+      </div>
+      {%- endunless -%}
+
+    </div>
+  </div>
+</div>

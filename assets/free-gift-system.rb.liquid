@@ -1,0 +1,110 @@
+# admin_emails = "contact@andrebulatov.com, andre@dankstop.com, andre.bulatov@gmail.com, fkhaykin@gmail.com, f@dankstop.com, keiko@dankstop.com, yulia@dankstop.com, lee@dankstop.com, monty@dankstop.com, yosef@dankstop.com, glenn@dankstop.com, parish@dankstop.com"
+# if Input.cart.customer and Input.cart.customer.email and ! admin_emails.include? Input.cart.customer.email
+#   Output.cart = Input.cart
+#   exit
+# end
+
+
+def partition_one(cart, line_item)
+  if line_item.quantity > 1
+    # If only part of the item must be discounted, split the item
+    partitioned_item = line_item.split(take: 1)
+    # Insert the newly-created item in the cart, right after the original item
+    position = cart.line_items.find_index(line_item)
+    cart.line_items.insert(position + 1, partitioned_item)
+  end
+  partitioned_item
+end
+
+
+def make_free(cart, line_item, amount)
+  if line_item != nil
+    line_item.change_line_price(Money.zero, message: "FREE with purchase of $#{amount} or more")
+    @already_gifted = true
+  end
+end
+
+
+def make_one_free(cart, line_item, amount)
+  if line_item.quantity > 1
+    line_item_one = partition_one(cart, line_item)
+  else 
+    line_item_one = line_item
+  end
+  make_free(cart, line_item_one, amount)
+end
+
+
+# # setup free gifts tiers array
+# free_gift_tiers = [
+#   {
+#     "tier" => "1",
+#     "amount" => 79,
+#     "product_id" => 4104081342538,
+#     "variant_id" => 30209717960778
+#   },
+#   {
+#     "tier" => "2",
+#     "amount" => 130,
+#     "product_id" => 7226565446,
+#     "variant_id" => 33001208902
+#   },
+#   {
+#     "tier" => "3",
+#     "amount" => 250,
+#     "product_id" => 11929090261,
+#     "variant_id" => 55106659157
+#   }
+# ]
+# # sort free gift tiers by cart total amount
+# free_gift_tiers = free_gift_tiers.sort_by{|item| item["amount"]}.reverse
+# # create product IDs array
+# free_gift_ids = []
+# free_gift_tiers.each do |fg_tier| 
+#   free_gift_ids << fg_tier["product_id"] 
+# end
+
+
+# set already gifted flag to keep track
+@already_gifted = false
+
+# free gift tag start
+free_gift_tag_start = "free gift at "
+
+# cart subtoal before any discounts 
+cart_sub_total = Input.cart.subtotal_price_was
+
+# Sort the items by price from high to low
+sorted_items = Input.cart.line_items.sort_by{|line_item| line_item.variant.price}.reverse
+
+
+# Get eligible items for tag check
+eligible_items = sorted_items.select do |line_item|
+  product = line_item.variant.product
+  !product.gift_card?
+end
+
+
+# First, loop through items and add tagged free gift, if exists
+eligible_items.each do |line_item|
+  product = line_item.variant.product
+  product.tags.each do |p_tag|
+    if !@already_gifted
+      if p_tag.include? free_gift_tag_start
+        free_gift_item = line_item
+        tag_cart_total = p_tag.sub(free_gift_tag_start, "").sub("$", "").to_i
+        tag_cart_total_money = Money.new(cents:100) * tag_cart_total.to_i
+        cart_sub_total_without_item = cart_sub_total - free_gift_item.variant.price
+
+        if cart_sub_total_without_item >= tag_cart_total_money
+          make_one_free(Input.cart, free_gift_item, tag_cart_total)
+          break
+        end
+      end
+    end
+  end
+end
+
+
+
+Output.cart = Input.cart

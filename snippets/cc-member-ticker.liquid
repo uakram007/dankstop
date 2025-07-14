@@ -1,0 +1,69 @@
+{% unless customer %}
+<div class="membership_ticker membership_ticker-club_member">
+  <a href="javascript:" class="SSO_popup_login">Unlock MEMBER Price</a>
+  {% render "icon-unlock" %}
+</div>
+{% endunless %}
+{% if customer and customer.tags contains 'club_member'%}
+<div class="membership_ticker membership_ticker-elite_member">
+   <a href="#" class="SSO_popup_elite_upgrade">Unlock ELITE Price</a>
+   {% render "icon-unlock" %}
+</div>
+{% endif %}
+<style>
+  .membership_ticker {
+    color: #FFF;
+    background: #E1251C;
+    position: fixed;
+    top: 40%;
+    right: 0;
+    width: 46px;
+    padding: 24px 18px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+  .membership_ticker.membership_ticker-elite_member {
+    background: #031546;
+  }
+  .membership_ticker a{
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #fff;
+    text-orientation: mixed;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+  @media only screen and (max-width: 768px) {
+		.membership_ticker {
+			color: #FFF;
+			background: #E1251C;
+			position: fixed;
+			right: 5px;
+			padding: 5px 18px;
+			border-top-left-radius: 20px;
+        	border-top-right-radius: 20px;
+			border-
+			z-index: 11111;
+			bottom: 0;
+			top: unset;
+			width: unset;
+			border-bottom-left-radius: unset;
+		}
+		.membership_ticker a {
+			font-size: 12px;
+			text-transform: uppercase;
+			color: #fff;
+			text-orientation: mixed;
+			writing-mode: unset;
+			transform: unset;
+		}
+		.membership_ticker svg{
+			transform: rotate(90deg);
+			position: relative;
+			top: 4px;
+		}
+		.zsiq_custommain {
+			bottom: 40px;
+		}
+	  }
+</style>

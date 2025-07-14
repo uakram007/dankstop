@@ -1,0 +1,293 @@
+{% comment %}
+	GEMPAGE BUILDER (https://apps.shopify.com/gempage)
+
+	You SHOULD NOT modify source code in this page because
+	It is automatically generated from GEMPAGE BUILDER
+	Try to edit page with the live editor.
+{% endcomment %}
+<!--GEM_HEADER-->
+<link data-instant-track rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" class="gf-style" />
+<link data-instant-track rel="stylesheet" type="text/css" href="https://d1um8515vdn9kb.cloudfront.net/files/vendor.css?refresh=1" class="gf-style" />
+<link data-instant-track rel="stylesheet" type="text/css" href="{{ 'gem-article-26778566730.css' | asset_url }}" class="gf_page_style">
+<!--GEM_HEADER_END-->
+{%- comment -%}
+<!-- Article JSON Schema =============== -->
+{%- endcomment -%}<div class="article-template">
+  <div class="container">
+    {%- include 'breadcrumb' -%}
+    
+    <div class="page-header"><h2>
+        {{- blog.title -}}
+      </h2></div>
+    
+    <div class="halo-blog-content article-content">
+      <div class="row {{ blog.template_suffix }}">
+        {%- section 'sidebar-blog' -%}
+        {%- comment -%}
+  Comments will not appear right after they are submitted, either to be checked for spam
+  or to await moderation. When a comment is submitted, the browser is redirected to a page
+  that includes the new comment id in its URL.
+    Example: http://shopname.myshopify.com/blogs/news/2022072-my-post?comment=3721372  More information:
+    - http://docs.shopify.com/themes/liquid-variables/comment
+{%- endcomment -%}{%- comment -%}
+  We're going to reference the number of comments below, so let's hold it in a variable.
+{%- endcomment -%}{%- assign number_of_comments = article.comments_count -%}{%- comment -%}
+  If a comment was just submitted and it has no blank fields, we have an extra comment to count.
+{%- endcomment -%}{%- if comment and comment.created_at -%}
+  {%- assign number_of_comments = article.comments_count | plus: 1 -%}
+{%- endif -%}<div class="blog-detail shopify-section col-12 col-xl-9 col-main">
+  <h1 class="article-title">{{- article.title -}}</h1>
+  
+  <div class="blog_author">  
+    {%- capture date -%}
+    	<time datetime='{{ article.published_at | date: '%Y-%m-%d' }}'>{{ article.published_at | date: '%b %d, %Y' }}</time>
+    {%- endcapture -%}
+    
+    {%- capture author -%}by {{ article.author }}{%- endcapture -%}
+    
+    {%- if section.settings.blog_show_author -%}
+    <span class="article__author">
+      {{ author }}
+    </span>
+    {%- endif %}    {%- if section.settings.blog_show_date -%}
+    <span class="article__date">
+      on {{ date }}
+    </span>
+    {%- endif %}    {%- if blog.comments_enabled? -%}
+    <a class="blog-comment" href="{{ article.url }}#comments"{% if settings.enable_multilang %} data-translate="blogs.comments.comments_with_count|count:{{ article.comments_count }}"{%endif%}>
+      {{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+    </a>
+    {%- endif -%}  
+  </div>
+  
+  <div class="article-details">
+    {%- if settings.enable_multilang and article.content contains '[lang2]' -%}
+    <div class="rte lang1">
+      <!--Gem_Page_Main_Editor--><div class="clearfix"></div><div class="gryffeditor">
+<div class="gryffeditor">
+<div data-label="Text Block"> <div class="elm text-edit"><p><span style="font-weight: 400;"><img src="//cdn.shopify.com/s/files/1/1085/8818/files/1_20ced008-8fce-404b-a30d-bcfa71a243b9.png?v=1533912259" alt="how to smoke in your hotel room"><br>Back in the day, smoking in a hotel room was a gamble. While more and more hotels begin to turn away from smoking-accessible rooms, those who are looking for a cloudy adventure have been finding themselves having to come up with all sorts of techniques to evade detection. Luckily with the emergence of </span><a href="https://dankstop.com/collections/vaporizers?findify_limit=24&amp;findify_offset=0&amp;findify_filters%5B0%5D%5Btype%5D=text&amp;findify_filters%5B0%5D%5Bname%5D=custom_fields.cf_style&amp;findify_filters%5B0%5D%5Bvalues%5D%5B0%5D%5Bvalue%5D=portable&amp;findify_slot=collections%2Fvaporizers" target="_blank" title="Vape Pens" rel="noopener noreferrer"><span style="font-weight: 400;">vape pens</span></a><span style="font-weight: 400;"> over the last few years most of the clunkier methods of hotel smoking have, well, gone out the window. But that doesn’t mean they’re still not good tips to have under your belt.<br><br></span></p>
+<hr>
+<p><b><br>Vape Pens are Your Best Bet</b></p>
+<p><span style="font-weight: 400;">We would be remiss not to mention that wax and oil pens are the perfect way to avoid having to deal with any of the following issues. They’re usually smell-free, always smoke-free (unless their heat mechanism is malfunctioning), and are hands-down the best way to covertly sneak a smoke wherever you are—be that in a hotel room or part of your trip in the great outdoors. The proliferation of e-cigarettes has also made it so that wax and oil pens are even less detectable and obvious, making them more travel-friendly than ever. To people who aren’t in the know, they look completely discrete, and they can usually fit in a pocket, purse, backpack, or fanny pack, without much fuss. If you’re really trying to be discrete, blowing vapor into an air conditioner completely dissipates it because of how air conditioners dehumidify (a function that sucks up and breaks down water vapor). So if you want to take extra care with the vapor, you always have the option to lean over and blow it into the hotel room’s AC vents.</span></p>
+<p><span style="font-weight: 400;">Need help choosing a vape pen? Check out </span><a href="https://dankstop.com/blogs/blog/the-best-wax-pens-of-2018" target="_blank" title="The Best Wax Pens of 2018" rel="noopener noreferrer"><span style="font-weight: 400;">The Best Wax Pens of 2018</span></a><span style="font-weight: 400;">!<br><br></span></p>
+<img src="//cdn.shopify.com/s/files/1/1085/8818/files/2_de246671-cd35-47f8-8e10-6296dc975084.png?v=1533911799" alt="vape pens"><br><br>
+<p><span style="font-weight: 400;">Even though it’s clearly the easiest option for smoking on the go, especially in a hotel room, a vape pen and its contents aren’t always available. Sometimes you have to go old school and figure out how to just smoke in your hotel. Luckily it’s not too difficult, and with some solid covert techniques and a little bit of subtlety you shouldn’t have too much trouble getting away with it as the plenty of smokers before you have.</span></p>
+<p><span style="font-weight: 400;">If you’ve got a balcony to your hotel room, go ahead: your hotel neighbors might not appreciate the smell, but it’s also very unlikely that they’ll be able to figure out exactly where the smoke is coming from if they have no sightline.<br><br></span></p>
+<meta charset="utf-8">
+<hr>
+<p><b><br>Making Your Hotel Room Smoke-Proof</b></p>
+<p><span style="font-weight: 400;">If you don’t have a balcony, don’t worry. There are ways to smoke indoors as long as your room has a window that opens. As a first step, lock the door and place a towel at its bottom to block off any airflow from the hallway. Some people swear by using a damp towel but completely dry ones work too. Next, if you can, get some sort of airflow going away from the door. If there’s a fan available, position it at the door so that it blows the smoke away from any gaps that might exist between the door and its frame. If your room doesn’t come with a fan you can always ask for one at the front desk, just don’t mention why you need it.<br><br></span></p>
+<img src="//cdn.shopify.com/s/files/1/1085/8818/files/3_82987691-3d0e-4b7e-94c6-63f7daa1ee38.png?v=1533911818" alt="smell proof room"><br><br>
+<p><span style="font-weight: 400;">Many hotel room smokers take the questionably safe but probably proactive step of covering the fire alarm with a handkerchief or plastic bag and rubber band to prevent it from being set off. This can come with serious legal and practical repercussions if there is a fire, of course, so if you’re going to do it be sure to take the handkerchief right off when you’re done. Then just lean and blow the smoke through the window so that it goes out and away from your room. </span></p>
+<p><span style="font-weight: 400;">Some people swear by smoking in their hotel bathrooms because of the added layer of discretion added by an extra door. Turning on the air vent during your session and blowing into it should help dissipate the smell. Be sure to spray some air freshener around after you’re done, since most hotel bathrooms don’t have any windows to help air the place out. If you find air fresheners too potent, </span><a href="https://dankstop.com/products/bluntmax-premium-incense-single-pack" target="_blank" title="Incense Sticks" rel="noopener noreferrer"><span style="font-weight: 400;">try out some incense sticks</span></a><span style="font-weight: 400;"> for a more calming, natural aroma. </span><a href="https://dankstop.com/collections/bluntmax" target="_blank" title="Bluntmax" rel="noopener noreferrer"><span style="font-weight: 400;">Bluntmax</span></a><span style="font-weight: 400;"> offers plenty of scents, as well as larger quantities.</span></p>
+<br> <meta charset="utf-8">
+<hr>
+<p><b><br>Make Smokebuddy Your Buddy</b></p>
+<p><span style="font-weight: 400;">If you don’t want to do all these steps, it is a great idea to get a portable air filter. </span><a href="https://dankstop.com/collections/smokebuddy" target="_blank" title="Smokebuddy" rel="noopener noreferrer"><span style="font-weight: 400;">Smokebuddy</span></a><span style="font-weight: 400;"> has been around for over a decade, protecting smokers from any unwanted scents before they linger. They come in multiple sizes and colors and can last upwards of 600+ uses! Simply remove the caps and exhale through the mouthpiece as the Smokebuddy eliminates odor and removes smoke. This nifty invention is a great help to any smoker no matter the situation, hence why it made </span><a href="https://dankstop.com/blogs/wiki/5-bong-accessories-you-didn-t-know-you-needed" target="_blank" title="Smoking Accessories Every Smoker Needs" rel="noopener noreferrer"><span style="font-weight: 400;">one of our lists for needed accessories</span></a><span style="font-weight: 400;">.<br><br><img src="//cdn.shopify.com/s/files/1/1085/8818/files/4_d2674cf4-fd8e-40f1-a80a-ca9557b24190.png?v=1533911836" alt="smokebuddy"><br></span></p>
+<br> <meta charset="utf-8">
+<hr>
+<p><b><br>Clean After Yourself</b></p>
+<p><span style="font-weight: 400;">Though </span><a href="https://dankstop.com/collections/glass-pipes-hand-pipes" target="_blank" title="Hand Pipes" rel="noopener noreferrer"><span style="font-weight: 400;">hand pipes</span></a><span style="font-weight: 400;"> are seen as the best choice for hotel smoking (since they don’t stay lit the way that joints do and they’re less obvious than a bong), if you choose to use a piece instead of something rolled it’s important to remember to </span><a href="https://dankstop.com/blogs/wiki/what-s-the-best-way-to-store-your-stash" target="_blank" title="Best Way to Store Your Stash" rel="noopener noreferrer"><span style="font-weight: 400;">put away your stash and device</span></a><span style="font-weight: 400;"> after you’re finished! There’s nothing worse than worrying about whether a cleaner will cause a stink about your business, and the whole point of going on vacation is to enjoy yourself instead of being paranoid.</span></p>
+<p><span style="font-weight: 400;">If you can’t get either a smoking-friendly room or a wax/oil pen, there are still options available out there for smoking in your hotel room. Just be sure to prepare your space, clean it afterwards, and keep your stash somewhere where it can’t be found by the people doing their jobs around the hotel.</span></p>
+<p><span style="font-weight: 400;">Still paranoid? </span><a href="https://dankstop.com/blogs/wiki/faking-the-funk-how-to-cover-up-that-smoke-smell" target="_blank" title="How to Cover up Smoke" rel="noopener noreferrer"><span style="font-weight: 400;">Read how you can further cover up that smoke smell</span></a><span style="font-weight: 400;">!</span></p></div></div>
+</div><div id="divContentBk"></div>
+</div><div id="divContentBk"></div><!--End_Gem_Page_Main_Editor-->
+    </div>
+    <div class="rte lang2">
+      <!--Gem_Page_Main_Editor--><div class="clearfix"></div><div class="gryffeditor">
+<div class="gryffeditor">
+<div data-label="Text Block"> <div class="elm text-edit"><p><span style="font-weight: 400;"><img src="//cdn.shopify.com/s/files/1/1085/8818/files/1_20ced008-8fce-404b-a30d-bcfa71a243b9.png?v=1533912259" alt="how to smoke in your hotel room"><br>Back in the day, smoking in a hotel room was a gamble. While more and more hotels begin to turn away from smoking-accessible rooms, those who are looking for a cloudy adventure have been finding themselves having to come up with all sorts of techniques to evade detection. Luckily with the emergence of </span><a href="https://dankstop.com/collections/vaporizers?findify_limit=24&amp;findify_offset=0&amp;findify_filters%5B0%5D%5Btype%5D=text&amp;findify_filters%5B0%5D%5Bname%5D=custom_fields.cf_style&amp;findify_filters%5B0%5D%5Bvalues%5D%5B0%5D%5Bvalue%5D=portable&amp;findify_slot=collections%2Fvaporizers" target="_blank" title="Vape Pens" rel="noopener noreferrer"><span style="font-weight: 400;">vape pens</span></a><span style="font-weight: 400;"> over the last few years most of the clunkier methods of hotel smoking have, well, gone out the window. But that doesn’t mean they’re still not good tips to have under your belt.<br><br></span></p>
+<hr>
+<p><b><br>Vape Pens are Your Best Bet</b></p>
+<p><span style="font-weight: 400;">We would be remiss not to mention that wax and oil pens are the perfect way to avoid having to deal with any of the following issues. They’re usually smell-free, always smoke-free (unless their heat mechanism is malfunctioning), and are hands-down the best way to covertly sneak a smoke wherever you are—be that in a hotel room or part of your trip in the great outdoors. The proliferation of e-cigarettes has also made it so that wax and oil pens are even less detectable and obvious, making them more travel-friendly than ever. To people who aren’t in the know, they look completely discrete, and they can usually fit in a pocket, purse, backpack, or fanny pack, without much fuss. If you’re really trying to be discrete, blowing vapor into an air conditioner completely dissipates it because of how air conditioners dehumidify (a function that sucks up and breaks down water vapor). So if you want to take extra care with the vapor, you always have the option to lean over and blow it into the hotel room’s AC vents.</span></p>
+<p><span style="font-weight: 400;">Need help choosing a vape pen? Check out </span><a href="https://dankstop.com/blogs/blog/the-best-wax-pens-of-2018" target="_blank" title="The Best Wax Pens of 2018" rel="noopener noreferrer"><span style="font-weight: 400;">The Best Wax Pens of 2018</span></a><span style="font-weight: 400;">!<br><br></span></p>
+<img src="//cdn.shopify.com/s/files/1/1085/8818/files/2_de246671-cd35-47f8-8e10-6296dc975084.png?v=1533911799" alt="vape pens"><br><br>
+<p><span style="font-weight: 400;">Even though it’s clearly the easiest option for smoking on the go, especially in a hotel room, a vape pen and its contents aren’t always available. Sometimes you have to go old school and figure out how to just smoke in your hotel. Luckily it’s not too difficult, and with some solid covert techniques and a little bit of subtlety you shouldn’t have too much trouble getting away with it as the plenty of smokers before you have.</span></p>
+<p><span style="font-weight: 400;">If you’ve got a balcony to your hotel room, go ahead: your hotel neighbors might not appreciate the smell, but it’s also very unlikely that they’ll be able to figure out exactly where the smoke is coming from if they have no sightline.<br><br></span></p>
+<meta charset="utf-8">
+<hr>
+<p><b><br>Making Your Hotel Room Smoke-Proof</b></p>
+<p><span style="font-weight: 400;">If you don’t have a balcony, don’t worry. There are ways to smoke indoors as long as your room has a window that opens. As a first step, lock the door and place a towel at its bottom to block off any airflow from the hallway. Some people swear by using a damp towel but completely dry ones work too. Next, if you can, get some sort of airflow going away from the door. If there’s a fan available, position it at the door so that it blows the smoke away from any gaps that might exist between the door and its frame. If your room doesn’t come with a fan you can always ask for one at the front desk, just don’t mention why you need it.<br><br></span></p>
+<img src="//cdn.shopify.com/s/files/1/1085/8818/files/3_82987691-3d0e-4b7e-94c6-63f7daa1ee38.png?v=1533911818" alt="smell proof room"><br><br>
+<p><span style="font-weight: 400;">Many hotel room smokers take the questionably safe but probably proactive step of covering the fire alarm with a handkerchief or plastic bag and rubber band to prevent it from being set off. This can come with serious legal and practical repercussions if there is a fire, of course, so if you’re going to do it be sure to take the handkerchief right off when you’re done. Then just lean and blow the smoke through the window so that it goes out and away from your room. </span></p>
+<p><span style="font-weight: 400;">Some people swear by smoking in their hotel bathrooms because of the added layer of discretion added by an extra door. Turning on the air vent during your session and blowing into it should help dissipate the smell. Be sure to spray some air freshener around after you’re done, since most hotel bathrooms don’t have any windows to help air the place out. If you find air fresheners too potent, </span><a href="https://dankstop.com/products/bluntmax-premium-incense-single-pack" target="_blank" title="Incense Sticks" rel="noopener noreferrer"><span style="font-weight: 400;">try out some incense sticks</span></a><span style="font-weight: 400;"> for a more calming, natural aroma. </span><a href="https://dankstop.com/collections/bluntmax" target="_blank" title="Bluntmax" rel="noopener noreferrer"><span style="font-weight: 400;">Bluntmax</span></a><span style="font-weight: 400;"> offers plenty of scents, as well as larger quantities.</span></p>
+<br> <meta charset="utf-8">
+<hr>
+<p><b><br>Make Smokebuddy Your Buddy</b></p>
+<p><span style="font-weight: 400;">If you don’t want to do all these steps, it is a great idea to get a portable air filter. </span><a href="https://dankstop.com/collections/smokebuddy" target="_blank" title="Smokebuddy" rel="noopener noreferrer"><span style="font-weight: 400;">Smokebuddy</span></a><span style="font-weight: 400;"> has been around for over a decade, protecting smokers from any unwanted scents before they linger. They come in multiple sizes and colors and can last upwards of 600+ uses! Simply remove the caps and exhale through the mouthpiece as the Smokebuddy eliminates odor and removes smoke. This nifty invention is a great help to any smoker no matter the situation, hence why it made </span><a href="https://dankstop.com/blogs/wiki/5-bong-accessories-you-didn-t-know-you-needed" target="_blank" title="Smoking Accessories Every Smoker Needs" rel="noopener noreferrer"><span style="font-weight: 400;">one of our lists for needed accessories</span></a><span style="font-weight: 400;">.<br><br><img src="//cdn.shopify.com/s/files/1/1085/8818/files/4_d2674cf4-fd8e-40f1-a80a-ca9557b24190.png?v=1533911836" alt="smokebuddy"><br></span></p>
+<br> <meta charset="utf-8">
+<hr>
+<p><b><br>Clean After Yourself</b></p>
+<p><span style="font-weight: 400;">Though </span><a href="https://dankstop.com/collections/glass-pipes-hand-pipes" target="_blank" title="Hand Pipes" rel="noopener noreferrer"><span style="font-weight: 400;">hand pipes</span></a><span style="font-weight: 400;"> are seen as the best choice for hotel smoking (since they don’t stay lit the way that joints do and they’re less obvious than a bong), if you choose to use a piece instead of something rolled it’s important to remember to </span><a href="https://dankstop.com/blogs/wiki/what-s-the-best-way-to-store-your-stash" target="_blank" title="Best Way to Store Your Stash" rel="noopener noreferrer"><span style="font-weight: 400;">put away your stash and device</span></a><span style="font-weight: 400;"> after you’re finished! There’s nothing worse than worrying about whether a cleaner will cause a stink about your business, and the whole point of going on vacation is to enjoy yourself instead of being paranoid.</span></p>
+<p><span style="font-weight: 400;">If you can’t get either a smoking-friendly room or a wax/oil pen, there are still options available out there for smoking in your hotel room. Just be sure to prepare your space, clean it afterwards, and keep your stash somewhere where it can’t be found by the people doing their jobs around the hotel.</span></p>
+<p><span style="font-weight: 400;">Still paranoid? </span><a href="https://dankstop.com/blogs/wiki/faking-the-funk-how-to-cover-up-that-smoke-smell" target="_blank" title="How to Cover up Smoke" rel="noopener noreferrer"><span style="font-weight: 400;">Read how you can further cover up that smoke smell</span></a><span style="font-weight: 400;">!</span></p></div></div>
+</div><div id="divContentBk"></div>
+</div><div id="divContentBk"></div><!--End_Gem_Page_Main_Editor-->
+    </div>
+    {%- else -%}
+    <div class="rte">
+      <!--Gem_Page_Main_Editor--><div class="clearfix"></div><div class="gryffeditor">
+<div class="gryffeditor">
+<div data-label="Text Block"> <div class="elm text-edit"><p><span style="font-weight: 400;"><img src="//cdn.shopify.com/s/files/1/1085/8818/files/1_20ced008-8fce-404b-a30d-bcfa71a243b9.png?v=1533912259" alt="how to smoke in your hotel room"><br>Back in the day, smoking in a hotel room was a gamble. While more and more hotels begin to turn away from smoking-accessible rooms, those who are looking for a cloudy adventure have been finding themselves having to come up with all sorts of techniques to evade detection. Luckily with the emergence of </span><a href="https://dankstop.com/collections/vaporizers?findify_limit=24&amp;findify_offset=0&amp;findify_filters%5B0%5D%5Btype%5D=text&amp;findify_filters%5B0%5D%5Bname%5D=custom_fields.cf_style&amp;findify_filters%5B0%5D%5Bvalues%5D%5B0%5D%5Bvalue%5D=portable&amp;findify_slot=collections%2Fvaporizers" target="_blank" title="Vape Pens" rel="noopener noreferrer"><span style="font-weight: 400;">vape pens</span></a><span style="font-weight: 400;"> over the last few years most of the clunkier methods of hotel smoking have, well, gone out the window. But that doesn’t mean they’re still not good tips to have under your belt.<br><br></span></p>
+<hr>
+<p><b><br>Vape Pens are Your Best Bet</b></p>
+<p><span style="font-weight: 400;">We would be remiss not to mention that wax and oil pens are the perfect way to avoid having to deal with any of the following issues. They’re usually smell-free, always smoke-free (unless their heat mechanism is malfunctioning), and are hands-down the best way to covertly sneak a smoke wherever you are—be that in a hotel room or part of your trip in the great outdoors. The proliferation of e-cigarettes has also made it so that wax and oil pens are even less detectable and obvious, making them more travel-friendly than ever. To people who aren’t in the know, they look completely discrete, and they can usually fit in a pocket, purse, backpack, or fanny pack, without much fuss. If you’re really trying to be discrete, blowing vapor into an air conditioner completely dissipates it because of how air conditioners dehumidify (a function that sucks up and breaks down water vapor). So if you want to take extra care with the vapor, you always have the option to lean over and blow it into the hotel room’s AC vents.</span></p>
+<p><span style="font-weight: 400;">Need help choosing a vape pen? Check out </span><a href="https://dankstop.com/blogs/blog/the-best-wax-pens-of-2018" target="_blank" title="The Best Wax Pens of 2018" rel="noopener noreferrer"><span style="font-weight: 400;">The Best Wax Pens of 2018</span></a><span style="font-weight: 400;">!<br><br></span></p>
+<img src="//cdn.shopify.com/s/files/1/1085/8818/files/2_de246671-cd35-47f8-8e10-6296dc975084.png?v=1533911799" alt="vape pens"><br><br>
+<p><span style="font-weight: 400;">Even though it’s clearly the easiest option for smoking on the go, especially in a hotel room, a vape pen and its contents aren’t always available. Sometimes you have to go old school and figure out how to just smoke in your hotel. Luckily it’s not too difficult, and with some solid covert techniques and a little bit of subtlety you shouldn’t have too much trouble getting away with it as the plenty of smokers before you have.</span></p>
+<p><span style="font-weight: 400;">If you’ve got a balcony to your hotel room, go ahead: your hotel neighbors might not appreciate the smell, but it’s also very unlikely that they’ll be able to figure out exactly where the smoke is coming from if they have no sightline.<br><br></span></p>
+<meta charset="utf-8">
+<hr>
+<p><b><br>Making Your Hotel Room Smoke-Proof</b></p>
+<p><span style="font-weight: 400;">If you don’t have a balcony, don’t worry. There are ways to smoke indoors as long as your room has a window that opens. As a first step, lock the door and place a towel at its bottom to block off any airflow from the hallway. Some people swear by using a damp towel but completely dry ones work too. Next, if you can, get some sort of airflow going away from the door. If there’s a fan available, position it at the door so that it blows the smoke away from any gaps that might exist between the door and its frame. If your room doesn’t come with a fan you can always ask for one at the front desk, just don’t mention why you need it.<br><br></span></p>
+<img src="//cdn.shopify.com/s/files/1/1085/8818/files/3_82987691-3d0e-4b7e-94c6-63f7daa1ee38.png?v=1533911818" alt="smell proof room"><br><br>
+<p><span style="font-weight: 400;">Many hotel room smokers take the questionably safe but probably proactive step of covering the fire alarm with a handkerchief or plastic bag and rubber band to prevent it from being set off. This can come with serious legal and practical repercussions if there is a fire, of course, so if you’re going to do it be sure to take the handkerchief right off when you’re done. Then just lean and blow the smoke through the window so that it goes out and away from your room. </span></p>
+<p><span style="font-weight: 400;">Some people swear by smoking in their hotel bathrooms because of the added layer of discretion added by an extra door. Turning on the air vent during your session and blowing into it should help dissipate the smell. Be sure to spray some air freshener around after you’re done, since most hotel bathrooms don’t have any windows to help air the place out. If you find air fresheners too potent, </span><a href="https://dankstop.com/products/bluntmax-premium-incense-single-pack" target="_blank" title="Incense Sticks" rel="noopener noreferrer"><span style="font-weight: 400;">try out some incense sticks</span></a><span style="font-weight: 400;"> for a more calming, natural aroma. </span><a href="https://dankstop.com/collections/bluntmax" target="_blank" title="Bluntmax" rel="noopener noreferrer"><span style="font-weight: 400;">Bluntmax</span></a><span style="font-weight: 400;"> offers plenty of scents, as well as larger quantities.</span></p>
+<br> <meta charset="utf-8">
+<hr>
+<p><b><br>Make Smokebuddy Your Buddy</b></p>
+<p><span style="font-weight: 400;">If you don’t want to do all these steps, it is a great idea to get a portable air filter. </span><a href="https://dankstop.com/collections/smokebuddy" target="_blank" title="Smokebuddy" rel="noopener noreferrer"><span style="font-weight: 400;">Smokebuddy</span></a><span style="font-weight: 400;"> has been around for over a decade, protecting smokers from any unwanted scents before they linger. They come in multiple sizes and colors and can last upwards of 600+ uses! Simply remove the caps and exhale through the mouthpiece as the Smokebuddy eliminates odor and removes smoke. This nifty invention is a great help to any smoker no matter the situation, hence why it made </span><a href="https://dankstop.com/blogs/wiki/5-bong-accessories-you-didn-t-know-you-needed" target="_blank" title="Smoking Accessories Every Smoker Needs" rel="noopener noreferrer"><span style="font-weight: 400;">one of our lists for needed accessories</span></a><span style="font-weight: 400;">.<br><br><img src="//cdn.shopify.com/s/files/1/1085/8818/files/4_d2674cf4-fd8e-40f1-a80a-ca9557b24190.png?v=1533911836" alt="smokebuddy"><br></span></p>
+<br> <meta charset="utf-8">
+<hr>
+<p><b><br>Clean After Yourself</b></p>
+<p><span style="font-weight: 400;">Though </span><a href="https://dankstop.com/collections/glass-pipes-hand-pipes" target="_blank" title="Hand Pipes" rel="noopener noreferrer"><span style="font-weight: 400;">hand pipes</span></a><span style="font-weight: 400;"> are seen as the best choice for hotel smoking (since they don’t stay lit the way that joints do and they’re less obvious than a bong), if you choose to use a piece instead of something rolled it’s important to remember to </span><a href="https://dankstop.com/blogs/wiki/what-s-the-best-way-to-store-your-stash" target="_blank" title="Best Way to Store Your Stash" rel="noopener noreferrer"><span style="font-weight: 400;">put away your stash and device</span></a><span style="font-weight: 400;"> after you’re finished! There’s nothing worse than worrying about whether a cleaner will cause a stink about your business, and the whole point of going on vacation is to enjoy yourself instead of being paranoid.</span></p>
+<p><span style="font-weight: 400;">If you can’t get either a smoking-friendly room or a wax/oil pen, there are still options available out there for smoking in your hotel room. Just be sure to prepare your space, clean it afterwards, and keep your stash somewhere where it can’t be found by the people doing their jobs around the hotel.</span></p>
+<p><span style="font-weight: 400;">Still paranoid? </span><a href="https://dankstop.com/blogs/wiki/faking-the-funk-how-to-cover-up-that-smoke-smell" target="_blank" title="How to Cover up Smoke" rel="noopener noreferrer"><span style="font-weight: 400;">Read how you can further cover up that smoke smell</span></a><span style="font-weight: 400;">!</span></p></div></div>
+</div><div id="divContentBk"></div>
+</div><div id="divContentBk"></div><!--End_Gem_Page_Main_Editor-->
+    </div>
+    {%- endif -%}
+  </div>  {%- include 'blog-detail-gallery_lookbook' -%}
+  
+  <div class="tags-share">
+    <ul class="user-tags">
+      {%- include 'tags-article' -%}
+    </ul>    {%- include 'share' -%}
+  </div>  {%- if blog.next_article or blog.previous_article -%}
+  <div class="action-btn">
+    
+    {%- if blog.previous_article -%}
+    <div class="btn-left">
+      <i class="fa fa-angle-left" aria-hidden="true"></i>
+      {{ 'blogs.article.older_post' | t | link_to: blog.previous_article }}
+    </div>    
+    {%- endif -%}
+    
+    {%- if blog.next_article -%}
+    <div class="btn-right">
+      {{ 'blogs.article.newer_post' | t | link_to: blog.next_article }}
+      <i class="fa fa-angle-right" aria-hidden="true"></i>
+    </div>
+    {%- endif -%}
+    
+  </div>
+  {%- endif -%}  {%- if blog.comments_enabled? -%}  {%- comment -%}
+  Just like our blog.liquid page, define how many comments should be on each page.
+  {%- endcomment -%}  {%- if number_of_comments > 0 -%}
+  <h2 class="title-comment">
+    {{ 'blogs.comments.comments_with_count' | t: count: number_of_comments }}
+  </h2>
+  {%- endif -%}
+  
+  {%- paginate article.comments by 5 -%}  {%- comment -%}
+  #comments is required, it is used as an anchor link by Shopify.
+  {%- endcomment -%}
+  
+  <div id="comments">
+    {%- if comment and comment.created_at -%}
+    <div class="note form-success">
+      {%- if blog.moderated? -%}
+      <span {% if settings.enable_multilang %}data-translate="blogs.comments.success_moderated"{%endif%}>
+        {{ 'blogs.comments.success_moderated' | t }}
+      </span>
+      {%- else -%}
+      <span {% if settings.enable_multilang %}data-translate="blogs.comments.success"{%endif%}>
+        {{ 'blogs.comments.success' | t }}
+      </span>
+      {%- endif -%}
+    </div>
+    {%- endif -%}    {%- if number_of_comments > 0 -%}
+    <ul class="list-comments">
+      {%- comment -%}If a comment was just submitted with no blank field, let's show it.{%- endcomment -%}
+      {%- if comment and comment.created_at %}
+      <li id="{{ comment.id }}" class="comment first{% if article.comments_count == 0 %} last{% endif %}">
+        {% include 'comment' -%}
+      </li>
+      {%- endif -%}      {%- comment -%}
+      Showing the rest of the comments.
+      {%- endcomment -%}
+      
+      {%- for comment in article.comments -%}
+      <li id="{{ comment.id }}" class="comment{% unless number_of_comments > article.comments_count %}{% if forloop.first %} first{% endif %}{% endunless %}{% if forloop.last %} last {% endif %}">
+        {% include 'comment' %}
+      </li>
+      {%- endfor -%}
+    </ul>    {%- if paginate.pages > 1 -%}
+    {%- include 'pagination' -%}
+    {%- endif -%}
+    
+    {%- endif -%}    {%- comment -%}
+    Comment submission form
+    {%- endcomment -%}    {%- form article -%}
+    
+    {%- comment -%}
+    #add-comment-title is used simply as an anchor link
+    {%- endcomment -%}
+    
+    <h3 class="title-comment" id="add-comment-title" {% if settings.enable_multilang %}data-translate="blogs.comments.title"{%endif%}>
+      {{ 'blogs.comments.title' | t }}
+    </h3>
+    
+    {%- include 'form-errors-custom' -%}
+    
+    <div class="comment-form">
+      <div class="form-group">
+        <label for="comment-author" {% if settings.enable_multilang %}data-translate="blogs.comments.name"{%endif%}>
+          {{ 'blogs.comments.name' | t }}
+        </label>
+        <input {% if form.errors contains "author" %}class="error"{% endif %} type="text" name="comment[author]" id="comment-author" value="{{ form.author }}">
+      </div>      <div class="form-group">
+        <label for="comment-email" {% if settings.enable_multilang %}data-translate="blogs.comments.email"{%endif%}>
+          {{ 'blogs.comments.email' | t }}
+        </label>
+        <input {% if form.errors contains "email" %}class="error"{% endif %} type="email" name="comment[email]" id="comment-email" value="{{ form.email }}">
+      </div>
+    </div>    <div class="message form-group">
+      <label for="comment-body" {% if settings.enable_multilang %}data-translate="blogs.comments.message"{%endif%}>
+        {{ 'blogs.comments.message' | t }}
+      </label>
+      <textarea rows="7" {% if form.errors contains "body" %}class="error"{% endif %} name="comment[body]" id="comment-body">
+        {{ form.body }}
+      </textarea>
+    </div>    <div class="note" {% if settings.enable_multilang %}data-translate="blogs.comments.note"{%endif%}>
+      {{ 'blogs.comments.note' | t }}
+    </div>    <input type="submit" class="btn" value="{{ 'blogs.comments.post' | t }}">
+    
+    {%- if form.errors -%}
+    <script>
+      window.location.hash = '#add-comment-title';
+    </script>
+    {%- endif -%}    {%- if form.posted_successfully? -%}
+    <script>
+      window.location.hash = '#comments';
+    </script>
+    {%- endif -%}
+    {%- endform -%}
+  </div>
+  {%- endpaginate -%}
+  {%- endif -%}
+</div>      </div>      
+    </div>   
+  </div>
+</div>
+{%- include 'article-schema-json' -%}
+<!--GEM_FOOTER-->
+{% capture GEM_FOOTER_SCRIPT %}
+<script data-instant-track type="text/javascript">
+	var pageLibs = [		'{{ 'gem-article-26778566730.js' | asset_url }}',	];
+</script>
+<script data-instant-track type="text/javascript">
+	var GEMVENDOR = GEMVENDOR || (function(){		var _js = {};		return {			init: function(Args) {				_js = Args;			},			getLibs: function() {				return _js;			}		};	}());	GEMVENDOR.init(pageLibs);</script>
+<script data-instant-track type="text/javascript" src="https://d1um8515vdn9kb.cloudfront.net/files/gempagev2.js?v=1.0" class="gf-script" defer></script>
+{% endcapture %}
+<!--GEM_FOOTER_END-->

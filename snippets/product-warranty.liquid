@@ -1,0 +1,91 @@
+{%- comment -%}
+  Product Warranty Eligibility
+{%- endcomment -%}
+{%- assign warranty_eligible = false -%}
+{%- assign warranty_ineligible_tag = settings.warranty__ineligible_tag -%}
+{%- comment -%}
+  First check if product has the tag that makes it ineligible for warranty
+{%- endcomment -%}
+{%- unless product.tags contains warranty_ineligible_tag -%}
+  {%- comment -%}
+    Then check if product is of a brand that is eligible for warranty
+  {%- endcomment -%}
+  {%- assign warranty_eligible_brands = settings.warranty__elibigle_brands | split: ", " -%}
+  {%- for warranty_eligible_brand in warranty_eligible_brands -%}
+    {%- if product.vendor == warranty_eligible_brand -%}
+      {%- assign warranty_eligible = true -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- comment -%}
+    If it is of an eligible brand, then check if its of a disqualifying type
+  {%- endcomment -%}
+  {%- if warranty_eligible -%}
+  {%- assign warranty_ineligible_types = settings.warranty__ineligible_types | split: ", " -%}
+  {%- for warranty_ineligible_type in warranty_ineligible_types -%}
+    {%- if product.type == warranty_ineligible_type -%}
+      {%- assign warranty_eligible = false -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- endif -%}
+{%- endunless -%}
+{%- assign warranty__show_in_product_details = settings.warranty__enable_in_product_details -%}
+
+        
+
+{%- comment -%}
+  Product Warranty - Product Details Add-to-Cart Display
+{%- endcomment -%}
+{%- if warranty__show_in_product_details == true -%}
+  {%- if warranty_eligible and product.available -%}
+    {%- assign warranty_name = settings.warranty__name -%}
+    {%- assign warranty_product_handle = settings.warranty__product -%}
+    {%- assign warranty_product = all_products[warranty_product_handle] -%}
+    {%- assign warranty_decimal_percentage = settings.warranty__percentage | divided_by: 100.00 -%}
+    {%- assign warranty_price = product.selected_or_first_available_variant.price | times: warranty_decimal_percentage | money | remove: ' ' -%}
+    {%- assign warranty__product_details_title_html = 'warranty_program.product_details_title_html' | t -%}
+    {%- assign warranty__product_details_tooltip_html = 'warranty_program.product_details_tooltip_html' | t: warranty_name: warranty_name, product_type: product.type -%}
+    {%- assign warranty__product_details_info_html = 'warranty_program.product_details_info_html' | t: warranty_name: warranty_product.title, warranty__product_details_tooltip_html: warranty__product_details_tooltip_html -%}
+
+    <div class="warranty-program">
+      <h3>{{ warranty__product_details_title_html }}</h3>
+      <label for="addWarrantyPlan" id="addWarrantyLabel" class="th-box add-warranty-label">
+            <span class="add-warranty-checkbox pretty p-curve p-pulse p-smooth p-svg">
+              <input type="checkbox" id="addWarrantyPlan" data-handle="{{ product.handle }}" />
+              <span class="state p-success">
+                <svg class="svg svg-icon"><use xlink:href="#checkmarkIcon" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
+                <span class="state-label"></span>
+              </span>
+            </span> 
+        
+            <span class="warranty-image">
+              {%- assign warranty_img = warranty_product.featured_image -%}
+              {%- assign warranty_featured_image = warranty_img | product_img_url: '100x' -%}
+              {%- assign warranty_img_alt = warranty_img.alt | escape -%}
+              {%- assign warranty_img_url = warranty_img | img_url: warranty_x_by_y -%}
+              
+              <span class="imod ar--1x1">
+                <img width="100" height="98" class="lazyload"
+                     src="{{ lazyload_placeholder }}"
+                     data-src="{{ warranty_featured_image }}"
+                     title="{{ warranty_img_alt }}" 
+                     alt="{{ warranty_img_alt }}">
+              </span>
+            </span>
+        
+            <span class="add-warranty-text">
+              {%- comment -%}
+              Add <a href="#" class="add-warranty-anchor" title="Add PieceProtect Warranty">
+              <strong class="green">{{ warranty_name }}</strong> <span class="tooltip top" title="{{ warranty__product_details_tooltip_html }}">(?)</span> </a> for only 
+              {%- endcomment -%}
+              {{ warranty__product_details_info_html }} 
+              <span class="warranty-price">{{ warranty_price }}</span>
+            </span>
+        
+            <span class="tooltip-help top left fading-tip html-content">
+              <span class="tt-content text-center">{{ warranty__product_details_tooltip_html }}</span>
+              <span class="help-tip">i</span>
+            </span>
+      </label>
+    </div>
+  {%- endif -%}
+{%- endif -%}

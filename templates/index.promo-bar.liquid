@@ -1,0 +1,126 @@
+{%- layout none -%}
+
+{%- include 'promo-bar' -%}
+
+{%- comment -%}  
+<style>
+  .promo-code {
+    display: inline-block;
+    padding: 0 7px;
+    background: {{ settings.site__promo_code_bg_color }};
+    color: {{ settings.site__promo_code_text_color }};
+    letter-spacing: 1px;
+  }
+</style>
+
+{%- if settings.display_header_top -%}
+<div class="header-top lazyload no-fade" data-expand="-1" data-bg="{{ settings.header_top_image | img_url: '2048x' }}" data-load-method="{{ settings.site__promo_bar_load_method }}">
+  {%- if settings.top_message_text != blank or settings.site__promo_timer_expiration != blank -%}
+  <div class="container">
+    {%- if settings.top_message_text != blank -%}
+    <div class="top-message">
+      <p>
+        {{- settings.top_message_text | replace: '#PROMO_DISCOUNT#', settings.site__promo_discount -}}
+      </p>
+      <a href="#" title="close" class="close" data-close-header-top  aria-label="Close promotional top header">
+        <svg aria-hidden="true" focusable="false" role="img"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#closeXIcon"></use></svg>
+        <span class="visually-hidden">Close promotional top header</span>
+      </a>
+    </div>
+    {%- endif -%}  
+
+    {%- if settings.site__promo_timer_expiration != blank -%}
+    {%- comment -%}  
+    <div class="header-top-countdown" data-countdown data-countdown-value="{{ settings.site__promo_timer_expiration }}">
+      <div class="clock-item ci-days">
+        <span class="num">00</span>
+        <span>days</span>
+      </div>
+      <div class="clock-item ci-hours">
+        <span class="num">00</span>
+        <span>hours</span>
+      </div>
+      <div class="clock-item ci-mins">
+        <span class="num">00</span>
+        <span>mins</span>
+      </div>
+      <div class="clock-item ci-secs">
+        <span class="num">00</span>
+        <span>secs</span>
+      </div>
+    </div>
+    {%- endcomment -%}  
+
+    {%- comment -%}  
+    {
+    "type": "header",
+    "content": "Header Top"
+    },
+    {
+    "type": "checkbox",
+    "id": "display_header_top",
+    "label": "Display Header Top?",
+    "default": true
+    },
+    {
+    "type": "image_picker",
+    "id": "header_top_image",
+    "label": "Image"
+    },
+    {
+    "type": "textarea",
+    "id": "top_message_text",
+    "label": "Top Message Text",
+    "default": "Mid-Season Sale up to 70% Off. End Ins:"
+    },
+    {
+    "type" : "text",
+    "id" : "site__promo_timer_start",
+    "label" : "Promo Start Date and Time",
+    "default" : "03/13/2021 00:00:00",
+    "info": "FORMAT: 03/13/2021 00:00:01"
+    },
+    {
+    "type": "text",
+    "id": "site__promo_timer_expiration",
+    "label": "Promo Expiration Date and Time",
+    "info": "FORMAT: 03/17/2021 02:59:59"
+    },
+    {
+    "type": "color",
+    "id": "bg_header_top",
+    "label": "Background Color",
+    "default": "#e95144"
+    },
+    {
+    "type": "color",
+    "id": "text_header_top_color",
+    "label": "Text Color",
+    "default": "#fff"
+    },
+    {%- endcomment -%}  
+
+    <div class="header-top-countdown" id="promoBanner" data-promo-start="{{ settings.site__promo_timer_start }}" data-promo-end="{{ settings.site__promo_timer_expiration }}">
+      <div class="clock-item ci-days">
+        <span class="num">00</span>
+        <span>days</span>
+      </div>
+      <div class="clock-item ci-hours">
+        <span class="num">00</span>
+        <span>hours</span>
+      </div>
+      <div class="clock-item ci-mins">
+        <span class="num">00</span>
+        <span>mins</span>
+      </div>
+      <div class="clock-item ci-secs">
+        <span class="num">00</span>
+        <span>secs</span>
+      </div>
+    </div>
+    {%- endif -%}
+  </div>
+  {%- endif -%}
+</div>
+{%- endif -%}
+{%- endcomment -%}

@@ -1,0 +1,17 @@
+{%- comment -%}
+  Payment plan - ViaBill or Sezzle
+  {%- assign viabill_monthly_price = product.price | divided_by: 4.00 | round: 2 | money_without_currency -%}
+{%- endcomment -%}
+{%- assign payment_plan__max_price = settings.payment_plan__max_price -%}
+{%- if settings.product__payment_program == "viabill" -%}
+  {%- if settings.viabill__widget_delivery == "manual" -%}
+    {%- assign decimal_price = product.price | money_without_currency | replace: '$', '' | abs -%}
+    {%- if decimal_price <= payment_plan__max_price -%}
+      {%- assign viabill_monthly_price = product.price | divided_by: 4 | money_without_currency | round -%}
+<div class="viabill-custom" data-product-price="{{ product.price | money }}"><span class="vb-badge">only <span class="vb-price-currency">$</span><span class="vb-price">{{ viabill_monthly_price }}</span> / month with </span><svg class="vb-icon icon-vb-logo"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#vbLogo"></use></svg><svg class="vb-icon icon-arrow"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevronRight"></use></svg><div class="vb-no-fee">No interest</div></div>
+    {%- endif -%}
+  {%- else -%}
+    {%- include 'viabill-pricetag-grid' -%}
+  {%- endif -%}
+{%- elsif settings.product__payment_program == "sezzle" -%}
+{%- endif -%}

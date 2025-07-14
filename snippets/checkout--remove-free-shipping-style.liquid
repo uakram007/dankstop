@@ -1,0 +1,19 @@
+{%- if settings.wholesale_hide_free_shipping -%}
+{%- comment -%}
+  If removing this, don't forget to remove 
+  the 'checkout--footer-scripts' >> 'checkout--remove-free-shipping-JS' snippet
+{%- endcomment -%}
+{%- if customer -%}
+{%- for tag in customer.tags -%}
+{%- assign customer_tag = tag | strip | downcase -%}
+{%- if tag == settings.wholesale_approval_tag -%}
+<style>
+  div[data-shipping-method="shopify-Free%20Shipping-0.00"],
+  div[data-shipping-method="shopify-Free%20Shipping%20over%20$300-0.00"] {
+    display: none !important;
+  }
+</style>
+{%- endif -%}
+{%- endfor -%}
+{%- endif -%}
+{%- endif -%}

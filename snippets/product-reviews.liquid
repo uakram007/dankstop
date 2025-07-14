@@ -1,0 +1,198 @@
+{%- if pgi_reviews == blank -%}
+  {%- assign pgi_reviews = true -%}
+{%- endif -%}
+
+{%- if reviewed_item == blank -%}
+  {%- assign reviewed_item = product -%}
+{%- endif -%}
+
+{%- assign reviews_min_threshold = 1 -%}
+{%- if reviews_location != 'product-details' -%}
+  {%- assign reviews_min_threshold = 3 -%}
+{%- endif -%}
+
+
+{%- if pgi_reviews -%}
+
+  {%- if settings.reviews_display == "custom" -%}
+
+      {%- comment -%}
+      {%- if reviewed_item.metafields.stamped.reviews_average -%}
+        {%- assign ri_reviews_metafield = reviewed_item.metafields.stamped -%}
+        {%- assign ri_reviews_avg = ri_reviews_metafield.reviews_average | round: 2 -%}
+        {%- assign ri_reviews_count = ri_reviews_metafield.reviews_count -%}
+      {%- endif -%}
+      {%- endcomment -%}
+
+      {%- comment -%}
+      {%- if reviewed_item.metafields.okendo.summaryData -%}
+        {%- assign ri_reviews_metafield = reviewed_item.metafields.okendo.summaryData -%}
+        {%- assign ri_reviews_avg = ri_reviews_metafield.reviewAverageValue | round: 2 -%}
+        {%- assign ri_reviews_count = ri_reviews_metafield.reviewCount -%}
+      {%- endif -%}
+      {%- endcomment -%}
+
+      {%- comment -%}
+      {%- if reviewed_item.metafields.yotpo.reviews_average -%}
+        {%- assign ri_reviews_metafield = reviewed_item.metafields.yotpo -%}
+        {%- assign ri_reviews_avg = ri_reviews_metafield.reviews_average | round: 2 -%}
+        {%- assign ri_reviews_count = ri_reviews_metafield.reviews_count -%}
+      {%- endif -%}
+      {%- endcomment -%}
+
+      {%- if settings.reviews_vendor == "stamped" -%}
+        {%- assign ri_reviews_exist = reviewed_item.metafields.stamped.reviews_average -%}
+        {%- assign ri_reviews_metafield = reviewed_item.metafields.stamped -%}
+        {%- assign ri_reviews_avg = ri_reviews_metafield.reviews_average | round: 2 -%}
+        {%- assign ri_reviews_count = ri_reviews_metafield.reviews_count | abs | times: 1 -%}
+      
+      {%- elsif settings.reviews_vendor == "okendo" -%}
+        {%- assign ri_reviews_exist = reviewed_item.metafields.okendo.summaryData -%}
+        {%- assign ri_reviews_metafield = reviewed_item.metafields.okendo.summaryData -%}
+        {%- assign ri_reviews_avg = ri_reviews_metafield.reviewAverageValue | round: 2 -%}
+        {%- assign ri_reviews_count = ri_reviews_metafield.reviewCount | abs | times: 1 -%}
+
+      {%- elsif settings.reviews_vendor == "yotpo" -%}
+        {%- assign ri_reviews_exist = reviewed_item.metafields.yotpo.reviews_average -%}
+        {%- assign ri_reviews_metafield = reviewed_item.metafields.yotpo -%}
+        {%- assign ri_reviews_avg = ri_reviews_metafield.reviews_average | round: 2 -%}
+        {%- assign ri_reviews_count = ri_reviews_metafield.reviews_count | abs | times: 1 -%}
+
+      {%- endif -%}
+      
+      {%- if ri_reviews_exist -%}
+        {%- assign ri_reviews_stars = ri_reviews_avg | floor -%}
+        {%- assign ri_reviews_filled_stars = ri_reviews_avg | ceil -%}
+        {%- assign ri_reviews_empty_stars = 5 | minus: ri_reviews_filled_stars -%}
+        {%- assign ri_reviews_stars_remainder = ri_reviews_avg | modulo: 1 -%}
+        {%- assign ri_reviews_star_quarters = ri_reviews_stars_remainder | times: 4 | ceil | times: 1.00 | round: 2 | divided_by: 4 -%}
+        {%- case ri_reviews_star_quarters -%}
+          {%- when 0.25 -%}
+            {%- assign ri_star_quarters_class = 'star--part star--1-4' -%}
+          {%- when 0.50 -%}
+            {%- assign ri_star_quarters_class = 'star--part star--1-2' -%}
+          {%- when 0.75 -%}
+            {%- assign ri_star_quarters_class = 'star--part star--3-4' -%}
+          {%- when 1 -%}
+            {%- assign ri_star_quarters_class = 'star--full' -%}
+          {%- else -%}
+            {%- assign ri_star_quarters_class = 'star--part star--0' -%}
+        {%- endcase -%}
+
+
+        {%- comment -%}
+        <p>reviewed_item json: {{ reviewed_item | json }}</p>
+        <p>ri_reviews_avg: {{ ri_reviews_avg }}</p>
+        <p>ri_reviews_count: {{ ri_reviews_count }}</p>
+        <p>ri_reviews_stars: {{ ri_reviews_stars }}</p>
+        <p>ri_reviews_empty_stars: {{ ri_reviews_empty_stars }}</p>
+        <p>ri_reviews_stars_remainder: {{ ri_reviews_stars_remainder }}</p>
+        <p>ri_reviews_star_quarters: {{ ri_reviews_star_quarters }}</p>
+        <p hidden>reviews_location: {{ reviews_location }}</p>
+        <p hidden>ri_reviews_avg: {{ ri_reviews_avg }}</p>
+        <p hidden>reviews_min_threshold: {{ reviews_min_threshold }}</p>
+        <p hidden>
+          {%- if ri_reviews_count > 0 and ri_reviews_avg >= reviews_min_threshold -%}
+             yes
+          {%- endif -%}
+        </p>
+        <p hidden>
+          {%- if ri_reviews_count > 0 and ri_reviews_avg >= 3 -%}
+             yes 2
+          {%- endif -%}
+        </p>
+        {%- endcomment -%}
+      
+
+        {%- if ri_reviews_count > 0 and ri_reviews_avg >= reviews_min_threshold -%}
+        <span class="item-reviews" title="{{ product.title}} has an average rating of {{ ri_reviews_avg }}">
+          <span class="ir--stars" data-rcount="{{ri_reviews_count}}">
+            {%- for i in (1..ri_reviews_stars) -%}
+            <i class="ir-star star-full">&#9733;</i>
+            {%- endfor -%}
+            {%- unless ri_star_quarters_class == 'star--part star--0' -%}
+            <i class="ir-star {{ ri_star_quarters_class }}">&#9733;</i>
+            {%- endunless -%}
+            {%- for i in (1..ri_reviews_empty_stars) -%}
+            <i class="ir-star star--part star--0">&#9733;</i>
+            {%- endfor -%}
+
+            {%- comment -%}
+            {%- for i in (1..ri_reviews_stars) -%}
+            <i class="fa fa-star"></i>
+            {%- endfor -%}
+            {%- for i in (1..ri_reviews_empty_stars) -%}
+            <span class="{{ ri_star_quarters_class }}">
+              <i class="fa fa-star-half"></i>
+            </span>
+            {%- endfor -%}
+            {%- endcomment -%}
+          </span>
+          {{- "" -}}
+          <span class="ir--count">{{ 'products.reviews.count_text' | t: reviews_count: ri_reviews_count }}</span>{{- "" -}}
+        </span>
+        {%- endif -%}
+
+      {%- else -%}
+
+        {%- comment -%}
+        <span class="item-reviews">
+          <span class="ir--stars">
+            {%- for i in (1..5) -%}
+            <i class="ir-star  star--part star--0">&#9733;</i>
+            {%- endfor -%}
+          </span>
+          <span class="ir--count">{{ 'products.reviews.no_reviews_text' | t }}</span>{{- "" -}}
+        </span>
+        {%- endcomment -%}
+
+      {%- endif -%}
+      
+  {%- else -%}
+
+    {%- if settings.vendor == "stamped" -%}
+      <div class="stamped-product-reviews-badge" 
+            data-id="{{ product.id }}"
+            data-product-sku="{{product.selected_or_first_available_variant.sku}}" 
+            data-product-type="{{product.type}}" 
+            data-product-title="{{product.title}}"></div>
+    
+    {%- elsif settings.vendor == "yotpo" -%}
+      <div class="yotpo bottomLine" data-product-id="{{ reviewed_item.id }}"></div>
+
+    {%- elsif settings.vendor == "okendo" -%}
+      <div data-oke-reviews-product-listing-rating>{{ product.metafields.okendo.ProductListingSnippet }}</div>
+
+    {%- endif -%}
+
+    {%- comment -%}
+    <div class="yotpo-placeholder bottomLine" data-product-id="{{ reviewed_item.id }}">
+      <span class="yotpo-display-wrapper" style="visibility: hidden;">
+        <div class="standalone-bottomline">
+          <div class="yotpo-bottomline pull-left star-clickable">
+            <span class="yotpo-stars">
+              <span class="yotpo-icon yotpo-icon-empty-star rating-star pull-left"></span>
+              <span class="yotpo-icon yotpo-icon-empty-star rating-star pull-left"></span>
+              <span class="yotpo-icon yotpo-icon-empty-star rating-star pull-left"></span>
+              <span class="yotpo-icon yotpo-icon-empty-star rating-star pull-left"></span>
+              <span class="yotpo-icon yotpo-icon-empty-star rating-star pull-left"></span>
+              <span class="sr-only" tabindex="0">0 star rating</span>
+            </span> 
+            <a class="text-m write-review-btn-hidden">Write a review</a>
+            <div class="yotpo-clr"></div>
+          </div>
+          <div class="yotpo-clr"></div>
+        </div>
+        <div class="yotpo-clr">
+        </div>
+      </span>
+    </div>
+    {%- endcomment -%}
+
+    {%- comment -%}
+    <span class="shopify-product-reviews-badge" data-id="{{ reviewed_item.id }}"></span>       
+    {%- endcomment -%}
+
+  {%- endif -%}
+
+{%- endif -%}

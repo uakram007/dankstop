@@ -1,0 +1,9 @@
+{%- comment -%}
+{%- endcomment -%}
+{%- assign canonical_url = '' -%}
+{%- if product.metafields.global.canon_url != blank -%}
+  {%- assign canonical_url = product.metafields.global.canon_url -%}
+{%- endif -%}
+<script type="text/javascript">
+  window.location.replace(window.location.origin + "{{ canonical_url }}");
+</script>

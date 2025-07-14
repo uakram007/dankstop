@@ -1,0 +1,206 @@
+/*
+ * Scrollable Items Carousel - Custom
+ */
+hsjs.scrollCarouselInit = function(scrollCarouselsSelector) {
+  var $uninitializedScrollers;
+  if (typeof(scrollCarouselsSelector)==="undefined") {
+    $uninitializedScrollers = $(".scroll-box:not(.js-enabled)");
+
+      console.log($uninitializedScrollers);
+  }
+  else {
+    $uninitializedScrollers = $(scrollCarouselsSelector);
+  }
+  var $scrollBtns = $("<div class='sb-btn sb-btn-p'><svg width='100%' height='100%'><use xlink:href='#chevronLeft' xmlns:xlink='http://www.w3.org/1999/xlink'></use></svg></div><div class='sb-btn sb-btn-n'><svg width='100%' height='100%'><use xlink:href='#chevronRight' xmlns:xlink='http://www.w3.org/1999/xlink'></use></svg></div>");
+  $uninitializedScrollers.each(function(){
+    var $thisScroller = $(this);
+    var $testScroller = $(this).find("> .sb-inner").length ? $(this).find("> .sb-inner") : $(this);
+
+      console.log("width 1 ", $testScroller[0].offsetWidth);
+      console.log("width 2 ", $testScroller[0].scrollWidth);
+
+    if ($testScroller[0].offsetWidth < $testScroller[0].scrollWidth) {
+      if ($thisScroller.find("> .swatch-element").length) {
+        $thisScroller.find("> .swatch-element").wrapAll("<div class='sb-inner'></div>");
+      }
+      if ($thisScroller.find("> .sb-btn").length < 2 ) {
+        $thisScroller.append($scrollBtns.clone());
+      }
+      var $scrollCarousel = $thisScroller.find("> .sb-inner:first");
+      var sCWidth = Math.floor($scrollCarousel.find("> div:first").outerWidth());
+      var $sCPrev = $thisScroller.find("> .sb-btn.sb-btn-p");
+      var $sCNext = $thisScroller.find("> .sb-btn.sb-btn-n");
+      $sCPrev.on("click", function() {
+        $scrollCarousel.stop();
+        $scrollCarousel.animate( { scrollLeft: "-="+sCWidth }, 200);
+      });
+      $sCNext.on("click", function() {
+        $scrollCarousel.stop();
+        $scrollCarousel.animate( { scrollLeft: "+="+sCWidth }, 200);
+      });
+      $thisScroller.addClass("js-enabled");
+    }
+    else {
+      $thisScroller.find("> .sb-btn").remove();
+      $thisScroller.addClass("no-js");
+    }
+  });
+}
+
+hsjs.scrollCarouselInit();
+
+
+
+
+.scroll-box {
+	 position: relative;
+	 overflow: hidden;
+	 z-index: 1;
+}
+ .scroll-box .sb-inner, .scroll-box .sb-btn {
+	 -webkit-transition: all 753ms;
+	 -ms-transition: all 753ms;
+	 transition: all 753ms;
+}
+ .scroll-box .sb-inner {
+	 width: 90%;
+	 margin: 0 auto;
+}
+ .scroll-box .sb-btn {
+	 position: absolute;
+	 -webkit-transform: scale(0);
+	 -ms-transform: scale(0);
+	 transform: scale(0);
+}
+ .scroll-box.no-js .sb-inner {
+	 width: 100%;
+}
+ .scroll-box:not(.js-enabled) {
+	 overflow-y: hidden;
+	 overflow-x: scroll;
+	 -ms-overflow-style: scrollbar;
+	 white-space: nowrap !important;
+}
+ .scroll-box:not(.js-enabled) .sb-inner {
+	 overflow-y: hidden;
+	 overflow-x: scroll;
+	 -ms-overflow-style: scrollbar;
+	 white-space: nowrap !important;
+	 -webkit-overflow-scrolling: touch;
+	 -webkit-backface-visibility: hidden;
+	 -webkit-transform: translate3d(0, 0, 0);
+}
+ .scroll-box:not(.js-enabled) .sb-inner > div {
+	 clear: none;
+	 float: none;
+	 display: inline-block;
+	/* &:first-of-type {
+		 margin-left: -30px;
+	}
+	 */
+}
+ .scroll-box.js-enabled .sb-inner {
+	 height: 100%;
+	 overflow-y: hidden;
+	 overflow-x: scroll;
+	 -ms-overflow-style: scrollbar;
+	 white-space: nowrap !important;
+	 -webkit-overflow-scrolling: touch;
+	 -webkit-backface-visibility: hidden;
+	 -webkit-transform: translate3d(0, 0, 0);
+	 -webkit-box-shadow: inset -10px 0px 10px -10px rgba(0, 0, 0, 0.1), inset 10px 0px 10px -10px rgba(0, 0, 0, 0.1);
+	 -ms-box-shadow: inset -10px 0px 10px -10px rgba(0, 0, 0, 0.1), inset 10px 0px 10px -10px rgba(0, 0, 0, 0.1);
+	 box-shadow: inset -10px 0px 10px -10px rgba(0, 0, 0, 0.1), inset 10px 0px 10px -10px rgba(0, 0, 0, 0.1);
+}
+ .scroll-box.js-enabled .sb-inner > div {
+	 clear: none;
+	 float: none;
+	 display: inline-block;
+	 max-width: 199px;
+}
+ .scroll-box.js-enabled .sb-inner > .grid-item {
+	 padding-left: 15px;
+}
+ .scroll-box.js-enabled .sb-inner .grid-image {
+	 z-index: -1;
+}
+ .scroll-box.js-enabled .sb-inner > div:first-of-type {
+	 box-shadow: inset 25px 0px 10px -10px #fff;
+	/* margin-left: -10px;
+	 */
+}
+ .scroll-box.js-enabled .sb-inner > div:last-of-type {
+	 box-shadow: inset -20px 0px 10px -10px #fff;
+}
+ .scroll-box.js-enabled .sb-inner .wishlist-container {
+	 left: 15px;
+}
+ @media screen and (max-width: 480px) {
+	 .scroll-box.js-enabled .sb-inner .grid-item {
+		 max-width: 37vw;
+	}
+	 .scroll-box.js-enabled .sb-inner .grid-item .color-swatch .carousel .swatch-element {
+		 height: 21px;
+	}
+	 .scroll-box.js-enabled .sb-inner .grid-item .color-swatch .carousel .swatch-element label {
+		 height: 17px;
+		 margin: 2px;
+	}
+	 .scroll-box.js-enabled .sb-inner .grid-item .color-swatch .carousel .swatch-element input {
+		 width: 13px !important;
+		 min-width: 13px !important;
+		 height: 13px !important;
+	}
+	 .scroll-box.js-enabled .sb-inner .grid-item .item-price {
+		 font-size: 0.73em;
+	}
+	 .scroll-box.js-enabled .sb-inner .grid-item .product-image + .product-title, .scroll-box.js-enabled .sb-inner .grid-item script + .product-title {
+		 margin-top: 27px;
+	}
+}
+ .scroll-box.js-enabled .product-image .imod {
+	 z-index: -1;
+}
+ .scroll-box.js-enabled .sb-btn {
+	 position: absolute;
+	 top: 0;
+	 display: block;
+	 width: 5%;
+	 height: 100%;
+	 padding: 0;
+	 color: #000;
+	 background: transparent;
+	 cursor: pointer;
+	 z-index: 1;
+	 -webkit-transform: scale(1);
+	 -ms-transform: scale(1);
+	 transform: scale(1);
+}
+ .scroll-box.js-enabled .sb-btn.sb-btn-p {
+	 right: 95%;
+}
+ .scroll-box.js-enabled .sb-btn.sb-btn-n {
+	 left: 95%;
+}
+ .scroll-box.js-enabled .sb-btn .chevron {
+	 display: block;
+	 width: 13px;
+	 height: 11px;
+	 font-size: 0;
+}
+ @media screen and (min-width: 769px) {
+	 .scroll-box.js-enabled .sb-btn .chevron {
+		 width: 30px;
+		 height: 30px;
+	}
+}
+ .scroll-box.js-enabled .sb-btn .chevron-l {
+	 -webkit-transform: rotate(90deg);
+	 -ms-transform: rotate(90deg);
+	 transform: rotate(90deg);
+}
+ .scroll-box.js-enabled .sb-btn .chevron-r {
+	 -webkit-transform: rotate(-90deg);
+	 -ms-transform: rotate(-90deg);
+	 transform: rotate(-90deg);
+}

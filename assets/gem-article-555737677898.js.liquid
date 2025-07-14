@@ -1,0 +1,2777 @@
+{% comment %}
+	GEMPAGE BUILDER (https://apps.shopify.com/gempage)
+
+	You SHOULD NOT modify source code in this page because
+	It is automatically generated from GEMPAGE BUILDER
+	Try to edit page with the live editor.
+{% endcomment %}
+
+    
+(function( jQuery ){
+  var $hero = jQuery('#m-1615561590189');
+  var $module = jQuery('#m-1615561590189').children('.module');
+
+  var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+  var $heroLink = $hero.children('.hero-link');
+  if (mode == 'dev' && $heroLink.length > 0) {
+    $hero.children('.hero-link').hide();
+  }
+  if (mode == 'production' && $heroLink.length > 0) {
+    $module.off('click.openLink').on('click.openLink', function (e) {
+      var $target = jQuery(e.target);
+      if ($target.length > 0) {
+        var linkTarget = typeof $target.attr('href') !== "undefined" ? $target.attr('href') : "";
+        if (linkTarget == "") {
+          var link = typeof $heroLink.attr('href') !== "undefined" ? $heroLink.attr('href') : "";
+          var newTab = typeof $heroLink.attr('target') !== "undefined" ? $heroLink.attr('target') : "";
+          if (link != "") {
+            if (newTab == "") {
+              window.location.href = link;
+            } else {
+              window.open(link, newTab);
+            }
+          }
+        }
+      };
+    })
+  }
+
+  var height = jQuery.trim($module.attr("data-height"));
+  if (height == undefined || height == "") {
+    $hero.css("height", "auto!important");
+  } else {
+    $hero.css("height", "inherit");
+  }
+
+
+  var effect = $module.attr('data-effect');
+  var transition = $module.attr('data-transition');
+
+  if (effect == 'effect-zoom') {
+    $module.parent().addClass(effect);
+
+    setTimeout(function () {
+      var backgroundImage = $module.parent().css('background-image');
+      var backgroundSize = $module.parent().css('background-size');
+      var backgroundPosition = $module.parent().css('background-position');
+      $module.siblings('.gf_hero-bg-wrap').css({
+        'background-image': 'inherit',
+        'background-size': 'inherit',
+        'background-position': 'inherit',
+        '-webkit-transition': 'transform ' + transition + 's ease-in-out',
+        '-moz-transition': 'transform ' + transition + 's ease-in-out',
+        '-ms-transition': 'transform ' + transition + 's ease-in-out',
+        '-o-transition': 'transform ' + transition + 's ease-in-out',
+        'transition': 'transform ' + transition + 's ease-in-out'
+      })
+      $module.siblings('.gf_hero-bg-wrap').children('.gf_hero-bg').css({
+        'background-image': 'inherit',
+        'background-size': 'inherit',
+        'background-position': 'inherit',
+        '-webkit-transition': 'transform ' + transition + 's ease-in-out',
+        '-moz-transition': 'transform ' + transition + 's ease-in-out',
+        '-ms-transition': 'transform ' + transition + 's ease-in-out',
+        '-o-transition': 'transform ' + transition + 's ease-in-out',
+        'transition': 'transform ' + transition + 's ease-in-out'
+      });
+    }, 300);
+  } else{
+    $module.parent().removeClass("effect-zoom");
+  }
+
+  if ($module.attr('data-fixedMode') == '1') {
+    function changeImage() {
+      var backgroundImage = $module.parent().css('background-image');
+      if (backgroundImage) {
+        backgroundImage = backgroundImage.replace('url(', '').replace(')', '').replace(/\"/gi, "");
+        $module.find('.gf_hero-fixed').attr('src', backgroundImage);
+        $module.parent().addClass('gf_hero-fixed-mode');
+      }
+    }
+    changeImage();
+    let windowWidth = jQuery(window).width();
+    let timeoutResize = 0;
+    jQuery(window).resize(function () {
+      if (jQuery(window).width() == windowWidth) {
+        return;
+      }
+      windowWidth = jQuery(window).width();
+
+      if (timeoutResize) {
+        clearTimeout(timeoutResize);
+        timeoutResize = 0;
+      }
+
+      timeoutResize = window.setTimeout(function () {
+        changeImage();
+      }, 16);
+    });
+  } else {
+    $module.parent().removeClass('gf_hero-fixed-mode');
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1615561590259').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1615561590259-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function(jQuery) {
+var $module = jQuery('#m-1615561590130').children('.module');
+$module.gfV4ProductImageList({
+  onImageClicked: function(imageUrl, imageZoomUrl) {}
+});
+
+var style = $module.attr('data-style');
+switch(style) {
+  case 'slider':
+      var navspeed = $module.data('navspeed'),
+          navlg = $module.data('navlg'),
+          navmd = $module.data('navmd'),
+          navsm = $module.data('navsm'),
+          navxs = $module.data('navxs'),
+          collg = $module.data('collg'),
+          colmd = $module.data('colmd'),
+          colsm = $module.data('colsm'),
+          colxs = $module.data('colxs'),
+          dotslg = $module.data('dotslg'),
+          dotsmd = $module.data('dotsmd'),
+          dotssm = $module.data('dotssm'),
+          dotsxs = $module.data('dotsxs'),
+
+          marginlg = parseInt($module.data('mlg')),
+          marginmd = parseInt($module.data('mmd')),
+          marginsm = parseInt($module.data('msm')),
+          marginxs = parseInt($module.data('mxs'));
+
+      var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+      if(mode == 'production') {
+          var loop = $module.data('loop');
+      } else {
+          var loop = 0;
+      }
+      $module.find('.gf_product-images-list').children().each( function( index ) {
+        jQuery(this).attr( 'data-position', index );
+      });
+      $module.find('.gf_product-images-list').owlCarousel({
+          mouseDrag: false,
+          navSpeed: navspeed,
+          autoWidth: !1,
+          loop: loop,
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:colxs,
+                  nav: navxs,
+                  dots:dotsxs,
+                  margin: marginxs
+              },
+              768:{
+                  items:colsm,
+                  nav: navsm,
+                  dots:dotssm,
+                  margin: marginsm
+              },
+              992:{
+                  items:colmd,
+                  nav: navmd,
+                  dots:dotsmd,
+                  margin: marginmd
+              },
+              1200:{
+                  items:collg,
+                  nav: navlg,
+                  dots:dotslg,
+                  margin: marginlg
+              }
+          },
+          onInitialized: function(){
+            $module.closest('.module-wrap[data-label="(P) Image List"]').addClass('gf-carousel-loaded');
+          }
+      }); 
+      break;
+}
+})(window.GemQuery || jQuery); 
+    
+    
+(function(jQuery) {
+    var $module = jQuery('#m-1615561590259-2').children('.module');
+    $module.gfV3ProductPrice({
+        displayCurrency: true
+    });
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1615561755446').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1615561590259-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1615566180202').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1615566180202-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function(jQuery) {
+var $module = jQuery('#m-1615566180115').children('.module');
+$module.gfV4ProductImageList({
+  onImageClicked: function(imageUrl, imageZoomUrl) {}
+});
+
+var style = $module.attr('data-style');
+switch(style) {
+  case 'slider':
+      var navspeed = $module.data('navspeed'),
+          navlg = $module.data('navlg'),
+          navmd = $module.data('navmd'),
+          navsm = $module.data('navsm'),
+          navxs = $module.data('navxs'),
+          collg = $module.data('collg'),
+          colmd = $module.data('colmd'),
+          colsm = $module.data('colsm'),
+          colxs = $module.data('colxs'),
+          dotslg = $module.data('dotslg'),
+          dotsmd = $module.data('dotsmd'),
+          dotssm = $module.data('dotssm'),
+          dotsxs = $module.data('dotsxs'),
+
+          marginlg = parseInt($module.data('mlg')),
+          marginmd = parseInt($module.data('mmd')),
+          marginsm = parseInt($module.data('msm')),
+          marginxs = parseInt($module.data('mxs'));
+
+      var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+      if(mode == 'production') {
+          var loop = $module.data('loop');
+      } else {
+          var loop = 0;
+      }
+      $module.find('.gf_product-images-list').children().each( function( index ) {
+        jQuery(this).attr( 'data-position', index );
+      });
+      $module.find('.gf_product-images-list').owlCarousel({
+          mouseDrag: false,
+          navSpeed: navspeed,
+          autoWidth: !1,
+          loop: loop,
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:colxs,
+                  nav: navxs,
+                  dots:dotsxs,
+                  margin: marginxs
+              },
+              768:{
+                  items:colsm,
+                  nav: navsm,
+                  dots:dotssm,
+                  margin: marginsm
+              },
+              992:{
+                  items:colmd,
+                  nav: navmd,
+                  dots:dotsmd,
+                  margin: marginmd
+              },
+              1200:{
+                  items:collg,
+                  nav: navlg,
+                  dots:dotslg,
+                  margin: marginlg
+              }
+          },
+          onInitialized: function(){
+            $module.closest('.module-wrap[data-label="(P) Image List"]').addClass('gf-carousel-loaded');
+          }
+      }); 
+      break;
+}
+})(window.GemQuery || jQuery); 
+    
+    
+(function(jQuery) {
+    var $module = jQuery('#m-1615566180202-2').children('.module');
+    $module.gfV3ProductPrice({
+        displayCurrency: true
+    });
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1615567300328').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1615566180202-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1615566114000').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1615566114000-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function(jQuery) {
+var $module = jQuery('#m-1615566113985').children('.module');
+$module.gfV4ProductImageList({
+  onImageClicked: function(imageUrl, imageZoomUrl) {}
+});
+
+var style = $module.attr('data-style');
+switch(style) {
+  case 'slider':
+      var navspeed = $module.data('navspeed'),
+          navlg = $module.data('navlg'),
+          navmd = $module.data('navmd'),
+          navsm = $module.data('navsm'),
+          navxs = $module.data('navxs'),
+          collg = $module.data('collg'),
+          colmd = $module.data('colmd'),
+          colsm = $module.data('colsm'),
+          colxs = $module.data('colxs'),
+          dotslg = $module.data('dotslg'),
+          dotsmd = $module.data('dotsmd'),
+          dotssm = $module.data('dotssm'),
+          dotsxs = $module.data('dotsxs'),
+
+          marginlg = parseInt($module.data('mlg')),
+          marginmd = parseInt($module.data('mmd')),
+          marginsm = parseInt($module.data('msm')),
+          marginxs = parseInt($module.data('mxs'));
+
+      var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+      if(mode == 'production') {
+          var loop = $module.data('loop');
+      } else {
+          var loop = 0;
+      }
+      $module.find('.gf_product-images-list').children().each( function( index ) {
+        jQuery(this).attr( 'data-position', index );
+      });
+      $module.find('.gf_product-images-list').owlCarousel({
+          mouseDrag: false,
+          navSpeed: navspeed,
+          autoWidth: !1,
+          loop: loop,
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:colxs,
+                  nav: navxs,
+                  dots:dotsxs,
+                  margin: marginxs
+              },
+              768:{
+                  items:colsm,
+                  nav: navsm,
+                  dots:dotssm,
+                  margin: marginsm
+              },
+              992:{
+                  items:colmd,
+                  nav: navmd,
+                  dots:dotsmd,
+                  margin: marginmd
+              },
+              1200:{
+                  items:collg,
+                  nav: navlg,
+                  dots:dotslg,
+                  margin: marginlg
+              }
+          },
+          onInitialized: function(){
+            $module.closest('.module-wrap[data-label="(P) Image List"]').addClass('gf-carousel-loaded');
+          }
+      }); 
+      break;
+}
+})(window.GemQuery || jQuery); 
+    
+    
+(function(jQuery) {
+    var $module = jQuery('#m-1615566114000-2').children('.module');
+    $module.gfV3ProductPrice({
+        displayCurrency: true
+    });
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1615567282573').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1615566114000-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1615566066663').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1615566066663-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function(jQuery) {
+var $module = jQuery('#m-1615566066661').children('.module');
+$module.gfV4ProductImageList({
+  onImageClicked: function(imageUrl, imageZoomUrl) {}
+});
+
+var style = $module.attr('data-style');
+switch(style) {
+  case 'slider':
+      var navspeed = $module.data('navspeed'),
+          navlg = $module.data('navlg'),
+          navmd = $module.data('navmd'),
+          navsm = $module.data('navsm'),
+          navxs = $module.data('navxs'),
+          collg = $module.data('collg'),
+          colmd = $module.data('colmd'),
+          colsm = $module.data('colsm'),
+          colxs = $module.data('colxs'),
+          dotslg = $module.data('dotslg'),
+          dotsmd = $module.data('dotsmd'),
+          dotssm = $module.data('dotssm'),
+          dotsxs = $module.data('dotsxs'),
+
+          marginlg = parseInt($module.data('mlg')),
+          marginmd = parseInt($module.data('mmd')),
+          marginsm = parseInt($module.data('msm')),
+          marginxs = parseInt($module.data('mxs'));
+
+      var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+      if(mode == 'production') {
+          var loop = $module.data('loop');
+      } else {
+          var loop = 0;
+      }
+      $module.find('.gf_product-images-list').children().each( function( index ) {
+        jQuery(this).attr( 'data-position', index );
+      });
+      $module.find('.gf_product-images-list').owlCarousel({
+          mouseDrag: false,
+          navSpeed: navspeed,
+          autoWidth: !1,
+          loop: loop,
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:colxs,
+                  nav: navxs,
+                  dots:dotsxs,
+                  margin: marginxs
+              },
+              768:{
+                  items:colsm,
+                  nav: navsm,
+                  dots:dotssm,
+                  margin: marginsm
+              },
+              992:{
+                  items:colmd,
+                  nav: navmd,
+                  dots:dotsmd,
+                  margin: marginmd
+              },
+              1200:{
+                  items:collg,
+                  nav: navlg,
+                  dots:dotslg,
+                  margin: marginlg
+              }
+          },
+          onInitialized: function(){
+            $module.closest('.module-wrap[data-label="(P) Image List"]').addClass('gf-carousel-loaded');
+          }
+      }); 
+      break;
+}
+})(window.GemQuery || jQuery); 
+    
+    
+(function(jQuery) {
+    var $module = jQuery('#m-1615566066663-2').children('.module');
+    $module.gfV3ProductPrice({
+        displayCurrency: true
+    });
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1615567266827').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1615566066663-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625152144760').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1625152144760-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function(jQuery) {
+var $module = jQuery('#m-1625152144683').children('.module');
+$module.gfV4ProductImageList({
+  onImageClicked: function(imageUrl, imageZoomUrl) {}
+});
+
+var style = $module.attr('data-style');
+switch(style) {
+  case 'slider':
+      var navspeed = $module.data('navspeed'),
+          navlg = $module.data('navlg'),
+          navmd = $module.data('navmd'),
+          navsm = $module.data('navsm'),
+          navxs = $module.data('navxs'),
+          collg = $module.data('collg'),
+          colmd = $module.data('colmd'),
+          colsm = $module.data('colsm'),
+          colxs = $module.data('colxs'),
+          dotslg = $module.data('dotslg'),
+          dotsmd = $module.data('dotsmd'),
+          dotssm = $module.data('dotssm'),
+          dotsxs = $module.data('dotsxs'),
+
+          marginlg = parseInt($module.data('mlg')),
+          marginmd = parseInt($module.data('mmd')),
+          marginsm = parseInt($module.data('msm')),
+          marginxs = parseInt($module.data('mxs'));
+
+      var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+      if(mode == 'production') {
+          var loop = $module.data('loop');
+      } else {
+          var loop = 0;
+      }
+      $module.find('.gf_product-images-list').children().each( function( index ) {
+        jQuery(this).attr( 'data-position', index );
+      });
+      $module.find('.gf_product-images-list').owlCarousel({
+          mouseDrag: false,
+          navSpeed: navspeed,
+          autoWidth: !1,
+          loop: loop,
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:colxs,
+                  nav: navxs,
+                  dots:dotsxs,
+                  margin: marginxs
+              },
+              768:{
+                  items:colsm,
+                  nav: navsm,
+                  dots:dotssm,
+                  margin: marginsm
+              },
+              992:{
+                  items:colmd,
+                  nav: navmd,
+                  dots:dotsmd,
+                  margin: marginmd
+              },
+              1200:{
+                  items:collg,
+                  nav: navlg,
+                  dots:dotslg,
+                  margin: marginlg
+              }
+          },
+          onInitialized: function(){
+            $module.closest('.module-wrap[data-label="(P) Image List"]').addClass('gf-carousel-loaded');
+          }
+      }); 
+      break;
+}
+})(window.GemQuery || jQuery); 
+    
+    
+(function(jQuery) {
+    var $module = jQuery('#m-1625152144760-2').children('.module');
+    $module.gfV3ProductPrice({
+        displayCurrency: true
+    });
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625152144806').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625152144760-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625153131851').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1625153131851-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function(jQuery) {
+var $module = jQuery('#m-1625153131894').children('.module');
+$module.gfV4ProductImageList({
+  onImageClicked: function(imageUrl, imageZoomUrl) {}
+});
+
+var style = $module.attr('data-style');
+switch(style) {
+  case 'slider':
+      var navspeed = $module.data('navspeed'),
+          navlg = $module.data('navlg'),
+          navmd = $module.data('navmd'),
+          navsm = $module.data('navsm'),
+          navxs = $module.data('navxs'),
+          collg = $module.data('collg'),
+          colmd = $module.data('colmd'),
+          colsm = $module.data('colsm'),
+          colxs = $module.data('colxs'),
+          dotslg = $module.data('dotslg'),
+          dotsmd = $module.data('dotsmd'),
+          dotssm = $module.data('dotssm'),
+          dotsxs = $module.data('dotsxs'),
+
+          marginlg = parseInt($module.data('mlg')),
+          marginmd = parseInt($module.data('mmd')),
+          marginsm = parseInt($module.data('msm')),
+          marginxs = parseInt($module.data('mxs'));
+
+      var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+      if(mode == 'production') {
+          var loop = $module.data('loop');
+      } else {
+          var loop = 0;
+      }
+      $module.find('.gf_product-images-list').children().each( function( index ) {
+        jQuery(this).attr( 'data-position', index );
+      });
+      $module.find('.gf_product-images-list').owlCarousel({
+          mouseDrag: false,
+          navSpeed: navspeed,
+          autoWidth: !1,
+          loop: loop,
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:colxs,
+                  nav: navxs,
+                  dots:dotsxs,
+                  margin: marginxs
+              },
+              768:{
+                  items:colsm,
+                  nav: navsm,
+                  dots:dotssm,
+                  margin: marginsm
+              },
+              992:{
+                  items:colmd,
+                  nav: navmd,
+                  dots:dotsmd,
+                  margin: marginmd
+              },
+              1200:{
+                  items:collg,
+                  nav: navlg,
+                  dots:dotslg,
+                  margin: marginlg
+              }
+          },
+          onInitialized: function(){
+            $module.closest('.module-wrap[data-label="(P) Image List"]').addClass('gf-carousel-loaded');
+          }
+      }); 
+      break;
+}
+})(window.GemQuery || jQuery); 
+    
+    
+(function(jQuery) {
+    var $module = jQuery('#m-1625153131851-2').children('.module');
+    $module.gfV3ProductPrice({
+        displayCurrency: true
+    });
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625153131899').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625153131851-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625153820953').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1625153820953-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function(jQuery) {
+var $module = jQuery('#m-1625153820980').children('.module');
+$module.gfV4ProductImageList({
+  onImageClicked: function(imageUrl, imageZoomUrl) {}
+});
+
+var style = $module.attr('data-style');
+switch(style) {
+  case 'slider':
+      var navspeed = $module.data('navspeed'),
+          navlg = $module.data('navlg'),
+          navmd = $module.data('navmd'),
+          navsm = $module.data('navsm'),
+          navxs = $module.data('navxs'),
+          collg = $module.data('collg'),
+          colmd = $module.data('colmd'),
+          colsm = $module.data('colsm'),
+          colxs = $module.data('colxs'),
+          dotslg = $module.data('dotslg'),
+          dotsmd = $module.data('dotsmd'),
+          dotssm = $module.data('dotssm'),
+          dotsxs = $module.data('dotsxs'),
+
+          marginlg = parseInt($module.data('mlg')),
+          marginmd = parseInt($module.data('mmd')),
+          marginsm = parseInt($module.data('msm')),
+          marginxs = parseInt($module.data('mxs'));
+
+      var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+      if(mode == 'production') {
+          var loop = $module.data('loop');
+      } else {
+          var loop = 0;
+      }
+      $module.find('.gf_product-images-list').children().each( function( index ) {
+        jQuery(this).attr( 'data-position', index );
+      });
+      $module.find('.gf_product-images-list').owlCarousel({
+          mouseDrag: false,
+          navSpeed: navspeed,
+          autoWidth: !1,
+          loop: loop,
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:colxs,
+                  nav: navxs,
+                  dots:dotsxs,
+                  margin: marginxs
+              },
+              768:{
+                  items:colsm,
+                  nav: navsm,
+                  dots:dotssm,
+                  margin: marginsm
+              },
+              992:{
+                  items:colmd,
+                  nav: navmd,
+                  dots:dotsmd,
+                  margin: marginmd
+              },
+              1200:{
+                  items:collg,
+                  nav: navlg,
+                  dots:dotslg,
+                  margin: marginlg
+              }
+          },
+          onInitialized: function(){
+            $module.closest('.module-wrap[data-label="(P) Image List"]').addClass('gf-carousel-loaded');
+          }
+      }); 
+      break;
+}
+})(window.GemQuery || jQuery); 
+    
+    
+(function(jQuery) {
+    var $module = jQuery('#m-1625153820953-2').children('.module');
+    $module.gfV3ProductPrice({
+        displayCurrency: true
+    });
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625153820927').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625153820953-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625154460607').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1625154460607-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function(jQuery) {
+var $module = jQuery('#m-1625154460525').children('.module');
+$module.gfV4ProductImageList({
+  onImageClicked: function(imageUrl, imageZoomUrl) {}
+});
+
+var style = $module.attr('data-style');
+switch(style) {
+  case 'slider':
+      var navspeed = $module.data('navspeed'),
+          navlg = $module.data('navlg'),
+          navmd = $module.data('navmd'),
+          navsm = $module.data('navsm'),
+          navxs = $module.data('navxs'),
+          collg = $module.data('collg'),
+          colmd = $module.data('colmd'),
+          colsm = $module.data('colsm'),
+          colxs = $module.data('colxs'),
+          dotslg = $module.data('dotslg'),
+          dotsmd = $module.data('dotsmd'),
+          dotssm = $module.data('dotssm'),
+          dotsxs = $module.data('dotsxs'),
+
+          marginlg = parseInt($module.data('mlg')),
+          marginmd = parseInt($module.data('mmd')),
+          marginsm = parseInt($module.data('msm')),
+          marginxs = parseInt($module.data('mxs'));
+
+      var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+      if(mode == 'production') {
+          var loop = $module.data('loop');
+      } else {
+          var loop = 0;
+      }
+      $module.find('.gf_product-images-list').children().each( function( index ) {
+        jQuery(this).attr( 'data-position', index );
+      });
+      $module.find('.gf_product-images-list').owlCarousel({
+          mouseDrag: false,
+          navSpeed: navspeed,
+          autoWidth: !1,
+          loop: loop,
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:colxs,
+                  nav: navxs,
+                  dots:dotsxs,
+                  margin: marginxs
+              },
+              768:{
+                  items:colsm,
+                  nav: navsm,
+                  dots:dotssm,
+                  margin: marginsm
+              },
+              992:{
+                  items:colmd,
+                  nav: navmd,
+                  dots:dotsmd,
+                  margin: marginmd
+              },
+              1200:{
+                  items:collg,
+                  nav: navlg,
+                  dots:dotslg,
+                  margin: marginlg
+              }
+          },
+          onInitialized: function(){
+            $module.closest('.module-wrap[data-label="(P) Image List"]').addClass('gf-carousel-loaded');
+          }
+      }); 
+      break;
+}
+})(window.GemQuery || jQuery); 
+    
+    
+(function(jQuery) {
+    var $module = jQuery('#m-1625154460607-2').children('.module');
+    $module.gfV3ProductPrice({
+        displayCurrency: true
+    });
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625154460526').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625154460607-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625155945716').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1625155945716-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function(jQuery) {
+var $module = jQuery('#m-1625155945805').children('.module');
+$module.gfV4ProductImageList({
+  onImageClicked: function(imageUrl, imageZoomUrl) {}
+});
+
+var style = $module.attr('data-style');
+switch(style) {
+  case 'slider':
+      var navspeed = $module.data('navspeed'),
+          navlg = $module.data('navlg'),
+          navmd = $module.data('navmd'),
+          navsm = $module.data('navsm'),
+          navxs = $module.data('navxs'),
+          collg = $module.data('collg'),
+          colmd = $module.data('colmd'),
+          colsm = $module.data('colsm'),
+          colxs = $module.data('colxs'),
+          dotslg = $module.data('dotslg'),
+          dotsmd = $module.data('dotsmd'),
+          dotssm = $module.data('dotssm'),
+          dotsxs = $module.data('dotsxs'),
+
+          marginlg = parseInt($module.data('mlg')),
+          marginmd = parseInt($module.data('mmd')),
+          marginsm = parseInt($module.data('msm')),
+          marginxs = parseInt($module.data('mxs'));
+
+      var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+      if(mode == 'production') {
+          var loop = $module.data('loop');
+      } else {
+          var loop = 0;
+      }
+      $module.find('.gf_product-images-list').children().each( function( index ) {
+        jQuery(this).attr( 'data-position', index );
+      });
+      $module.find('.gf_product-images-list').owlCarousel({
+          mouseDrag: false,
+          navSpeed: navspeed,
+          autoWidth: !1,
+          loop: loop,
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:colxs,
+                  nav: navxs,
+                  dots:dotsxs,
+                  margin: marginxs
+              },
+              768:{
+                  items:colsm,
+                  nav: navsm,
+                  dots:dotssm,
+                  margin: marginsm
+              },
+              992:{
+                  items:colmd,
+                  nav: navmd,
+                  dots:dotsmd,
+                  margin: marginmd
+              },
+              1200:{
+                  items:collg,
+                  nav: navlg,
+                  dots:dotslg,
+                  margin: marginlg
+              }
+          },
+          onInitialized: function(){
+            $module.closest('.module-wrap[data-label="(P) Image List"]').addClass('gf-carousel-loaded');
+          }
+      }); 
+      break;
+}
+})(window.GemQuery || jQuery); 
+    
+    
+(function(jQuery) {
+    var $module = jQuery('#m-1625155945716-2').children('.module');
+    $module.gfV3ProductPrice({
+        displayCurrency: true
+    });
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625155945761').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625155945716-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625156588842').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1625156588842-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function(jQuery) {
+var $module = jQuery('#m-1625156588838').children('.module');
+$module.gfV4ProductImageList({
+  onImageClicked: function(imageUrl, imageZoomUrl) {}
+});
+
+var style = $module.attr('data-style');
+switch(style) {
+  case 'slider':
+      var navspeed = $module.data('navspeed'),
+          navlg = $module.data('navlg'),
+          navmd = $module.data('navmd'),
+          navsm = $module.data('navsm'),
+          navxs = $module.data('navxs'),
+          collg = $module.data('collg'),
+          colmd = $module.data('colmd'),
+          colsm = $module.data('colsm'),
+          colxs = $module.data('colxs'),
+          dotslg = $module.data('dotslg'),
+          dotsmd = $module.data('dotsmd'),
+          dotssm = $module.data('dotssm'),
+          dotsxs = $module.data('dotsxs'),
+
+          marginlg = parseInt($module.data('mlg')),
+          marginmd = parseInt($module.data('mmd')),
+          marginsm = parseInt($module.data('msm')),
+          marginxs = parseInt($module.data('mxs'));
+
+      var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+      if(mode == 'production') {
+          var loop = $module.data('loop');
+      } else {
+          var loop = 0;
+      }
+      $module.find('.gf_product-images-list').children().each( function( index ) {
+        jQuery(this).attr( 'data-position', index );
+      });
+      $module.find('.gf_product-images-list').owlCarousel({
+          mouseDrag: false,
+          navSpeed: navspeed,
+          autoWidth: !1,
+          loop: loop,
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:colxs,
+                  nav: navxs,
+                  dots:dotsxs,
+                  margin: marginxs
+              },
+              768:{
+                  items:colsm,
+                  nav: navsm,
+                  dots:dotssm,
+                  margin: marginsm
+              },
+              992:{
+                  items:colmd,
+                  nav: navmd,
+                  dots:dotsmd,
+                  margin: marginmd
+              },
+              1200:{
+                  items:collg,
+                  nav: navlg,
+                  dots:dotslg,
+                  margin: marginlg
+              }
+          },
+          onInitialized: function(){
+            $module.closest('.module-wrap[data-label="(P) Image List"]').addClass('gf-carousel-loaded');
+          }
+      }); 
+      break;
+}
+})(window.GemQuery || jQuery); 
+    
+    
+(function(jQuery) {
+    var $module = jQuery('#m-1625156588842-2').children('.module');
+    $module.gfV3ProductPrice({
+        displayCurrency: true
+    });
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625156588857').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625156588842-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625156884594').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1625156884594-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function(jQuery) {
+var $module = jQuery('#m-1625156884657').children('.module');
+$module.gfV4ProductImageList({
+  onImageClicked: function(imageUrl, imageZoomUrl) {}
+});
+
+var style = $module.attr('data-style');
+switch(style) {
+  case 'slider':
+      var navspeed = $module.data('navspeed'),
+          navlg = $module.data('navlg'),
+          navmd = $module.data('navmd'),
+          navsm = $module.data('navsm'),
+          navxs = $module.data('navxs'),
+          collg = $module.data('collg'),
+          colmd = $module.data('colmd'),
+          colsm = $module.data('colsm'),
+          colxs = $module.data('colxs'),
+          dotslg = $module.data('dotslg'),
+          dotsmd = $module.data('dotsmd'),
+          dotssm = $module.data('dotssm'),
+          dotsxs = $module.data('dotsxs'),
+
+          marginlg = parseInt($module.data('mlg')),
+          marginmd = parseInt($module.data('mmd')),
+          marginsm = parseInt($module.data('msm')),
+          marginxs = parseInt($module.data('mxs'));
+
+      var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+      if(mode == 'production') {
+          var loop = $module.data('loop');
+      } else {
+          var loop = 0;
+      }
+      $module.find('.gf_product-images-list').children().each( function( index ) {
+        jQuery(this).attr( 'data-position', index );
+      });
+      $module.find('.gf_product-images-list').owlCarousel({
+          mouseDrag: false,
+          navSpeed: navspeed,
+          autoWidth: !1,
+          loop: loop,
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:colxs,
+                  nav: navxs,
+                  dots:dotsxs,
+                  margin: marginxs
+              },
+              768:{
+                  items:colsm,
+                  nav: navsm,
+                  dots:dotssm,
+                  margin: marginsm
+              },
+              992:{
+                  items:colmd,
+                  nav: navmd,
+                  dots:dotsmd,
+                  margin: marginmd
+              },
+              1200:{
+                  items:collg,
+                  nav: navlg,
+                  dots:dotslg,
+                  margin: marginlg
+              }
+          },
+          onInitialized: function(){
+            $module.closest('.module-wrap[data-label="(P) Image List"]').addClass('gf-carousel-loaded');
+          }
+      }); 
+      break;
+}
+})(window.GemQuery || jQuery); 
+    
+    
+(function(jQuery) {
+    var $module = jQuery('#m-1625156884594-2').children('.module');
+    $module.gfV3ProductPrice({
+        displayCurrency: true
+    });
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625156884608').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625156884594-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625157689365').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1625157689365-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function(jQuery) {
+var $module = jQuery('#m-1625157689392').children('.module');
+$module.gfV4ProductImageList({
+  onImageClicked: function(imageUrl, imageZoomUrl) {}
+});
+
+var style = $module.attr('data-style');
+switch(style) {
+  case 'slider':
+      var navspeed = $module.data('navspeed'),
+          navlg = $module.data('navlg'),
+          navmd = $module.data('navmd'),
+          navsm = $module.data('navsm'),
+          navxs = $module.data('navxs'),
+          collg = $module.data('collg'),
+          colmd = $module.data('colmd'),
+          colsm = $module.data('colsm'),
+          colxs = $module.data('colxs'),
+          dotslg = $module.data('dotslg'),
+          dotsmd = $module.data('dotsmd'),
+          dotssm = $module.data('dotssm'),
+          dotsxs = $module.data('dotsxs'),
+
+          marginlg = parseInt($module.data('mlg')),
+          marginmd = parseInt($module.data('mmd')),
+          marginsm = parseInt($module.data('msm')),
+          marginxs = parseInt($module.data('mxs'));
+
+      var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+      if(mode == 'production') {
+          var loop = $module.data('loop');
+      } else {
+          var loop = 0;
+      }
+      $module.find('.gf_product-images-list').children().each( function( index ) {
+        jQuery(this).attr( 'data-position', index );
+      });
+      $module.find('.gf_product-images-list').owlCarousel({
+          mouseDrag: false,
+          navSpeed: navspeed,
+          autoWidth: !1,
+          loop: loop,
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:colxs,
+                  nav: navxs,
+                  dots:dotsxs,
+                  margin: marginxs
+              },
+              768:{
+                  items:colsm,
+                  nav: navsm,
+                  dots:dotssm,
+                  margin: marginsm
+              },
+              992:{
+                  items:colmd,
+                  nav: navmd,
+                  dots:dotsmd,
+                  margin: marginmd
+              },
+              1200:{
+                  items:collg,
+                  nav: navlg,
+                  dots:dotslg,
+                  margin: marginlg
+              }
+          },
+          onInitialized: function(){
+            $module.closest('.module-wrap[data-label="(P) Image List"]').addClass('gf-carousel-loaded');
+          }
+      }); 
+      break;
+}
+})(window.GemQuery || jQuery); 
+    
+    
+(function(jQuery) {
+    var $module = jQuery('#m-1625157689365-2').children('.module');
+    $module.gfV3ProductPrice({
+        displayCurrency: true
+    });
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625157689393').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625157689365-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625158496917').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1625158496917-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function(jQuery) {
+var $module = jQuery('#m-1625158496934').children('.module');
+$module.gfV4ProductImageList({
+  onImageClicked: function(imageUrl, imageZoomUrl) {}
+});
+
+var style = $module.attr('data-style');
+switch(style) {
+  case 'slider':
+      var navspeed = $module.data('navspeed'),
+          navlg = $module.data('navlg'),
+          navmd = $module.data('navmd'),
+          navsm = $module.data('navsm'),
+          navxs = $module.data('navxs'),
+          collg = $module.data('collg'),
+          colmd = $module.data('colmd'),
+          colsm = $module.data('colsm'),
+          colxs = $module.data('colxs'),
+          dotslg = $module.data('dotslg'),
+          dotsmd = $module.data('dotsmd'),
+          dotssm = $module.data('dotssm'),
+          dotsxs = $module.data('dotsxs'),
+
+          marginlg = parseInt($module.data('mlg')),
+          marginmd = parseInt($module.data('mmd')),
+          marginsm = parseInt($module.data('msm')),
+          marginxs = parseInt($module.data('mxs'));
+
+      var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+      if(mode == 'production') {
+          var loop = $module.data('loop');
+      } else {
+          var loop = 0;
+      }
+      $module.find('.gf_product-images-list').children().each( function( index ) {
+        jQuery(this).attr( 'data-position', index );
+      });
+      $module.find('.gf_product-images-list').owlCarousel({
+          mouseDrag: false,
+          navSpeed: navspeed,
+          autoWidth: !1,
+          loop: loop,
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:colxs,
+                  nav: navxs,
+                  dots:dotsxs,
+                  margin: marginxs
+              },
+              768:{
+                  items:colsm,
+                  nav: navsm,
+                  dots:dotssm,
+                  margin: marginsm
+              },
+              992:{
+                  items:colmd,
+                  nav: navmd,
+                  dots:dotsmd,
+                  margin: marginmd
+              },
+              1200:{
+                  items:collg,
+                  nav: navlg,
+                  dots:dotslg,
+                  margin: marginlg
+              }
+          },
+          onInitialized: function(){
+            $module.closest('.module-wrap[data-label="(P) Image List"]').addClass('gf-carousel-loaded');
+          }
+      }); 
+      break;
+}
+})(window.GemQuery || jQuery); 
+    
+    
+(function(jQuery) {
+    var $module = jQuery('#m-1625158496917-2').children('.module');
+    $module.gfV3ProductPrice({
+        displayCurrency: true
+    });
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625158496800').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625158496917-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625160864500').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1625160864500-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function(jQuery) {
+var $module = jQuery('#m-1625160864492').children('.module');
+$module.gfV4ProductImageList({
+  onImageClicked: function(imageUrl, imageZoomUrl) {}
+});
+
+var style = $module.attr('data-style');
+switch(style) {
+  case 'slider':
+      var navspeed = $module.data('navspeed'),
+          navlg = $module.data('navlg'),
+          navmd = $module.data('navmd'),
+          navsm = $module.data('navsm'),
+          navxs = $module.data('navxs'),
+          collg = $module.data('collg'),
+          colmd = $module.data('colmd'),
+          colsm = $module.data('colsm'),
+          colxs = $module.data('colxs'),
+          dotslg = $module.data('dotslg'),
+          dotsmd = $module.data('dotsmd'),
+          dotssm = $module.data('dotssm'),
+          dotsxs = $module.data('dotsxs'),
+
+          marginlg = parseInt($module.data('mlg')),
+          marginmd = parseInt($module.data('mmd')),
+          marginsm = parseInt($module.data('msm')),
+          marginxs = parseInt($module.data('mxs'));
+
+      var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+      if(mode == 'production') {
+          var loop = $module.data('loop');
+      } else {
+          var loop = 0;
+      }
+      $module.find('.gf_product-images-list').children().each( function( index ) {
+        jQuery(this).attr( 'data-position', index );
+      });
+      $module.find('.gf_product-images-list').owlCarousel({
+          mouseDrag: false,
+          navSpeed: navspeed,
+          autoWidth: !1,
+          loop: loop,
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:colxs,
+                  nav: navxs,
+                  dots:dotsxs,
+                  margin: marginxs
+              },
+              768:{
+                  items:colsm,
+                  nav: navsm,
+                  dots:dotssm,
+                  margin: marginsm
+              },
+              992:{
+                  items:colmd,
+                  nav: navmd,
+                  dots:dotsmd,
+                  margin: marginmd
+              },
+              1200:{
+                  items:collg,
+                  nav: navlg,
+                  dots:dotslg,
+                  margin: marginlg
+              }
+          },
+          onInitialized: function(){
+            $module.closest('.module-wrap[data-label="(P) Image List"]').addClass('gf-carousel-loaded');
+          }
+      }); 
+      break;
+}
+})(window.GemQuery || jQuery); 
+    
+    
+(function(jQuery) {
+    var $module = jQuery('#m-1625160864500-2').children('.module');
+    $module.gfV3ProductPrice({
+        displayCurrency: true
+    });
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625160864513').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625160864500-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625161220091').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1625161220091-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function(jQuery) {
+var $module = jQuery('#m-1625161220034').children('.module');
+$module.gfV4ProductImageList({
+  onImageClicked: function(imageUrl, imageZoomUrl) {}
+});
+
+var style = $module.attr('data-style');
+switch(style) {
+  case 'slider':
+      var navspeed = $module.data('navspeed'),
+          navlg = $module.data('navlg'),
+          navmd = $module.data('navmd'),
+          navsm = $module.data('navsm'),
+          navxs = $module.data('navxs'),
+          collg = $module.data('collg'),
+          colmd = $module.data('colmd'),
+          colsm = $module.data('colsm'),
+          colxs = $module.data('colxs'),
+          dotslg = $module.data('dotslg'),
+          dotsmd = $module.data('dotsmd'),
+          dotssm = $module.data('dotssm'),
+          dotsxs = $module.data('dotsxs'),
+
+          marginlg = parseInt($module.data('mlg')),
+          marginmd = parseInt($module.data('mmd')),
+          marginsm = parseInt($module.data('msm')),
+          marginxs = parseInt($module.data('mxs'));
+
+      var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+      if(mode == 'production') {
+          var loop = $module.data('loop');
+      } else {
+          var loop = 0;
+      }
+      $module.find('.gf_product-images-list').children().each( function( index ) {
+        jQuery(this).attr( 'data-position', index );
+      });
+      $module.find('.gf_product-images-list').owlCarousel({
+          mouseDrag: false,
+          navSpeed: navspeed,
+          autoWidth: !1,
+          loop: loop,
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:colxs,
+                  nav: navxs,
+                  dots:dotsxs,
+                  margin: marginxs
+              },
+              768:{
+                  items:colsm,
+                  nav: navsm,
+                  dots:dotssm,
+                  margin: marginsm
+              },
+              992:{
+                  items:colmd,
+                  nav: navmd,
+                  dots:dotsmd,
+                  margin: marginmd
+              },
+              1200:{
+                  items:collg,
+                  nav: navlg,
+                  dots:dotslg,
+                  margin: marginlg
+              }
+          },
+          onInitialized: function(){
+            $module.closest('.module-wrap[data-label="(P) Image List"]').addClass('gf-carousel-loaded');
+          }
+      }); 
+      break;
+}
+})(window.GemQuery || jQuery); 
+    
+    
+(function(jQuery) {
+    var $module = jQuery('#m-1625161220091-2').children('.module');
+    $module.gfV3ProductPrice({
+        displayCurrency: true
+    });
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625161219996').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625161220091-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625161678805').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1625161678805-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function(jQuery) {
+var $module = jQuery('#m-1625161678748').children('.module');
+$module.gfV4ProductImageList({
+  onImageClicked: function(imageUrl, imageZoomUrl) {}
+});
+
+var style = $module.attr('data-style');
+switch(style) {
+  case 'slider':
+      var navspeed = $module.data('navspeed'),
+          navlg = $module.data('navlg'),
+          navmd = $module.data('navmd'),
+          navsm = $module.data('navsm'),
+          navxs = $module.data('navxs'),
+          collg = $module.data('collg'),
+          colmd = $module.data('colmd'),
+          colsm = $module.data('colsm'),
+          colxs = $module.data('colxs'),
+          dotslg = $module.data('dotslg'),
+          dotsmd = $module.data('dotsmd'),
+          dotssm = $module.data('dotssm'),
+          dotsxs = $module.data('dotsxs'),
+
+          marginlg = parseInt($module.data('mlg')),
+          marginmd = parseInt($module.data('mmd')),
+          marginsm = parseInt($module.data('msm')),
+          marginxs = parseInt($module.data('mxs'));
+
+      var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+      if(mode == 'production') {
+          var loop = $module.data('loop');
+      } else {
+          var loop = 0;
+      }
+      $module.find('.gf_product-images-list').children().each( function( index ) {
+        jQuery(this).attr( 'data-position', index );
+      });
+      $module.find('.gf_product-images-list').owlCarousel({
+          mouseDrag: false,
+          navSpeed: navspeed,
+          autoWidth: !1,
+          loop: loop,
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:colxs,
+                  nav: navxs,
+                  dots:dotsxs,
+                  margin: marginxs
+              },
+              768:{
+                  items:colsm,
+                  nav: navsm,
+                  dots:dotssm,
+                  margin: marginsm
+              },
+              992:{
+                  items:colmd,
+                  nav: navmd,
+                  dots:dotsmd,
+                  margin: marginmd
+              },
+              1200:{
+                  items:collg,
+                  nav: navlg,
+                  dots:dotslg,
+                  margin: marginlg
+              }
+          },
+          onInitialized: function(){
+            $module.closest('.module-wrap[data-label="(P) Image List"]').addClass('gf-carousel-loaded');
+          }
+      }); 
+      break;
+}
+})(window.GemQuery || jQuery); 
+    
+    
+(function(jQuery) {
+    var $module = jQuery('#m-1625161678805-2').children('.module');
+    $module.gfV3ProductPrice({
+        displayCurrency: true
+    });
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625161678818').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625161678805-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625162232075').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1625162232075-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function(jQuery) {
+var $module = jQuery('#m-1625162232074').children('.module');
+$module.gfV4ProductImageList({
+  onImageClicked: function(imageUrl, imageZoomUrl) {}
+});
+
+var style = $module.attr('data-style');
+switch(style) {
+  case 'slider':
+      var navspeed = $module.data('navspeed'),
+          navlg = $module.data('navlg'),
+          navmd = $module.data('navmd'),
+          navsm = $module.data('navsm'),
+          navxs = $module.data('navxs'),
+          collg = $module.data('collg'),
+          colmd = $module.data('colmd'),
+          colsm = $module.data('colsm'),
+          colxs = $module.data('colxs'),
+          dotslg = $module.data('dotslg'),
+          dotsmd = $module.data('dotsmd'),
+          dotssm = $module.data('dotssm'),
+          dotsxs = $module.data('dotsxs'),
+
+          marginlg = parseInt($module.data('mlg')),
+          marginmd = parseInt($module.data('mmd')),
+          marginsm = parseInt($module.data('msm')),
+          marginxs = parseInt($module.data('mxs'));
+
+      var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+      if(mode == 'production') {
+          var loop = $module.data('loop');
+      } else {
+          var loop = 0;
+      }
+      $module.find('.gf_product-images-list').children().each( function( index ) {
+        jQuery(this).attr( 'data-position', index );
+      });
+      $module.find('.gf_product-images-list').owlCarousel({
+          mouseDrag: false,
+          navSpeed: navspeed,
+          autoWidth: !1,
+          loop: loop,
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:colxs,
+                  nav: navxs,
+                  dots:dotsxs,
+                  margin: marginxs
+              },
+              768:{
+                  items:colsm,
+                  nav: navsm,
+                  dots:dotssm,
+                  margin: marginsm
+              },
+              992:{
+                  items:colmd,
+                  nav: navmd,
+                  dots:dotsmd,
+                  margin: marginmd
+              },
+              1200:{
+                  items:collg,
+                  nav: navlg,
+                  dots:dotslg,
+                  margin: marginlg
+              }
+          },
+          onInitialized: function(){
+            $module.closest('.module-wrap[data-label="(P) Image List"]').addClass('gf-carousel-loaded');
+          }
+      }); 
+      break;
+}
+})(window.GemQuery || jQuery); 
+    
+    
+(function(jQuery) {
+    var $module = jQuery('#m-1625162232075-2').children('.module');
+    $module.gfV3ProductPrice({
+        displayCurrency: true
+    });
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625162232101').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625162232075-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625162745695').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1625162745695-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function(jQuery) {
+var $module = jQuery('#m-1625162745673').children('.module');
+$module.gfV4ProductImageList({
+  onImageClicked: function(imageUrl, imageZoomUrl) {}
+});
+
+var style = $module.attr('data-style');
+switch(style) {
+  case 'slider':
+      var navspeed = $module.data('navspeed'),
+          navlg = $module.data('navlg'),
+          navmd = $module.data('navmd'),
+          navsm = $module.data('navsm'),
+          navxs = $module.data('navxs'),
+          collg = $module.data('collg'),
+          colmd = $module.data('colmd'),
+          colsm = $module.data('colsm'),
+          colxs = $module.data('colxs'),
+          dotslg = $module.data('dotslg'),
+          dotsmd = $module.data('dotsmd'),
+          dotssm = $module.data('dotssm'),
+          dotsxs = $module.data('dotsxs'),
+
+          marginlg = parseInt($module.data('mlg')),
+          marginmd = parseInt($module.data('mmd')),
+          marginsm = parseInt($module.data('msm')),
+          marginxs = parseInt($module.data('mxs'));
+
+      var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+      if(mode == 'production') {
+          var loop = $module.data('loop');
+      } else {
+          var loop = 0;
+      }
+      $module.find('.gf_product-images-list').children().each( function( index ) {
+        jQuery(this).attr( 'data-position', index );
+      });
+      $module.find('.gf_product-images-list').owlCarousel({
+          mouseDrag: false,
+          navSpeed: navspeed,
+          autoWidth: !1,
+          loop: loop,
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:colxs,
+                  nav: navxs,
+                  dots:dotsxs,
+                  margin: marginxs
+              },
+              768:{
+                  items:colsm,
+                  nav: navsm,
+                  dots:dotssm,
+                  margin: marginsm
+              },
+              992:{
+                  items:colmd,
+                  nav: navmd,
+                  dots:dotsmd,
+                  margin: marginmd
+              },
+              1200:{
+                  items:collg,
+                  nav: navlg,
+                  dots:dotslg,
+                  margin: marginlg
+              }
+          },
+          onInitialized: function(){
+            $module.closest('.module-wrap[data-label="(P) Image List"]').addClass('gf-carousel-loaded');
+          }
+      }); 
+      break;
+}
+})(window.GemQuery || jQuery); 
+    
+    
+(function(jQuery) {
+    var $module = jQuery('#m-1625162745695-2').children('.module');
+    $module.gfV3ProductPrice({
+        displayCurrency: true
+    });
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625162745726').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625162745695-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625163042665').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+    
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1625163042665-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function(jQuery) {
+var $module = jQuery('#m-1625163042679').children('.module');
+$module.gfV4ProductImageList({
+  onImageClicked: function(imageUrl, imageZoomUrl) {}
+});
+
+var style = $module.attr('data-style');
+switch(style) {
+  case 'slider':
+      var navspeed = $module.data('navspeed'),
+          navlg = $module.data('navlg'),
+          navmd = $module.data('navmd'),
+          navsm = $module.data('navsm'),
+          navxs = $module.data('navxs'),
+          collg = $module.data('collg'),
+          colmd = $module.data('colmd'),
+          colsm = $module.data('colsm'),
+          colxs = $module.data('colxs'),
+          dotslg = $module.data('dotslg'),
+          dotsmd = $module.data('dotsmd'),
+          dotssm = $module.data('dotssm'),
+          dotsxs = $module.data('dotsxs'),
+
+          marginlg = parseInt($module.data('mlg')),
+          marginmd = parseInt($module.data('mmd')),
+          marginsm = parseInt($module.data('msm')),
+          marginxs = parseInt($module.data('mxs'));
+
+      var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+      if(mode == 'production') {
+          var loop = $module.data('loop');
+      } else {
+          var loop = 0;
+      }
+      $module.find('.gf_product-images-list').children().each( function( index ) {
+        jQuery(this).attr( 'data-position', index );
+      });
+      $module.find('.gf_product-images-list').owlCarousel({
+          mouseDrag: false,
+          navSpeed: navspeed,
+          autoWidth: !1,
+          loop: loop,
+          responsiveClass:true,
+          responsive:{
+              0:{
+                  items:colxs,
+                  nav: navxs,
+                  dots:dotsxs,
+                  margin: marginxs
+              },
+              768:{
+                  items:colsm,
+                  nav: navsm,
+                  dots:dotssm,
+                  margin: marginsm
+              },
+              992:{
+                  items:colmd,
+                  nav: navmd,
+                  dots:dotsmd,
+                  margin: marginmd
+              },
+              1200:{
+                  items:collg,
+                  nav: navlg,
+                  dots:dotslg,
+                  margin: marginlg
+              }
+          },
+          onInitialized: function(){
+            $module.closest('.module-wrap[data-label="(P) Image List"]').addClass('gf-carousel-loaded');
+          }
+      }); 
+      break;
+}
+})(window.GemQuery || jQuery); 
+    
+    
+(function(jQuery) {
+    var $module = jQuery('#m-1625163042665-2').children('.module');
+    $module.gfV3ProductPrice({
+        displayCurrency: true
+    });
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625163042726').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1625163042665-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+    
+    
+    

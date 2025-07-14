@@ -1,0 +1,62 @@
+# Mini Travel Pipe ID = 7226565446
+min_dollar_amount_for_free_gift = 119
+min_total_for_free_gift = Money.new(cents:100) * min_dollar_amount_for_free_gift
+travel_pipe_id = 7226565446
+travel_pipe_variant_id = 33001208902
+free_gift_ids = [travel_pipe_id]
+cart_sub_total = Input.cart.subtotal_price_was
+
+
+# Gets one of each line_item and returns the items that are to be discounted.
+#
+# Arguments
+# ---------
+#
+# * cart
+#   The cart to which split items will be added (typically Input.cart).
+#
+# * line_items
+#   The selected items that are applicable for the campaign.
+#
+# * usage: discounted_line_items = get_one(Input.cart, eligible_items)
+def get_one(cart, line_items)
+  # Sort the items by price from high to low
+  sorted_items = line_items.sort_by{|line_item| line_item.variant.price}.reverse
+  # Create an array of items to return
+  discounted_items = []
+  sorted_items.each do |line_item|
+    if line_item.quantity > 1
+      # If only part of the item must be discounted, split the item
+      discounted_item = line_item.split(take: 1)
+      # Insert the newly-created item in the cart, right after the original item
+      position = cart.line_items.find_index(line_item)
+      cart.line_items.insert(position + 1, discounted_item)
+      # Add it to the list of items to return
+      discounted_items.push(discounted_item)
+    else
+      discounted_item = line_item
+      discounted_items.push(discounted_item)
+    end
+  end
+  # Return the items to be discounted
+  discounted_items
+end
+
+
+
+eligible_items = Input.cart.line_items.select do |line_item|
+  product = line_item.variant.product
+  !product.gift_card? && product.id == travel_pipe_id
+end
+
+
+discounted_line_items = get_one(Input.cart, eligible_items)
+discounted_line_items.each do |line_item|
+  product = line_item.variant.product
+  if free_gift_ids.include?(product.id) && cart_sub_total >= min_total_for_free_gift 
+    line_item.change_line_price(Money.zero, message: "FREE with purchase of $119 or more")
+  end
+end
+
+
+Output.cart = Input.cart

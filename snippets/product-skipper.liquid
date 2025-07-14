@@ -1,0 +1,16 @@
+{%- comment -%}
+Skip noindex products
+{%- endcomment -%}
+{%- if product.template_suffix == 'hidden' -%}
+  {%- continue -%}
+{%- endif -%}
+{%- if product.metafields.global.noindex != blank and product.metafields.global.noindex == 'noindex,nofollow'-%}
+  {%- continue -%}
+{%- endif -%}
+{%- if product.metafields.seo.hidden != blank and product.metafields.seo.hidden == 1 -%}
+  {%- continue -%}
+{%- endif -%}
+{%- if product.tags contains 'hidden' -%}
+  {%- continue -%}
+{%- endif -%}
+

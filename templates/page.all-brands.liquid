@@ -1,0 +1,84 @@
+<style>
+  .col-8 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 12.5%;
+    flex: 0 0 12.5%;
+    max-width: 12.5%;
+  }
+  @media (min-width: 576px){
+    .col-sm-6 {
+      -webkit-box-flex: 0;
+      -ms-flex: 0 0 50%;
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+  }
+  @media (min-width: 768px){
+    .col-md-3 {
+      -webkit-box-flex: 0;
+      -ms-flex: 0 0 25%;
+      flex: 0 0 25%;
+      max-width: 25%;
+    }
+  }
+  @media (min-width: 992px){
+    .col-lg-8 {
+      -webkit-box-flex: 0;
+      -ms-flex: 0 0 12.5%;
+      flex: 0 0 12.5%;
+      max-width: 12.5%;
+    }
+  }
+</style>
+
+<div class="wrapper container">
+
+  {%- include 'breadcrumb' -%}
+
+  <div class="row">
+    <h1 class="col">{{ page.title }}</h1>
+  </div>
+
+  <div class="row">
+    {%- comment -%}
+    {{ page.content }}
+    {%- endcomment -%}
+
+    <p class="col">Check out thousands of products from hundreds of different brands and glass artists on our online headshop! Shop your favorite artist or brand by name using the list below.</p>
+  </div>
+
+  <ul class="vendor-list row">
+    {%- for collection in collections -%}
+    {%- assign collection_suffix = collection.template_suffix | strip -%}
+    {%- if collection_suffix == 'vendor' -%}
+    {%- assign collection_title = collection.title -%}
+    <li class="col-6 col-sm-6 col-md-3 col-lg-8">
+      <a href="{{ collection.url }}">
+        <div class="brand-img">
+          {%- assign vendor_collection_image = collection.image -%}
+          {%- assign v_c_width = '100' -%}
+          {%- assign v_c_size = 'small' -%}
+          {%- assign v_c_srcset = '100,100,120' -%}
+          {%- assign v_c_ss_sizes = '100,100,120' -%}
+          
+          {%- comment -%}
+          {%- include 'image-module' im_src:vendor_collection_image, width:v_c_width, srcset:v_c_srcset, ss_sizes:v_c_ss_sizes, size:v_c_size, im_a:collection_title -%}
+          {%- endcomment -%}
+          
+          {%- include 'image-module' im_src:vendor_collection_image, im_a:collection_title -%}
+          
+        </div>
+        {%- comment -%}
+        {%- include 'collection--reviews' with collection, schema_off:true -%}
+        {%- endcomment -%}
+        
+        <div class="brand-name"> 
+          <span>{{ collection_title }}</span>
+        </div>
+      </a>
+    </li>
+    {%- endif -%}
+    {%- endfor -%}
+  </ul>
+
+</div>

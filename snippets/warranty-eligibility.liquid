@@ -1,0 +1,31 @@
+{%- comment -%}
+  Product Warranty Eligibility
+{%- endcomment -%}
+{%- assign warranty_eligible = false -%}
+{%- assign warranty_ineligible_tag = settings.warranty__ineligible_tag -%}
+{%- comment -%}
+  First check if product has the tag that makes it ineligible for warranty
+{%- endcomment -%}
+{%- unless product.tags contains warranty_ineligible_tag -%}
+  {%- comment -%}
+    Then check if product is of a brand that is eligible for warranty
+  {%- endcomment -%}
+  {%- assign warranty_eligible_brands = settings.warranty__elibigle_brands | split: ", " -%}
+  {%- for warranty_eligible_brand in warranty_eligible_brands -%}
+    {%- if product.vendor == warranty_eligible_brand -%}
+      {%- assign warranty_eligible = true -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- comment -%}
+    If it is of an eligible brand, then check if its of a disqualifying type
+  {%- endcomment -%}
+  {%- if warranty_eligible -%}
+  {%- assign warranty_ineligible_types = settings.warranty__ineligible_types | split: ", " -%}
+  {%- for warranty_ineligible_type in warranty_ineligible_types -%}
+    {%- if product.type == warranty_ineligible_type -%}
+      {%- assign warranty_eligible = false -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- endif -%}
+{%- endunless -%}
+{%- assign warranty__show_in_product_details = settings.warranty__enable_in_product_details -%}

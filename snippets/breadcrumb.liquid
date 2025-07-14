@@ -1,0 +1,189 @@
+{%- comment -%}
+  Documentation - http://docs.shopify.com/support/your-website/navigation/creating-a-breadcrumb-navigation
+{%- increment item_position -%}
+{%- endcomment -%}
+
+{%- if settings.display_breadcrumb -%}
+
+
+
+{%- unless template == 'index' -%}
+<ul class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList" data-nothing="{%- increment item_position -%}">
+  <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a href="/" title="{{ shop.name }}" data-translate="general.breadcrumbs.home" itemprop="item">
+      <span itemprop="name">
+        {{- 'general.breadcrumbs.home' | t -}}
+      </span>
+      {%- assign item_position = 1 -%}
+      <meta itemprop="position" content="{%- increment item_position -%}" />
+    </a>
+  </li>
+  
+  {%- if template contains 'product' -%} 
+  
+    {%- if collection -%}
+      <li class="arrow">
+        <svg class=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#faChevronRight"></use></svg>
+      </li>
+
+      <li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+        <a href="/collections" title="Categories" itemprop="item"><span itemprop="name">Categories</span><meta itemprop="position" content="{%- increment item_position -%}"></a>
+      </li>
+
+      <li class="arrow">
+        <svg class=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#faChevronRight"></use></svg>
+      </li>
+
+      {%- if collection.handle -%}
+      {%- capture url -%}/collections/{{ collection.handle }}{%- endcapture -%}
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a href="{{ url }}" title="{{ collection.title }}" itemprop="item">
+          <span itemprop="name">{{ collection.title | split: '|' | first }}</span>
+          <meta itemprop="position" content="{%- increment item_position -%}" />
+        </a>
+      </li>
+      {%- endif -%}
+    {%- endif -%}
+  
+    <li class="arrow">
+      <svg class=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#faChevronRight"></use></svg>
+  	</li>
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <span itemprop="name">{{ product.title | split: '|' | first }}</span>
+      <meta itemprop="position" content="{%- increment item_position -%}" />
+    </li>
+  
+  {%- elsif template contains 'collection' and collection.handle -%}
+  
+    <li class="arrow">
+      <svg class=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#faChevronRight"></use></svg>
+    </li>
+
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/collections" title="All Categories" itemprop="item">
+        <span itemprop="name">Categories</span>
+        <meta itemprop="position" content="{%- increment item_position -%}" />
+      </a>
+    </li>
+
+
+    <li class="arrow">
+      <svg class=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#faChevronRight"></use></svg>
+    </li>
+
+    {%- capture url -%}/collections/{{ collection.handle }}{%- endcapture -%}
+    {%- assign collection_title_prefix = "" -%}
+    {%- if template.suffix == "vendor" -%}
+    {%- assign collection_title_prefix = "Brand: " -%}
+    {%- endif -%}
+    {%- if template.suffix == "type" -%}
+    {%- assign collection_title_prefix = "Product type: " -%}
+    {%- endif -%}
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" data-hello="{{template.suffix}}">
+      <a href="{{ url }}" title="{{ collection_title_prefix }}{{ collection.title }}" itemprop="item">
+        <span>{{ collection_title_prefix }}<span itemprop="name">{{ collection.title }}</span></span>
+        <meta itemprop="position" content="{%- increment item_position -%}" />
+      </a>
+    </li>
+
+  
+    {%- if current_tags -%}
+  
+      <li class="arrow">
+        <svg class=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#faChevronRight"></use></svg>
+      </li>
+
+
+      {%- for tag in current_tags -%}
+        {%- comment -%}
+      	{%- assign current_tags[forloop.index0] = tag | capitalize -%}
+        {%- endcomment -%}
+  
+        {%- if bd_tags == blank -%}
+          {%- assign bd_tags = tag | replace: "_", ": " | capitalize -%}
+        {%- else -%}
+          {%- assign processed_tag = tag | replace: "_", ": " | capitalize -%}
+          {%- assign bd_tags = bd_tags | append: " + " | append: processed_tag -%}
+        {%- endif -%}
+      {%- endfor -%}
+      
+      
+      {%- comment -%}
+      {%- assign bd_tags = current_tags | join: " + " | replace: "_", ": " | capitalize -%}
+      {%- endcomment -%}
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a class="bd-title" href="{{ canonical_url }}" title="{{ bd_tags | split: '|' | first }}" itemprop="item">
+          <span itemprop="name">{{ bd_tags | split: '|' | first }}</span>
+          <meta itemprop="position" content="{%- increment item_position -%}" />
+        </a>
+      </li>
+  
+  	{%- endif -%}
+  
+  {%- elsif template == 'cart' -%}
+
+    <li class="arrow">
+      <svg class=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#faChevronRight"></use></svg>
+    </li> 	
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="{{ canonical_url }}" title="{{ 'general.breadcrumbs.cart' | t }}" itemprop="item">
+        <span itemprop="name">{{ 'general.breadcrumbs.cart' | t }}</span>
+        <meta itemprop="position" content="{%- increment item_position -%}" />
+      </a>
+    </li>
+
+  {%- elsif template == 'article' -%}
+
+    <li class="arrow">
+      <svg class=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#faChevronRight"></use></svg>
+    </li> 
+  
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="{{ blog.url }}" title="{{ blog.title }}" itemprop="item">
+        <span itemprop="name">{{ blog.title | split: '|' | first }}</span>
+        <meta itemprop="position" content="{%- increment item_position -%}" />
+      </a>
+    </li>
+  
+    <li class="arrow">
+      <svg class=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#faChevronRight"></use></svg>
+    </li>
+  
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="{{ article.url }}" title="{{ article.title }}" itemprop="item">
+        <span itemprop="name">{{ article.title | split: '|' | first }}</span>
+        <meta itemprop="position" content="{%- increment item_position -%}" />
+      </a>
+    </li>
+
+  {%- elsif template contains 'page' -%}
+
+    <li class="arrow">
+      <svg class=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#faChevronRight"></use></svg>
+    </li>
+  
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="{{ page.url }}" title="{{ page.title }}" itemprop="item">
+        <span itemprop="name">{{ page.title | split: '|' | first }}</span>
+        <meta itemprop="position" content="{%- increment item_position -%}" />
+      </a>
+    </li>
+
+  {%- else -%}
+  
+    <li class="arrow">
+      <svg class=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#faChevronRight"></use></svg>
+    </li>
+  
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="{{ canonical_url  }}" itemprop="item">
+        <span itemprop="name">{{ page_title | split: '|' | first }}</span>
+        <meta itemprop="position" content="{%- increment item_position -%}" />
+      </a>
+    </li>
+  
+  {%- endif -%}
+  
+</ul>
+{%- endunless -%}
+{%- endif -%}

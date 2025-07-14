@@ -1,0 +1,22 @@
+<div class="product-template product-template-default container">
+
+  {%- if collection -%}
+  <div class="next_prev-groups">
+    {%- include 'breadcrumb' -%}
+    {%- include 'next-prev-product' -%} 	
+  </div>
+  {%- else -%}
+  {%- include 'breadcrumb' -%}
+  {%- endif -%}
+
+  {%- comment -%}
+  {%- section 'sidebar-section' -%}
+  {%- endcomment -%}
+  {%- section 'product-template-default' -%}
+
+  {%- comment -%}
+  {%- section 'recently-viewed-products' -%}
+  {%- endcomment -%}
+  <div class="lazybit lazybit-load" data-lazy-url="{{ shop.url }}?view=recently-viewed-products"></div>
+
+</div>

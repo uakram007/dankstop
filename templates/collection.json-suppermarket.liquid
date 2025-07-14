@@ -1,0 +1,27 @@
+{% layout none %}
+<div class="product-grids">
+    <div class="grid-items">
+        {% assign in_stock_products = 0 %}    
+        {% if collection.products_count > 0 %}    
+        {% for product in collection.products %}
+      
+          {% if product.available %}
+            {% assign in_stock_products = in_stock_products | plus: 1 %}    
+            <div data-stock="{{in_stock_products}}" class="grid-item col-6 col-md-4 col-lg-3 col5 {% if settings.product_image_border %} grid-item-border{% endif %}">
+                {% include 'suppermarket-product-grid-item' %}
+            </div>
+          {% endif %}
+
+          {% if in_stock_products == 10 %}
+            {% break %}
+          {% endif %}
+      
+        {% endfor%}
+
+        {% else %}
+        <div class="text-center" {% if settings.enable_multilang %}data-translate="collections.general.no_matches"{% endif %}>
+            {{ 'collections.general.no_matches' | t }}
+        </div>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,31 @@
+{%- if feature_translated_terms_array or product_bullet_points_array -%}
+<div class="product-bullet-points container">
+    {%- if product_height or joint_size_or_gender -%}
+    <div class="row joint-and-height">
+        {%- if joint_size != '' and joint_gender != '' -%}
+        <div class="col-6 joint-size">
+          <h5>{{ 'products.bullet_points.joint_title' | t }}:</h5>
+          <span><span>{{ joint_size }}</span> <span class="joint-gender">{{ joint_gender }}</span></span>
+        </div>
+        {%- endif -%}
+        {%- if product_height -%}
+        <div class="col-6 product-height">
+          <h5>{{ 'products.bullet_points.height_title' | t }}:</h5>
+          <span>{{ product_height }}</span>
+        </div>
+        {%- endif -%}
+    </div>
+    {%- endif -%}
+    <div class="row product-bullets">
+      <ul class="col-12">
+        <li>{{ product_vendor }} {{ product_type }}</li>
+        {%- for product_bullet_point in product_bullet_points_array -%}
+        <li>{{ product_bullet_point | strip | replace: "-; ", ", " }}</li>
+        {%- endfor -%}
+        {%- for feature_term in feature_translated_terms_array -%}
+        <li>{{ feature_term }}</li>
+        {%- endfor -%}
+      </ul>
+    </div>
+</div>
+{%- endif -%}

@@ -1,0 +1,690 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{ shop.locale }}"> <!--<![endif]-->
+<head>
+  
+   <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MK2MCKP');</script>
+<!-- End Google Tag Manager -->
+  {%- comment -%}
+  <!-- Title, description, and basics ===================================== -->
+  {%- endcomment -%}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">	
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes">
+  <meta name="HandheldFriendly" content="true" />
+  <title>{{ page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+
+  {%- if page_description -%}
+  <meta name="description" content="{{ page_description | escape | truncate: 120, '...' }}">
+  {%- endif -%}
+  
+  
+  {%- comment -%}
+  <!-- Who put this here?  It throws a syntax error, at least on Bongs page.  -Andre -->
+  <script>
+    {{ collection | json }}
+  </script>
+  {%- endcomment -%}
+  
+  
+  {%- comment -%}
+  <!-- DankStop Highlife Andre custom bidness -->
+  {%- include 'site-head' -%}
+  {%- endcomment -%}
+
+
+
+
+  {%- comment -%}
+  <!-- Current Page Object ====================================== -->
+  {%- endcomment -%}
+  {%- if template.name == 'collection' -%}
+    {%- assign current_page_object = collection -%}
+  {%- elsif template.name == 'product' -%}
+    {%- assign current_page_object = product -%}
+  {%- elsif template.name == 'page' -%}
+    {%- assign current_page_object = page -%}
+    {{ 'pages.scss.css' | asset_url | stylesheet_tag }}
+  {%- elsif template.name == 'article' -%}
+  {%- comment -%}
+  <!-- Article head ====================================== -->
+  {%- endcomment -%}
+    <link rel="amphtml" href="{{ canonical_url }}?view=amp-html">
+    {%- assign current_page_object = article -%}
+  {%- elsif template.name == 'blog' -%}
+    {%- assign current_page_object = blog -%}
+  {%- endif -%}
+ 
+
+
+  {%- if template == 'collection' and collection -%}
+    {%- if current_tags.size > 0 -%}
+      {%- if current_tags.first contains 'brand_' -%}
+        <meta name="robots" content="noindex,follow" />{%- assign usednoindex = true -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- elsif template == 'product' -%}
+    {%- if product.type == 'shipping' or product.title == 'Shipping Insurance' -%}
+      <meta name="robots" content="noindex,follow">{%- assign usednoindex = true -%}
+    {%- endif -%}
+  {%- elsif template == 'blog' and blog -%}
+    {%- if current_tags.size > 0 -%}
+      <meta name="robots" content="noindex,follow" />{%- assign usednoindex = true -%}
+    {%- endif -%}
+  {%- endif -%}
+
+ 
+
+  
+  
+  
+	{%- comment -%}
+	<!-- Canonical URL ===================================== -->
+	{%- endcomment -%}
+	{%- assign new_canonical_url = canonical_url -%}
+	{%- assign collections_path = "/collections/" -%}
+
+	{%- if request.path == '/collections/vendors' -%}
+		{%- capture query_string -%}{%- include 'query_string_extractor' -%}{%- endcapture -%}
+		{%- assign query_string_parts = query_string | split: ',' -%}
+		{%- for query_string_part in query_string_parts -%}
+			{%- assign query_parts = query_string_part | split: '=' -%}
+			{%- assign query_key = query_parts[0] -%}
+			{%- assign query_value = query_parts[1] -%}
+			{%- if query_key == 'q' -%}
+				{%- assign vendor_handle = query_parts[1] | url_decode | handle -%}
+				{%- break -%}
+			{%- endif -%}
+		{%- endfor -%}
+		{%- assign new_canonical_url = shop.url | append: collections_path | append: vendor_handle -%}
+  
+	{% elsif template contains 'list-collections' %}
+		{%- assign new_canonical_url = shop.url -%}
+  
+	{% elsif current_tags.first == 'material_ceramic' and collection.handle == 'bongs' %}
+		{%- assign new_canonical_url = shop.url | append: "/collections/ceramic-bongs" -%}
+  
+	{% elsif template contains 'collection' and collection %}
+		{% if collection.handle == 'new-arrivals-klaviyo-collection' %}
+			{%- assign new_canonical_url = shop.url | append: collections_path | append: "newest-products" -%}
+  
+		{% elsif collection.handle == 'all-but-puffco-and-volcano' %}
+			{%- assign new_canonical_url = shop.url | append: collections_path | append: "puffco" -%}
+  
+		{% elsif collection.handle == 'all-but-knockbox' %}
+			{%- comment -%}
+			{%- assign new_canonical_url = shop.url | append: collections_path | append: 'storz-bickel' -%}
+			{%- endcomment -%}
+			{%- assign new_canonical_url = shop.url | append: "/products/volcano-classic-vaporizer" -%}
+  
+		{% elsif collection.handle == 'on-sale' %}
+			{%- assign new_canonical_url = shop.url | append: collections_path | append: "clearance" -%}
+  
+		{% elsif collection.handle == 'apparel-lifestyle' %}
+			{%- assign new_canonical_url = shop.url | append: collections_path | append: "clothing-accessories" -%}
+  
+		{% elsif collection.handle == 'dab-rigs-100-and-up' %}
+			{%- assign new_canonical_url = shop.url | append: collections_path | append: "dab-rigs-and-oil-rigs" -%}
+  
+		{% elsif collection.handle == 'all-vapes-except-puffco-davinci-storz' %}
+			{%- assign new_canonical_url = shop.url | append: collections_path | append: "davinci" -%}
+  
+		{% elsif collection.handle == 'sale' %}
+			{%- assign new_canonical_url = shop.url | append: collections_path | append: "clearance" -%}
+  
+		{% elsif collection.handle == 'sale' %}
+			{%- assign new_canonical_url = shop.url | append: collections_path | append: "clearance" -%}
+  
+		{% elsif collection.handle == 'sale' %}
+			{%- assign new_canonical_url = shop.url | append: collections_path | append: "clearance" -%}
+  
+		{% elsif collection.handle == 'sale' %}
+			{%- assign new_canonical_url = shop.url | append: collections_path | append: "clearance" -%}
+  
+		{% else %}
+			{%- assign new_canonical_url = shop.url | append: collections_path | append: collection.handle -%}
+		{% endif %}
+    
+	{% elsif template contains 'product' %}
+		{%- assign new_canonical_url = shop.url | append: product.url -%}
+  
+	{% endif %}
+  
+	<!-- Canonical: {{canonical_url}} - New: {{new_canonical_url}} - Collection handle: {{collection.handle}} ========================== -->
+	<!-- First tag: {{current_tags.first}} - Current tags: {{current_tags}} ========================== -->
+	<link rel="canonical" href="{{ new_canonical_url }}">
+  
+
+
+  {%- comment -%}
+  <!-- Prefetching, preloading, prebrowsing ========================== -->
+  <!-- preloading styles.min may not be necessary as CPCSS does the work -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="preconnect" href="https://www.googleadservices.com" crossorigin>
+  <link rel="preconnect" href="https://googleads.g.doubleclick.net" crossorigin>
+  <link rel="preconnect" href="https://www.google.com" crossorigin>
+  <link rel="preconnect" href="https://portal.dankstop.com" crossorigin>
+  <link rel="preconnect" href="https://nsg.symantec.com" crossorigin>
+  <link rel="preconnect" href="https://v.shopify.com" crossorigin>
+  <link rel="preload" as="style" href="{{ 'theme.min.css' | asset_url }}">
+  {%- endcomment %}
+  <link rel="preconnect" href="https://cdn.shopify.com">
+  <link rel="preload" as="script" href="{{ 'init.min.js' | asset_url }}">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+  {%- if template.name == 'product' -%}
+  <link rel="preconnect" href="https://monorail-edge.shopifysvc.com" crossorigin>
+  <link rel="preconnect" href="https://godog.shopifycloud.com" crossorigin>
+  {%- endif -%}
+  <link rel="preconnect" href="https://imgs.signifyd.com" crossorigin>
+  <link rel="preconnect" href="https://connect.facebook.net" crossorigin>
+
+
+
+
+  
+  {%- comment -%}
+  <!-- Favicon =========================================================== -->
+  <!-- favicon.png and favicon-16x16.png are identical, so we're using the former to save on 1 call -->
+  {%- include 'site_favicon' -%}
+  {%- endcomment -%}
+  {%- if settings.favicon != blank -%}
+  <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+  {%- endif -%}
+  <link rel="manifest" href="{{ 'manifest.json' | asset_url | split: '?' | first }}">
+  <link rel="shortcut icon" href="{{ 'favicon.ico' | asset_url | split: '?' | first }}"/>
+  <link rel="icon" href="{{ 'favicon.png' | asset_url | split: '?' | first }}" type="image/png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ 'apple-touch-icon.png' | asset_url | split: '?' | first }}">
+  <link rel="icon" type="image/png" href="{{ 'favicon-32x32.png' | asset_url | split: '?' | first }}" sizes="32x32">
+  <link rel="icon" type="image/png" href="{{ 'favicon.png' | asset_url | split: '?' | first }}" sizes="16x16">
+  <link rel="mask-icon" href="{{ 'safari-pinned-tab.svg' | asset_url | split: '?' | first }}" color="#19bc5e">
+  <meta name="apple-mobile-web-app-title" content="{{ shop.name }}">
+  <meta name="application-name" content="{{ shop.name }}">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="msapplication-TileColor" content="#19bc5e">
+  <meta name="msapplication-TileImage" content="{{ 'mstile-150x150.png' | asset_url }}" />
+  <meta name="msapplication-square70x70logo" content="{{ 'mstile-150x150.png' | asset_url }}">
+  <meta name="msapplication-square150x150logo" content="{{ 'mstile-150x150.png' | asset_url }}">
+  <meta name="msapplication-wide310x150logo" content="{{ 'mstile-150x150.png' | asset_url }}">
+  <meta name="msapplication-square310x310logo" content="{{ 'mstile-150x150.png' | asset_url }}">
+  <meta name="msapplication-config" content="{{ 'browserconfig.xml' | asset_url }}">
+
+
+
+
+
+  {%- comment -%}
+  <!-- Critical Path CSS (CPSS) ====================================== -->
+  <!-- Site/Global CPSS -->
+  <!-- We include extra style tags, in case we forget or don't include them in the snippet -->
+  <!-- ...far better to hae extra style tags in the CSS, as it still validates, than breaking the whole site -->
+  {%- endcomment -%}
+  <style>{%- include 'cpcss_site' -%}
+
+  {%- comment -%}
+  <!-- Template-specific CPSS -->
+  {%- endcomment -%}
+  {%- assign cpcss_enabled_templates = "index, product, collection, blog, article, page" -%}
+  {%- if cpcss_enabled_templates contains template.name -%}
+    {%- assign cpcss_snippet_name = "cpcss_" | append: template.name -%}
+    {%- include cpcss_snippet_name -%}
+  {%- endif -%}
+
+  {%- comment -%}
+  <!-- Variable CPSS -->
+  {%- endcomment -%}
+  .suppermarket-product-tabs-sections,.home-new-arrivals-sections,.home-featured-products-sections{margin:{{ settings.home__sections_margin }}px 0}.header-top{background-color:{{ settings.bg_header_top }};color:{{ settings.text_header_top_color }};}.header-top a,.header-top .top-message p a:hover,.header-top .close:hover{color:{{ settings.text_header_top_color }};}.header-top .clock-item{border-color:{{ settings.text_header_top_color | color_modify: 'alpha', 0.8 }};}</style>
+
+
+
+
+
+  {%- comment -%}
+  <!-- Org + Website + Search Schema.org ================================================== -->
+  {%- include 'site-schema-json-ld'  -%}
+  {%- endcomment -%}
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","url":"https://dankstop.com","mainEntityOfPage":{"@type":"WebPage","@id":"https://dankstop.com/about-us/"},"name":"DankStop","alternateName":"DankStop Online Headshop","description":"Our dab rig selection is HUGE. We stock a variety of glass concentrate pipes, vapor rigs, and oil rigs by only the best brands in the industry.","brand":"DankStop","logo":{"@type":"ImageObject","name":"DankStop Round Logo","url":"https:{{ 'android-chrome-256x256.png' | asset_img_url: 'master' }}","width":256,"height":256},"legalName":"DS Distribution Inc","duns":"025262345","sameAs":["https://www.instagram.com/dankstop/","https://www.facebook.com/Dankstop/","https://www.youtube.com/user/Dankstop","https://twitter.com/dankstop","https://www.pinterest.com/DankStop/","https://www.crunchbase.com/organization/dankstop","https://plus.google.com/+DankStopOnlineHeadshop","https://dankstop.tumblr.com/","https://www.snapchat.com/add/dankstop","https://www.trustpilot.com/review/www.dankstop.com","https://www.leafly.com/brands/dankstop","https://www.bbb.org/us/nj/edison/profile/tobacco-store/dank-depot-llc-0221-90179276","https://www.indeed.com/cmp/Dankstop/reviews?fcountry=US&floc=Edison%2C+NJ","https://www.glassdoor.com/Reviews/DankStop-Reviews-E1659471.htm"],"contactPoint":[{"@type":"ContactPoint","email":"support@dankstop.com","telephone":"+1-844-326-5786","contactType":"customer service","contactOption":"TollFree","availableLanguage":["English"]},{"@type":"ContactPoint","email":"wholesale@dankstop.com","telephone":"+1-844-326-5786","contactType":"sales","contactOption":"TollFree","availableLanguage":["English"]}],"owns":[{"@type":"WebSite","name":"Highlife Wholesale","url":"https://highlife.com/","sameAs":["https://www.instagram.com/highlife.wholesale/","https://www.facebook.com/highlifewholesale/"]},{"@type":"Brand","name":"Nucleus Glass","url":"https://getnucleus.com/"},{"@type":"Brand","name":"Ronin Glass","url":"https://smokeronin.com/","sameAs":["https://www.instagram.com/smokeronin/","https://www.facebook.com/smokeronin/"]},{"@type":"Brand","name":"Sweet Tooth Grinders","url":"https://sweettoothgear.com/"},{"@type":"Brand","name":"LavaTech Dabbing","url":"https://getlavatech.com/","sameAs":["https://www.instagram.com/getlava/","https://www.facebook.com/LavaTech-1007671012773399/"]},{"@type":"WebSite","name":"SanaPure CBD","url":"https://sanapurecbd.com/","sameAs":["https://www.instagram.com/sanapurewellness/","https://www.facebook.com/sanapurecbd"]},{"@type":"WebSite","name":"DankStop Online Headshop","url":"https://dankstop.com/"}],"foundingDate":"2014-04-03","foundingLocation":{"@type":"Place","name":"DankStop HQ","address":{"@type":"PostalAddress","addressLocality":"Edison","addressRegion":"NJ","postalCode":"08837"}},"founders":[{"@type":"Person","name":"Feliks Khaykin","sameAs":["https://www.linkedin.com/in/fkhaykin","https://www.facebook.com/fkhaykin"]},{"@type":"Person","name":"Louis Coniglio","sameAs":["https://www.linkedin.com/in/louis-coniglio-44698510b/","https://www.facebook.com/louie.coniglio"]}],"members":[{"@type":"Person","name":"Feliks Khaykin","sameAs":["https://www.crunchbase.com/person/feliks-khaykin","https://felikskhaykin.com/","https://www.linkedin.com/in/fkhaykin","https://www.facebook.com/fkhaykin"]},{"@type":"Person","name":"Louis Coniglio","sameAs":["https://www.crunchbase.com/person/louis-coniglio","https://www.linkedin.com/in/louis-coniglio-44698510b/","https://www.facebook.com/louie.coniglio"]},{"@type":"Person","name":"Gabriel Aronovich","sameAs":["https://www.crunchbase.com/person/gabriel-aronovich","https://www.linkedin.com/in/gabrielaronovich/"]},{"@type":"Person","name":"Vadim Telyatnikov","sameAs":["https://www.crunchbase.com/person/vadim-telyatnikov-3a4d","https://www.linkedin.com/in/vadimtelyatnikov/"]},{"@type":"Person","name":"Joshua Solan","sameAs":["https://www.crunchbase.com/person/joshua-solan","https://www.linkedin.com/in/joshua-solan-74272/"]},{"@type":"Person","name":"Andre Bulatov","sameAs":["https://www.crunchbase.com/person/andre-bulatov","https://andrebulatov.com/"]}]},{"@context":"http://schema.org","@type":"WebSite","name":"DankStop","alternateName":"Online Headshop","url":"https://dankstop.com","author":{"@type":"Organization","name":"DankStop","logo":{"@type":"ImageObject","name":"DankStop Round Logo","url":"https:{{ 'android-chrome-256x256.png' | asset_img_url: 'master' }}","width":256,"height":256}},"potentialAction":{"@type":"SearchAction","name":"DankStop Site Search","target":"https://dankstop.com/search?q={search_query_string}","query-input":"required name=search_query_string"}}]</script>
+
+
+
+
+
+  {%- comment -%}
+  <!-- Social Metas ================================================== -->
+  {%- include 'site-social-metas'  -%}
+  {%- endcomment -%}
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:site_name" content="{{ shop.name }}">
+  {%- if page_description -%}
+  <meta property="og:description" content="{{ page_description | escape }}">
+  {%- endif -%}
+  {%- comment -%}
+  <meta name="twitter:site" content="@DankStop">
+  {%- endcomment -%}
+  <meta name="twitter:site" content="{{ shop.url }}">
+  {%- if template contains 'product' -%}
+  <meta property="og:type" content="product">
+  <meta property="og:title" content="{{ product.title | strip_html | escape }}">
+  {%- for image in product.images limit:3 -%}
+  <meta property="og:image" content="http:{{ image.src | product_img_url: 'grande' }}">
+  <meta property="og:image:secure_url" content="https:{{ image.src | product_img_url: 'grande' }}">
+  {%- endfor -%}
+  <meta property="og:price:amount" content="{{ product.selected_or_first_available_variant.price | money_without_currency }}">
+  <meta property="og:price:currency" content="{{ shop.currency }}">
+  <meta name="twitter:card" content="product">
+  {%- comment -%}
+  <meta name="twitter:title" content="{{ product.title | escape }}">
+  <meta name="twitter:description" content="{{ product.description | strip_html | truncatewords: 140, '' | escape }}">
+  {%- endcomment -%}
+  <meta name="twitter:title" content="{{ product.title | truncate: 67, '...' | escape }}">
+  <meta name="twitter:description" content="{{ product.description | strip_html | truncate: 197, '...' | escape }}">
+  <meta name="twitter:image" content="https:{{ product.featured_image.src | img_url: 'medium' }}">
+  <meta name="twitter:image:alt" content="{{ product.description | strip_html | truncate: 37, '...' | escape }}">
+  <meta name="twitter:image:width" content="240">
+  <meta name="twitter:image:height" content="240">
+  <meta name="twitter:label1" content="Price">
+  <meta name="twitter:data1" content="{{ product.selected_or_first_available_variant.price | money_with_currency | strip_html | escape }}">
+  {%- if product.vendor != blank -%}
+  <meta name="twitter:label2" content="Brand">
+  <meta name="twitter:data2" content="{{ product.vendor | escape }}">
+  {%- else -%}
+  <meta name="twitter:label2" content="Availability">
+  <meta name="twitter:data2" content="In stock">
+  {%- endif -%}
+  {%- elsif template contains 'article' -%}
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{ article.title | strip_html | escape }}">
+  {%- assign img_tag = '<img' -%}
+  {%- if article.content contains img_tag -%}
+  {%- assign src = article.content | split: 'src="' -%}
+  {%- assign src = src[1] | split: '"' | first | remove: 'https:' | remove: 'http:' -%}
+  {%- if src -%}
+  <meta property="og:image" content="http:{{ src }}">
+  <meta property="og:image:secure_url" content="https:{{ src }}">
+  <meta name="twitter:image" content="{{ src }}">
+  <meta name="twitter:image:alt" content="{{ article.excerpt_or_content | strip_html | truncate: 37, '...' | escape }}">
+  {%- endif -%}
+  {%- endif -%}
+  <meta name="twitter:card" content="summary">
+  {%- comment -%}
+  <meta name="twitter:title" content="{{ article.title | escape }}">
+  <meta name="twitter:description" content="{{ article.excerpt_or_content | strip_html | truncatewords: 140, '' | escape }}">
+  {%- endcomment -%}
+  <meta name="twitter:title" content="{{ article.title | truncate: 67, '...' | escape }}">
+  <meta name="twitter:description" content="{{ article.excerpt_or_content | strip_html | truncate: 197, '...' | escape }}">
+  {%- else -%}
+  {%- assign site_logo_url = 'android-chrome-256x256.png' | asset_img_url: 'master' -%}
+  <meta name="twitter:card" content="summary">
+  {%- comment -%}
+  <meta name="twitter:title" content="{{ page_title | escape }}">
+  <meta name="twitter:description" content="{{ page_description | escape }}">
+  {%- endcomment -%}
+  <meta name="twitter:title" content="{{ page_title | truncate: 67, '...' | escape }}">
+  <meta name="twitter:description" content="{{ page_description | strip_html | truncate: 197, '...' | escape }}">
+  <meta name="twitter:image" content="https:{{ site_logo_url }}">
+  <meta name="twitter:image:alt" content="{{ page_description | strip_html | truncate: 37, '...' | escape }}">
+  <meta name="twitter:image:width" content="256">
+  <meta name="twitter:image:height" content="256">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ page_title | escape }}">
+  <meta property="og:image" content="http:{{ site_logo_url }}">
+  <meta property="og:image:secure_url" content="https:{{ site_logo_url }}">
+  {%- endif -%}
+
+
+
+  {%- include 'lazyload-placeholder' -%} 
+
+  
+  
+  {%- comment -%}
+  <!-- Header hook for plugins ================================================== -->
+  {%- assign trekkie_storefront = 'first.parentNode.insertBefore(script, first);' -%}
+  {%- assign third_party_launcher = ', asyncLoad' -%}
+  {%- assign sezzle_script_tag = '"https:\/\/d34uoa9py2cgca.cloudfront.net\/shopify-app\/helper-scripts\/sezzle-footer-logo-fix.js?shop=dankstop-9.myshopify.com"' -%}
+  {%- assign zendesk_url = '"https:\/\/cdn.shopify.com\/s\/files\/1\/1085\/8818\/t\/7\/assets\/zendesk-embeddable.js?24378\u0026shop=dankstop-9.myshopify.com"' -%}
+  {%- assign pushowl_url = '"https:\/\/cdn.pushowl.com\/sdks\/pushowl-shopify.js?subdomain=dankstop-9\u0026environment=production\u0026guid=0d673122-e559-4fce-8717-f4873d46429f\u0026shop=dankstop-9.myshopify.com"' -%}
+  {%- assign sweettooth_script_tag = '"https:\/\/cdn.sweettooth.io\/assets\/storefront.js?shop=dankstop-9.myshopify.com"' -%}
+  {%- assign smile_io_v1_script_tag = '"https:\/\/js.smile.io\/v1\/smile-shopify.js?shop=dankstop-9.myshopify.com"' -%}
+  {%- assign klaviyo_url = '"https:\/\/static.klaviyo.com\/onsite\/js\/klaviyo.js?company_id=E8gYFp\u0026shop=dankstop-9.myshopify.com"' -%}
+  {%- assign printful_url = '"https:\/\/static.cdn.printful.com\/static\/js\/external\/shopify-product-customizer.js?v=0.17\u0026shop=dankstop-9.myshopify.com"' -%}
+  {%- assign route_insurance_url = '"https:\/\/cdn.routeapp.io\/route-widget-shopify\/stable\/route-widget-shopify-stable.min.js?shop=dankstop-9.myshopify.com"' -%}
+  {%- assign affiliatly_script_tag = '"https:\/\/static.affiliatly.com\/shopify\/shopify_stc.js?affiliatly_code=AF-101600\u0026shop=dankstop-9.myshopify.com"' -%}
+  {%- assign klickly_url = '"https:\/\/track.klickly.com\/track.bundle.js?shop=dankstop-9.myshopify.com"' -%}
+  {%- assign async_load_leftover = 'var urls = [,];' -%}
+  {%- assign async_load_clean = 'var urls = [];' -%}
+  {%- assign content_for_header = content_for_header | replace: sweettooth_script_tag, '' | replace: smile_io_v1_script_tag, '' | replace: zendesk_url, '' | replace: pushowl_url, '' | replace: klaviyo_url, '' | replace: printful_url, '' | replace: route_insurance_url, '' | replace: affiliatly_script_tag, '' | replace: klickly_url, '' | replace: ',,', '' | replace: '[,"', '["' | replace: '""', '","' | replace: async_load_leftover, async_load_clean -%}
+  {{ content_for_header }}
+  {%- endcomment -%}
+  <!-- START content_for_header - Andre -->  
+  {%- assign third_party_replacement = ', function(){return;}' -%}
+  {{- content_for_header | replace: ', asyncLoad', third_party_replacement | replace: 'first.parentNode.insertBefore(script, first);', '' 
+    | replace: '<meta name="robots" content="noindex,nofollow">', '<meta name="robots" content="noindex,dofollow">'
+  -}}
+  <!-- END content_for_header - Andre -->  
+
+  
+  
+  <!--[if lt IE 9]>{{ '//html5shiv.googlecode.com/svn/trunk/html5.js' | script_tag }}<![endif]-->
+
+  {%- comment -%}
+  If you store has customers disabled, you can remove the following JS file
+  {%- endcomment -%}
+  {%- if template contains 'customers' -%}
+    {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+    {{ 'customer_area.js'  | shopify_asset_url | script_tag }}
+  {%- endif -%}
+
+  {%- comment -%}
+  {% include 'judgeme_core' %}
+  {%- endcomment -%}
+
+<!-- Google Search Console -->
+<meta name="google-site-verification" content="O6qEduJpywFEB1X-C_Zq1MXxUiSo4TsMRp2gzPNeqqg" />
+<!-- End Google Search Console -->
+  <style>
+ .horizontal-menu {
+    width: 1000px;
+}
+    @media only screen and (min-width:767px){
+      .product-item .product-image{
+        max-height:210px;
+      }
+      .product-item .product-image img{
+        max-height: 210px !important;
+      }
+    }
+    .szl-price-display.pay-plan-price * {
+    font-size: 14px;
+    color: rgb(60, 60, 60);
+}
+  </style>
+  
+    {% comment %}
+  {% unless customer %}
+    <script src="{{ 'sso-lib.js' | asset_url }}" defer="defer"></script> 
+    <script type="module">
+        apiClient.fetchClient('{{ shop.name | handleize}}', 'shopify');
+    </script>
+    
+  {% endunless %}  
+   {% endcomment %}
+
+   {% if template != 'index' %}
+    
+  <link href="{{ 'splide.min.css' | asset_url }}" rel="stylesheet"> 
+  {{ 'cc-styles.css' | asset_url | stylesheet_tag }}
+  {{ 'cc-media-queries.css' | asset_url | stylesheet_tag }}
+   {% endif %}
+
+   <script type="text/javascript">!function(){var b=function(){window.__AudioEyeSiteHash = "1374e9e402f4e9f4f87bb14c63a4dff5"; var a=document.createElement("script");a.src="https://wsmcdn.audioeye.com/aem.js";a.type="text/javascript";a.setAttribute("defer","");document.getElementsByTagName("body")[0].appendChild(a)};"complete"!==document.readyState?window.addEventListener?window.addEventListener("load",b):window.attachEvent&&window.attachEvent("onload",b):b()}();</script>
+
+   {% if template != 'index' %}
+    <script src="{{ 'splide.min.js' | asset_url }}" defer></script>
+   {% endif %}
+
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "oms17y91lj");
+</script>
+<script type="text/javascript" id="zsiqchat">
+    var $zoho=$zoho || {
+    };
+    $zoho.salesiq = $zoho.salesiq || {
+      widgetcode: "67894c701fbc4a8ea66ecd4ac22246eb525621a8ac6a7151420cb948b49166d7", values:{
+      }
+      ,ready:function(){
+      }
+    };
+    var d=document;
+    s=d.createElement("script");
+    s.type="text/javascript";
+    s.id="zsiqscript";
+    s.defer=true;
+    s.src="https://salesiq.zohopublic.ca/widget";
+    t=d.getElementsByTagName("script")[0];
+    t.parentNode.insertBefore(s,t);
+    </script>
+    <script> 
+      $zoho.salesiq.ready=function() 
+    {
+      $zoho.salesiq.chat.logo("https://dankstop.com/cdn/shop/files/LogoB-green_copy_199x_ffbb68b7-61b6-4745-a9f0-1bb632bbad19.png");
+    }
+</script>
+
+<script src="https://analytics.ahrefs.com/analytics.js" data-key="C1oH4PZZjrMPPOSHate8Tw" async></script>
+</head> 
+
+
+
+<body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}"
+      data-page-handle="{{ current_page_object.handle }}" data-template-name="{{ template.name }}" data-template-suffix="{{ template.suffix }}" data-template-directory="{{ template.directory }}">
+      <link rel="preload" as="image" href="//dankstop.com/cdn/shop/files/CabanaClubBanner_600x_crop_center_9426bdcd-107f-49b6-8665-382c5ec536de_600x_crop_center.webp?v=1738255456" />
+      <a id="filter_url"></a>
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MK2MCKP"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+  
+  {%- include 'svg-cache' -%}
+
+  
+  {% render 'wk_auction_config' %}
+
+  
+  {%  unless customer %} {%- render 'new-custom-popup' -%} {% endunless %}
+  
+  {%- if settings.site__promo_bar_load_method == "static" -%}
+    {%- include 'promo-bar' -%}
+  {%- endif -%}
+
+
+  <div class="wrapper-header wrapper_header_supermarket header-lang-style2">
+    
+  {%- section 'header-supermarket' -%}
+
+    {%- include 'navigation-supermarket' -%}
+
+    
+    
+    
+  </div>
+
+
+  
+  <main id="mainContent" class="main-content" role="main">
+
+    
+    {%- if template == 'collection' -%}
+      {%- include 'mobile-collection-nav' -%}
+    {%- endif -%}
+
+
+
+    
+    {%- include 'gem-app-header-scripts' -%}
+    
+
+    {{ content_for_layout }}
+
+    
+    {%- include 'gem-app-footer-scripts' -%}
+    
+
+  </main>    
+
+
+  
+  
+
+
+  
+  
+  
+
+   
+<script src="{{ 'cc-slider.js' | asset_url }}" defer></script>
+<script src="{{ 'cc-custom.js' | asset_url }}" defer></script>  
+
+
+
+{% if template == 'index' %}
+<script>
+  function newloadCSS(cssUrl) {
+    return new Promise((resolve, reject) => {
+        const cssLink = document.createElement('link');
+        cssLink.rel = 'stylesheet';
+        cssLink.href = cssUrl;
+        document.head.appendChild(cssLink);
+    });
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  {% if template != 'index' %}
+  newloadCSS("{{ 'splide.min.css' | asset_url }}").then(message => {}) .catch(error => {});
+  {% endif %}
+  newloadCSS("{{ 'cc-styles.css' | asset_url }}").then(message => {}) .catch(error => {});
+  newloadCSS("{{ 'cc-media-queries.css' | asset_url }}").then(message => {}) .catch(error => {});
+});
+</script>
+{% endif %}
+
+
+
+
+
+
+
+
+
+{% if customer %}
+     <script src="{{ 'cc-script.js' | asset_url }}" defer></script> 
+{% endif %}
+
+{% if template contains 'product' %}
+    <script type="text/javascript">
+        (function () {
+            var oldonload = window.onload;
+            window.onload = function(){
+                var scr = document.createElement("script");
+                scr.setAttribute('async', 'true');
+                scr.type = "text/javascript";
+                scr.src = "//ping.powertoolsapp.com/ping/{{ shop.permanent_domain }}/{{ product.id }}?weight={% if product.tags contains 'Featured' or product.tags contains 'featured' %}100{% else %}1{% endif %}{% if collection %}&collection_id={{ collection.handle }}{% endif %}";
+                ((document.getElementsByTagName('head') || [null])[0] || document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+                if(oldonload){oldonload()}};
+        }());
+    </script>
+{% endif %}
+<!-- PF EDT START -->
+<script type='text/javascript'>
+{%- if content_for_header contains 'shopify-product-customizer' -%}
+    {%- if product -%}
+        {%- if product.first_available_variant -%}
+            var pfProductId = {{ product.metafields.printful.is_synced | json }};
+            var pfEdt = {{ shop.metafields.printful.is_edt_enabled | json }};
+            var pfEdtTextColor = {{ shop.metafields.printful.edt_text_color | json }};
+            var pfEdtBackgroundColor = {{ shop.metafields.printful.edt_background_color | json }};
+            var pfEdtBorderColor = {{ shop.metafields.printful.edt_border_color | json }};  
+            var pfEdtUseDefaultStyling = {{ shop.metafields.printful.edt_default_style | json }};
+            var pfEdtTextAlignment = {{ shop.metafields.printful.edt_text_alignment | json }};
+            var pfEdtFlags = {
+                US: "{{ 'US.svg' | asset_url }}",CA: "{{ 'CA.svg' | asset_url }}",ES: "{{ 'ES.svg' | asset_url }}",LV: "{{ 'LV.svg' | asset_url }}",GB: "{{ 'GB.svg' | asset_url }}",DE: "{{ 'DE.svg' | asset_url }}",FR: "{{ 'FR.svg' | asset_url }}",AU: "{{ 'AU.svg' | asset_url }}",JP: "{{ 'JP.svg' | asset_url }}",NZ: "{{ 'NZ.svg' | asset_url }}",IT: "{{ 'IT.svg' | asset_url }}",BR: "{{ 'BR.svg' | asset_url }}",KR: "{{ 'KR.svg' | asset_url }}",NL: "{{ 'NL.svg' | asset_url }}",
+            };
+        {%- else -%}
+            var pfEdt = 0;
+        {%- endif -%}
+    {%- endif -%}
+{%- endif -%}
+</script>
+<!-- PF EDT END -->
+
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () { 
+
+    document.querySelectorAll('.list-product-tabs a[data-product-tabtop]').forEach(anchor => {
+      anchor.addEventListener('click', function() {
+        setTimeout(() => {
+          document.querySelectorAll('.grid-item').forEach(item => {
+            if (!item.querySelector('.product-title')) {
+              item.remove();
+            }
+          });
+        }, 1000);
+      });
+    });
+
+ 
+
+    {% if customer.tags contains 'elite_member' %}
+    let targetVariantId = 46302742249691;  
+    function checkAndRemoveProductFromCart(variantId) { 
+        fetch('/cart.js', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch cart');
+            }
+            return response.json();
+        })
+        .then(cart => { 
+            var itemInCart = cart.items.find(item => item.variant_id === variantId);
+
+            if (itemInCart) { 
+                fetch('/cart/change.js', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: itemInCart.key,
+                        quantity: 0
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to remove product');
+                    }
+                    return response.json();
+                })
+                .then(updatedCart => {
+                    console.log('Product removed from cart:', updatedCart);
+                })
+                .catch(error => {
+                    console.error('Error removing product:', error);
+                });
+            } else {
+                console.log('Product not found in the cart.');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching cart:', error);
+        });
+    } 
+    checkAndRemoveProductFromCart(targetVariantId);
+    {% endif %}
+
+  })
+</script>
+
+
+</body>
+</html>

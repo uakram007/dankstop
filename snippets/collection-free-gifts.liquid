@@ -1,0 +1,19 @@
+<div class="collection-template collection-template-default">
+  <div class="container">
+  	{% include 'breadcrumb' %}
+    
+    <div class="halo-collection-content">
+      <div class="row">
+        {%- comment -%}
+        {% section 'sidebar-filter' %}
+        {%- endcomment -%}
+        {% section 'collection-template-free-gifts' %}
+      </div>
+      
+      {% section 'recently-viewed-products' %}
+      {%- comment -%}
+      {% section 'collection--articles' %}
+      {%- endcomment -%}
+    </div>   
+  </div>
+</div>

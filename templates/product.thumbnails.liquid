@@ -1,0 +1,414 @@
+{%- layout none -%}
+
+
+{%- assign demo_video_yt_id = false -%}
+{%- assign demo_video_file_src = false -%}
+{%- if product.metafields.media -%}
+  {%- assign demo_video_yt_id = product.metafields.media.demoloop_yt_id | split: "," -%}
+  {%- assign demo_video_file_src = product.metafields.media.demoloop | split: "," -%}
+  {%- assign demo_video_file_poster = product.metafields.media.demoloop_poster | split: "," -%}
+{%- endif -%}
+
+
+
+{%- assign slick_initial_index = false -%}
+{%- for image in product.images -%}
+  {%- if image.src == product.selected_or_first_available_variant.image.src -%}
+    {%- assign slick_initial_index = forloop.index0 -%}
+  {%- endif -%} 
+  {%- if forloop.last and slick_initial_index == false -%}
+    {%- assign slick_initial_index = 0 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+
+
+{%- comment -%}
+<!--   <div class="slider-nav" data-rows="5" data-vertical="{% if section.settings.style_moreview == 'horizontal' %}false{% else %}true{% endif %}"> -->
+{%- endcomment -%}
+<div class="slider-nav" data-rows="5" data-vertical="true">
+
+  {%- assign first_image = product.images[slick_initial_index] -%}
+  {%- assign thumb_alt = product.title | append: ' Thumbnail' | escape -%}
+  {%- assign im_width = '70' -%}
+  
+  <div class="item filter-{{ first_image.alt | handle }}">
+    <a href="javascript:void(0)" data-image="{{ first_image.src | product_img_url: 'original' }}" data-zoom-image="{{ first_image.src | product_img_url: 'original' }}">
+
+      {%- include 'image-module', im_src: first_image, im_dt_ws: im_width, width: im_width, height: '88', im_a: thumb_alt, im_iep: 'data-expand="-1"' -%}
+
+    </a>
+  </div>
+  
+  {%- for image in product.images -%}
+  
+  {%- if forloop.index0 == slick_initial_index -%}  
+    {%- continue -%}
+  {%- endif -%}
+
+  <div class="item filter-{{ image.alt | handle }}">
+    <a href="javascript:void(0)" data-image="{{ image.src | product_img_url: 'original' }}" data-zoom-image="{{ image.src | product_img_url: 'original' }}">
+
+      {%- comment -%}
+      <img alt="{{ image.alt | escape }}"
+           {%- comment -%}
+           class=""
+           src="{{ image.src | product_img_url: 'compact' }}" 
+           {%- endcomment -%}
+           class="lazyload"
+           src="{{ lazyload_placeholder }}" 
+           data-src="{{ image.src | product_img_url: 'compact' }}" 
+           >
+      {%- endcomment -%}
+
+      {%- comment -%}
+      {%- assign img_shopify_size = '70x' -%}
+      <img width="70" height="87.5" class="lazyload"
+           src="{{ lazyload_placeholder }}"
+           data-src="{{ image | img_url: img_shopify_size }}"
+           data-shopfify-size="{{ img_shopify_size }}"
+           data-expand="-1" 
+           title="{{ product.title | escape }} Thumbnail" 
+           alt="{{ product.title | escape }} Thumbnail">
+      {%- endcomment -%}
+
+      {%- include 'image-module', im_src: image, im_dt_ws: im_width, width: im_width, height: '88', im_a: thumb_alt, im_iep: 'data-expand="-1"', im_ic: 'lazypreload' -%}
+
+    </a>
+  </div>
+  {%- endfor -%}
+  
+  
+  {%- if demo_video_file_src or demo_video_yt_id -%}
+    {%- for video_reference in demo_video_file_src -%}
+
+      {%- if demo_video_file_poster[forloop.index0] -%}
+      {%- assign video_poster = demo_video_file_poster[forloop.index0] -%}
+      {%- else -%}
+      {%- assign video_poster = product.featured_image.src | img_url: 'original' -%}
+      {%- endif -%}
+
+  <div class="item filter-demoloop">
+    {%- comment -%}
+    <video controls autoplay="autoplay" loop="true" id="demo_video_file" class="video-container" width="100%" height="auto" poster="{{ video_poster }}">
+      <source src="{{ video_reference }}">
+    </video>
+    {%- endcomment -%}
+    {%- include 'image-module', im_src: video_poster, im_dt_ws: im_width, width: im_width, height: '88', im_a: thumb_alt, im_iep: 'data-expand="-1"', im_ic: 'lazypreload' -%}
+    <span class="visually-hidden">Switch slider to {{ product_title_escaped }} Demo Video slide</span>
+    <svg aria-hidden="true" role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 504c137 0 248-111 248-248S393 8 256 8 8 119 8 256s111 248 248 248zM40 256c0-118.7 96.1-216 216-216 118.7 0 216 96.1 216 216 0 118.7-96.1 216-216 216-118.7 0-216-96.1-216-216zm331.7-18l-176-107c-15.8-8.8-35.7 2.5-35.7 21v208c0 18.4 19.8 29.8 35.7 21l176-101c16.4-9.1 16.4-32.8 0-42zM192 335.8V176.9c0-4.7 5.1-7.6 9.1-5.1l134.5 81.7c3.9 2.4 3.8 8.1-.1 10.3L201 341c-4 2.3-9-.6-9-5.2z" class=""></path></svg>
+  </div>
+    {%- endfor -%}
+  {%- endif -%}
+  
+    
+</div>
+
+<style>
+  .item.filter-demoloop {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .item.filter-demoloop svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translate3d(-50%,-50%,0);
+    -o-transform: translate3d(-50%,-50%,0);
+    -ms-transform: translate3d(-50%,-50%,0);
+    -webkit-transform: translate3d(-50%,-50%,0);
+    transform: translate3d(-50%,-50%,0);
+    width: 50%;
+    height: 50%;
+    color: #39b54a;
+    stroke: #39b54a;
+    fill: #39b54a;
+  }
+  
+  .item.filter-demoloop .imod {
+    opacity: 0.5;
+  }
+</style>
+
+<script>
+  
+  /**
+ * Executes a function (fn)  if all lazySizes images are loaded and trigger an event called `containerlazyloaded`
+ *
+ * @param [fn] {function}
+ * @return {jQuery}
+ *
+ * @example
+ *
+ *	 $('.scroll-view').allLazyLoaded(function(){
+ *		console.log(this)
+ *	});
+ * @example
+ *
+ *	 $('.scroll-view').allLazyLoaded().on('containerlazyloaded', function(){
+ *		console.log(this)
+ *	});
+ */
+  jQuery.fn.allLazyLoaded = function(fn){
+    if(this.length){
+      var loadingClass, toLoadClass;
+      var $ = jQuery;
+      var isConfigured = function(){
+        var hasLazySizes = !!window.lazySizes;
+
+        if(!loadingClass && hasLazySizes){
+          loadingClass = '.' + lazySizes.cfg.loadingClass;
+          toLoadClass = '.' + lazySizes.cfg.lazyClass;
+        }
+
+        return hasLazySizes;
+      };
+
+      var isComplete = function(){
+        return !('complete' in this) || this.complete;
+      };
+
+
+
+      this.each(function(){
+        var container = this;
+        var testLoad = function(){
+
+          if(isConfigured() && !$(toLoadClass, container).length && !$(loadingClass, container).not(isComplete).length){
+            container.removeEventListener('load', rAFedTestLoad, true);
+            if(fn){
+              fn.call(container, container);
+            }
+            $(container).trigger('containerlazyloaded');
+          }
+        };
+        var rAFedTestLoad = function(){
+          requestAnimationFrame(testLoad);
+        };
+
+        container.addEventListener('load', rAFedTestLoad, true);
+        rAFedTestLoad();
+      });
+    }
+    return this;
+  };
+  
+  
+
+  function initThumbnailsSlider(){
+    var e = $(".slider-for"),
+        i = $(".slider-nav"),
+        a = i.data("vertical");
+
+    var slick_initial_index = ( ! e.find("[data-slick-initial-index]").attr("data-slick-initial-index")) ? 0 : parseInt(e.find("[data-slick-initial-index]").attr("data-slick-initial-index"));
+
+    if (
+
+      i.find("> .item").length > 1
+
+    ){
+      i.slick({
+        waitForAnimate: false,
+        initialSlide: slick_initial_index,
+        infinite: !0,
+        slidesToShow: i.data("rows"),
+        vertical: a,
+        slidesToScroll: 1,
+        asNavFor: e,
+        focusOnSelect: !0,
+        rows: 0
+        , nextArrow: '<button type="button" class="slick-next"><svg aria-hidden="true" focusable="false" role="img"><use xlink:href="#faChevronRight" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></button>'
+        , prevArrow: '<button type="button" class="slick-prev"><svg aria-hidden="true" focusable="false" role="img"><use xlink:href="#faChevronLeft" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></button>'
+        //                     , nextArrow: '<button type="button" class="slick-next"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 17 33" xml:space="preserve"><g id="e4eb89a6-f885-43b8-9259-0d6b1516fab0"><g id="_x38_e584754-6657-46f1-a9d8-2cfd6623b552"><g><polygon points="14.9,14.5 0,0 0,3.7 11.1,14.5 13.2,16.5 11.1,18.5 0,29.3 0,33 14.9,18.5 17,16.5 "/></g></g></g></svg></button>',
+        //                     , prevArrow: '<button type="button" class="slick-prev"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 33"><g id="7f9a1925-e8c7-4614-8787-3c6095a9f6e1" data-name="Layer 2"><g id="c9b7920a-81fa-4bfe-ad13-4da717c6854b" data-name="Layer 1"><g id="c2d982ff-0cf6-4220-b365-47f30d708fea" data-name="e4eb89a6-f885-43b8-9259-0d6b1516fab0"><g id="f51d455e-6b9c-4c4e-96db-a5004582beda" data-name="8e584754-6657-46f1-a9d8-2cfd6623b552"><polygon points="0 16.5 2.1 18.5 17 33 17 29.3 5.9 18.5 3.8 16.5 5.9 14.5 17 3.7 17 0 2.1 14.5 0 16.5"/></g></g></g></g></svg></button>',
+//         , dots: !0
+//         , responsive: [
+//           {
+//           breakpoint: 1200,
+//           settings: {
+//             get dots() {
+//               if (1 == a) return dots = !0
+//                 }
+//           }
+//         }, {
+//           breakpoint: 992,
+//           settings: {
+//             slidesToShow: 4,
+//             slidesToScroll: 1,
+//             get dots() {
+//               if (1 == a) return dots = !0
+//                 }
+//           }
+//         }, {
+//           breakpoint: 768,
+//           settings: {
+//             slidesToShow: 4,
+//             slidesToScroll: 1,
+//             get dots() {
+//               if (1 == a) return dots = !0
+//                 }
+//           }
+//         }, {
+//           breakpoint: 360,
+//           settings: {
+//             slidesToShow: 3,
+//             slidesToScroll: 1,
+//             get dots() {
+//               if (1 == a) return dots = !0
+//                 }
+//           }
+//         }]
+      })
+    }
+    
+    if (
+      
+      e.hasClass("slick-initialized") && i.hasClass("slick-initialized")
+      
+    ){
+      
+      e.slick('slickSetOption', 'asNavFor', i);
+      i.slick('slickSetOption', 'asNavFor', e);
+      
+      function changeSwatch(r) {
+        $(document).off("change.changeSwatch").on("change.changeSwatch", r, function() {
+          var t = $(this).data("filter"),
+              e = $(this).closest(".swatch").attr("data-option-index"),
+              i = $(this).val();
+          if ( $(this).closest("form").find(".single-option-selector").eq(e).val(i).trigger("change"), "variant_grouped" === window.color_swatch_style && window.use_color_swatch && void 0 !== t) {
+            var a, o = $(r).closest(".product-shop");
+            if (o.closest(".product-slider").length)(s = (a = o.closest(".product-slider").find("[data-moreview-product-slider]")).find(".slider-for")).slick("slickUnfilter"), s.find(t).length && s.slick("slickFilter", t).slick("refresh");
+            else if ((a = o.prev("[data-more-view-product]")).length) {
+              var n = a.find(".slider-nav"),
+                  s = a.find(".slider-for");
+              n.slick("slickUnfilter"), s.slick("slickUnfilter"), n.find(t).length && s.find(t).length && (n.slick("slickFilter", t).slick("refresh"), s.slick("slickFilter", t).slick("refresh"))
+            }
+          }
+        })
+      }
+      changeSwatch("#add-to-cart-form .swatch :radio");
+      
+    }
+    
+  }
+
+//   initThumbnailsSlider();
+
+  // wait for slick and init slider
+//   hsjs.tools.waitForJSObject(
+//     "$slick", 
+//     initThumbnailsSlider,
+//     7300
+//   );
+
+  // init on lazysizes complete
+  $('.slider-nav img').allLazyLoaded().on('containerlazyloaded', function(){
+    
+    hsjs.tools.waitForElement(
+      ".slider-nav .item:last-of-type img.lazyloaded",
+      function(){
+        
+        // wait for slick and init slider
+        hsjs.tools.waitForJSObject(
+          "$slick", 
+          initThumbnailsSlider,
+          7300
+        );
+        
+      }
+    );
+    
+  });
+
+  
+  
+
+  
+//   function originalEllaImageSliderInit(){
+//     var e = $(".slider-for"),
+//         i = $(".slider-nav"),
+//         a = i.data("vertical");
+
+//     var slick_initial_index = ( ! e.find("[data-slick-initial-index]").attr("data-slick-initial-index")) ? 0 : parseInt(e.find("[data-slick-initial-index]").attr("data-slick-initial-index"));
+
+//     if (
+      
+//       e.hasClass("slick-initialized") || i.hasClass("slick-initialized") 
+      
+//       || (e.find("> .thumb").length > 1 && e.slick({
+//         waitForAnimate: false,
+//         initialSlide: slick_initial_index,
+//         slidesToShow: 1,
+//         slidesToScroll: 1,
+//         arrows: !1,
+//         fade: !0,
+//         rows: 0,
+//         asNavFor: i
+//       })
+//           , i.find("> .item").length > 1 && i.slick({
+//         waitForAnimate: false,
+//         initialSlide: slick_initial_index,
+//         infinite: !0,
+//         slidesToShow: i.data("rows"),
+//         vertical: a,
+//         slidesToScroll: 1,
+//         asNavFor: e,
+//         focusOnSelect: !0,
+//         rows: 0,
+//         nextArrow: '<button type="button" class="slick-next"><svg aria-hidden="true" focusable="false" role="img"><use xlink:href="#faChevronRight" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></button>',
+//         prevArrow: '<button type="button" class="slick-prev"><svg aria-hidden="true" focusable="false" role="img"><use xlink:href="#faChevronLeft" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></button>',
+//         //                     nextArrow: '<button type="button" class="slick-next"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 17 33" xml:space="preserve"><g id="e4eb89a6-f885-43b8-9259-0d6b1516fab0"><g id="_x38_e584754-6657-46f1-a9d8-2cfd6623b552"><g><polygon points="14.9,14.5 0,0 0,3.7 11.1,14.5 13.2,16.5 11.1,18.5 0,29.3 0,33 14.9,18.5 17,16.5 "/></g></g></g></svg></button>',
+//         //                     prevArrow: '<button type="button" class="slick-prev"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 33"><g id="7f9a1925-e8c7-4614-8787-3c6095a9f6e1" data-name="Layer 2"><g id="c9b7920a-81fa-4bfe-ad13-4da717c6854b" data-name="Layer 1"><g id="c2d982ff-0cf6-4220-b365-47f30d708fea" data-name="e4eb89a6-f885-43b8-9259-0d6b1516fab0"><g id="f51d455e-6b9c-4c4e-96db-a5004582beda" data-name="8e584754-6657-46f1-a9d8-2cfd6623b552"><polygon points="0 16.5 2.1 18.5 17 33 17 29.3 5.9 18.5 3.8 16.5 5.9 14.5 17 3.7 17 0 2.1 14.5 0 16.5"/></g></g></g></g></svg></button>',
+//         responsive: [{
+//           breakpoint: 1200,
+//           settings: {
+//             get dots() {
+//               if (1 == a) return dots = !0
+//                 }
+//           }
+//         }, {
+//           breakpoint: 992,
+//           settings: {
+//             slidesToShow: 4,
+//             slidesToScroll: 1,
+//             get dots() {
+//               if (1 == a) return dots = !0
+//                 }
+//           }
+//         }, {
+//           breakpoint: 768,
+//           settings: {
+//             slidesToShow: 4,
+//             slidesToScroll: 1,
+//             get dots() {
+//               if (1 == a) return dots = !0
+//                 }
+//           }
+//         }, {
+//           breakpoint: 360,
+//           settings: {
+//             slidesToShow: 3,
+//             slidesToScroll: 1,
+//             get dots() {
+//               if (1 == a) return dots = !0
+//                 }
+//           }
+//         }]
+//       })
+//          ), 
+//       "variant_grouped" === window.color_swatch_style && window.use_color_swatch
+//     ){
+//       var o = t.closest("[data-more-view-product]").siblings(".product-shop").find(".swatch").find(".swatch-element.color").find(":radio:checked");
+//       if (o.length) {
+//         var n = o.data("filter");
+//         void 0 !== n && (i.slick("slickUnfilter"), e.slick("slickUnfilter"), i.find(n).length && e.find(n).length && (i.slick("slickFilter", n).slick("refresh"), e.slick("slickFilter", n).slick("refresh")))
+//       }
+//     }
+
+//   }
+  
+  
+  
+  
+</script>

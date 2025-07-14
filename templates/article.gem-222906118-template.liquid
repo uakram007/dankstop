@@ -1,0 +1,234 @@
+{% comment %}
+	GEMPAGE BUILDER (https://apps.shopify.com/gempage)
+
+	You SHOULD NOT modify source code in this page because
+	It is automatically generated from GEMPAGE BUILDER
+	Try to edit page with the live editor.
+{% endcomment %}
+<!--GEM_HEADER-->
+
+<link data-instant-track rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" class="gf-style" />
+<link data-instant-track rel="stylesheet" type="text/css" href="https://d1um8515vdn9kb.cloudfront.net/files/vendor.css?refresh=1" class="gf-style" />
+<link data-instant-track rel="stylesheet" type="text/css" href="{{ 'gem-article-222906118.css' | asset_url }}" class="gf_page_style">
+<!--GEM_HEADER_END-->
+{%- comment -%}
+<!-- Article JSON Schema =============== -->
+{%- endcomment -%}<div class="article-template">
+  <div class="container">
+    {%- include 'breadcrumb' -%}
+    
+    <div class="page-header"><h2>
+        {{- blog.title -}}
+      </h2></div>
+    
+    <div class="halo-blog-content article-content">
+      <div class="row {{ blog.template_suffix }}">
+        {%- section 'sidebar-blog' -%}
+        {%- comment -%}
+  Comments will not appear right after they are submitted, either to be checked for spam
+  or to await moderation. When a comment is submitted, the browser is redirected to a page
+  that includes the new comment id in its URL.
+    Example: http://shopname.myshopify.com/blogs/news/2022072-my-post?comment=3721372  More information:
+    - http://docs.shopify.com/themes/liquid-variables/comment
+{%- endcomment -%}{%- comment -%}
+  We're going to reference the number of comments below, so let's hold it in a variable.
+{%- endcomment -%}{%- assign number_of_comments = article.comments_count -%}{%- comment -%}
+  If a comment was just submitted and it has no blank fields, we have an extra comment to count.
+{%- endcomment -%}{%- if comment and comment.created_at -%}
+  {%- assign number_of_comments = article.comments_count | plus: 1 -%}
+{%- endif -%}<div class="blog-detail shopify-section col-12 col-xl-9 col-main">
+  <h1 class="article-title">{{- article.title -}}</h1>
+  
+  <div class="blog_author">  
+    {%- capture date -%}
+    	<time datetime='{{ article.published_at | date: '%Y-%m-%d' }}'>{{ article.published_at | date: '%b %d, %Y' }}</time>
+    {%- endcapture -%}
+    
+    {%- capture author -%}by {{ article.author }}{%- endcapture -%}
+    
+    {%- if section.settings.blog_show_author -%}
+    <span class="article__author">
+      {{ author }}
+    </span>
+    {%- endif %}    {%- if section.settings.blog_show_date -%}
+    <span class="article__date">
+      on {{ date }}
+    </span>
+    {%- endif %}    {%- if blog.comments_enabled? -%}
+    <a class="blog-comment" href="{{ article.url }}#comments"{% if settings.enable_multilang %} data-translate="blogs.comments.comments_with_count|count:{{ article.comments_count }}"{%endif%}>
+      {{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+    </a>
+    {%- endif -%}  
+  </div>
+  
+  <div class="article-details">
+   
+    <div class="rte">
+      <!--Gem_Page_Main_Editor--><div class="clearfix"></div><div class="gryffeditor">
+<div class="gryffeditor">
+<div data-label="Text Block"> <div class="elm text-edit"><h5 style="text-align: center;"><img alt="" src="//cdn.shopify.com/s/files/1/1085/8818/files/top_banner_4923332f-3ded-4a29-b178-3f1a70d07bce_1024x1024.png?v=1491233291" style="float: none;"></h5>
+<meta charset="utf-8">
+<p style="text-align: left;"><strong>Talk to one of your hippie friends about smoking and you’re certain to hear one suggest using hemp wick, if you don’t already use it. For those not-in-the-know, hemp wick is a length of cord that can be lit and used to light pipes and rolled cigarettes. Hemp wick has a loyal fanbase, like most hemp products. And for good reason, since…</strong></p>
+<p style="text-align: left;"> </p>
+<p style="text-align: center;"><img alt="" src="//cdn.shopify.com/s/files/1/1085/8818/files/banner_2_db21849d-7143-4504-af92-6435c3901756_medium.png?v=1491235869" style="float: none;" width="83" height="85"></p>
+<p style="text-align: center;"><span style="color: #000000;"><strong>IT'S ORGANIC</strong></span></p>
+<p style="text-align: left;">This is probably the most obvious benefit; hemp is a non-psychoactive variety of cannabis sativa that grows so easily that it doesn’t require pesticides or other additives. The wick is created by clinging together hemp strands with beeswax, which acts as a natural and healthy glue. The organic nature of hemp wick means that, even after being lit by a butane lighter or other heat source, it provides the purest possible light for your pipe or cigarette. And that purity means that...</p>
+<p style="text-align: left;"> </p>
+<p style="text-align: center;"><span style="color: #000000;"><strong>IT TASTES BETTER</strong></span></p>
+<p style="text-align: center;"><img src="//cdn.shopify.com/s/files/1/1085/8818/files/banner_3_7a9d54e8-5041-4297-bbe5-58ba55ec07dd_medium.png?v=1491235994" alt="raw papers"></p>
+<p style="text-align: left;"><span style="font-weight: 400;">Anyone that’s smoked a hemp </span><a href="https://dankstop.com/collections/rolling-papers" title="rolling papers, machines, &amp; accessories - rolling papers product page"><span style="font-weight: 400;">rolling paper</span></a><span style="font-weight: 400;"> knows that hemp doesn’t intrude on the flavor of your smoke. This is even more true with hemp wick, since it doesn’t add the usual butane flavor you get from lighters. The only thing you’ll be getting is the taste of whatever dry herb or tobacco you’re puffing on. It’s common for smokers who switch to hemp wick to notice the subtle nuances of herb flavor they’ve been missing out on for years. Hemp wicks also burn at around the 300-500 degrees necessary to combust herb, as opposed to the 2,000-4,000 produced by the average lighter. Lower heat leads to a less harsh inhale, which is ideal for the daily smoker. And if you do smoke daily, you’ll love that...</span></p>
+<p style="text-align: left;"> </p>
+<div style="text-align: center;"><strong></strong></div>
+<div style="text-align: center;"><span style="color: #000000;"><strong>IT'S COST EFFECTIVE</strong></span></div>
+<p style="text-align: left;"><img alt="" src="//cdn.shopify.com/s/files/1/1085/8818/files/banner_4_2ca1b215-470e-4800-8ce8-59e10650aa06_medium.png?v=1491235478" style="display: block; margin-left: auto; margin-right: auto;"></p>
+<p style="text-align: center;"> </p>
+<p style="text-align: left;"><span style="font-weight: 400;">While the idea of buying an extra item to </span><i><span style="font-weight: 400;">save </span></i><span style="font-weight: 400;">money might seem counter-productive, hemp wick is easily one of the smartest investment the daily smoker can make. Hemp wick itself is cheap; <a href="https://dankstop.com/collections/humboldt-hemp/products/humboldt-hemp-wick-5ft" title="humboldt hemp wick 5ft (3 pack) product page">a 3 pack of 5ft Humboldt Hemp Wick costs less than 6 dollars</a>. Assuming you use a quarter foot of wick every week, your wicks should last for over a year. And you probably won’t use all of your wick, since hemp wick prolongs the life of lighters exponentially. As we mentioned before, lighters burn 4x the amount necessary to combust herb. Because you have to hold the flame for at least a few seconds, that means you’re cutting down your lighter’s life to a fraction. Because hemp wick ignites immediately upon being lit, the lighter only needs to be on for a second or two before the wick is on fire. And since you’ll have 250 feet of it, you don’t need to worry about it running out anytime soon. Once your wick is lit, you’ll also realize that...</span></p>
+<p style="text-align: left;"> </p>
+<p style="text-align: center;"><img src="//cdn.shopify.com/s/files/1/1085/8818/files/banner_5_7d2cb4af-59d9-4aae-9ef7-b8c349fc8150_medium.png?v=1491236046" alt="" width="101" height="86">   </p>
+<p style="text-align: center;"><span style="color: #000000;"><strong>IT'S PRECISE</strong></span></p>
+<p style="text-align: left;"><span style="font-weight: 400;">If you’re an experienced smoker, you’ve probably heard the term “cornering” before (we wrote an article on it). If you haven’t, it’s pretty much what it sounds like: combusting sides of your herb bowl instead of the whole thing. The benefit of cornering is that it allows for multiple people to have tasty fresh hits from a pipe. It also means that everyone gets optimal potency from whatever’s being smoked. Cornering is difficult to do with the wide flame of a lighter, but much easier when done with the skinnier hemp wick. The narrow flame can directly touch a section of the herb without touching the rest. A lit hemp wick burns so precisely that you can make </span><span style="font-weight: 400;">unique</span> <span style="font-weight: 400;">designs</span><span style="font-weight: 400;"> in your herb bowl that will please your friends and family. And if being a man/woman of the people is your goal, you’ll be glad to know that...</span></p>
+<p style="text-align: left;"> </p>
+<p style="text-align: left;"><span style="font-weight: 400;"><img src="//cdn.shopify.com/s/files/1/1085/8818/files/banner_6_039302eb-6e97-4ba1-ae0a-619322f62f44_medium.png?v=1491236243" alt="made by people" style="display: block; margin-left: auto; margin-right: auto;" width="100" height="95"></span></p>
+<p style="text-align: center;"><span style="color: #000000;"><strong>IT'S MADE BY PEOPLE</strong></span></p>
+<p style="text-align: left;"><span style="font-weight: 400;">Given the ease of growing hemp, most hemp wick companies use local farmers for their resources. For example, Humboldt Traders’ founder, Brett Watson, grew up in Humboldt, went to school in Humboldt, and even sells glass from a local Humboldt headshop. With this in mind, it makes sense that the company prides itself on using locally grown hemp to support the local economy. The sale of hemp wick also supports the local beekeeping community, who (according to authorities like </span><a href="https://www.geneticliteracyproject.org/2016/12/06/honeybees-not-crisis-beekeepers/"><span style="font-weight: 400;">The Genetic Literacy Project)</span></a><span style="font-weight: 400;"> are seeing an increase of the bee population and will benefit from increased use of beeswax products. No matter who you buy your hemp wick from, you can be sure that your investment will go towards supporting a regional economy.</span></p>
+<p style="text-align: left;"><span style="font-weight: 400;">Hemp wick is sure to improve your smoking experience, so go to DankStop.com to see our selection of </span><a href="https://dankstop.com/collections/smoking-accessories" title="smoking accessories product page"><span style="font-weight: 400;">hemp wicks and other smoking accessories</span></a><span style="font-weight: 400;">!</span></p></div></div>
+</div><div id="divContentBk"></div>
+</div><div id="divContentBk"></div><!--End_Gem_Page_Main_Editor-->
+    </div>
+   
+  </div>  {%- include 'blog-detail-gallery_lookbook' -%}
+  
+  <p class="clearfix"></p>
+  
+  <div class="tags-share">
+    <ul class="user-tags">
+      {%- include 'tags-article' -%}
+    </ul>    {%- include 'share' -%}
+  </div>  {%- if blog.next_article or blog.previous_article -%}
+  <div class="action-btn">
+    
+    {%- if blog.previous_article -%}
+    <div class="btn-left">
+      <i class="fa fa-angle-left" aria-hidden="true"></i>
+      {{ 'blogs.article.older_post' | t | link_to: blog.previous_article }}
+    </div>    
+    {%- endif -%}
+    
+    {%- if blog.next_article -%}
+    <div class="btn-right">
+      {{ 'blogs.article.newer_post' | t | link_to: blog.next_article }}
+      <i class="fa fa-angle-right" aria-hidden="true"></i>
+    </div>
+    {%- endif -%}
+    
+  </div>
+  {%- endif -%}  {%- if blog.comments_enabled? -%}  {%- comment -%}
+  Just like our blog.liquid page, define how many comments should be on each page.
+  {%- endcomment -%}  {%- if number_of_comments > 0 -%}
+  <h2 class="title-comment">
+    {{ 'blogs.comments.comments_with_count' | t: count: number_of_comments }}
+  </h2>
+  {%- endif -%}
+  
+  {%- paginate article.comments by 5 -%}  {%- comment -%}
+  #comments is required, it is used as an anchor link by Shopify.
+  {%- endcomment -%}
+  
+  <div id="comments">
+    {%- if comment and comment.created_at -%}
+    <div class="note form-success">
+      {%- if blog.moderated? -%}
+      <span {% if settings.enable_multilang %}data-translate="blogs.comments.success_moderated"{%endif%}>
+        {{ 'blogs.comments.success_moderated' | t }}
+      </span>
+      {%- else -%}
+      <span {% if settings.enable_multilang %}data-translate="blogs.comments.success"{%endif%}>
+        {{ 'blogs.comments.success' | t }}
+      </span>
+      {%- endif -%}
+    </div>
+    {%- endif -%}    {%- if number_of_comments > 0 -%}
+    <ul class="list-comments">
+      {%- comment -%}If a comment was just submitted with no blank field, let's show it.{%- endcomment -%}
+      {%- if comment and comment.created_at %}
+      <li id="{{ comment.id }}" class="comment first{% if article.comments_count == 0 %} last{% endif %}">
+        {% include 'comment' -%}
+      </li>
+      {%- endif -%}      {%- comment -%}
+      Showing the rest of the comments.
+      {%- endcomment -%}
+      
+      {%- for comment in article.comments -%}
+      <li id="{{ comment.id }}" class="comment{% unless number_of_comments > article.comments_count %}{% if forloop.first %} first{% endif %}{% endunless %}{% if forloop.last %} last {% endif %}">
+        {% include 'comment' %}
+      </li>
+      {%- endfor -%}
+    </ul>    {%- if paginate.pages > 1 -%}
+    {%- include 'pagination' -%}
+    {%- endif -%}
+    
+    {%- endif -%}    {%- comment -%}
+    Comment submission form
+    {%- endcomment -%}    {%- form article -%}
+    
+    {%- comment -%}
+    #add-comment-title is used simply as an anchor link
+    {%- endcomment -%}
+    
+    <h3 class="title-comment" id="add-comment-title" {% if settings.enable_multilang %}data-translate="blogs.comments.title"{%endif%}>
+      {{ 'blogs.comments.title' | t }}
+    </h3>
+    
+    {%- include 'form-errors-custom' -%}
+    
+    <div class="comment-form">
+      <div class="form-group">
+        <label for="comment-author" {% if settings.enable_multilang %}data-translate="blogs.comments.name"{%endif%}>
+          {{ 'blogs.comments.name' | t }}
+        </label>
+        <input {% if form.errors contains "author" %}class="error"{% endif %} type="text" name="comment[author]" id="comment-author" value="{{ form.author }}">
+      </div>      <div class="form-group">
+        <label for="comment-email" {% if settings.enable_multilang %}data-translate="blogs.comments.email"{%endif%}>
+          {{ 'blogs.comments.email' | t }}
+        </label>
+        <input {% if form.errors contains "email" %}class="error"{% endif %} type="email" name="comment[email]" id="comment-email" value="{{ form.email }}">
+      </div>
+    </div>    <div class="message form-group">
+      <label for="comment-body" {% if settings.enable_multilang %}data-translate="blogs.comments.message"{%endif%}>
+        {{ 'blogs.comments.message' | t }}
+      </label>
+      <textarea rows="7" {% if form.errors contains "body" %}class="error"{% endif %} name="comment[body]" id="comment-body">
+        {{ form.body }}
+      </textarea>
+    </div>    <div class="note" {% if settings.enable_multilang %}data-translate="blogs.comments.note"{%endif%}>
+      {{ 'blogs.comments.note' | t }}
+    </div>    <input type="submit" class="btn" value="{{ 'blogs.comments.post' | t }}">
+    
+    {%- if form.errors -%}
+    <script>
+      window.location.hash = '#add-comment-title';
+    </script>
+    {%- endif -%}    {%- if form.posted_successfully? -%}
+    <script>
+      window.location.hash = '#comments';
+    </script>
+    {%- endif -%}
+    {%- endform -%}
+  </div>
+  {%- endpaginate -%}
+  {%- endif -%}
+</div>      </div>      
+    </div>   
+  </div>
+</div>
+{%- include 'article-schema-json' -%}
+<!--GEM_FOOTER-->
+{% capture GEM_FOOTER_SCRIPT %}
+<script data-instant-track type="text/javascript">
+	var pageLibs = [		'{{ 'gem-article-222906118.js' | asset_url }}',	];
+</script>
+<script data-instant-track type="text/javascript">
+	var GEMVENDOR = GEMVENDOR || (function(){		var _js = {};		return {			init: function(Args) {				_js = Args;			},			getLibs: function() {				return _js;			}		};	}());	GEMVENDOR.init(pageLibs);</script>
+<script data-instant-track type="text/javascript" src="https://d1um8515vdn9kb.cloudfront.net/files/gempagev2.js?v=1.0" class="gf-script" defer></script>
+{% endcapture %}
+<!--GEM_FOOTER_END-->

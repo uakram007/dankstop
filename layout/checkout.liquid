@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="{{ locale }}" dir="{{ direction }}" class="{{ checkout_html_classes }}">
+  <head>
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MK2MCKP');</script>
+<!-- End Google Tag Manager -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
+
+    <title>{{ page_title }}</title>
+    
+    {%- include 'checkout--header-scripts' -%}
+    
+    {%- comment -%}
+    {% if settings.favicon_enable %}
+    {%- comment -%}
+    <link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}" type="image/png" />
+    {%- endcomment -%}
+    {%- comment -%}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+    {%- endcomment -%}
+    <link rel="shortcut icon" href="//cdn.shopify.com/s/files/1/1085/8818/files/dankstop-favicon_32x32.png?v=1556817731" type="image/png">
+    {% endif %}
+    {%- endcomment -%}
+    {%- include 'site-favicon' -%}
+    
+    {{ content_for_header }}
+
+    {{ checkout_stylesheets }}
+    {{ checkout_scripts }}
+    
+  
+  {% include 'shogun-head' %}
+</head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MK2MCKP"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+    {{ skip_to_content_link }}
+    
+    <div class="banner" data-header>
+      <div class="wrap">
+        {{ content_for_logo }}
+      </div>
+    </div>
+
+    {{ order_summary_toggle }}
+
+    <div class="content" data-content>
+      <div class="wrap">
+        {%- assign order_minimum_for_checkout = settings.checkout__order_minimum -%}
+        {%- assign order_minimum_for_checkout_in_cents = order_minimum_for_checkout | times: 100 -%}
+        <div class="main" role="main">
+          <div class="main__header">
+            {{ content_for_logo }}
+            {%- if checkout.total_price >= order_minimum_for_checkout_in_cents -%}
+            {{ breadcrumb }}
+            {{ alternative_payment_methods }}
+            {%- endif -%}
+          </div>
+          <div class="main__content">
+            {%- assign checkout_json = checkout | json -%}
+            {%- if checkout_json == "null" or checkout_json == null or checkout.total_price >= order_minimum_for_checkout_in_cents -%}
+            {{ content_for_layout }}
+            {%- else -%}
+            <p class="errors">{{ 'cart.general.order_minimum_message' | t: order_minimum:order_minimum_for_checkout }}</p>
+            {%- endif -%}
+          </div>
+          <div class="main__footer">
+            {{ content_for_footer }}
+          </div>
+        </div>
+        <div class="sidebar" role="complementary">
+          <div class="sidebar__header">
+            {{ content_for_logo }}
+          </div>
+          <div class="sidebar__content">
+            {{ content_for_order_summary }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{ tracking_code }}
+    
+    {%- include 'checkout--footer-scripts' -%}
+    
+  </body>
+</html>

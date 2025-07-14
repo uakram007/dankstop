@@ -1,0 +1,19 @@
+{%- layout none -%}
+
+{%- comment -%}
+{%- section 'footer-5' -%}
+{%- endcomment -%}
+
+{%- if settings.footer_layout == 'default' -%}        
+{%- section 'footer' -%}
+{%- elsif settings.footer_layout == 'parallax' -%}
+{%- section 'footer-parallax' -%}
+{%- elsif settings.footer_layout == '02' -%}
+{%- section 'footer-2' -%}
+{%- elsif settings.footer_layout == '03' -%}
+{%- section 'footer-3' -%}
+{%- elsif settings.footer_layout == '04' -%}
+{%- section 'footer-4' -%}
+{%- elsif settings.footer_layout == '05' -%}
+{%- section 'footer-5' -%}
+{%- endif -%}

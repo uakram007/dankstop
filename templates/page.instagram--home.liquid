@@ -1,0 +1,26 @@
+{% include 'breadcrumb' %}
+<div class="grid">
+
+  <div class="grid-item large--two-thirds push--large--one-sixth">
+
+    <h1>{{ page.title }}</h1>
+
+    <div class="rte">
+      
+      {%- comment -%}
+      <!-- Yotpo =========================================== -->
+      {%- endcomment -%}
+      <script type="text/javascript">
+        (function e(){var e=document.createElement("script");e.type="text/javascript",e.async=true,e.src="//staticw2.yotpo.com/slO4cjcGIOnMsb78Mu313loqvxAp3HCWDc7KauBH/widget.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})();
+      </script>
+	
+      <div class="yotpo yotpo-pictures-gallery" data-gallery-id="1">
+        <div class="loading-spinner loading-centered loading-3x"></div>
+      </div>
+      
+      {{ page.content }}
+    </div>
+
+  </div>
+
+</div>

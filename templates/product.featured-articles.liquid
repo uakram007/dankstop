@@ -1,0 +1,121 @@
+{%- layout none -%}
+{%- include 'lazyload-placeholder' -%} 
+
+{%- comment -%}
+  Product Head
+{%- endcomment -%}
+{%- include 'product-head' -%}
+
+
+
+{%- assign product_type = product.type -%}
+{%- assign product_type_handle = product_type | handle -%}
+
+
+{%- comment -%}
+Related Articles -- output up to 4 articles related by tag
+{%- endcomment -%}
+{%- assign html_start_output = false -%}
+{%- assign related_articles_limit = 4 -%}
+{%- assign related_articles_count = 0 -%}
+{%- assign article_img_srcset = '87,204,240' -%}
+{%- assign article_img_ss_sizes = '87,204,240' -%}
+
+{%- comment -%}
+<div class="hidden">{{ main_product.tags | join: "," | json }}</div>
+<div class="hidden">{{ product_type_handle | split: "," | json }}</div>
+<div class="hidden">{{ product_type_handle | split: "," | json }}</div>
+{%- endcomment -%}
+
+{%- unless terms_to_match -%}
+  {%- assign terms_to_match = product_handle -%}
+  {%- comment -%}
+  <div class="hidden">{{ terms_to_match | json }}</div>
+  {%- endcomment -%}
+{%- endunless -%}
+
+{%- comment -%}
+Loop through all articles
+{%- endcomment -%}
+{%- for link in linklists.blogs.links -%}
+
+  {%- assign blog = link.object -%}
+  {%- for article in blog.articles -%}
+
+    {%- comment -%}
+    Look for a matching article
+    {%- endcomment -%}
+    {%- assign matching_article = false -%}
+    {%- for term_to_match in terms_to_match -%}
+
+      {%- for article_tag in article.tags -%}
+
+        {%- if article_tag == term_to_match -%}
+          {%- assign matching_article = true -%}
+          {%- break -%}
+        {%- endif -%}
+
+      {%- endfor -%}
+
+      {%- if matching_article -%}
+        {%- break -%}
+      {%- endif -%}
+
+    {%- endfor -%}
+
+
+
+    {%- comment -%}
+    Output matching article, if found 
+    {%- endcomment -%}
+    {%- if matching_article and related_articles_count < related_articles_limit -%}
+      {%- if html_start_output == false -%}
+        {%- assign html_start_output = true -%}
+
+<section class="product-section related-articles col-12">
+  
+  <h3 class="prods-title"><span class="prods-title-inner">Related Articles</span></h3>
+  
+  <div class="grid-item seclpse-inner">
+    <ul class="article-list articles--inline grid row">
+      {%- endif -%}
+      {%- assign related_articles_count = related_articles_count | plus: 1 -%}
+      <li class="grid-item col-12 col-md-6 col-lg-3 article">
+        <a href="{{ article.url }}" class="article-img-container" title="{{ article.title | escape }}">
+          {%- if article.image -%}
+          {%- assign article_image = article.image -%}
+          {%- assign article_image_alt = article.title -%}
+          {%- include 'image-module' im_src:article_image, srcset:article_img_srcset, ss_sizes:article_img_ss_sizes, width:87, ratio:'4x3', size:'medium', im_a:article_image_alt -%}
+          {%- endif -%}
+        </a>
+        <h3 class="article-title" title="{{ article.title | escape }}">{{ article.title }}</h3>
+        {%- comment -%}
+        <p class="article-tags article-excerpt hidden">
+          {%- for tag in article.tags limit:4 -%}
+          {%- if forloop.first -%}
+          {{- tag -}}
+          {%- else -%}
+          {{- ', ' -}}{{- tag -}}
+          {%- endif -%}
+          {%- endfor -%}
+        </p>
+        {%- endcomment -%}
+        <p class="article-excerpt">
+          {{- article.excerpt_or_content | strip_html | truncate: 153 | strip | strip_newlines -}}
+        </p>
+        <a href="{{ article.url }}" class="article-read-more" title="{{ article.title | escape }}">Continue reading {{ article.title }} »</a>
+        <span class="article-date">{{ article.created_at | date: "%d.%m.%Y" }}</span>
+      </li>
+    {%- endif -%}
+    {%- if related_articles_count == related_articles_limit -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endfor -%}
+{%- if html_start_output == true and related_articles_count > 1 -%}
+    </ul>
+    <a class="articles--more" href="/blogs/blog/tagged/{{ product_type_handle }}" title="Learn more about {{ product_type }}">Learn more about {{ product_type_string_plural }} »</a>
+  </div>
+  
+</section>
+{%- endif -%}

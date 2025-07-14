@@ -1,0 +1,338 @@
+{%- if product.available -%}
+{%- comment -%}
+  Attachments Options on Product Details by Andre
+{%- endcomment -%}
+{%- assign main_product = product -%}
+{%- assign first_addon_free = false -%}
+{%- assign attachment_handles_string = '' -%}
+{%- assign attachment_handles_string_delimiter = ',' -%}
+{%- assign included_product_title = '' -%}
+{%- assign total_addons_limit = settings.total_addons_limit -%}
+
+
+{%- comment -%}
+  When run live, this code and tag loop is already performed in the main product
+{%- endcomment -%}
+{%- comment -%}
+{%- assign product_type = main_product.type -%}
+{%- assign product_type_handle = product_type | handleize -%}
+
+{%- comment -%}
+	Pluralize product type string to use with getting product type collection
+{%- endcomment -%}
+{%- capture product_type_string_plural -%}{%- include 'string-pluralizer' with product_type -%}{%- endcapture -%}
+{%- capture product_type_collection_handle -%}{{ product_type_string_plural | handle }}{%- endcapture -%}
+
+
+
+{%- comment -%}
+	Store product type and vendor collections
+{%- endcomment -%}
+{%- assign product_type_collection = collections[product_type_collection_handle] -%}
+{%- assign product_vendor_collection = collections[product_vendor_handle] -%}
+
+
+
+{%- comment -%}
+  Attachment Default tag initial value
+{%- endcomment -%}
+{%- assign attachment_default_included = 'nit' -%}
+
+
+
+{%- comment -%}
+  Do a run through product tags to find various properties 
+{%- endcomment -%}
+{%- assign product_height = false -%}
+{%- assign product_perc = false -%}
+{%- assign joint_size_or_gender = false -%}
+{%- assign joint_size = '' -%}
+{%- assign joint_gender = '' -%}
+{%- assign joint_angle = '' -%}
+{%- assign this_product_has_feature_terms = false -%}
+{%- assign some_product_has_features = false -%}
+{%- assign feature_term_keys = '' -%}
+{%- assign feature_translated_terms = '' -%}
+{%- assign product_bullet_point_count = 0 -%}
+{%- assign product_bullet_points = '' -%}
+{%- assign has_color_pref = false -%}
+{%- assign made_in_usa = false -%}
+{%- assign free_gift_tag_start = settings.free_gifts_tag_start -%}
+{%- assign free_gift_tag = false -%}
+
+{%- for tag in main_product.tags -%}
+  {%- assign tag_type = tag | split: "_" | first -%}
+  {%- assign tag_value = tag | split: "_" | last -%}
+
+  {%- comment -%}
+    Joint Size and Gender - find out if product has joint size and gender 
+    for use with comparison tables and attachments
+  {%- endcomment -%}
+  {%- if tag contains 'height_' -%}
+    {%- assign product_height = true -%}
+    {%- capture product_height -%}{{ tag_value | replace: '"', ''}} {{ 'products.bullet_points.height_inches' | t }}{%- endcapture -%}
+  {%- elsif tag_type contains 'joint ' -%}
+    {%- assign joint_size_or_gender = true -%}
+    {%- if tag contains 'joint size_' -%}
+      {%- if joint_size != '' -%}
+        {%- assign joint_size = joint_size | replace: 'mm', '' | strip | append: '/' | strip -%}
+      {%- endif -%}
+      {%- assign joint_size = joint_size | append: ' ' | append: tag_value | strip -%}
+    {%- elsif tag contains 'joint gender_' -%}
+      {%- assign joint_gender = joint_gender | append: ' ' | append: tag_value | strip -%}
+    {%- elsif tag contains 'joint angle' -%}
+      {%- assign joint_angle = joint_angle | append: ' ' | append: tag_value | strip -%}
+    {%- endif -%}
+  {%- elsif tag contains 'perc_' -%}
+    {%- assign product_perc = tag_value -%}
+  {%- endif -%}
+
+  {%- comment -%}
+    Attachment add-on default included product or bundle
+  {%- endcomment -%}
+  {%- if tag contains 'included_'  -%}
+    {%- assign attachment_default_included = tag_value -%}
+  {%- endif -%}
+
+  {%- comment -%}
+    PGI Made In USA sticker
+  {%- endcomment -%}
+  {%- if tag contains 'made in_USA' or  tag contains 'made in_usa'-%}
+    {%- assign made_in_usa = true -%}
+  {%- endif -%}
+
+  {%- comment -%}
+    PGI Free Gift Progress
+  {%- endcomment -%}
+  {%- if tag contains free_gift_tag_start -%}
+    {%- assign free_gift_tag = tag -%}
+  {%- endif -%}
+
+{%- endfor -%}
+
+{%- comment -%}
+  Joint gender opposite + index -- for use with product attachment addons
+{%- endcomment -%}
+{%- assign joint_gender_opposite = '' -%}
+{%- assign joint_gender_index = 'f' -%}
+{%- if joint_gender != '' -%}
+  {%- if joint_gender == 'male' -%}
+    {%- assign joint_gender_opposite = 'female' -%}
+    {%- assign joint_gender_index = 'm' -%}
+  {%- elsif joint_gender == 'female' -%}
+    {%- assign joint_gender_opposite = 'male' -%}
+    {%- assign joint_gender_index = 'f' -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- endcomment -%}
+
+
+
+{%- comment -%}
+  Product types with attachments -- also for use with product attachment addons
+{%- endcomment -%}
+{%- assign product_types_with_attachments = settings.product_types_with_attachments -%}
+{%- assign bundle_parent_string = 'products.option_swatch.attachment_bundle_parent' | t | replace: ':', '' -%}
+{%- assign bundle_child_string = 'products.option_swatch.attachment_bundle_child' | t | replace: ':', '' -%}
+
+{%- assign addons_collection_settings_ref = 'addons_collection_' | append: product_type_handle -%}
+{%- assign addons_collection_handle = settings[addons_collection_settings_ref] -%}
+{%- assign addons_collection = collections[addons_collection_handle] -%}
+
+
+{%- if product_types_with_attachments contains product_type and product_type != blank and joint_size != '' and joint_gender != '' -%}
+  {%- unless joint_size contains 'rubber grommet' -%}
+    {%- assign first_addon_free = true -%}
+    {%- capture attachment_setting_pre_id -%}attachment_{{ joint_gender_index }}j_{{ attachment_default_included }}_option_{%- endcapture -%}
+    {%- for i in (0..4) -%}
+      {%- assign attachment_setting_id = attachment_setting_pre_id | append: i | strip -%}
+      {%- if settings[attachment_setting_id] -%}
+        {%- if attachment_handles_string == '' -%}
+          {%- assign attachment_handles_string = settings[attachment_setting_id] -%}
+        {%- else -%}
+          {%- capture attachment_handles_string -%}{{ attachment_handles_string }}{{ attachment_handles_string_delimiter }}{{ settings[attachment_setting_id] }}{%- endcapture -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- assign attachment_handles_array = attachment_handles_string | split: attachment_handles_string_delimiter -%}
+    {%- comment -%}
+      <!-- Get first product variant as included default attachment add-on. -->
+      <!-- This will be used for "pretty properties" for checkout cart summary. -->
+    {%- endcomment -%}
+    {%- assign included_free_title_only = 'products.option_swatch.attachment_default_included_title_only' | t -%}
+    {%- assign included_attachment = all_products[attachment_handles_array.first] -%}
+    {%- assign included_product_title = included_attachment.title | escape -%}
+    {%- assign included_product_available = included_attachment.available -%}
+    {%- for included_var in included_attachment.variants -%}
+      {%- if included_var.option1 == joint_size -%}
+        {%- assign included_product_id = included_var.id -%}
+        {%- assign included_variant_inventory_quantity = included_var.inventory_quantity -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if included_product_available and included_variant_inventory_quantity != 0 -%}
+    <input type="hidden" id="includedFree" name="properties[{{ included_free_title_only }}]" value="{{ joint_size }} {{ joint_gender_opposite }} {{ included_product_title }}">
+    {%- endif -%}
+  {%- endunless -%}
+{%- elsif product_type_collection.metafields.product_page.addons != blank -%}
+  {%- assign first_addon_free = false -%}
+  {%- assign attachment_handles_string = product_type_collection.metafields.product_page.addons -%}
+{%- endif -%}
+
+
+{%- comment -%}
+<!-- Add product metafield addons -->
+{%- endcomment -%}
+{%- if main_product.metafields.global.addons != blank -%}
+  {%- if attachment_handles_string == blank -%}
+    {%- assign attachment_handles_string = main_product.metafields.global.addons -%}
+  {%- else -%}
+    {%- assign attachment_handles_string = attachment_handles_string | append: attachment_handles_string_delimiter | append: main_product.metafields.global.addons -%}
+  {%- endif -%}
+{%- endif -%}
+{%- if main_product.metafields.product_page.addons != blank -%}
+  {%- if attachment_handles_string == blank -%}
+    {%- assign attachment_handles_string = main_product.metafields.product_page.addons -%}
+  {%- else -%}
+    {%- assign attachment_handles_string = attachment_handles_string | append: attachment_handles_string_delimiter | append: main_product.metafields.product_page.addons -%}
+  {%- endif -%}
+{%- endif -%}
+
+
+{%- comment -%}
+<!-- Add collection addons -->
+{%- endcomment -%}
+{%- if addons_collection.title != blank -%}
+  {%- assign collection_addons_limit = settings.collection_addons_limit -%}
+  {%- for addons_product in addons_collection.products limit:collection_addons_limit -%}
+    {%- if attachment_handles_string == blank -%}
+      {%- assign attachment_handles_string = addons_product.handle -%}
+    {%- else -%}
+      {%- assign attachment_handles_string = attachment_handles_string | append: attachment_handles_string_delimiter | append: addons_product.handle -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+
+{%- assign attachment_handles_string = attachment_handles_string | replace: ' , ', ',' | replace: ', ', ',' | replace: ' ,', ',' -%}
+{%- assign attachment_handles_array = attachment_handles_string | split: attachment_handles_string_delimiter -%}
+{%- comment -%}
+  <!-- If array has more than 1 item, we output a swatch with options. -->
+<span class="hidden">total addons limit: {{ total_addons_limit }}</span>
+<span class="hidden">addon handles string: {{ attachment_handles_string }}</span>
+<span class="hidden">addon handles array: {{ attachment_handles_array | json }}</span>
+{%- endcomment -%}
+
+{%- unless attachment_handles_array == blank or attachment_handles_array.size < 1 -%}
+<input type="hidden" id="attachmentBundleId" name="properties[{{ bundle_parent_string }}]" value="{{ attachment_bundle_id }}">
+<div class="addon-options th-box" data-addon-bundle-id="{{ attachment_bundle_id }}" data-bundle-string="{{ bundle_child_string }}" data-bundle-parent-string="{{ bundle_parent_string }}" data-addon-for-product-id="{{ product_id }}">
+  <input class="show-all-addons hidden" id="show-all-addons" name="show-all-addons" type="checkbox" value="show">
+  <div class="ao-header">
+    <div class="ao-header-inner">
+      <span class="h3">{{ 'products.option_swatch.attachment_swatch_title' | t }}</span>
+      {% if first_addon_free and included_product_available and included_variant_inventory_quantity != 0 %}
+      <span class="ao-value number-font">{{ 'products.option_swatch.attachment_default_included' | t: free_product_title: included_product_title }}</span>
+      {% endif %}
+    </div>
+    <label class="show-all-addons-label" for="show-all-addons">
+      <span class="show-addons">{{ 'products.option_swatch.show_all_addons' | t }}</span>
+      <span class="hide-addons hidden">{{ 'products.option_swatch.show_addons_carousel' | t }}</span>
+    </label>
+  </div>
+  <div class="ao-content">
+    {%- assign option_selected = false -%}
+    {%- assign addons_count = 0 -%}
+    
+    {%- comment -%}
+    <div class="hidden debug">array: {{ attachment_handles_array | json }}</div>
+    <div class="hidden debug">size: {{ attachment_handles_array.size }}</div>
+    {%- endcomment -%}
+    
+    {%- for attachment_handle in attachment_handles_array limit: 19 -%}
+      {%- assign attachment_product_available = false -%}
+      {%- assign attachment_handle_trimmed = attachment_handle | strip -%}
+      {%- assign attachment_product = all_products[attachment_handle_trimmed] -%}
+      {%- assign attachment_product_selected_or_first_available_variant = attachment_product.selected_or_first_available_variant -%}
+      {%- assign attachment_variant = attachment_product_selected_or_first_available_variant -%}
+      {%- assign attachment_variant_id = attachment_variant.id -%}
+      {%- assign attachment_product_price = attachment_product_selected_or_first_available_variant.price -%}
+      {%- for att_var in attachment_product.variants -%}
+        {%- if att_var.option1 == joint_size -%}
+          {%- assign attachment_variant = att_var -%}
+          {%- assign attachment_variant_id = attachment_variant.id -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- assign attachment_product_available = attachment_variant.available -%}
+      {%- if attachment_product_available -%}
+      {%- assign addons_count = addons_count | plus: 1 -%}
+    
+      <div class="ao-line {% if forloop.first and first_addon_free %}ao-default{% endif %} {% if attachment_product_available %}available{% else %}soldout{% endif %}" data-value="{{ attachment_variant_id }}">
+        <label class="ao-label" data-attachmentid="{{ attachment_variant_id }}" data-attachmenttitle="{{ attachment_product.title | replace: 'Bundle', '' | escape }}" for="swatch-{{ attachment_variant_id }}">
+          <span class="ao-left">
+            {%- assign attachment_prod_alt = attachment_product.title | escape -%}
+            {%- assign attachment_prod_img_src = attachment_product.featured_image.src | img_url: '120x' -%}
+              
+            {%- comment -%}
+            <img width="60" height="75" class="lazyload"
+                 src="{{ lazyload_placeholder }}"
+                 data-src="{{ attachment_prod_img_src }}"
+                 data-expand="-1" 
+                 title="{{ attachment_prod_alt }}" 
+                 alt="{{ attachment_prod_alt }}">
+            {%- endcomment -%}
+            
+            {%- include 'image-module', im_src: attachment_product.featured_image, im_dt_ws: '60', im_iep: 'data-expand="-1"' -%}
+
+          </span>
+          <span class="ao-center">
+            <span class="ao-title">{{ attachment_product.title | replace: 'Bundle', '' }}</span>
+            <span class="ao-price">
+              {%- if forloop.first and first_addon_free -%}
+              <span class="ao-included-free">{{ 'products.option_swatch.attachment_included_free' | t }}</span>
+              {%- else -%}
+              {{ 'products.option_swatch.attachment_add_for' | t }}<span>{%- assign formatted_price = attachment_product_price | money %}
+                  {%- unless settings.show_dollar_symbol -%}
+                    {%- assign formatted_price = formatted_price | remove: '$' -%}
+                  {%- endunless -%}
+                  {%- comment -%}
+                    Unless this store uses multiple currencies,
+                    if we apply a special style to cents,
+                    we will wrap them in a sup (superscript) element.
+                  {%- endcomment -%}
+                  {%- unless shop.money_format contains 'money' -%}
+                    {%- assign sup_end = '</sup>' -%}
+                    {%- if settings.superscript_decimals -%}
+                      {%- if shop.money_format contains '{{amount}}' -%}
+                        {%- capture formatted_price -%}{{- formatted_price | replace: '$ ', '<sup class="dollar">$</sup>&nbsp;' | replace: '.','<sup class="cents">' -}}{{- sup_end -}}{%- endcapture -%}
+                      {%- elsif shop.money_format contains '{{amount_with_comma_separator}}' -%}
+                        {%- capture formatted_price -%}{{- formatted_price | replace: '$ ', '<sup class="dollar">$</sup>&nbsp;' | replace: ',','<sup class="cents">' -}}{{- sup_end -}}{%- endcapture -%}
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endunless -%}
+                  {{- formatted_price | strip_newlines -}}</span>
+              {%- endif -%}
+            </span>
+          </span>
+          <span class="ao-right">
+            <span class="pretty p-curve p-pulse p-smooth p-svg">
+              <input type="checkbox" {% unless forloop.first and first_addon_free != false %}data-attachmentid="{{ attachment_variant_id }}" data-attprice="{{ attachment_product_price }}"{% endunless %} id="swatch-{{ attachment_variant_id }}" class="hidden-input attachment-checkbox {% if forloop.first and first_addon_free %}checkbox-default{% endif %}" name="{{ 'attachment' }}-product" value="{{ attachment_variant_id }}" {% if forloop.first and first_addon_free %}checked disabled{% endif %} {% unless attachment_product_available %}disabled{% endunless %}>
+              <span class="state p-success">
+                <svg class="svg svg-icon"><use xlink:href="#checkmarkIcon" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
+                <span class="state-label"></span>
+              </span>
+            </span>
+          </span>
+        </label>
+      </div>
+      {%- endif -%}
+      {%- if addons_count == total_addons_limit -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if addons_count == 0 -%}
+    <style>.ao-header h3{display:none;}</style>
+    {%- endif -%}
+  </div>
+</div>                  
+{%- endunless -%}
+{%- endif -%}

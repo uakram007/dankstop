@@ -1,0 +1,338 @@
+{{ 'blog.scss.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+{%- endcomment -%}
+
+<div class="dankblog_header container">
+  <div class="row">
+    <div id="dankblog_logo" class="col-xl-auto col-12">
+      <a href="/blogs/blog" title="DankStop Blog">
+        <h1>
+          <span class="title-dank">DANK</span>
+          {{- 'BLOG' -}}
+          {%- assign extra_title = '' -%}
+          {%- if current_tags -%}
+          {%- assign current_tags_joined = current_tags | join: ', ' -%}
+          {%- capture extra_title -%} &ndash; {{ 'general.meta.tags' | t: tags: current_tags_joined }}{%- endcapture -%}
+          {%- endif -%}
+          {%- if current_page != 1 -%}
+          {%- capture extra_title -%} &ndash; {{ 'general.meta.page' | t: page: current_page }}{%- endcapture -%}
+          {%- endif -%}
+          {%- if extra_title != blank -%}
+          <span class="page-tag">
+            {{- extra_title -}}
+          </span>
+          {%- endif -%}
+        </h1>
+      </a>
+    </div>
+    <button id="more_categories_mobile" class="btn btn-outline-secondary col-auto">
+      <span class="icon-nav icon-sm"><span class="icon-line"></span></span>
+      Categories
+    </button>
+    <ul class="blog-nav col" id="secondary_ul">
+      <li data-supernav-query="{{ settings.blog_nav_1_tag }}" data-supernav-query-type="{{ settings.blog_nav_1_type }}" class="col-lg-2 large--one-sixth"><span>{{ settings.blog_nav_1_title }}</span></li>
+      <li data-supernav-query="{{ settings.blog_nav_2_tag }}" data-supernav-query-type="{{ settings.blog_nav_2_type }}" class="col-lg-2 large--one-sixth"><span>{{ settings.blog_nav_2_title }}</span></li>
+      <li data-supernav-query="{{ settings.blog_nav_3_tag }}" data-supernav-query-type="{{ settings.blog_nav_3_type }}" class="col-lg-2 large--one-sixth"><span>{{ settings.blog_nav_3_title }}</span></li>
+      <li data-supernav-query="{{ settings.blog_nav_4_tag }}" data-supernav-query-type="{{ settings.blog_nav_4_type }}" class="col-lg-2 large--one-sixth"><span>{{ settings.blog_nav_4_title }}</span></li>
+      <li data-supernav-query="{{ settings.blog_nav_5_tag }}" data-supernav-query-type="{{ settings.blog_nav_5_type }}" class="col-lg-2 large--one-sixth"><span>{{ settings.blog_nav_5_title }}</span></li>
+      <li data-supernav-query="{{ settings.blog_nav_6_tag }}" data-supernav-query-type="{{ settings.blog_nav_6_type }}" class="col-lg-2 large--one-sixth"><span>{{ settings.blog_nav_6_title }}</span></li>
+    </ul>
+    <button id="article_search_icon" class="btn btn-outline-secondary col-auto">
+      <svg width="25px" height="25px"><use xlink:href="#searchIcon" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
+    </button>
+  </div>
+</div>
+
+
+<div id="search_container">
+  <form id="blog_search_form" class="search" action="/search?view=blog">
+    <input type="hidden" name="type" value="article">
+    {%- comment -%}
+    onfocus="this.value=''" 
+    {%- endcomment -%}
+    <input id="type_search_field" type="search" name="q" value="{{ search.terms | escape }}" placeholder="search DankBlog" class="input-group-field" aria-label="{{ 'general.search.placeholder' | t }}">
+  </form>
+</div>
+
+
+<hr style="margin: 0px; border-top: 1px solid #000;"/>
+
+{% paginate blog.articles by 12 %}
+
+{%- comment -%} {% include 'breadcrumb' %} {%- endcomment -%}
+
+
+
+
+<div id="dankblog_articles" class="container">
+
+  {% if keyAndValue[1] == blank %}
+
+  <ul id="dankblog_all_articles" class="row articles-list list_of_articles">
+
+    {% for article in blog.articles %}
+
+    {% if article.tags %}
+
+    {%- assign item_grid_class = "col-sm-12 col-md-6 col-lg-4" -%}
+    {%- comment -%}
+    {%- if forloop.first -%}
+      {%- assign item_grid_class = "col-12" -%}
+    {%- endif -%}
+    {%- endcomment -%}
+    <li class="individual_article {{ item_grid_class }}">
+
+      <a href="{{ article.url }}">
+        {%- assign article_image = article.image -%}
+        {%- assign article_image_src = article_image.src -%}
+        {%- assign article_image_src = article_image | img_url: 'original' -%}
+        {%- assign article_image_alt = article.title -%}
+        {%- assign article_img_srcset = '320,768,1080' -%}
+        {%- assign article_img_ss_sizes = '320,768,1080' -%}
+        {%- comment -%}    
+        {%- include 'image-module' url:article_image_src, srcset:article_img_srcset, ss_sizes:article_img_ss_sizes, width:100, ratio:'16x9', size:'medium', im_a:article_image_alt -%}
+        {%- endcomment -%}    
+        {%- include 'shimod', img: article_image, size: 'original' -%}
+
+        <p class="article_post_date">{{ article.published_at | date: "%b %d, %Y" }}</p>
+
+        <h2>{{ article.title }}</h2>
+
+        <p class="article_excerpt">
+          {% if article.excerpt.size > 0 %}
+          {{ article.excerpt }}
+          {% else %}
+          <span>{{ article.content | strip_html | truncate: 90 }}</span>
+          {% endif %}
+        </p>
+
+        {%- comment -%}
+        <p class="article-tags">
+          {% for tag in article.tags %}
+          {%- if forloop.first -%}
+          <span>{{ tag }}</span>
+          {%- else -%}
+          {{- ', ' -}}<span>{{ tag }}</span>
+          {%- endif -%}    
+          {% endfor %}
+        </p>
+        {%- endcomment -%}
+
+        {%- comment -%}
+        {% if blog.comments_enabled? %}
+        <a class="comment-count-link" href="{{ article.url }}#comments">
+          {{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+        </a>
+        {% endif %}
+        {%- endcomment -%}
+
+        <span class="read_more_link">{{ 'blogs.article.read_more' | t }}</span>
+
+      </a>
+
+    </li>
+
+    {% endif %}
+
+    {% endfor %}
+
+  </ul>
+
+  {% endif %}
+
+
+  {% if paginate.pages > 1 %}
+  <br>
+  <div class="text-center">
+    {% include 'blog-pagination' %}
+  </div>
+  {% endif %}
+
+</div>
+
+
+
+{%- comment -%}
+<script type="text/javascript">
+
+  var $articlesContainer = $("#dankblog_all_articles");
+  var $searchContainer = $("#search_container");
+  var $searchBtn = $("#article_search_icon");
+  var $searchField = $("#type_search_field");
+  var $searchForm = $("#blog_search_form");
+  var $paginationList = $("#paginationList");
+  var $mobileNavBtn = $("#more_categories_mobile");
+  var $blogNav = $("#secondary_ul");
+  
+  var domain = window.location.origin;
+  var link = domain + "/search?view=blog&page=1&type=article&q=";
+
+  /*
+   * Ajax Show/Hide Loading
+   */
+  function showLoading() {
+    $(".loading-spinner").show();
+  }
+  function hideLoading() {
+    $(".loading-spinner").hide();
+  }
+
+  
+  function blog_pagination(pagination_link, query){
+
+    var $paginationList = $("#paginationList");
+    var $articlesContainer = $("#dankblog_all_articles");
+    var nextPageIndex = 2;
+    
+    function attachPaginationCLick(){
+      $paginationList.off("click").one("click", function(e) {
+        e.preventDefault();  
+
+        showLoading();
+
+//         if ( (query_type == "tag" || query_type == "") || ! query || query === undefined ){
+//           var search_query_string = "";
+//           var paginationUrl = window.location.href + "?page=" + nextPageIndex;
+//         }
+//         else {
+//           var search_query_string = "&q=" + query + "&type=article&cache=false";
+//           var paginationUrl = window.location.origin + "/search?view=blog&page=" + nextPageIndex + search_query_string;
+//         }
+        
+        var paginationUrl = pagination_link.replace("page=1", "page=" + nextPageIndex)
+
+        $.ajax({
+          url: paginationUrl, 
+          type: "GET",
+          success: function(data){
+            var $categoryArticles = $(data).find(".individual_article");
+
+            if ($categoryArticles.length > 0) {
+              $articlesContainer.append($categoryArticles);
+              attachPaginationCLick();
+              $paginationList.show();
+            }
+            else {
+              var no_results_html = "<div class=\"individual_article col-12 text-center\"><p>There are no more results for this topic.</p></div>";
+              $articlesContainer.append(no_results_html);
+              $paginationList.hide();
+            }
+
+            hideLoading();
+
+            nextPageIndex++;
+          }
+        });
+      });
+    }
+
+    $paginationList.show();
+    attachPaginationCLick();
+    
+  }
+  
+  
+  function load_article_results(query_type, query, $containerForContent){
+    showLoading();
+    if ( $containerForContent === undefined || ! $containerForContent){
+      var $containerForContent = $("#dankblog_all_articles");
+    }
+    if (query_type == "search"){
+      var pagination_link = window.location.origin + "/search?view=blog&page=1&q=" + query + "&type=article&cache=false";
+      var search_query_link = pagination_link + " .search-page .articles-list > *";
+    }
+    else if (query_type == "tag"){
+      var pagination_link = window.location.origin + "/blogs/blog/tagged/" + query + "?page=1";
+      var search_query_link = pagination_link + " .articles-list .individual_article ";
+    }
+
+    $containerForContent.load(search_query_link, function(ajaxResp) {
+      
+      hideLoading();
+
+      blog_pagination(pagination_link, query);
+
+    });
+  }
+
+
+  $(document).off("click.blogHeaderTabs").on("click.blogHeaderTabs", "[data-supernav-query]", function() {
+	var $thisItem = $(this);
+    $("[data-supernav-query]").removeClass("active");
+    $thisItem.addClass("active");
+    var query_type = $thisItem.attr("data-supernav-query-type");
+    var supernav_query = $thisItem.attr("data-supernav-query");
+    load_article_results(query_type, supernav_query);
+  });
+
+
+  // Displays/Open the SEARCH FIELD SECTION
+  function hideSearchContainer(event){
+    if (event.target !== $searchBtn[0] && event.target !== $searchField[0]) {
+      $searchContainer.hide();
+      $(window).off("click.blogHideSearchContainer", hideSearchContainer);
+    }
+    else {
+    }
+  };
+  $searchBtn.on("click", function(event) {
+    console.log("hello");
+    $searchContainer.show();
+
+    $searchField.focus();
+    
+    event.stopPropagation();
+    
+    //To close the SEARCH FIELD SECTION
+    $(window).on("click.blogHideSearchContainer", hideSearchContainer);
+  });
+  
+  // This prevents form from reloading page
+  $searchForm.submit(function(e) {
+    e.preventDefault();
+
+    // Gets the value of the input search field
+    var category_search_query = encodeURIComponent($('#type_search_field').val().replace(/[^0-9a-z ]/gi, ""));
+    console.log(category_search_query);
+
+    // load article results
+    load_article_results("search", category_search_query);
+    
+    // hide search container
+    $searchContainer.hide();
+    $searchField.blur();
+    
+    //clears the input field after submit
+    $searchField.val(''); 
+  });
+
+
+
+  //Paginate/Load More Posts function
+  function hideNavMenu(event){
+    if (event.target !== $blogNav[0] && event.target !== $mobileNavBtn[0]) {
+      $blogNav.hide();
+      $(window).off("click.blogHideNavMenu", hideNavMenu);
+    }
+  };
+  $mobileNavBtn.off("click.blogMobileNav").on("click.blogMobileNav", function(event) {
+    $blogNav.show();
+    event.stopPropagation();    
+    $(window).on("click.blogHideNavMenu", hideNavMenu);
+  });
+
+  
+  $(document).ready(function() {  
+    // Enable initial pagination
+    blog_pagination();
+  });
+
+</script>
+{%- endcomment -%}
+
+
+
+{% endpaginate %}
+
+{%- include 'schema-json-list', shopify_objects: blog.articles -%}

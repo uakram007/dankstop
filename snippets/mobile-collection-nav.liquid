@@ -1,0 +1,129 @@
+{%- if template == 'collection' or template == 'collection.no-layout' -%}
+
+{% assign linkhandle = 'mobile-collection-nav-' | append: collection.handle %}
+
+{%- if collection.handle contains 'dab-rigs' -%}
+	{% assign linkhandle = 'mobile-collection-nav-dab-rigs-and-oil-rigs' %}
+{%- elsif collection.handle == 'bongs-and-water-pipes' or collection.handle contains 'bong' or collection.title contains 'Bong' -%}
+	{% assign linkhandle = 'mobile-collection-nav-bongs' %}
+{%- elsif collection.handle == 'glass-pipes-and-hand-pipes' or collection.handle contains 'pipes' -%}
+	{% assign linkhandle = 'mobile-collection-nav-glass-pipes' %}
+{%- elsif collection.handle == 'adapter' or collection.handle == 'reclaimer' or collection.handle == 'downstem' or collection.handle == 'bowl' or collection.handle == 'glass-dome' or collection.handle == 'grinder' or collection.handle == 'oil-accessories' or collection.handle == 'dropdown' or collection.handle == 'electronic-nail' or collection.handle == 'torch' or collection.handle == 'ashcatcher' -%}
+	{% assign linkhandle = 'bowls-domes-accessories-downstems-and-adapters' %}
+{%- elsif collection.title contains 'Vaporizers' or collection.handle contains 'vaporizer' -%}
+	{% assign linkhandle = 'vapes' %}
+{%- elsif collection.title contains 'Hand Pipes' or collection.handle == 'spoon' or collection.handle == 'bubbler' or collection.handle == 'chillum' or collection.handle == 'steamroller' or collection.handle == 'sherlock' or collection.handle == 'dry-pipes' -%}
+	{% assign linkhandle = 'glass-hand-pipes' %}
+{%- elsif collection.handle == 'titanium-ceramic-quartz-nails-and-dabber-tools' or collection.handle == 'titanium-nail' or collection.handle == 'ceramic-nail' or collection.handle == 'quartz-nail' or collection.handle == 'dabber' or collection.handle == 'carb-cap' or collection.handle == 'electronic-nail' or collection.handle == 'quartz-nails-bangers-and-domeless-dab-nails' or collection.handle == 'dab-tools' -%}
+	{% assign linkhandle = 'nails' %}
+{%- elsif collection.title contains 'CBD' -%}
+	{% assign linkhandle = 'cbd' %}
+{%- elsif collection.title contains 'Rolling' or collection.handle == 'blunt-wraps' -%}
+	{% assign linkhandle = 'rolling' %}
+{%- endif -%}
+
+
+
+{%- if linklists[linkhandle].links.size > 0 -%}
+<style>
+  
+  .text-link {
+    color: #232323;
+  }
+  
+  .mobile-top-scroll-menu {
+/*     background: #000; */
+    position: relative;
+    border-bottom: 1px solid #eee;
+  }
+
+  .mobile-top-scroll-menu ul {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mobile-top-scroll-menu ul li {
+    flex: 0 0 auto;
+    margin: 0;
+  }
+
+  .mobile-top-scroll-menu ul li a {
+    color: #232323;
+    text-transform: uppercase;
+    font-weight: 450;
+    font-size: 12px;
+    font-family: "Myriad Set Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+    padding: 5px 15px 0px;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    border-bottom: 5px solid #fff;
+  }
+
+  .mobile-top-scroll-menu ul li a.active {
+/*     color: #FFF; */
+    border-color: #52c939;
+  }
+
+  .mobile-top-scroll-menu .shadow {
+    box-shadow: inset -30px 0px 13px -10px white;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 20px;
+    top: 0;
+  }
+
+  .mobile-top-scroll-menu.fixed {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+  }
+  
+  
+  
+  @media only screen and (min-width: 769px){
+    .mobile:not(html) {
+      display: none; 
+    }
+  }
+</style>
+<div id="mobile-collection-nav" class="mobile-top-scroll-menu container mobile" data-handle="{{ linkhandle }}">
+	<ul class="no-bullets">
+
+		{%- for link in linklists[linkhandle].links -%}
+			{%- if link.active -%}
+				<li class="animated fadeInRight"><a href="{{ link.url }}" title="{{ link.title | escape }}" class="active">{% if link.title == 'Top' %}Popular{% elsif link.title == 'Rigs' %}Dab Rigs{% else %}{{ link.title }}{% endif %}</a></li>
+				{% break %}
+			{%- endif -%}
+		{%- endfor -%}
+		{% assign stepcounter = 1 %}
+		{%- for link in linklists[linkhandle].links -%}
+			{%- unless link.active -%}
+				<li class="animated fadeInRight step{{ stepcounter }}"><a href="{{ link.url }}" title="{{ link.title | escape }}">{% if link.title == 'Top' %}Popular{% elsif link.title == 'Rigs' %}Dab Rigs{% else %}{{ link.title }}{% endif %}</a></li>
+				{% assign stepcounter = stepcounter | plus: 1 %}
+			{%- endunless -%}
+		{%- endfor -%}
+		
+		<li><a href="/" title="DankStop Online Head Shop">Online Headshop</a></li>
+		
+		{% unless collection.handle == 'staff-picks' %}
+			{%- for article in blogs['guides'].articles -%}
+			{%- if article.metafields.c_f.collection == collection.handle -%}
+			<li><a href="{{ article.url }}">{{ article.title }}</a></li>
+			{% break %}
+			{%- endif -%}
+			{%- endfor -%}
+		{% endunless %}
+	</ul>
+	<div class="shadow"></div>
+</div>
+{%- endif -%}
+
+{%- endif -%}

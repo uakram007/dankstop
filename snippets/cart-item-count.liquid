@@ -1,0 +1,10 @@
+{%- comment -%}
+{{ cart.item_count }}
+{%- endcomment -%}
+{%- assign cart_item_count = 0 -%}
+{%- for line_item in cart.items -%}
+  {%- if line_item.product.handle != settings.warranty__product -%}
+    {%- assign cart_item_count = cart_item_count | plus: line_item.quantity -%}
+  {%- endif -%}
+{%- endfor -%}
+{{ cart_item_count }}

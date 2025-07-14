@@ -1,0 +1,91 @@
+<div class="page-tpl">
+  <div class="container">
+    {% include 'breadcrumb' %}
+
+    <header class="page-header">
+      <h2>
+        {% include 'multilang' with page.title %}
+      </h2>      
+    </header>
+
+    {% comment %}
+    Regular page content goes here.
+    {% endcomment %}
+
+    <div class="rte">
+      {{ page.content | split: '[lang2]' | first }}
+      
+      
+      {%- comment -%}
+      <form enctype="multipart/form-data" action="/upload/image" method="post">
+        <input id="csv_upload" type="file" />
+      </form>
+      {%- endcomment -%}
+      
+      <form id="csv_parser" method="post" enctype="multipart/form-data">
+
+        <p><input id="csv_upload" type="file" name="photos[]" value="" accept=".csv, .txt" required="required" multiple="multiple" /></p>
+
+        <div id="imageHolder" class="image-holder fade">
+          <h2>Images you selected for upload</h2>
+          <div id="thumbnails" class="thumbnails"></div>
+        </div>
+
+        {%- comment -%}
+        <label for="email">Your Email Address:</label>
+        <p><input class="email-input" required type="email" name="email" placeholder="Email Address" value="<?php print $customer['email']; ?>" /></p>
+
+        <p><input id="submitRedemptionRequest" type="submit" value="Redeem PieceProtect" class="btn btn-default" /></p>
+        {%- endcomment -%}
+        
+      </form>
+
+
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.2.0/papaparse.min.js"></script>
+
+      <script type="text/javascript">
+        var $file_input = $("#csv_upload");
+        var file_input = $file_input[0];
+        $file_input.on('change', function () {
+          
+          console.log("$file_input changed!");
+          
+//           //Get count of selected files
+//           var files = $(this)[0].files;
+//           var countFiles = files.length;
+
+//           // Get file extension
+//           var imgPath = $(this)[0].value;
+//           var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+
+//           if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+//             if (typeof (FileReader) != "undefined") {
+
+//               //loop for each file selected for uploaded.
+//               for (var i = 0; i < countFiles; i++) {
+//                 setupReader(files[i], i);
+//               }
+
+//             } else {
+//               alert("This browser does not support FileReader.");
+//             }
+//           } else {
+//             alert("Pls select only images");
+//           }
+          
+          Papa.parse(file_input.files[0], {
+            complete: function(results) {
+              console.log(results);
+            }
+          });
+          
+        });
+      </script>
+            
+      
+      
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,191 @@
+{% layout none %}
+<div id="shopify-section-1541566560488" class="shopify-section home-instagram-sections">
+  <script src="//cdn.shopify.com/s/files/1/1085/8818/t/13/assets/instafeed.min.js?v=16740502295725037449" type="text/javascript"></script>
+  <section class="home-instagram" id="new-instagram-1541566560488">
+    <div class="container">
+        
+        <div class="widget-title not-before">   
+            <h3 class="box-title">
+                <span class="title"> 
+                <i class="fa fa-instagram fa-lg" aria-hidden="true"></i>
+                
+<span>
+  #dankstop On Instagram
+</span>
+
+                </span>
+            </h3>
+            
+            <p>
+                
+<span>
+  Discover new products & follow us for Instagram-exclusive giveaways.
+</span>
+
+            </p>        
+            
+        </div>
+        
+    </div>
+
+    <div class="container">
+        <div id="instafeed" class="row" data-instagram-feed data-limit="10" data-rows="6"></div>  
+        
+        
+    </div>
+</section>
+
+<style>
+    
+
+    
+
+    
+
+    
+    #new-instagram-1541566560488 {
+        padding-bottom: 5px;
+    }
+    
+    
+    #new-instagram-1541566560488,
+    #new-instagram-1541566560488 .widget-title .box-title .title {
+        background-color: #ffffff;
+    }	
+
+    
+</style>
+
+<script>
+    $(document).ready(function() {
+
+      // https://github.com/stevenschobert/instafeed.js
+      function instafeedBlocks(){
+        
+//         console.log("instafeedBlocks fired!");
+        
+        var instagramBlock = $('[data-instagram-feed]');
+        instagramBlock.each(function() {
+            var self = $(this),
+                dataRows = self.data('rows'),
+                dataLimit = self.data('limit');
+                
+            var feed = new Instafeed({
+                get: "user",   
+                
+                userId: 884494772,
+                accessToken: '884494772.1677ed0.9710218cb8ff4f6eb7b982f6e2728074', 
+                
+                resolution: "thumbnail",
+                clientId: "c6e4c736e82345a3898a0e299daa00fb",
+              template: '<a class="item col-12 animate-hvr" href="{% raw %}{{link}}{% endraw %}" title="{% raw %}{{caption}}{% endraw %}" target="_blank" rel="noopener"><img class="lazysizes lazyload" src="//cdn.shopify.com/s/files/1/1085/8818/files/lazyload-placeholder_small.gif?v=1574651753" data-src="{% raw %}{{image}}{% endraw %}" alt="{% raw %}{{caption}}{% endraw %}" /></a>',
+                get limit() {
+                    return limit = dataLimit.toString();          
+                },          
+                  
+                after: function() {
+                    self.find('a').attr({
+                        target: "_blank",
+                        class: "item col-12 animate-hvr"
+                    });
+
+                setTimeout(function(){
+                  self.slick({
+                    infinite: true,
+                    speed: 1000,                       
+
+                    centerMode: true,
+                    centerPadding: '11.36%',
+
+
+                    nextArrow: '<button type="button" class="slick-next"><svg aria-hidden="true" focusable="false" role="img"><use xlink:href="#faChevronRight" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></button>',
+                    prevArrow: '<button type="button" class="slick-prev"><svg aria-hidden="true" focusable="false" role="img"><use xlink:href="#faChevronLeft" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></button>',
+                    //                         nextArrow: '<button type="button" class="slick-next"><i class="fa fa-angle-right"></i></button>',
+                    //                         prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-angle-left"></i></button>',
+
+
+                    slidesToShow: dataRows,
+                    slidesToScroll: dataRows,
+
+                    responsive: [
+                      {
+                        breakpoint: 1200,
+                        settings: {
+
+                          slidesToShow: 4,
+                          slidesToScroll: 4,
+
+                        }
+                      },
+                      {
+                        breakpoint: 992,
+                        settings: {
+
+                          slidesToShow: 3,
+                          slidesToScroll: 3,
+
+                        }
+                      },
+                      {
+                        breakpoint: 768,
+                        settings: {
+
+                          slidesToShow: 2,
+                          slidesToScroll: 2,
+
+                        }
+                      }                                          
+                    ]
+                  });
+                });
+              
+                }
+            });
+
+            feed.run();
+        });
+      }
+
+      
+      
+      function loadInstafeed(){
+
+//         console.log("loadInstafeed fired!");
+
+        if (
+          window.Instafeed 
+          && {}.toString.call(window.Instafeed) === '[object Function]'
+          && typeof(window.Instafeed) === 'function'
+        ){
+
+//           console.log("window.Instafeed ready!");
+
+          instafeedBlocks();
+
+        }
+        else {
+
+          if (load_attempts < 10){
+
+            setTimeout(function(){
+
+//               console.log("loadInstafeed attempt #", load_attempts);
+
+              load_attempts++;
+
+              loadInstafeed();
+
+            }, 1000);
+
+          }
+
+        }
+
+      }
+
+//       console.log("BEFORE loadInstafeed fires ...");
+      var load_attempts = 0;
+      loadInstafeed();
+  
+    });
+</script>

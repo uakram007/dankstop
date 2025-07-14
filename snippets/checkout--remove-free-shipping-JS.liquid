@@ -1,0 +1,70 @@
+{%- if settings.shipping_hider -%}
+{%- comment -%}
+  If removing this, don't forget to remove 
+  the 'checkout--header-scripts' 'checkout--remove-free-shipping-style' snippet
+{%- endcomment -%}
+{%- if customer -%}
+<script type="text/javascript">
+  var hideWholesaleFreeShipping = false;
+  {%- assign wholesale_approval_tag = settings.wholesale_approval_tag | strip | downcase -%}
+  {%- assign wholesale_approval_tag_2 = settings.wholesale_approval_tag_2 | strip | downcase -%}
+  {%- for tag in customer.tags -%}
+  {%- assign customer_tag = tag | strip | downcase -%}
+  {%- if customer_tag == wholesale_approval_tag -%}
+  var hideWholesaleFreeShipping = true;
+  var freeShippingId = 'checkout_shipping_rate_id_shopify-free20shipping-000';
+  var freeShippingQueryString = '[data-shipping-method-label-title="Free Shipping"], [data-shipping-method="shopify-Free%20Shipping-0.00"], [data-shipping-method="shopify-Free%20Shipping%20over%20$300-0.00"]';
+  {%- elsif customer_tag == wholesale_approval_tag_2 -%}
+  var hideWholesaleFreeShipping = true;
+  var freeShippingId = 'checkout_shipping_rate_id_fedex-standard_overnight-36_48';
+  var freeShippingQueryString = '[data-shipping-method-label-title="FedEx Standard Overnight®"], [data-shipping-method-label-title="FedEx Priority Overnight®"], [data-shipping-method-label-title="FedEx First Overnight®"], [data-shipping-method="fedex-STANDARD_OVERNIGHT-36.48"], [data-shipping-method="fedex-PRIORITY_OVERNIGHT-38.66"], [data-shipping-method="fedex-FIRST_OVERNIGHT-145.76"]';
+  {%- endif -%}
+  {%- endfor -%}
+  var freeShippingQueryStringCheckCount = 1;
+  function freeShippingRemover(freeShippingQueryString) {
+    var freeShippingInputWrapper = document.querySelectorAll(freeShippingQueryString);
+    if (typeof freeShippingInputWrapper !== 'undefined' && freeShippingInputWrapper.length > 0) {
+      for (var i = 0; i < freeShippingInputWrapper.length; i++) {
+        var freeShippingRowNode = freeShippingInputWrapper[i].parentNode;
+        var secondShippingRow = freeShippingRowNode.nextSibling;
+        while(secondShippingRow && secondShippingRow.nodeType !== 1) {
+          secondShippingRow = secondShippingRow.nextSibling;
+        }
+        freeShippingRowNode.getElementsByTagName('input').checked = false;
+        console.log("freeShippingRowNode", freeShippingRowNode);
+        console.log("secondShippingRow", secondShippingRow);
+        freeShippingRowNode.parentNode.removeChild(freeShippingRowNode);
+        // Select the first available option
+//         secondShippingRow.getElementsByTagName('input')[0].click();
+      }
+      var has_checked_option = [...document.querySelectorAll("[data-shipping-methods] input")].some(c=>c.checked);
+      var first_option = document.querySelectorAll("[data-shipping-methods] input")[0];
+      var first_option_checked = first_option.checked;
+      if ( ! first_option_checked ){
+        first_option.checked = true;
+      }
+    }
+    else {
+      if (freeShippingQueryStringCheckCount < 357) {
+        setTimeout(function(){
+          freeShippingRemover(freeShippingQueryString);
+        }, 50);
+        freeShippingQueryStringCheckCount += 1;
+      }
+    }
+  }
+  console.log("hideWholesaleFreeShipping", hideWholesaleFreeShipping);
+  if (hideWholesaleFreeShipping) {
+  console.log("freeShippingQueryString", freeShippingQueryString);
+    function hideRemoveFreeShipping() {
+      var section_title_element = document.querySelectorAll('h2.section__title');
+      var section_title = section_title_element[0].innerHTML;
+      if (section_title.indexOf("Shipping method") !== -1) {
+        freeShippingRemover(freeShippingQueryString);
+      }
+    }
+    hideRemoveFreeShipping();
+  }
+</script>
+{%- endif -%}
+{%- endif -%}

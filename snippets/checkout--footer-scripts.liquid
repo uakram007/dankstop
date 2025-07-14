@@ -1,0 +1,136 @@
+{%- include 'checkout--remove-free-shipping-JS' -%}
+
+<!--     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script> -->
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+{{ 'api.jquery.js' | shopify_asset_url | script_tag }}
+
+<script type="text/javascript">
+  // Function to link WARRANTY on checkout cart display
+  function link_warranty_on_checkout_display() {
+    var carttable = $('table.product-table tbody');
+    var warranty_anchor_class_string = 'warranty-anchor';
+    carttable.find('span.product__description__property:contains("product:")').hide();			
+    $.getJSON('/cart.js', function(data) {
+      $('.CartCount').html(data.item_count.length);
+
+      var pids = [];
+      var handles = [];
+      $.each(data.items, function(i, item) {
+        pids.push(item.product_id);
+        handles.push(item.handle);
+
+        Shopify.getProduct(item.handle, function(product) {
+          // Get Variant Quantity Counts
+          $.each(product.variants, function(j, v) {
+            var line_item = carttable.find('tr[data-variant-id="'+v.id+'"]');
+            if(line_item.length > 0) {								
+              var producturl = 'products/'+product.handle;
+              var warrantiedProduct = '';
+
+              if(item.product_id == 242036441109 && item.properties.hasOwnProperty('_item_id')) {
+                Shopify.getProduct(item.properties._item_name, function(product) {
+                  warrantiedProduct = ' for '+product.name;
+                  $.each(product.variants, function(j, v) {
+                    if (v.id == item.properties._item_id) {
+                      warrantiedProduct = ' for '+v.name;
+                    }
+                  });
+                  // link PieceProtect product to its explainer page
+                  producturl = '/pages/pieceprotect-warranty-program';
+                  line_item.find('.product__description__name').html('<a href="//dankstop.com/'+producturl+'" class="green '+warranty_anchor_class_string+'" target="_blank" style="font-size: 11px;">PieceProtect Warranty'+warrantiedProduct+'</a>');
+                  line_item.attr('data-attached-pid', item.properties.item_id);
+                  // relink if warranty_anchor class not present or has been overwritten - for Customer page
+                  function check_for_warranty_anchor() {
+                    if ($('.'+warranty_anchor_class_string).length < 1) {
+                      link_warranty_on_checkout_display();
+                    }
+                  }
+                  setTimeout(function(){
+                    check_for_warranty_anchor();
+                  }, 357);
+                });
+
+              }								
+              else {
+                // Link item
+                line_item.find('.product__description__name').wrap('<a href="//dankstop.com/'+producturl+'"></a>');
+              }
+            }
+          });
+        });
+
+      });
+    });
+  }
+  $(document).ready(function(){
+    link_warranty_on_checkout_display();
+  });
+</script>
+
+
+{%- comment -%}
+<script src="//d79i1fxsrar4t.cloudfront.net/jquery.liveaddress/2.8/jquery.liveaddress.min.js"></script>
+<script type="text/javascript">
+  smartyStreets();
+  contactUsRedirect();
+
+  function smartyStreets() {
+    var smartyStreetsId = '';
+    if (window.location.hostname == 'dankstop.com') {
+      smartyStreetsId = '33538254780982992';
+    }
+    else {
+      smartyStreetsId = '33538251974033432';
+    }
+
+    var liveaddress = jQuery.LiveAddress(
+      {
+        key: smartyStreetsId, 
+        //             debug: true,
+        autocomplete: 7,
+        autoverify: true,
+        target: "US",
+        addresses: [
+          {
+            id: 'shipping',
+            street: '#checkout_shipping_address_address1',
+            street2: '#checkout_shipping_address_address2',
+            city: '#checkout_shipping_address_city',
+            state: '#checkout_shipping_address_province',
+            zipcode: '#checkout_shipping_address_zip'
+          },
+          {
+            id: 'billing',
+            street: '#checkout_billing_address_address1',
+            street2: '#checkout_billing_address_address2',
+            city: '#checkout_billing_address_city',
+            state: '#checkout_billing_address_province',
+            zipcode: '#checkout_billing_address_zip'
+          }]
+      });
+  }
+
+  function contactUsRedirect() {
+    var contactUsLink = '{{ settings.order_status_contact_us_link }}';
+    $('body').on('click', 'a:contains("Contact us")', function(e) {
+      e.preventDefault();
+      window.location.href = contactUsLink; 
+    });
+  }
+</script>
+
+{%- endcomment -%}
+
+<div id="dSData" style="display: none;">
+  <div id="moneyFormat" data-moneyformat="{{ shop.money_format | escape }}"></div>
+  <div id="moneyFormatJson" data-moneyformatjson="{{ shop.money_format | json | escape }}"></div>
+  <div id="cartItemCount" data-cartitemcount="{{ cart.item_count | escape }}"></div>
+  {%- if customer -%}
+  <div id="customerEmail" data-customeremail="{{ customer.email | escape }}"></div>
+  <div id="customerId" data-customerid="{{ customer.id | escape }}"></div>
+  <div id="customerFullName" data-customerfullname="{{ customer.name | escape }}"></div>
+  <div id="customerFirst" data-customerlastname="{{ customer.first_name | escape }}"></div>
+  <div id="customerLast" data-customerlastname="{{ customer.last_name | escape }}"></div>
+  <div id="customerTags" data-customertags="{{ customer.tags | escape }}"></div>
+  {%- endif -%}
+</div>

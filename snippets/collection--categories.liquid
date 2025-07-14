@@ -1,0 +1,104 @@
+{%- assign subcategories_linklist_handle = "subcategories-" | append: collection.handle -%}
+{%- if linklists[subcategories_linklist_handle].links.size > 0 -%}
+<div class="col-subcat">
+
+  <style>
+    .col-subcat {
+      margin-bottom: 20px;
+    }
+    .col-item img {
+      width: auto;
+      height: 70px;
+    }
+    .subcat-title {
+      color: #000;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 1.4;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: subpixel-antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -moz-font-feature-settings: 'liga','kern';
+      direction: ltr;
+    }
+    @media (min-width: 992px){
+      .col-item img {
+        height: 100px;
+      }
+      .subcat-title {
+        font-size: 19px;
+      }
+    }
+  </style>
+
+  {%- assign img_widths = '600,810,960' -%}
+  <div class="row scroll-carousel text-center text-bold">
+    {% for link in linklists[subcategories_linklist_handle].links %}
+      {%- assign link_title = link.title -%}
+      {%- assign link_url = link.url | strip -%}
+      {%- assign link_img = link.object.image -%}
+    <div class="col-item {% if forloop.first %} offset-1{% endif %} col-3 col-md-3 col-lg-2">
+      <a href="{{ link_url }}">
+        {%- include 'image-module', im_src: link_img, im_id: img_id, im_dt_ws: img_widths -%}
+        <h4 class="subcat-title">{{- link_title -}}</h4>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+
+
+
+{%- comment -%}
+{%- assign type_cats_links = collection.metafields.landing.type_cats | split: ',' -%}
+{%- if type_cats_links != blank -%}
+<section class="sub-cats section">
+  {%- assign grid_push_class = '' -%}
+  {%- case type_cats_links.size -%}
+    {%- when 5 -%}
+      {%- assign grid_push_class = 'push--large--one-twelfth' -%}
+    {%- when 4 -%}
+      {%- assign grid_push_class = 'push--large--two-twelfths' -%}
+    {%- when 3 -%}
+      {%- assign grid_push_class = 'push--large--three-twelfths' -%}
+    {%- when 2 -%}
+      {%- assign grid_push_class = 'push--large--four-twelfths' -%}
+  {%- endcase -%}
+  <ul class="grid-uniform {{ grid_push_class }}">
+    {%- assign collection_img_width = 73 -%}
+    {%- assign collection_img_size = 'medium' -%}
+    {%- assign collection_img_ratio = '1x1' -%}
+    {%- assign collection_img_srcset = '93, 177, 171' -%}
+    {%- assign collection_img_sizes = '93, 177, 171' -%}
+    {%- assign type_cats_descriptions = collection.metafields.landing.type_cats_b | split: '|' -%}
+    {%- for link in type_cats_links -%}
+    {%- assign link_obj = link | split: '|' -%}
+    {%- assign link_title = link_obj[0] | strip -%}
+    {%- assign link_url = link_obj[1] | strip -%}
+    {%- assign link_img_url = link_obj[2] | strip -%}
+    <li class="grid-item small--one-third large--two-twelfths">
+      <a class="collection-box" href="{{- link_url -}}" title="Narrow {{ product_type }} to {{ link_title | escape }}">
+        {%- assign collection_img_alt = link_title -%}
+        {%- assign collection_image = link_img_url | file_url -%}
+        {%- include 'image-module' url:collection_image, width:collection_img_width, size:collection_img_size, srcset:collection_img_srcset, ss_sizes:collection_img_sizes, ratio:collection_img_ratio, im_a:collection_img_alt -%}
+        <h3 class="collection-title">{{- link_title -}}</h3>
+        {%- if type_cats_descriptions[forloop.index0] != blank -%}
+        <div class="box-overlay">
+          <div class="overlay-content">
+            <h4>{{- link_title -}}</h4>
+            <span>{{- type_cats_descriptions[forloop.index0] -}}</span>
+            <button class="btn">Shop Now</button>
+          </div>
+        </div>
+        {%- endif -%}
+      </a>
+    </li>
+    {%- endfor -%}
+  </ul>
+</section>
+{%- endif -%}
+{%- endcomment -%}
+
+{%- endif -%}

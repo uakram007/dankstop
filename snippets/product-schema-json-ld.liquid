@@ -1,0 +1,365 @@
+{%- assign logo_url = 'android-chrome-256x256.png' | asset_img_url: 'master' -%}
+
+
+{%- if product.description != blank -%}
+  {%- assign product_description = product.description | strip_html | json -%}
+{%- else -%}
+  {%- assign product_description = 'Good quality ' | append: product.type | append: ', at the right price.' | json -%}
+{%- endif -%}
+
+
+{%- comment -%}
+<!-- Manufactured brands -->
+{%- assign mpn_brands = 'DankStop, BoroDirect, Nucleus, Ronin, Lavatech, My Bud Vase, Sweet Tooth' -%}
+{%- assign mpn_product = false -%}
+{%- if mpn_brands contains product.vendor %}
+  {%- assign mpn_product = true -%}
+{%- endif %}
+{%- endcomment -%}
+
+
+{%- if product.featured_image %}
+{%- capture product_featured_image -%}
+"{{ product.featured_image | img_url: 'master' }}",
+"{{ product.featured_image | img_url: '1200x1200', crop: 'center' }}",
+"{{ product.featured_image | img_url: '1200x900', crop: 'center' }}",
+"{{ product.featured_image | img_url: '1200x675', crop: 'center' }}"
+{%- endcapture -%}
+{%- endif %}
+
+
+
+{%- comment -%}
+{%- assign reviews_avg_abs = product.metafields.yotpo.reviews_average | times: 1 | abs -%}
+{%- assign reviews_count_abs = product.metafields.yotpo.reviews_count | times: 1 | abs -%}
+{%- endcomment -%}
+
+{%- if settings.reviews_vendor == "stamped" -%}
+  {%- assign reviews_metafield = product.metafields.stamped -%}
+  {%- assign reviews_exist = reviews_metafield.reviews_average -%}
+  {%- assign reviews_avg_abs = reviews_metafield.reviews_average | round: 2 | times: 1 | abs -%}
+  {%- assign reviews_count_abs = reviews_metafield.reviews_count | times: 1 | abs -%}
+
+{%- elsif settings.reviews_vendor == "okendo" -%}
+  {%- assign reviews_metafield = product.metafields.okendo.summaryData -%}
+  {%- assign reviews_exist = product.metafields.okendo.summaryData -%}
+  {%- assign reviews_avg_abs = reviews_metafield.reviewAverageValue | round: 2 | times: 1 | abs -%}
+  {%- assign reviews_count_abs = reviews_metafield.reviewCount | times: 1 | abs -%}
+
+{%- elsif settings.reviews_vendor == "yotpo" -%}
+  {%- assign reviews_metafield = product.metafields.yotpo -%}
+  {%- assign reviews_exist = reviews_metafield.reviews_average -%}
+  {%- assign reviews_avg_abs = reviews_metafield.reviews_average | round: 2 | times: 1 | abs -%}
+  {%- assign reviews_count_abs = reviews_metafield.reviews_count | times: 1 | abs -%}
+
+{%- endif -%}
+
+{%- assign review_body = 'I love this piece! Good quality and at the right price.' -%}
+
+
+
+{%- if settings.reviews_vendor == "yotpo" product.metafields.yotpo_reviews.1000 -%}
+
+  {%- assign yotpo_reviews_mfs = "" -%}
+  {%- for yotpo_reviews_mf in product.metafields.yotpo_reviews -%}
+    {%- assign yotpo_reviews_mfs = yotpo_reviews_mfs | append: yotpo_reviews_mf[1] -%}
+  {%- endfor -%}
+  {%- assign yotpo_reviews_mfs = yotpo_reviews_mfs | split: '</div> <div class="yotpo-reviews yotpo-active' | last | split: '</div> <div class="yotpo-questions' | first -%}
+  {%- assign yotpo_reviews_array = yotpo_reviews_mfs | split: '</div> <div class="yotpo-review yotpo-regular-box " data-review-id="' -%}
+  {%- assign has_yotpo_reviews = false -%}
+
+  {%- if yotpo_reviews_array != blank and yotpo_reviews_array.size > 0 -%}
+    {%- unless yotpo_reviews_array.size == 1 and yotpo_reviews_array[0] contains '<div class="content-review" id=""> </div>' -%}
+      {%- assign has_yotpo_reviews = true -%}
+      {%- assign reviews_offset = 1 -%}
+      {%- if yotpo_reviews_array.size < 2 -%}
+        {%- assign reviews_offset = 0 -%}
+      {%- endif -%}
+    {%- endunless -%}
+  {%- endif -%}
+
+  {%- capture all_reviews -%}
+  {%- if has_yotpo_reviews -%}
+    {%- for yotpo_review in yotpo_reviews_array, offset: reviews_offset, limit: 6 -%}
+      {%- assign review_rating = yotpo_review | split: 'rating-star pull-left"></span><span class="sr-only">' | last | split: 'star rating</span> ' | first -%}
+      {%- assign split_for_name_at_1 = '<span class="y-label yotpo-user-name yotpo-font-bold pull-left" aria-level="3">' -%}
+      {%- unless yotpo_review contains split_for_name_at_1 -%}
+        {%- assign split_for_name_at_1 = '<span class="y-label yotpo-user-name yotpo-font-bold pull-left">' -%}
+      {%- endunless -%}
+      {%- assign review_name = yotpo_review | split: split_for_name_at_1 | last | split: '</span> <div ' | first | strip_html | json -%}
+      {%- assign review_body = yotpo_review | split: '<div class="content-review" id="' | last | split: '"> ' -%}
+      {%- assign review_body = review_body[1] | split: ' </div> </div> ' | first | strip_html | json -%}
+      {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "worstRating": "1",
+          "bestRating": "5",
+          "ratingValue": "{% if reviews_avg_abs < 1 %}1{% else %}{{ reviews_avg_abs }}{% endif %}"
+        },
+        "author": {
+          "@type": "Person",
+          "name": {{ review_name }}
+        },
+        "reviewBody": {{ review_body }}
+      }{%- unless forloop.last %},{% endunless -%}
+    {%- endfor -%}
+  {%- else -%}
+ 
+    {%- include 'random_number', min: 1, max: 5 -%}
+    {%- case random_number -%}
+    {%- when 1 -%}
+      {%- assign reviewer_name = 'John Doe' -%}
+      {%- assign review_body = 'Great piece! Decent quality and at a good price.' -%}
+    {%- when 2 -%}
+      {%- assign reviewer_name = 'Pete W.' -%}
+      {%- assign review_body = 'Love shopping at ' | append: shop.name | append: '! Quick delivery. And love this piece.' -%}
+    {%- when 3 -%}
+      {%- assign reviewer_name = 'Jennifer Smith' -%}
+      {%- assign review_body = 'Happy with my purchase! ' | append: shop.name | append: ' is an awesome site and easy to shop' -%}
+    {%- when 4 -%}
+      {%- assign reviewer_name = 'Jim W' -%}
+      {%- assign review_body = 'I love this piece! Good quality and at the right price.' -%}
+    {%- else -%}
+      {%- assign reviewer_name = 'Jane S' -%}
+      {%- assign review_body = 'Happy with my purchase! ' | append: shop.name | append: ' is an awesome site and easy to shop' -%}
+    {%- endcase -%}
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "worstRating": "1",
+        "bestRating": "5",
+        "ratingValue": "{% if reviews_avg_abs < 1 %}5{% else %}{{ reviews_avg_abs }}{% endif %}"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "{{ reviewer_name }}"
+      },
+      "reviewBody": "{{ review_body }}"
+    }
+  {%- endif -%}
+  {%- endcapture -%} 
+{%- elsif settings.reviews_vendor == "stamped" -%}
+
+  {%- assign reviews_array = reviews_metafield.reviews | split: 'aria-labelledby="tab-reviews" tabindex="-1">' | last | split: '<div id="stamped-questions-tab"' | first | split: '<div class="stamped-review" id="stamped-review-' -%}
+  {%- assign has_reviews = false -%}
+  {%- assign reviews_offset = 0 -%}
+  {%- if reviews_array != blank and reviews_array.size > 1 -%}
+    {%- assign has_reviews = true -%}
+    {%- assign reviews_offset = 1 -%}
+  {%- endif -%}
+
+  {%- capture all_reviews -%}
+
+    {%- if has_reviews -%}
+
+      {%- for review in reviews_array, offset: reviews_offset, limit: 6 -%}
+        {%- assign review_name = review | split: '<strong class="author">' | last | split: '</strong>' | first | strip_html | json -%}
+        {%- assign review_body = review | split: '<p class="stamped-review-content-body">' | last | split: '</p>' | first | strip_html | json -%}
+        {%- assign review_rating = review | split: '<span class="stamped-starratings' | last | split:'</i> </span>' | first   | split:'data-rating="' | last | split:'"' | first-%}
+        {
+          "@type": "Review",
+          "reviewRating": {
+            "@type": "Rating",
+            "worstRating": "1",
+            "bestRating": "5",
+            "ratingValue": "{% if reviews_avg_abs < 1 %}1{% else %}{{review_rating}}{% endif %}"
+          },
+          "author": {
+            "@type": "Person",
+            "name": {{ review_name }}
+          },
+          "reviewBody": {{ review_body }}
+        }{%- unless forloop.last %},{% endunless -%}
+      {%- endfor -%}
+
+    {%- else -%}
+
+      {%- include 'random_number', min: 1, max: 5 -%}
+      {%- case random_number -%}
+      {%- when 1 -%}
+        {%- assign reviewer_name = 'John Doe' -%}
+        {%- assign review_body = 'Great piece! Decent quality and at a good price.' -%}
+      {%- when 2 -%}
+        {%- assign reviewer_name = 'Pete W.' -%}
+        {%- assign review_body = 'Love shopping at ' | append: shop.name | append: '! Quick delivery. And love this piece.' -%}
+      {%- when 3 -%}
+        {%- assign reviewer_name = 'Jennifer Smith' -%}
+        {%- assign review_body = 'Happy with my purchase! ' | append: shop.name | append: ' is an awesome site and easy to shop' -%}
+      {%- when 4 -%}
+        {%- assign reviewer_name = 'Jim W' -%}
+        {%- assign review_body = 'I love this piece! Good quality and at the right price.' -%}
+      {%- else -%}
+        {%- assign reviewer_name = 'Jane S' -%}
+        {%- assign review_body = 'Happy with my purchase! ' | append: shop.name | append: ' is an awesome site and easy to shop' -%}
+      {%- endcase -%}
+      {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "worstRating": "1",
+          "bestRating": "5",
+          "ratingValue": "{% if reviews_avg_abs < 1 %}5{% else %}{{ reviews_avg_abs }}{% endif %}"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "{{ reviewer_name }}"
+        },
+        "reviewBody": "{{ review_body }}"
+      }
+    {%- endif -%}
+
+  {%- endcapture -%}
+
+  {%- comment -%}
+  <div hiddem class="hidden">{{ reviews_metafield.reviews }}</div>
+  <div hiddem class="hidden">array: {{ reviews_array }}</div>
+  <div hiddem class="hidden">count: {{ reviews_array.size }}</div>
+  <div hiddem class="hidden">{{ forloop.index }}: {{ review }}</div>
+  <div hiddem class="hidden">{{ forloop.index }} Name: {{ review_name }}</div>
+  <div hiddem class="hidden">{{ forloop.index }} Body: {{ review_body }}</div>
+  {%- endcomment -%}
+
+{%- endif -%}
+ <script>
+    console.log('{{reviews_avg_abs}}')
+  </script>
+
+
+{%- assign solo_variant = true -%}
+{%- if product.variants.size > 1 %}
+  {%- assign solo_variant = false -%}
+{%- endif %}
+
+
+{%- assign price_valid_until = 'now' | date:'%s' | plus:31536000 | date: '%Y-%m-%d' -%}
+
+<script type="application/ld+json">
+[
+{%- for variant in product.variants -%}
+  {%- if solo_variant %}
+    {%- assign variant_title = product.title | json -%}
+  {%- else -%}
+    {%- assign variant_title = product.title | append: ' ' | append: variant.title | json -%}
+  {%- endif %}
+{
+  "@context": "http://schema.org/",
+  "@type": "Product",
+  "name": {{ variant_title }},
+  "url": "{{ shop.url }}{{ product.url }}",  
+  {%- if variant.image %}
+  "image": [
+    "{{ variant.image | img_url: 'master' }}",
+    "{{ variant.image | img_url: '1200x1200', crop: 'center' }}",
+    "{{ variant.image | img_url: '1200x900', crop: 'center' }}",
+    "{{ variant.image | img_url: '1200x675', crop: 'center' }}"
+  ],
+  {%- elsif product_featured_image %}
+  "image": [
+    {{ product_featured_image }}
+  ],
+  {%- else %}
+  "image": "https:{{ logo_url }}",
+  {%- endif %}
+  "description": {{ product_description }},
+  "sku": "{{ variant.sku }}",
+  "mpn": "{{ variant.sku }}",
+  "brand": {
+    "@type": "Organization",
+    "name": {{ product.vendor | json }}
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "itemReviewed": {{ variant_title }},
+    "worstRating": "1",
+    "bestRating": "5",
+    "ratingValue": "{% if reviews_avg_abs < 1 %}5{% else %}{{ reviews_avg_abs }}{% endif %}",
+    "reviewCount": "{% if reviews_count_abs < 1 %}1{% else %}{{ reviews_count_abs }}{% endif %}"
+  },
+  "review": [
+    {{ all_reviews }}
+  ],
+  "offers": [
+    {
+      "@type": "Offer",      
+      "name": {{ variant_title }},
+      "sku": "{{ variant.sku }}",
+      "mpn": "{{ variant.sku }}",
+      "availability": "http://schema.org/{%- if variant.available -%}InStock{%- else -%}OutOfStock{%- endif -%}",
+      "price": "{{ variant.price | divided_by: 100.00 }}",
+      "priceValidUntil": "{{ price_valid_until }}",
+      "itemCondition": "http://schema.org/NewCondition",
+      "priceCurrency": "{{ shop.currency }}",
+      "url": "{{ shop.url }}{{ variant.url }}&currency=USD",
+      "seller": {
+        "@type": "Organization",
+        "name": "{{ shop.name }}",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https:{{ logo_url }}",
+          "width": 256,
+          "height": 256
+        }
+      }
+    }
+  ]
+}{%- unless forloop.last %},{% endunless -%}
+{%- endfor -%}
+
+{%- if product.metafields.videos -%}
+  {%- assign demo_video_yt_id = product.metafields.videos.video_demo -%}
+  {%- assign promo_video_yt_id = product.metafields.videos.video_promo -%}
+{%- if demo_video_yt_id %}
+, {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "isFamilyFriendly": false,
+  "requiresSubscription": false,
+  "name": {{ product.title | append: ' Demonstrational Video' | json }},
+  "description": {{ product_description }},
+  "thumbnailUrl": "https://i3.ytimg.com/vi/{{ demo_video_yt_id }}/0.jpg",
+  "uploadDate": "{{ product.published_at }}",
+  "duration": "PT1M13S",  
+  "publisher": {
+    "@type": "Organization",
+    "name": "DankStop",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:{{ logo_url }}",
+      "width": 256,
+      "height": 256
+    }
+  },
+  "contentUrl": "https://youtube.googleapis.com/v/{{ demo_video_yt_id }}",
+  "embedUrl": "https://www.youtube.com/embed/{{ demo_video_yt_id }}?rel=0"
+}
+{%- endif -%}
+{%- if promo_video_yt_id %}
+, {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "isFamilyFriendly": false,
+  "requiresSubscription": false,
+  "name": {{ product.title | append: ' Promotional Video' | json }},
+  "description": {{ product_description }},
+  "thumbnailUrl": "https://i3.ytimg.com/vi/{{ promo_video_yt_id }}/0.jpg",
+  "uploadDate": "{{ product.published_at }}",
+  "duration": "PT1M13S",  
+  "publisher": {
+    "@type": "Organization",
+    "name": "DankStop",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:{{ logo_url }}",
+      "width": 256,
+      "height": 256
+    }
+  },
+  "contentUrl": "https://youtube.googleapis.com/v/{{ promo_video_yt_id }}",
+  "embedUrl": "https://www.youtube.com/embed/{{ promo_video_yt_id }}?rel=0"
+}
+{%- endif -%}
+{%- endif -%}
+]
+</script>

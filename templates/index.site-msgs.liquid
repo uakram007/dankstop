@@ -1,0 +1,171 @@
+{%- layout none -%}
+
+{%- comment -%}
+<style>
+  .site-msg {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 10px 7%;
+    background: #000;
+/*     z-index: 2; */
+    z-index: 999999;
+    -webkit-transform: translate3d(0, 100%, 0);
+    -moz-transform: translate3d(0, 100%, 0);
+    -ms-transform: translate3d(0, 100%, 0);
+    -o-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+    -webkit-transition: 300ms;
+    -moz-transition: 300ms;
+    -ms-transition: 300ms;
+    -o-transition: 300ms;
+    transition: 300ms;
+  }
+
+  .site-msg, .site-msg a {
+    color: #fff;
+  }
+
+  .site-msg.lazybit-loaded {
+    -webkit-transition-delay: 3s;
+    -moz-transition-delay: 3s;
+    -ms-transition-delay: 3s;
+    -o-transition-delay: 3s;
+    transition-delay: 3s;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    z-index: 3;
+  }
+  
+  @media (min-width: 1200px){
+    .site-msg {
+      padding: 10px 20%;
+    }
+  }
+</style>
+
+<div class="site-msg lazybit lazybit-load" data-lazy-url="{{ shop.url }}?view=site-msgs"></div>
+{%- endcomment -%}
+
+
+
+<style>
+  .site-msg {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 10px 7%;
+    background: #000;
+	z-index: 2;
+    -webkit-transform: translate3d(0, 100%, 0);
+    -moz-transform: translate3d(0, 100%, 0);
+    -ms-transform: translate3d(0, 100%, 0);
+    -o-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+
+  .site-msg, .site-msg a {
+    color: #fff;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    z-index: 3;
+  }
+
+  @media (min-width: 1200px){
+    .site-msg {
+      padding: 10px 20%;
+    }
+  }
+
+  
+  .site-msg {
+    opacity: 0;
+    background: {{ settings.site_msgs__bg_color }};
+  }
+  .site-msg, .site-msg a {
+    color: {{ settings.site_msgs__text_color }};
+  }
+  .site-msg.show-site-msgs {
+    opacity: 1;
+/*     -webkit-transition-delay: 3s;
+    -moz-transition-delay: 3s;
+    -ms-transition-delay: 3s;
+    -o-transition-delay: 3s;
+    transition-delay: 3s; */
+    -webkit-transition-delay: {{ settings.site_msgs__delay_length }}s;
+    -moz-transition-delay: {{ settings.site_msgs__delay_length }}s;
+    -ms-transition-delay: {{ settings.site_msgs__delay_length }}s;
+    -o-transition-delay: {{ settings.site_msgs__delay_length }}s;
+    transition-delay: {{ settings.site_msgs__delay_length }}s;
+    -webkit-transition: transform 750ms ease-in-out;
+    -moz-transition: transform 750ms ease-in-out;
+    -ms-transition: transform 750ms ease-in-out;
+    -o-transition: transform 750ms ease-in-out;
+    transition: transform 750ms ease-in-out;
+/*   }
+  .site-msg.show-site-msgs { */
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+</style>
+
+
+{%- comment -%}
+<div class="site-msg show">
+{%- endcomment -%}
+  
+  <a href="{{ shop.url }}/pages/covid19" title="Click to learn more about our response to Covid-19" class="row justify-content-center">
+
+    <div class="policy-icon col-auto justify-content-center my-auto">
+      <i class="fa fa-exclamation-circle fa-2x" aria-hidden="true"></i>
+    </div>
+
+    <div class="policy-text col col-lg-auto">
+      {{- settings.site_msgs__text -}}
+    </div>
+    
+  </a>
+  
+  <a href="#" title="close" class="close-btn" data-close=".site-msg" aria-label="Close site message">
+    <svg aria-hidden="true" focusable="false" role="img"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#closeXIcon"></use></svg>
+    <span class="visually-hidden">Close site message</span>
+  </a>
+  
+{%- comment -%}
+</div>
+{%- endcomment -%}
+
+
+<script type="text/javascript">
+  var $close_btns = $(".close-btn");
+  $close_btns.each(function(){
+    $(this).on("click", function(e){
+      e.preventDefault();
+      let close_selector = this.dataset.close;
+      $(close_selector).remove();
+    });
+  });
+  
+  setTimeout(function(){
+    let $site_msgs_lazybit = $(".site-msg.lazybit");
+    $site_msgs_lazybit.addClass("show-site-msgs");
+  }, {{ settings.site_msgs__delay_length | times: 1000 }});
+</script>

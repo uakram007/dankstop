@@ -1,0 +1,54 @@
+{% unless customer %}
+  <section class="cc-topbar-section" id="cc-topbar-section">
+    <div class="cc-topbar-row">
+      <div class="page-width">
+        <div class="cc-topbar-wrap">
+          <p>Unlock UNBEATABLE Member Price — Join Cabana Club for FREE!</p>
+          <div class="cc-topbar-logins">
+              <a
+                class="SSO_popup_register"
+                href="#"
+              >
+              Join Now
+              </a>
+
+            <a href="/pages/membership">Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endunless %}
+{% comment %} Elite Banner {% endcomment %}
+{% if  customer and customer.tags contains 'club_member' %}
+  <section class="cc-topbar-elite-section" id="cc-topbar-elite-section">
+    <div class="cc-topbar-row">
+      <div class="page-width">
+        <div class="cc-topbar-wrap">
+          <p>Unlock UNBELIEVABLE Savings, Perks & FREE Shipping with ELITE</p>
+          <div class="cc-topbar-logins">
+            <a href="#" class="SSO_popup_elite_upgrade">Upgrade</a>
+            <a href="/pages/membership">Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}
+{% comment %}
+
+<section class="cc-topbar-section" id="cc-topbar-section">
+    <div class="cc-topbar-row" style="
+    background: beige;
+    color: #000;
+    padding: 10px;
+    font-size: 13px;
+    text-align: center;
+    font-weight: bold;
+">
+      <p class="header__banner-text" style="
+    margin: 0;
+">Thanks for your patience as we perfect our new discount club. Log out and back in to see the latest updates. Spot an issue? Report it <a href="mailto:feedback@cabanaclubusa.com" style="color: red;" aria-label="send an email to feedback@cabanaclubusa.com" data-uw-rm-vglnk="" uw-rm-vague-link-id="mailto:feedback@cabanaclubusa.com$send an email to feedback@cabanaclubusa.com"><strong>here!</strong></a></p>
+    </div>
+  </section>
+  {% endcomment %}

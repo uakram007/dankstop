@@ -1,0 +1,35 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  {%- comment -%}
+  <title>{{- page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}</title>
+  {%- endcomment -%}
+  {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}
+  <link rel="canonical" href="{{ canonical_url }}">
+  {%- comment -%}
+  <script>var themeSettings = {{ settings | json }};</script>
+  {%- endcomment -%}
+  {{content_for_header}}
+</head>
+<body id="{{ page_title | handle }}" class="template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}"
+      data-page-handle="{{ current_page_object.handle }}" data-template-name="{{ template.name }}" data-template-suffix="{{ template.suffix }}" data-template-directory="{{ template.directory }}">
+  <div class="wrapper-container wrapper-body">	
+    <main id="mainContent" class="main-content" role="main">
+
+      <title>{{ page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+
+      {%- if product -%}
+      {%- include 'bold-common' -%}
+      {%- include 'bold-ro-init' -%}
+      {%- include 'bold-prepaid-fix' -%}
+      {%- endif -%}
+      
+      {%- include 'gem-app-header-scripts' -%}
+      
+      {{ content_for_layout }}
+
+      {%- include 'gem-app-footer-scripts' -%}
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,772 @@
+/*============================================================================
+  (c) Copyright 2014-20 Andre Bulatov LLC / DS Distribution Inc.
+  Author: Andre Bulatov (@andrebu). All Rights Reserved.
+==============================================================================*/
+"use strict";
+
+window.hsjs = window.hsjs || {};
+
+
+
+/*
+ * Universal JavaScrip tools and functions
+ */
+hsjs.tools = hsjs.tools || {};
+
+
+/*
+ * Attach Event - Cross-browser Vanilla JS (maybe obsolete)
+ */
+// hsjs.tools.addEvent = function( obj, type, fn ){
+  
+//   type = typeof type === "string" ? type.split(" ") : type;
+//   let typeLen = type.length;
+//   let i;
+  
+//   for (i = 0; i < typeLen; i++) {
+
+//     if ( obj.addEventListener ){
+
+//       obj.addEventListener( type[i], fn, false );
+
+//     }
+
+//     else if ( obj.attachEvent ){
+
+//       obj["e"+type[i]+fn] = fn;
+
+//       obj[type[i]+fn] = function(){
+//         obj["e"+type[i]+fn]( window.event );
+//       };
+
+//       obj.attachEvent( "on"+type[i], obj[type[i]+fn] );
+
+//     } 
+
+//     else {
+
+//       obj["on"+type[i]] = fn;
+
+//     }
+
+//   }
+      
+// };
+
+
+/*
+ * Remove Event - Cross-browser Vanilla JS (maybe obsolete)
+ */
+hsjs.tools.removeEvent = function( obj, type, fn ){
+
+  type = typeof type === "string" ? type.split(" ") : type;
+  let typeLen = type.length;
+  let i;
+
+  for (i = 0; i < typeLen; i++) {
+
+    if ( obj.removeEventListener ){
+      
+      obj.removeEventListener( type[i], fn, false );
+      
+    }
+    
+    else if ( obj.detachEvent ){
+
+      obj.detachEvent( "on"+type[i], obj[type[i]+fn] );
+
+      obj[type[i]+fn] = null;
+
+    } 
+
+    else {
+
+      obj["on"+type[i]] = null;
+
+    }
+
+  }
+
+};
+
+
+/*
+ * Run function at onload event
+ */
+// hsjs.tools.runOnLoad = function(func){
+
+//   hsjs.tools.addEvent(window, "load", func);
+
+// };
+
+
+/*
+ * Convert string (even with dot notation) to an obj/executable func ref
+ */
+hsjs.tools.stringToObj = function(string){
+  
+//   string = string.replace(/\[(\w+)\]/g, '.$1'); 
+//   string = string.replace(/^\./, ''); 
+  let stringPart = string.split('.');
+  let selLen = stringPart.length;
+  let obj = window;
+  
+  for (var i = 0, n = selLen; i < n; ++i) {
+    
+    let objKey = stringPart[i];
+    if (objKey in obj) {
+      obj = obj[objKey];
+    } 
+    else {
+      obj = undefined;
+      break;
+    }
+    
+  }
+  
+//   return string.split('.').reduce(function(obj, key){ return obj[key]; }, window);
+  
+  return obj;
+  
+}
+
+
+/*
+ * Check if function, and run
+ */
+hsjs.tools.runCallback = function(callback, data){
+  callback = callback || false;
+  if (typeof callback === "function"){
+    callback(data);
+  };
+};
+
+
+/*
+ * Append JS Script tag to body
+ */
+// hsjs.tools.appendScriptTag = function(src){
+//   var s = document.createElement("script");
+//   s.src = src;
+//   document.body.appendChild(s);
+// };
+  
+
+/*
+ * Download JS / JavaScript and append to body as script tag
+ */
+hsjs.tools.downloadJS = function(srcs, callback, at_onload){
+  
+  callback = callback || false;
+  at_onload = at_onload || false;
+  let jsSrcs = typeof srcs === "string" ? [srcs] : srcs;
+  let srcLen = jsSrcs.length;
+  let i;
+  
+  if (at_onload){
+    for (i = 0; i < srcLen; i++) {
+      hsjs.tools.addEvent(window, "load", function(){ hsjs.tools.appendScriptTag(jsSrcs[i]); });
+    }
+  }
+  
+  else {
+    for (i = 0; i < srcLen; i++) {
+      hsjs.tools.appendScriptTag(jsSrcs[i]);
+    }
+  };
+  
+  hsjs.tools.runCallback(callback);
+  
+};
+
+
+/*
+ * Append JS Script tag to body
+ */
+// hsjs.tools.appendStyleTag = function(src){
+//   var doc_head = document.getElementsByTagName("head")[0];
+//   var css = document.createElement('link'); 
+//   css.href = src;
+//   css.rel = 'stylesheet';
+//   css.type = "text/css";
+//   css.media = "screen";
+//   // Prepend styles before head
+//   //doc_head.parentNode.insertBefore(stylesheet, doc_head);
+//   // Append styles to head
+//   doc_head.appendChild(css);
+// };
+  
+
+/*
+ * Download CSS Stylesheet and append to head
+ */
+// hsjs.tools.downloadCSS = function(cssSrcs, at_onload){
+//   var at_onload = at_onload || false;
+//   var cssSrcs = typeof cssSrcs === "string" ? [cssSrcs] : cssSrcs;
+//   var srcLen = cssSrcs.length;
+//   var i;
+//   if (at_onload) {
+//     if (document.createStyleSheet){
+//       for (i = 0; i < srcLen; i++) {
+//         document.createStyleSheet(cssSrcs[i]);
+//       }
+//     }
+//     else {
+//       for (i = 0; i < srcLen; i++) {
+//         hsjs.tools.appendStyleTag(cssSrcs[i]);
+//       }
+//     }
+//   }
+//   else {
+//     var cb = function(src) {
+//         hsjs.tools.appendStyleTag(src);
+//     };
+//     for (i = 0; i < srcLen; i++) {
+//       var raf = requestAnimationFrame || webkitRequestAnimationFrame ||
+//           mozRequestAnimationFrame || msRequestAnimationFrame;
+//       if (raf){
+//         var cssSrc = cssSrcs[i];
+// 		var rafCb = function(){
+//           hsjs.tools.appendStyleTag(cssSrc);
+//         }
+//         raf(rafCb);
+//       }
+//       else {
+//         window.addEventListener('load', function(){
+//           hsjs.tools.appendStyleTag(cssSrcs[i]);
+//         });
+//       };
+//     }
+//   }
+// };
+
+
+/*
+ * Wait for DOM element to populate and fire callback
+ */
+// hsjs.tools.waitForElement = function(selector, callback, timeLimit){
+//   var timeLimit = timeLimit ? timeLimit : false;
+//   var timeSpent = 0;
+//   var clearAndRunCb = function(interval, callback){
+//     clearInterval(poops);
+//     hsjs.tools.runCallback(callback);
+//   };
+//   var poops = setInterval(function(){
+//     if ( document.querySelector(selector) ){
+//       clearAndRunCb(poops, callback);
+//     }
+//     if (timeLimit){
+//       timeSpent = timeSpent + 100;
+//       if (timeSpent >= timeLimit){
+//         clearInterval(poops);
+//       }
+//     }
+//   }, 100);
+// };
+
+
+/*
+ * Wait for JS Object or jQuery method and fire callback
+ */
+hsjs.tools.waitForJSObject = function(selector, callback){
+  
+  function waiter_checker(selector){
+    
+    // If selector has a "$", then check for jQuery method
+    if (selector.indexOf("$") !== -1) {
+      var jq_method_selector = selector.replace("$", "");
+      return typeof $.fn[jq_method_selector] !== "undefined";
+    }
+    
+    // If selector does not have a "$", then check for window object
+    else {
+      return typeof hsjs.tools.stringToObj(selector) !== "undefined";
+    }
+    
+  };
+
+  // Setup JS object of jQueyr method checker on an interval
+  var poops = setInterval(function(){
+    
+    // Check if object or method we"re waiting for exists
+    if (waiter_checker(selector)) {
+      
+      // If it exists, clear the interval
+      clearInterval(poops);
+      
+      // and fire the passed callback function
+      hsjs.tools.runCallback(callback);
+      
+    }
+    
+  }, 100);
+  
+};
+
+
+/*
+ * Ajax Vanilla JS
+ */
+// hsjs.tools.ajaxCall = function(ajax_url, callback, options) {
+//   ajax_url = (ajax_url) ? ajax_url : "URL Not Set";
+//   let data_type, method;
+//   if ( typeof options !== "undefined" ){
+//     data_type = (options["data_type"]) ? options["data_type"] : "text"; 
+//     method = (options["method"]) ? options["method"] : "GET"; 
+//   }
+//   else {
+//     data_type = "text"; 
+//     method = "GET"; 
+//   }
+    
+// //   if ( window.fetch ){
+
+// //     fetch(ajax_url)
+
+// //     .then(response => {
+// //       return response[data_type]();
+// //     })
+
+// //     .then(data => {
+// //       hsjs.tools.runCallback(callback, data);
+// //     })
+
+// //     .catch(error => {
+// //       console.log("AjaxCall Error: ", error);
+// //     });
+    
+// //   } 
+// //   else {
+    
+//     var xmlhttp = new XMLHttpRequest();
+
+//     xmlhttp.onreadystatechange = function() {
+//       if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+//         if (xmlhttp.status == 200) {
+//           hsjs.tools.runCallback(callback, xmlhttp.responseText);
+//         }
+//         else if (xmlhttp.status == 400) {
+//           console.log("There was an error 400");
+//         }
+//         else {
+//           console.log("Something else other than 200 or 400 was returned");
+//         }
+//       }
+//     };
+
+//     let some_boolean = true;
+//     xmlhttp.open(method, ajax_url, some_boolean);
+//     xmlhttp.send();
+
+// //   }
+
+// };
+
+
+/*
+ * Ajax Show/Hide Loading
+ */
+// hsjs.ajax = {
+//   showLoading: function() {
+//     $(".loading-spinner").show();
+//   },
+//   hideLoading: function() {
+//     $(".loading-spinner").hide();
+//   }
+// };
+
+
+/*
+ * Check if browser is mobile device or not
+ */
+// hsjs.tools.isMobile = function(){
+//   var check = false;
+//   !function(i){(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(i)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(i.substr(0,4)))&&(check=!0),hsjs.tools.isMobile=function(){return!0}}(navigator.userAgent||navigator.vendor||window.opera);
+//   return check;
+// };
+
+
+/*
+ * Return HREF query parameters as JSON 
+ * (eg, "https://www.example.com/hello/bye?key=vlue&red=green" returns {"key":"value","red":"green"} )
+ */
+hsjs.tools.getQueryVal = function(){
+  var q_ps = {};
+  if (location.search.length) {
+    for (var aKeyValue, i = 0, aCouples = location.search.substr(1).split("&"), aCoup_len = aCouples.length; i < aCoup_len; i++) {
+      aKeyValue = aCouples[i].split("=");
+      if (aKeyValue.length > 1) {
+        q_ps[decodeURIComponent(aKeyValue[0])] = decodeURIComponent(aKeyValue[1]);
+      }
+    }
+  }
+  return q_ps;
+};
+
+
+
+
+/*
+ * PWA - Progressive Web App and Service Worker 
+ */
+hsjs.pwa = {
+  
+  service_worker_js_path: "/apps/pwa/service-worker.js?shop=dankstop-9.myshopify.com",
+  
+  reg_service_worker: function(){
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register(
+        hsjs.pwa.service_worker_js_path, 
+        {scope: "/"}
+      )
+      .then(reg => {
+        reg.update()
+        //console.log("PWA: Service worker registered! ", reg);
+      })
+      .catch(err => {
+        //console.log("PWA: Service worker registration failed: ", err);
+      });
+    }
+    
+  },
+  
+  init: function(){
+    
+    hsjs.pwa.reg_service_worker();
+  	
+  }
+  
+};
+
+
+
+/*
+ * Load template/page specific JS
+ */
+// hsjs.loadTemplateJs = function(template_type){
+
+//   if (typeof template_type === "undefined"){
+//     template_type = hsjs.vars.template.name;
+//   }
+
+//   let template_js_var_name = template_type + "_template";
+//   let template_js_url = template_js_var_name + "_js_url";
+
+//   // If url for template js doesn't exist, return
+//   if ( ! (template_js_url in hsjs.cache.site_data.theme) ) {
+//     return;
+//   }
+
+//   // Load if not already loaded
+//   let template_name_loaded = template_js_var_name + "_js_loaded";
+//   if ( ! (template_name_loaded in hsjs.cache.site_data.theme) || ! hsjs.cache.site_data.theme[template_name_loaded]){
+//     hsjs.tools.downloadJS(hsjs.cache.site_data.theme[template_js_url]);
+//   }
+
+//   // Reload template-specific JS functions, if template-specific JS has already been loaded
+//   else {
+//     hsjs[template_js_var_name].refresh();
+//   }
+
+// }
+
+
+
+/*
+ * Lazysizes lazyload 
+ */
+hsjs.lazysizes = {
+  
+//   cdnjsSrc: "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js",
+//   jsDelivrSrc: "https://cdn.jsdelivr.net/npm/lazysizes@5.1.2/lazysizes.min.js",
+//   riasCdnSrc: "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/1.1.3/plugins/rias/ls.rias.min.js",  
+  
+//   load: function(){
+  
+//     hsjs.tools.downloadJS(hsjs.lazysizes.cdnjsSrc);
+    
+//   },
+  
+//   resetDataExpand: function(){
+  
+//     document.querySelectorAll("[data-expand]").forEach(elem => elem.removeAttribute("data-expand"));
+
+//   },
+  
+  addBgSupport: function(){
+
+    // https://github.com/aFarkas/lazysizes
+    //add simple support for background images
+    document.addEventListener('lazybeforeunveil', function(e){
+      var bg = e.target.getAttribute('data-bg');
+      if (bg){
+        e.target.style.backgroundImage = 'url(' + bg + ')';
+      }
+    });
+
+  },
+  
+//   addRiasSupport: function(){
+    
+//     hsjs.tools.downloadJS(hsjs.lazysizes.riasCdnSrc);
+    
+//   },
+  
+  init: function(){
+  
+    hsjs.lazysizes.addBgSupport();
+
+    //hsjs.lazysizes.addRiasSupport();
+    
+    //hsjs.lazysizes.load();
+  
+  }
+  
+};
+
+
+
+/* 
+ * Load On User Interaction
+ */
+// hsjs.loadOnUserInteraction = {
+
+//   events: "click mouseup mouseover scroll touchstart touchmove",
+  
+//   preFuncs: function(event){
+
+//     //console.log("LoadOnUserInteraction triggered by ", event);
+    
+//     // Set flag to true, so other events can know when to load
+//     hsjs.vars.userInteracted = true;
+
+//     // Turn off on user interaction lazy load handler
+//     hsjs.loadOnUserInteraction.detachHandler();
+
+//   },
+
+//   funcs: function(event){
+//   },
+  
+//   attachOnLoad: function(event){
+
+//     hsjs.loadOnUserInteraction.preFuncs(event);
+//     hsjs.loadOnUserInteraction.funcs(event);
+
+//   },
+  
+//   detachHandler: function(){
+    
+//     hsjs.tools.removeEvent(
+//       document, 
+//       hsjs.loadOnUserInteraction.events, 
+//       hsjs.loadOnUserInteraction.attachOnLoad
+//     );
+
+//   },
+
+//   attachHandler: function(){
+
+//     // First remove events - may be obsolete
+// //     hsjs.tools.removeEvent(
+// //       document, 
+// //       hsjs.loadOnUserInteraction.events, 
+// //       hsjs.loadOnUserInteraction.attachOnLoad
+// //     );
+
+//     hsjs.tools.addEvent(
+//       document, 
+//       hsjs.loadOnUserInteraction.events, 
+//       hsjs.loadOnUserInteraction.attachOnLoad
+//     );
+
+//   },
+  
+//   init: function(){
+//     hsjs.loadOnUserInteraction.attachHandler();
+//   }
+  
+// }
+
+
+
+
+
+
+// ===============================================
+// ==== Cache settings, selectors, variables =====
+// ===============================================
+hsjs.cacheSelectors = function(){
+  
+  hsjs.cache = {
+    // General
+    $document: $(document),
+    $html: $("html"),
+    $body: $("body"),
+    $promoBanner: $("#promoBanner"),
+    $removePromoBanner: $("#removePromoBanner"),
+    $header: $(".site-header"),
+    $navWrapper: $(".wrapper-navigation"),
+    $breadcrumbs: $(".breadcrumb"),
+    $mainContent: $("#mainContent"),
+    $modalBackdrop: $(".modal-backdrop"),
+    $loadingSpinner: $("<div class='loading-spinner'></div>"),
+    $loadingSpinner3x: $("<div class='loading-spinner loading-centered loading-3x'></div>"),
+    $openLiveChat: $(".chat-btn"),
+    $mnAccTrgr: $("#mnAccTrgr"),
+
+    // Page and Shop data
+    site_data: window.site_data
+  };
+  
+};
+
+hsjs.cacheVariables = function(){
+  
+  hsjs.vars = {
+    // Scroll Top Position used for setting page position
+    scrollTopPos: 0,
+    
+    // Set user interaction flag to false, 
+    // and change to true on loadonUserInteraction trigger
+    userInteracted: false,
+
+    // MediaQueries 
+//     isTouch: ('ontouchstart' in window) ? true : false,
+//     isMobile: (hsjs.tools && hsjs.tools.isMobile) ? hsjs.tools.isMobile() : undefined,
+    
+    // Current Page URL and related
+    pageUrl: document.URL,
+    originalPathname: window.location.pathname,
+    originalHref: window.location.href.split(window.location.search||window.location.hash||/[?#]/)[0],
+    scrollTopPos: (window.scrollY !== undefined) ? window.scrollY : ( (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop ),
+    queryParams: (function(){
+      return hsjs.tools.getQueryVal();
+    })(),
+    
+    // Checks
+//     isJQueryLoaded: function () { return typeof jQuery !== "undefined" && window.jQuery},
+//     isSlickLoaded: function () { return typeof $.fn.slick !== "undefined"},
+    
+    // Lazyload Image
+    lazyloadMainMenu: hsjs.cache.site_data.theme.lazyload_main_menu,
+    lazyloadGifPlaceholder: hsjs.cache.site_data.theme.lazyload_gif_url,
+    
+    // SuperNav 
+    supernav: {
+      enable: hsjs.cache.site_data.theme.supernav_enable
+    },
+    
+    // Apps
+    norton: {
+      enable: hsjs.cache.site_data.theme.norton_enable
+    },
+    
+    // Page data
+    pageHandle: hsjs.cache.$body[0].dataset.pageHandle || window.location.pathname.substr(window.location.pathname.lastIndexOf('/') + 1),
+    customer: {
+      logged_in: hsjs.cache.site_data.customer.logged_in,
+      id: hsjs.cache.site_data.customer.id,
+      email: hsjs.cache.site_data.customer.email,
+      phone: hsjs.cache.site_data.customer.phone,
+      full_name: hsjs.cache.site_data.customer.full_name,
+      first_name: hsjs.cache.site_data.customer.first_name,
+      last_name: hsjs.cache.site_data.customer.last_name,
+      tags: hsjs.cache.site_data.customer.tags,
+      watchlist: {
+        no_login_to_use: hsjs.cache.site_data.customer.watchlist_no_login_to_use,
+        products: hsjs.cache.site_data.customer.watchlist_products,
+        email: hsjs.cache.site_data.customer.watchlist_email,
+        phone: hsjs.cache.site_data.customer.watchlist_phone
+      }
+    },
+    template: {
+      name: hsjs.cache.$body[0].dataset.templateName,
+      suffix: hsjs.cache.$body[0].dataset.templateSuffix,
+      directory: hsjs.cache.$body[0].dataset.templateDirectory
+    }
+  };
+
+  hsjs.flags = {
+    cartAjaxOpened: false
+  };
+  
+};
+
+
+
+// ===========================================================
+// ==== Highlife Shopify JavaScript (hsjs) Initialization ====
+// ===========================================================
+hsjs.init = function(){
+
+  // Let HTML know that JS is enabled
+  document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+
+  // Load lazysizes image lazy loader
+  // UNCOMMENT THE hsjs.lazysizes.load METHOD FIRST
+//   hsjs.lazysizes.init();
+  // UNCOMMENT THE hsjs.lazysizes.load METHOD FIRST
+
+  // Load on uIx
+//   hsjs.loadOnUserInteraction.funcs = function(){
+//   };
+//   hsjs.loadOnUserInteraction.init();
+  
+  // Load jQuery 
+  hsjs.tools.downloadJS( "//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" );
+
+  hsjs.tools.waitForJSObject("jQuery", function(){
+    
+    // Cache selectors and vars
+    hsjs.cacheSelectors();
+    hsjs.cacheVariables();
+//     hsjs.tools.waitForJSObject("hsjs.themeObj", hsjs.cacheVariables);
+//     hsjs.tools.waitForJSObject("hsjs.vars", hsjs.controlPanel);
+
+    
+    // Deferred Load All Scripts 
+    hsjs.tools.downloadJS( hsjs.cache.site_data.theme.main_js_url );
+
+
+    // Download page-specific JS
+//     hsjs.loadTemplateJs();
+    
+
+    // Deferred Load All Scripts 
+    hsjs.tools.downloadJS( hsjs.cache.site_data.theme.third_party_js_urls );
+    
+    
+    // Load lazyloaded background images
+    hsjs.lazysizes.init();
+
+    
+    // Init PWA
+    hsjs.pwa.init();
+    
+    
+    // Load on user interaction
+    hsjs.tools.waitForJSObject("hsjs.loadOnUserInteraction", function(){
+      hsjs.loadOnUserInteraction.init();
+    });
+
+
+    // check if dark mode enabled
+//     if (
+//       // If set via URL query parameters, ie '?darkmode=true'
+//       hsjs.vars && hsjs.vars.queryParams && hsjs.vars.queryParams.darkmode === "true"
+//     ){
+//       hsjs.darkMode.init();
+//     }
+
+    
+    // TODO eliminate this into 
+    // shop -> metafields -> use liquid to populate
+    //hsjs.instagram.populateCount();
+    
+  });
+  
+};
+
+
+hsjs.init();

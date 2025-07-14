@@ -1,0 +1,191 @@
+<header class="collection-header">
+
+  {%- assign col_title_escaped = collection.title | escape -%}
+  
+  {%- if settings.display_collection_image -%}
+  <div class="collection-image">
+    {%- if collection.description contains 'img' or collection.image -%}
+
+    {%- if collection.description contains 'img' -%}
+    {%- assign img_url = collection.description | split: '<img' | last | split: '>' | first | replace: ' src=', ' data-src=' -%}
+
+    {%- elsif collection.image -%}
+    {%- assign img_url = collection.image | img_url: 'master' -%}
+    {%- endif -%}
+    
+    {%- if collection.description contains 'img' -%}
+    <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3C/svg%3E" class="lazyload" {{ img_url }} 
+         alt="{{ col_title_escaped }}" title="{{ col_title_escaped }}" data-expand="-1" data-sizes="auto"/>
+    {%- else -%}
+    <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3C/svg%3E" class="lazyload" data-src="{{ img_url }}" 
+         alt="{{ col_title_escaped }}" title="{{ col_title_escaped }}" data-expand="-1" data-sizes="auto">
+    {%- endif -%}
+    
+    {%- else -%}
+
+    {%- comment -%}
+    <div class="not_img">
+      930 x 320px
+    </div>
+    {%- endcomment -%}
+
+    {%- endif -%}
+  </div>
+  {%- endif -%}
+  
+  <div class="collection-wrapper page-header">
+    <h1 class="collection-title">{{- collection.title -}}</h1>
+
+    {%- comment -%}
+        {{ collection.description | split: '[lang2]' | first | strip_html | truncatewords: 50 }}
+        {{ collection.description | split: '[lang2]' | last | strip_html | truncatewords: 50 }}
+      <div class="rte">
+        {{ collection.description | split: '[lang2]' | first | strip_html | truncatewords: 50 }}
+      </div>
+    {%- endcomment -%}
+    
+    {%- if collection.description != '' and settings.display_collection_des -%}
+    <div class="collection-des">
+      
+      {%- assign collection_banner = false -%}
+      {%- assign collection_banner_image_ref = 'collection__banner_' | append: collection.handle -%}
+      {%- assign collection_banner_image = settings[collection_banner_image_ref] -%}
+      {%- assign collection_default_banner_mf = collection.metafields.global.uses_default_benner -%}
+      {%- if collection_banner_image -%}
+        {%- assign collection_banner = true -%}
+      {%- elsif collection_default_banner_mf and collection_default_banner_mf == '1' -%}
+        {%- assign collection_banner = true -%}
+        {%- assign collection_default_banner_image_ref = 'collection__banner_default' -%}
+        {%- assign collection_banner_image = settings[collection_banner_image_ref] -%}
+      {%- endif -%}
+      {%- if collection_banner_image -%}
+        {%- assign collection_banner_alt = collection_banner_image.alt | strip -%}
+        {%- if collection_banner_alt and collection_banner_alt != blank -%}
+          {%- assign collection_banner_alt = collection_banner_alt | escape -%}
+        {%- else -%}
+          {%- assign collection_banner_alt = col_title_escaped -%}
+        {%- endif -%}
+        {%- if collection_default_banner_image_ref == 'collection__banner_default' -%}
+          {%- assign collection_banner_link_ref = 'collection__banner_url_default' -%}
+          {%- assign collection_banner_link_href = settings[collection_banner_link_ref] -%}
+        {%- else -%}
+          {%- assign collection_banner_link_ref = 'collection__banner_url_' | append: collection.handle -%}
+          {%- assign collection_banner_link_href = settings[collection_banner_link_ref] -%}
+        {%- endif -%}
+        {%- if collection_banner_link_href -%}
+        <a href="{{ collection_banner_link_href }}" title="{{ collection_banner_alt }}">
+          <img class="collection-banner lazyload" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20380%20171'%3E%3C/svg%3E" 
+               data-src="{{ collection_banner_image.src | img_url: 'master' }}"
+               alt="{{ collection_banner_alt }}" title="{{ collection_banner_alt }}" data-expand="-1" data-sizes="auto"/>
+        </a>
+        {%- else -%}
+        <img class="collection-banner lazyload" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20380%20171'%3E%3C/svg%3E" 
+             data-src="{{ collection_banner_image.src | img_url: 'master' }}"
+             alt="{{ collection_banner_alt }}" title="{{ collection_banner_alt }}" data-expand="-1" data-sizes="auto"/>
+        {%- endif -%}
+      {%- endif -%}
+      
+
+      
+      {%- comment -%}
+      <!-- Process Collection Description -->
+      {%- endcomment -%}
+      {%- assign collection_description = collection.description -%}
+      
+
+      {%- comment -%}
+      <!-- Remove meta charset utf-8 tag -->
+      {%- endcomment -%}
+      {%- assign collection_description = collection_description | replace: '<meta charset="utf-8">', '' -%}
+      
+      
+      {%- comment -%}
+      <!-- Process Imgs -- make img tag into lazy img tags -->
+      {%- endcomment -%}
+      {%- assign imt_tag_array = collection.description | split: '<img ' -%}
+      {%- assign imt_tag_count = imt_tag_array.size -%}
+  
+      {%- comment -%}
+      <!-- Loop through images -->
+      {%- endcomment -%}
+      {%- for i in (1..imt_tag_count) -%}
+  
+        {%- comment -%}
+        <!-- isolate img tag content -->
+        {%- endcomment -%}
+        {%- assign img_2nd_part = imt_tag_array[i] -%}
+        {%- assign img_content = img_2nd_part | split: '>' | first -%}
+        {%- assign original_img_tag = '<img ' | append: img_content | append: '>' -%}
+  
+        {%- comment -%}
+        <!-- Extract any classnames this img tag has -->
+        {%- endcomment -%}
+        {%- assign img_class = '' -%}
+        {%- if img_content contains 'class="' -%}
+          {%- assign img_class = img_content | split: 'class="' | last -%}
+          {%- assign img_class = img_class | split: '"' | first -%}
+        {%- endif -%}
+        {%- assign img_class_attr_and_val = 'class="' | append: img_class | append: '"' -%}
+        {%- assign img_content = img_content | replace: img_class_attr_and_val, '' -%}
+        {%- assign img_content = img_content | replace: 'alt=""', '' -%}
+  
+  
+        {%- comment -%}
+        <!-- Make sure the img has an alt tag -->
+        {%- endcomment -%}
+        {%- assign img_alt = '' -%}
+        {%- unless img_content contains 'alt="' -%}
+          {%- assign img_alt_text = col_title_escaped | append: ' on ' | append: shop.name -%}
+          {%- assign img_alt = 'alt="' | append: img_alt_text | append: '" title="' | append: img_alt_text | append: '" ' -%}
+        {%- else -%}
+          {%- if img_content contains 'alt=""' -%}
+            {%- assign img_alt_text = col_title_escaped | append: ' on ' | append: shop.name -%}
+            {%- assign img_alt = 'alt="' | append: img_alt_text | append: '" title="' | append: img_alt_text | append: '" ' -%}
+          {%- else -%}
+            {%- unless img_content contains 'title="' -%}
+              {%- assign img_alt_text = col_title_escaped | append: ' on ' | append: shop.name -%}
+              {%- assign img_alt = 'title="' | append: img_alt_text | append: '" ' -%}
+            {%- else -%}
+              {%- if img_content contains 'title=""' -%}
+                {%- assign img_alt_text = col_title_escaped | append: ' on ' | append: shop.name -%}
+                {%- assign img_alt = 'title="' | append: img_alt_text | append: '" ' -%}
+              {%- endif -%}
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endunless -%}
+  
+
+        {%- comment -%}
+        <!-- Build final lazyload tag -->
+        {%- endcomment -%}
+        {%- assign lazyload_placeholder = "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20160%20160'%3E%3C/svg%3E" -%}
+        {%- assign lazy_img_tag = '<img data-expand="-1" class="lazyload ' | append: img_class | append: '" ' | append: img_alt | append: img_content | replace: ' src="', ' data-src="' | append: ' src="' | append: lazyload_placeholder | append: '">' -%}
+
+        {%- comment -%}
+        <!-- Replace original img tag with lazy img tag -->
+        {%- endcomment -%}
+        {%- assign collection_description = collection_description | replace: original_img_tag, lazy_img_tag -%}
+  
+      {%- endfor -%}
+              
+
+      {%- if collection_description.size > 561 -%}
+      <input type="checkbox" id="show_desc" class="hidden">
+      <div class="collection-des-long">
+        {{- collection_description -}}
+        <label for="show_desc"><span>{{ 'collections.general.desc_show_more' | t }}</span>
+          <span>{{ 'collections.general.desc_show_less' | t }}</span>
+        </label>
+      </div>
+      {%- else -%}
+      {{- collection_description -}}
+      {%- endif -%}
+      
+    </div>      
+    {%- endif -%}
+    
+  </div>
+</header>
+
+
+{%- include 'collection--categories' -%}

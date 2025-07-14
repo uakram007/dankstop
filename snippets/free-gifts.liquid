@@ -1,0 +1,97 @@
+{%- if settings.display_free_gift_cart_top -%}
+<div class="free-gifts">
+  {%- assign total_tiers = 5 -%}  
+  {%- assign free_gift_tier_pre_name = 'free_gifts_tier_' -%}  
+  {%- assign free_gift_tiers_string = '' -%}  
+  {%- assign cart_total_cents = cart.total_price | times: 1 -%}  
+  {%- assign cart_total = cart_total_cents | divided_by: 100.00 -%}  
+  {%- assign current_tier_index = 0 -%}  
+  {%- assign next_tier_index = current_tier_index | plus: 1 -%}  
+
+  {%- for i in (1..total_tiers) -%}
+    {%- assign fgt_name = free_gift_tier_pre_name | append: i -%}  
+    {%- assign fgt_total_name = fgt_name | append: '_total' -%}  
+    {%- assign fgt_product_name = fgt_name | append: '_product' -%}  
+    {%- assign fgt_total = settings[fgt_total_name] | times: 1-%}  
+    {%- assign fgt_product = settings[fgt_product_name] -%}  
+
+    {%- if cart_total > fgt_total -%}
+      {%- assign current_tier_index = i -%}  
+      {%- assign next_tier_index = current_tier_index | plus: 1 -%}  
+  {%- comment -%}
+  <div class="hidden">
+    -- c tier - {{ current_tier_index }}<br>
+    -- n tier - {{ next_tier_index }}<br>
+  </div>
+  {%- endcomment -%}
+    {%- endif -%}
+
+    {%- if free_gift_tiers_string == blank -%}
+      {%- assign free_gift_tiers_string = fgt_total | append: '|' | append: fgt_product -%}  
+    {%- else -%}
+      {%- assign free_gift_tiers_string = free_gift_tiers_string | append: ',' | append: fgt_total | append: '|' | append: fgt_product -%}  
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- assign free_gift_tiers_array = free_gift_tiers_string | split: ',' -%}
+  {%- assign current_tier_index0 = current_tier_index | minus: 1 -%}  
+  {%- assign next_tier_index0 = next_tier_index | minus: 1 -%}  
+  {%- assign current_tier = free_gift_tiers_array[current_tier_index0] -%}  
+  {%- assign next_tier = free_gift_tiers_array[next_tier_index0] -%}  
+  {%- assign next_tier_total = next_tier | split: '|' | first | times: 1.00 -%}  
+  {%- unless next_tier_total contains '.' -%}
+    {%- assign next_tier_total = next_tier_total | append: '.00' | times: 1.00 -%}  
+  {%- endunless -%}
+  {%- assign next_tier_product_handle = next_tier | split: '|' | last -%}  
+  {%- assign next_tier_product = all_products[next_tier_product_handle] -%}  
+  {%- assign next_tier_product_title = next_tier_product.title -%}  
+  {%- assign next_tier_product_url = next_tier_product.url -%}  
+  {%- assign next_tier_progress = cart_total | divided_by: next_tier_total | times: 100.00 | round: 2 -%}  
+  {%- assign amount_to_next_tier = next_tier_total | minus: cart_total -%}  
+
+  
+  {%- comment -%}
+  <div class="hidden">
+    tiers - {{ free_gift_tiers_array | json }}<br>
+    c tier - {{ current_tier_index }}<br>
+    c tier 0 - {{ current_tier_index0 }}<br>
+    n tier - {{ next_tier_index }}<br>
+    n tier 0 - {{ next_tier_index0 }}<br>
+    cart cents - {{ cart_total_cents }}<br>
+    cart total - {{ cart_total }}<br>
+    current tier - {{ current_tier | json }}<br>
+    next tier - {{ next_tier | json }}<br>
+    n tier t - {{ next_tier_total }}<br>
+    prog - {{ next_tier_progress }}<br>
+    amount to next tier -- {{ next_tier_total }} - {{ cart_total }} = {{ amount_to_next_tier }}<br>
+  </div>
+  {%- endcomment -%}
+
+  {%- if next_tier_index > total_tiers -%}
+
+    <div class="final-free-gift-tier">
+      <span>{{ 'free_gifts.final_tier_html' | t }}</span>
+    </div>
+  
+  {%- else -%}
+  
+    <div class="add-for-next-tier">
+      <span>{{ 'free_gifts.add_for_next_tier_html' | t: amount_to_next_tier: amount_to_next_tier, product_title: next_tier_product_title, product_url: next_tier_product_url }}</span>
+    </div>
+
+    <div class="free-gift-progress progress">
+      <div class="progress-bar bg-color-primary" role="progressbar" style="width: {{ next_tier_progress }}%" aria-valuenow="{{ next_tier_progress }}" aria-valuemin="0" aria-valuemax="100">
+        <span>{{ next_tier_progress }}%</span>
+      </div>
+    </div>
+  
+  {%- endif -%}
+  
+  
+  <div class="{%- unless customer.email == 'andre.bulatov@gmail.com' -%}hidden debug{%- endunless -%}">
+    <p>You qualify for one free gift!</p>
+    <p>We've added a free gift to your cart, but feel free to replace it with one of these gifts below.</p>
+  </div>
+
+</div>
+{%- endif -%}

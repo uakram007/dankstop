@@ -1,0 +1,61 @@
+{%- include 'checkout--remove-free-shipping-style' -%}
+<style type="text/css">
+  .errors {
+    color: #dc0000;
+    background-color: #fff6f6;
+    border: 1px solid;
+    border-color: #dc0000;
+    padding: 0.5em;
+  }
+/*   .product[data-product-id="5045465412"] .product__description__property, */
+/*   .product[data-product-id="{{ all_products[settings.warranty__product] }}"] .product-thumbnail__quantity { */
+  .product[data-product-id="242036441109"] .product-thumbnail__quantity {
+    display: none !important;
+  }
+  .cart-btns {
+    display: inline-block;
+    background: #eef3f7;
+    border: 1px solid #859bab;
+    border-radius: 4px;
+    margin-top: 5px;
+  }
+
+  .cart-btns.remove {
+    background: transparent;
+    border: none;
+    font-size: 12px;
+  }
+
+  .cart-btns .increment-btn {
+    border-right: 1px solid #859bab;
+  }
+
+  .cart-btns a:not(.remove) {
+    padding: 2px 4px;
+  }
+
+  .cart-btns a:hover {
+    color: #000;
+  }
+
+</style>
+
+
+{%- comment -%}
+<!-- begin Convert Experiences code-->
+<script type="text/javascript" src="//cdn-3.convertexperiments.com/js/1002628-1002789.js"></script>
+<!-- end Convert Experiences code -->
+
+
+<!-- Hotjar code -->
+<script>
+    (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+      h._hjSettings={hjid:653828,hjsv:6};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;
+      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+{%- endcomment -%}

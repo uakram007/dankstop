@@ -1,0 +1,8 @@
+{% layout none %}
+{{-''-}} { {{-''-}}
+{{-''-}}   "customer_watchlist":{ {{-''-}}{{-''-}}
+{{-''-}}     "products": {{- customer.metafields.watchlist.products | json -}}, {{-''-}}
+{{-''-}}     "email": {{- customer.metafields.watchlist.email | json -}}, {{-''-}}
+{{-''-}}     "phone": {{- customer.metafields.watchlist.phone | json -}} {{-''-}}
+{{-''-}}   } {{-''-}}
+{{-''-}} } {{-''-}}

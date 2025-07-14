@@ -1,0 +1,60 @@
+<div class="route-div" disable-reorder></div>
+<!-- Route Code Edited 11/30/2022-->
+ <style>
+                      .carbon-icon svg{
+                        height:14px;
+                        width:14px;
+                        stroke: transparent;
+                        stroke-width: 0px;
+                      }
+                      .pw-subtitle-text a{
+                        color: #666
+                      }
+                      .pw-logo svg {
+                        stroke: transparent;
+                        stroke-width: 0px;
+                    }   
+       .pw-route-protection .pw-learn-more svg{
+         stroke: transparent;
+        stroke-width: 0px;
+         height:10px;
+          }
+        .pw-route-protection .pw-green .carbon-text-route svg{
+          stroke: transparent;
+        stroke-width: 0px;
+          height:20px;
+          width:45px;
+          }
+  </style>
+  <!-- Route Code End-->
+<p class="route-warning">{{ 'cart.general.shipping_insurance.warning' | t }}</p>
+{%- comment -%}
+<script>
+  function setRouteWarning($route_check_el){
+    if ($route_check_el.hasClass("rw-unchecked")){
+      $(".route-warning").removeClass("hidden");
+    }
+    else {
+      $(".route-warning").addClass("hidden");
+    }
+  }
+  
+  // Set initial visibility
+  if (window.hsjs && hsjs.tools && hsjs.tools.waitForElement){
+    hsjs.tools.waitForElement(
+      ".rw-checkbox-span",
+      function(){
+        setRouteWarning($(".rw-checkbox-span"));
+      },
+      10000
+    );
+  }
+
+  $(".route-div").on("click", ".rw-checkbox-span", function(){
+    setTimeout(function(){
+//       console.log($(".rw-checkbox-span").hasClass("rw-unchecked"));
+      setRouteWarning($(".rw-checkbox-span"));
+    }, 500);
+  });
+</script>
+{%- endcomment -%}

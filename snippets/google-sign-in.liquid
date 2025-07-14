@@ -1,0 +1,32 @@
+{%- comment -%}
+<div hidden>{{ customer | json }}</div>
+{%- endcomment -%}
+
+{%- unless customer -%}
+{%- if settings.google_sin_in__enable -%}
+
+{%- comment -%}
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+  $('#g_id_onload').attr('data-return', window.location.href);
+</script>
+{%- endcomment -%}
+
+<div id="g_id_onload" 
+     {%- comment -%}
+     data-moment_callback="continueWithNextIdp" 
+     data-return="{{ shop.url }}"
+     data-your_own_param_1_to_login="andre"
+     data-client_id="1070217124301-kq9iqc9h4m5kfrf8k3agc5nq77huvcg5.apps.googleusercontent.com" 
+     {%- endcomment -%}
+     {%- if settings.google_sin_in__auto_select -%}
+     data-auto_select="true" 
+     {%- endif -%}
+     data-client_id="{{ settings.google_sign_in__client_id }}" 
+     {%- assign return_url = shop.url | append: page.url | url_encode -%}
+     data-login_uri="https://portal.dankstop.com/shopify-pages/google-sign-in.php?return_url={{ canonical_url }}"
+     >
+</div>
+  
+{%- endif -%}
+{%- endunless -%}

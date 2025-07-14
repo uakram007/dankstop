@@ -1,0 +1,14 @@
+{%- if min == blank -%}
+{%- assign min = 1 -%}
+{%- endif -%}
+
+{%- if max == blank -%}
+{%- assign max = 100 -%}
+{%- endif -%}
+
+{%- assign diff = max | minus: min -%}
+{%- assign random_number = "now" | date: "%N" | modulo: diff | plus: min -%}
+
+{%- if output_value == true -%}
+{{ random_number }}
+{%- endif -%}

@@ -1,0 +1,358 @@
+
+{% assign elite = false %}
+{% for item in cart.items %}
+       {% if item.id == settings.elite_product.selected_or_first_available_variant.id %}
+         {% assign elite = true %}
+       {% break %}
+     {% endif %}
+{% endfor %}
+
+
+{% assign elite_product = settings.elite_product %} 
+
+
+{% assign base_price_active = true %}
+{% assign club_price_active = false %}
+{% assign elite_price_active = false %}
+
+{% if customer.tags contains 'elite_member' or elite %}
+  {% assign elite_price_active = true %}
+  {% assign base_price_active = false %}
+  {% assign club_price_active = false %}
+  
+{% endif %}
+{% if customer.tags contains 'club_member' %}
+  {% assign club_price_active = true %}
+  {% assign base_price_active = false %}
+  {% assign elite_price_active = false %}
+{% endif %}
+
+
+
+
+{% assign total_savings = 0 %}
+{% assign cart_total_price = 0 %}
+{% for item in cart.items %}
+  <!-- pricing according to user role -->
+  {% assign base_price = item.line_price | money_without_currency %}
+  {% assign club_price = item.product.metafields.custom.member_price.value
+    | default: base_price
+    | times: item.quantity
+  %}
+  {% assign elite_price = item.product.metafields.custom.elite_price.value
+    | default: base_price
+    | times: item.quantity
+  %}
+  
+
+{% endfor %}
+<!-- format cart total price -->
+{% assign cart_total_price = cart_total_price | times: 100 | money %}
+
+{% assign total_savings = savings | round: 2  | money  %}
+
+<style>
+  /* .cc-mm-cart-block-club_member .price-table {
+    display:none;
+  }
+.custom-radio input[type=radio], input[type=checkbox]{display:block}
+.ai-cart-applied {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+    background: #C14e47;
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: bold;
+} */
+</style>
+
+{% if customer == blank %}
+  {% if elite == false  %}
+{% style %}
+    .cc-mm-cart-block- .price-table{
+        display:none;
+    }
+    .cc-mm-cart-block- .cc-pricing-table-market-cell-inner {
+    grid-template-columns: 125px 1fr !important;
+    }
+    
+    {% if elite != true %}
+          .cc-mm-cart-block- button#checkout:after {
+          content: 'without savings';
+          display: block;
+          border: none;
+          background: none;
+          box-shadow: none;
+          position: static;
+          font-size: 9px;
+          margin-top: 5px;
+      }
+            {% endif %}
+          .cc-mm-cart-block- .cc-pricing-table-member-cell-inner-row1 h3 {
+          flex-basis: 50% !important;
+      }
+           .cc-mm-cart-block- button#checkout {
+          background: #e1241d !important;
+          border-radius: 30px !important;
+          flex-direction: column;
+      }
+                .cc-pricing-table-member-cell-inner-row1 {
+                  gap: 20px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  background: var(--Color-Elite-Blue-900, #031546);
+                  border-radius: 10px 10px 0 0;
+                  padding: 16px 12px;
+              }
+              .cc-member-cart-summary-benefits-banner h3 {
+            margin:0;
+            text-align:center;
+            color: var(--Elite, #e1251c);
+          font-family: Montserrat;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 800;
+          line-height: 96%; /* 13.44px */
+          }
+          .cc-pricing-table-member-cell-inner-row2 {
+            background: var( --Golden-Surface, linear-gradient(118deg, #ab7917 8.15%, #ffdf6e 50%, #ab7917 91.85%) );
+            padding: 12px 16px;
+            border-radius: 0 0 10px 10px;
+        }
+          .cc-pricing-table-member-cell-inner-row3 ul {
+            padding: 20px;
+            margin: 0;
+            border-bottom: 1px solid #031546;
+        }
+          .cc-pricing-table-member-cell-inner-row3 ul li {
+            color: #1C355E;
+            font-size: 12px;
+        }
+          .cc-pricing-table-member-cell-inner-row2 label {
+            color: #1C355E;
+            font-size: 16px;
+        }
+          .cc-pricing-table-member-cell-inner-row1 > img {
+            max-width: 90px;
+        }
+          .cc-pricing-table-member-cell-inner-row1 svg {
+            flex-shrink: 0;
+        }
+          .cc-pricing-table-member-cell-inner-row1 h3 {
+            margin: 0;
+            color: #fff;
+        }
+          .cc-pricing-table-member-cell-inner-row1 h3 span {
+            display: block;
+            font-weight: 400;
+        }
+  {% endstyle %}
+
+  <noscript>
+    {{ cart.items | json }}
+  </noscript>
+
+  <div class="cc-member-cart-summary cccccc">
+    <div class="cc-member-cart-summary-total">
+      <span class="cc-member-cart-summary-item-name">Total</span>
+      <span class="cc-member-cart-summary-new-total">
+        {{ cart.original_total_price | money -}}
+      </span>
+    </div>
+  </div>
+{% endif %}
+{% endif %}
+
+{% if customer.tags contains 'club_member' and elite == false %}
+  {% style %}
+    {% if  elite %}
+    .cc-mm-cart-block-club_member button#checkout:after {
+        content: 'without ELITE savings';
+        display: block;
+        border: none;
+        background: none;
+        box-shadow: none;
+        position: static;
+        font-size: 9px;
+        margin-top: 5px;
+    }
+      {% endif %}
+    .cc-mm-cart-block-club_member .cc-pricing-table-member-cell-inner-row1 h3 {
+    flex-basis: 50% !important;
+  }
+     .cc-mm-cart-block-club_member button#checkout {
+    background: #e1241d !important;
+    border-radius: 30px !important;
+    flex-direction: column;
+}
+          .cc-pricing-table-member-cell-inner-row1 {
+            gap: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--Color-Elite-Blue-900, #031546);
+            border-radius: 10px 10px 0 0;
+            padding: 16px 12px;
+        }
+        .cc-member-cart-summary-benefits-banner h3 {
+                margin: 0;
+              text-align: center;
+              color: #e1251c;
+              font-size: 14px;
+              font-style: normal;
+              font-weight: 600;
+              line-height: 24px;
+          }
+          .cc-pricing-table-member-cell-inner-row2 {
+            background: var( --Golden-Surface, linear-gradient(118deg, #ab7917 8.15%, #ffdf6e 50%, #ab7917 91.85%) );
+            padding: 12px 16px;
+            border-radius: 0 0 10px 10px;
+        }
+          .cc-pricing-table-member-cell-inner-row3 ul {
+            padding: 20px;
+            margin: 0;
+            border-bottom: 1px solid #031546;
+        }
+          .cc-pricing-table-member-cell-inner-row3 ul li {
+            color: #1C355E;
+            font-size: 12px;
+        }
+          .cc-pricing-table-member-cell-inner-row2 label {
+            color: #1C355E;
+            font-size: 16px;
+        }
+          .cc-pricing-table-member-cell-inner-row1 > img {
+            max-width: 90px;
+        }
+          .cc-pricing-table-member-cell-inner-row1 svg {
+            flex-shrink: 0;
+        }
+          .cc-pricing-table-member-cell-inner-row1 h3 {
+            margin: 0;
+            color: #fff;
+        }
+          .cc-pricing-table-member-cell-inner-row1 h3 span {
+            display: block;
+            font-weight: 400;
+        }
+  {% endstyle %}
+
+
+  <div class="cc-member-cart-summary ccmm">
+    <div class="cc-member-cart-summary-benefits-banner">
+      <h3>THE LOWEST PRICE GUARANTEED!</h3>      
+      <p>You Are Saving <span class="cc-red">{{ total_savings }}</span> with Cabana Club</p>
+    </div>
+    
+    <div class="cc-member-cart-summary-total">
+      <span class="cc-member-cart-summary-item-name">Total</span>
+      <span class="cc-member-cart-summary-new-total">
+        {% if customer and customer.tags contains 'club_member' %}
+          {%  liquid  
+              assign total_price = 0
+              for item in cart.items
+                  assign item_price = item.variant.metafields.custom.member_price | default: 0 | times: 100  | times: item.quantity 
+                  assign total_price = total_price | plus: item_price
+              endfor
+              if elite == true
+                  assign total_price = total_price | plus:elite_product.price
+              endif
+          %}
+          {{ total_price |  money }}
+        {% endif %}
+      </span>
+    </div>
+  </div>
+
+{% endif %}
+
+
+{% if customer.tags contains 'elite_member' or elite  %}
+  {% style %}
+        .cc-mm-cart-block-elite_member button#checkout {
+            background: #031546 !important;
+            border-radius: 30px !important;
+        }
+            .cc-member-cart-summary-benefits-banner h3 {
+          margin:0;
+          text-align:center;
+          color: var(--Elite, #031546);
+        font-family: Montserrat;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 800;
+        line-height: 96%; /* 13.44px */
+        }
+      .cc-pricing-table-member-cell-inner-row1 {
+            gap: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--Color-Elite-Blue-900, #031546);
+            border-radius: 10px 10px 0 0;
+            padding: 16px 12px;
+        }
+          .cc-pricing-table-member-cell-inner-row2 {
+            background: var( --Golden-Surface, linear-gradient(118deg, #ab7917 8.15%, #ffdf6e 50%, #ab7917 91.85%) );
+            padding: 12px 16px;
+            border-radius: 0 0 10px 10px;
+        }
+          .cc-pricing-table-member-cell-inner-row3 ul {
+            padding: 20px;
+            margin: 0;
+            border-bottom: 1px solid #031546;
+        }
+          .cc-pricing-table-member-cell-inner-row3 ul li {
+            color: #1C355E;
+            font-size: 16px;
+        }
+          .cc-pricing-table-member-cell-inner-row2 label {
+            color: #1C355E;
+            font-size: 16px;
+        }
+          .cc-pricing-table-member-cell-inner-row1 > img {
+            max-width: 90px;
+        }
+          .cc-pricing-table-member-cell-inner-row1 svg {
+            flex-shrink: 0;
+        }
+          .cc-pricing-table-member-cell-inner-row1 h3 {
+            margin: 0;
+            color: #fff;
+        }
+          .cc-pricing-table-member-cell-inner-row1 h3 span {
+            display: block;
+            font-weight: 400;
+        }
+  {% endstyle %}
+
+  <div class="cc-member-cart-summary" id="cc-member-cart-summary-elite">
+    <div class="cc-member-cart-summary-benefits-banner">
+      <h3>THE LOWEST PRICE GUARANTEED!</h3>
+  
+      <p>You Are Saving <span class="cc-blue">{{ total_savings }}</span> with ELITE</p>
+    </div>
+    
+    <div class="cc-member-cart-summary-total">
+      <span class="cc-member-cart-summary-item-name">Total</span>
+      <span class="cc-member-cart-summary-new-total">
+
+          {%  liquid  
+              assign total_price2 = 0
+              for item in cart.items
+                  assign item_price = item.variant.metafields.custom.elite_price | default: 0 | times: 100  | times: item.quantity 
+                  assign total_price2 = total_price2 | plus: item_price
+              endfor 
+              
+          %}
+          {{ total_price2 |  money }}
+{% comment %} if elite == true
+                  assign total_price2 = total_price2 | plus:elite_product.price
+              endif {% endcomment %}
+      </span>
+    </div>
+  </div>
+{% endif %}
+

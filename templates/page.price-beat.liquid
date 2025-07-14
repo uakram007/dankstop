@@ -1,0 +1,100 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<style>
+    main {
+        font-family: 'Montserrat', sans-serif;
+        *{
+            font-family: 'Montserrat', sans-serif !important;
+        }
+    }
+    .wrapper.main-content {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .top_container {
+        background: #DE2726;
+        padding: 30px 0 0 0;
+        text-align: center;
+    }
+    .inner_grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        max-width: 990px; 
+            margin: 0 auto;
+    }
+    .text_content{
+        max-width: 875px; 
+        margin: 40px auto;
+        padding: 0 35px;
+        p{
+            font-size:16px;
+        }
+        h2{
+            font-size: 30px;
+        }
+    }
+    .inner_grid img{
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    .inner_grid h1{ 
+        color: #fff;
+        text-align: left;
+        font-size: 44px;
+        b:first-child{
+            display: block;
+        }
+    }
+    .curve_bottom_desktop{
+        position: relative;
+        bottom: -15px;
+        width: 100%;
+    }
+    .curve_bottom_mobile{
+        display: none;
+    }
+    @media only screen and (max-width: 768px) {
+        .inner_grid {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+        .inner_grid img{
+            max-width: 75%;
+            margin: 0 auto 30px;
+        }
+        .inner_grid h1{
+            font-size: 40px;
+            text-align: center;
+        }
+        .curve_bottom_desktop{
+            display: none;
+        }
+        .curve_bottom_mobile{
+            display: block;
+            width: 100%;
+            position: relative;
+            bottom: -35px;
+        }
+        .text_content{
+            margin-top: 80px;
+        }
+    }
+</style>
+<div class="top_container">
+    <div class="inner_grid">
+        <img src="https://cdn.shopify.com/s/files/1/0350/8253/files/price-bea.webp?v=1748364015"/>
+        <h1>
+            We Don't Just <b>Price Match,</b> We <b>Price BEAT By 5%</b>
+        </h1>
+    </div>
+    <img class="curve_bottom_desktop" src="https://cdn.shopify.com/s/files/1/0350/8253/files/Rectangle_24010.png?v=1748364088"/>
+    <img src="https://cdn.shopify.com/s/files/1/0350/8253/files/Rectangle_24010_1.png?v=1748364088" class="curve_bottom_mobile"/>
+</div>
+
+<div class="text_content">
+    {{ page.content }}
+</div>

@@ -1,0 +1,6128 @@
+/*============================================================================
+  (c) Copyright 2014-20 Andre Bulatov LLC / DS Distribution Inc.
+  Author: Andre Bulatov (@andrebu). All Rights Reserved.
+==============================================================================*/
+"use strict";
+
+window.hsjs = window.hsjs || {};
+
+
+
+/*
+ * Universal JavaScrip tools and functions
+ */
+hsjs.tools = hsjs.tools || {};
+
+
+/*
+ * Append JS Script tag to body
+ */
+hsjs.tools.appendStyleTag = function(src){
+  var doc_head = document.getElementsByTagName("head")[0];
+  var css = document.createElement('link'); 
+  css.href = src;
+  css.rel = 'stylesheet';
+  css.type = "text/css";
+  css.media = "screen";
+  // Prepend styles before head
+  //doc_head.parentNode.insertBefore(stylesheet, doc_head);
+  // Append styles to head
+  doc_head.appendChild(css);
+};
+  
+
+/*
+ * Download CSS Stylesheet and append to head
+ */
+hsjs.tools.downloadCSS = function(cssSrcs, at_onload){
+  var at_onload = at_onload || false;
+  var cssSrcs = typeof cssSrcs === "string" ? [cssSrcs] : cssSrcs;
+  var srcLen = cssSrcs.length;
+  var i;
+  if (at_onload) {
+    if (document.createStyleSheet){
+      for (i = 0; i < srcLen; i++) {
+        document.createStyleSheet(cssSrcs[i]);
+      }
+    }
+    else {
+      for (i = 0; i < srcLen; i++) {
+        hsjs.tools.appendStyleTag(cssSrcs[i]);
+      }
+    }
+  }
+  else {
+    var cb = function(src) {
+        hsjs.tools.appendStyleTag(src);
+    };
+    for (i = 0; i < srcLen; i++) {
+      var raf = requestAnimationFrame || webkitRequestAnimationFrame ||
+          mozRequestAnimationFrame || msRequestAnimationFrame;
+      if (raf){
+        var cssSrc = cssSrcs[i];
+		var rafCb = function(){
+          hsjs.tools.appendStyleTag(cssSrc);
+        }
+        raf(rafCb);
+      }
+      else {
+        window.addEventListener('load', function(){
+          hsjs.tools.appendStyleTag(cssSrcs[i]);
+        });
+      };
+    }
+  }
+};
+
+
+/*
+ * Wait for DOM element to populate and fire callback
+ */
+hsjs.tools.waitForElement = function(selector, callback, timeLimit){
+  var timeLimit = timeLimit ? timeLimit : false;
+  var timeSpent = 0;
+  var clearAndRunCb = function(interval, callback){
+    clearInterval(poops);
+    hsjs.tools.runCallback(callback);
+  };
+  var poops = setInterval(function(){
+    if ( document.querySelector(selector) ){
+      clearAndRunCb(poops, callback);
+    }
+    if (timeLimit){
+      timeSpent = timeSpent + 100;
+      if (timeSpent >= timeLimit){
+        clearInterval(poops);
+      }
+    }
+  }, 100);
+};
+
+
+/*
+ * Ajax Vanilla JS
+ */
+hsjs.tools.ajaxCall = function(ajax_url, callback, method, some_boolean) {
+  ajax_url = (ajax_url) ? ajax_url : "URL Not Set";
+  method = (method) ? method : "GET"; 
+  some_boolean = true;
+  var xmlhttp = new XMLHttpRequest();
+
+  xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+      if (xmlhttp.status == 200) {
+        hsjs.tools.runCallback(callback, xmlhttp.responseText);
+      }
+      else if (xmlhttp.status == 400) {
+        console.log("There was an error 400");
+      }
+      else {
+        console.log("Something else other than 200 or 400 was returned");
+      }
+    }
+  };
+
+  xmlhttp.open(method, ajax_url, some_boolean);
+  xmlhttp.send();
+};
+
+
+/*
+ * Ajax Show/Hide Loading
+ */
+hsjs.ajax = {
+  showLoading: function() {
+    $(".loading-spinner").show();
+  },
+  hideLoading: function() {
+    $(".loading-spinner").hide();
+  }
+};
+
+
+/*
+ * Check if browser is mobile device or not
+ */
+hsjs.tools.isMobile = function(){
+  
+  let ua_string = navigator.userAgent || navigator.vendor || window.opera;
+//   let isMobile = false;
+  
+  if (
+    /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i
+    .test(ua_string)
+    ||
+    /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i
+    .test(ua_string.substr(0,4))
+  ){
+    
+//     isMobile = true;
+    hsjs.tools.isMobile=function(){return true}; 
+    
+  }
+  else {
+    hsjs.tools.isMobile=function(){return false}; 
+  }
+  
+//   hsjs.tools.isMobile=function(){return isMobile}; 
+//   return isMobile;
+  return hsjs.tools.isMobile();
+};
+
+
+/*
+ * Non-blocking loop for array of functions
+ */
+// hsjs.tools.easyLoad = function(funcs, timeOutDelay, context /*, args */){
+
+//   var startContext = typeof context !== "undefined" ? context : window;
+//   var args = Array.prototype.slice.call(arguments, 2) ? Array.prototype.slice.call(arguments, 2) : "";
+//   var funcs_array = typeof funcs === "string" ? [funcs] : funcs;
+//   var funcs_len = funcs_array.length;
+//   var i;
+//   for (i = 0; i < funcs_len; i++) {
+    
+// //     var func_to_load = funcs_array[i].split('.').reduce(function(obj, key){ return obj[key]; }, window);
+
+// //     setTimeout(function(){
+// //       func_to_load();
+// //     }, timeOutDelay);
+    
+// //     setTimeout(() => {
+// //       func_to_load();
+// //     }, timeOutDelay);
+    
+//     //var func_to_load = hsjs.tools.stringToObj(funcs_array[i]);
+
+// //     if (typeof func_to_load !== "function"){
+// //       return;
+// //     }
+
+// //     if (typeof timeOutDelay === "undefined"){
+// //       timeOutDelay = 0;
+// //     }
+
+// // //     setTimeout(function(){
+// // //       func_to_load();
+// // //     }, timeOutDelay);
+    
+// //     console.log(funcs_array[i], func_to_load);
+// //     console.log("context ", context[func_to_load]);
+    
+    
+// //     return setTimeout(function(){
+// //     console.log("context ", context[func_to_load]);
+// //       context[func_to_load].apply(context, args);
+// //     }, timeOutDelay);
+
+//     var context = startContext;
+//     var namespaces = funcs_array[i].split(".");
+//     var func = namespaces.pop();
+//     var nLen = namespaces.length;
+//     var n_i;
+//     for (n_i = 0; n_i < nLen; n_i++) {
+//     console.log(n_i, "namespaces[n_i] ", namespaces[n_i]);
+//     console.log(i, "before context ", context);
+//         context = context[namespaces[n_i]];
+//     console.log(i, "after context ", context);
+//     }
+//     console.log(i, "context ", context);
+//     console.log(i, "func ", func);
+    
+// //     setTimeout(function(){
+// //       context[func].apply(context, args); 
+// // //       context[func](); 
+// //     }, timeOutDelay);
+    
+//     setTimeout(() => {
+//       context[func].apply(context, args); 
+// //       context[func](); 
+//     }, timeOutDelay);
+
+//   }
+  
+// };
+
+
+/*
+ * Attach content from AJAX to body, with a callback
+ */
+hsjs.tools.attachToBody = function(html_content, callback){
+
+  if (hsjs.cache && hsjs.cache.$body && hsjs.cache.$body[0]){
+    //hsjs.cache.$body[0].appendChild(html_content);
+    hsjs.cache.$body.append(html_content);
+  }
+  else {
+    //document.body.appendChild(html_content);
+    $("body").append(html_content);
+  };
+
+  if (typeof callback === "function"){
+    callback(html_content);
+  }
+
+};
+
+
+/*
+ * Check if item is in array
+ */
+hsjs.tools.isThisInArray = function(target, array){
+  for(var i = 0; i < array.length; i++) 
+  {
+    if(array[i] === target)
+    {
+      return true;
+    }
+  }
+  return false; 
+};
+
+
+/*
+ * Parse a JS string as JS
+ */
+hsjs.tools.parseJs = function(equation_string){
+  return Function('"use strict";return (' + equation_string + ')')();
+};
+
+
+/*
+ * Replace URL query param value
+ */
+// hsjs.tools.replaceUrlParam = function(url, paramName, paramValue){
+//   var pattern = new RegExp("("+paramName+"=).*?(&|$)"),
+//       newUrl = url.replace(pattern,"$1" + paramValue + "$2");
+//   if ( newUrl == url ) {
+//     newUrl = newUrl + (newUrl.indexOf("?")>0 ? "&" : "?") + paramName + "=" + paramValue;
+//   }
+//   return newUrl;
+// };
+
+
+/*
+ * Time comparison - Is time one later than time two?
+ */
+hsjs.tools.timeOneIsLaterThanTimeTwo = function(time1, time2){
+  return new Date(time1) > new Date(time2);
+};
+
+
+/*
+ * Convert time string to HHMMSS format
+ */
+hsjs.tools.timeStrToHHMMSS = function(timeString){
+  var ts_split = timeString.split("/");
+  var ts_month = (ts_split[0].replace(/\s/g, '').length == 2) ? ts_split[0] : "0" + ts_split[0].replace(/\s/g, '');
+  var ts_day = (ts_split[1].replace(/\s/g, '').length == 2) ? ts_split[1] : "0" + ts_split[1].replace(/\s/g, '');
+  var ts_year = ts_split[2].split(" ")[0];
+  var ts_time = ts_split[2].split(" ")[1];
+  var ts_hour = (ts_time.split(":")[0].replace(/\s/g, '').length == 2) ? ts_time.split(":")[0] : "0" + ts_time.split(":")[0].replace(/\s/g, '');
+  var ts_min = (ts_time.split(":")[1].replace(/\s/g, '').length == 2) ? ts_time.split(":")[1] : "0" + ts_time.split(":")[1].replace(/\s/g, '');
+  var ts_sec = (ts_time.split(":")[2].replace(/\s/g, '').length == 2) ? ts_time.split(":")[2] : "0" + ts_time.split(":")[2].replace(/\s/g, '');
+  var ts_done = ts_month+"/"+ts_day+"/"+ts_year+" "+ts_hour+":"+ts_min+":"+ts_sec;
+  return ts_done;
+};
+
+
+/*
+ * Time difference - return the difference etween two timestamps
+ */
+// hsjs.tools.timeDifference = function(current, previous) {
+//   var msPerMinute = 60 * 1000;
+//   var msPerHour = msPerMinute * 60;
+//   var msPerDay = msPerHour * 24;
+//   var msPerWeek = msPerHour * 7;
+//   var msPerMonth = msPerDay * 30;
+//   var msPerYear = msPerDay * 365;
+//   var elapsed = current - previous;
+//   if (elapsed < msPerMinute) {
+//     return Math.round(elapsed/1000) + "s";   
+//   } else if (elapsed < msPerHour) {
+//     return Math.round(elapsed/msPerMinute) + "m";   
+//   } else if (elapsed < msPerDay ) {
+//     return Math.round(elapsed/msPerHour ) + "h";   
+//   } else if (elapsed < msPerMonth) {
+//     return Math.round(elapsed/msPerDay) + "d";   
+//   } else if (elapsed < msPerWeek) {
+//     return Math.round(elapsed/msPerWeek ) + "w";   
+//   } else if (elapsed < msPerYear) {
+//     return Math.round(elapsed/msPerMonth) + "m";   
+//   } else {
+//     return Math.round(elapsed/msPerYear ) + "y";   
+//   }
+// };
+
+
+/*
+ * Format number with decimal point and commas
+ */
+// hsjs.tools.numberWithCommas = function(num) {
+//     var parts = num.toString().split(".");
+//     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+//     return parts.join(".");
+// };
+
+
+/*
+ * Time conversion - convert UNIX timestamp to full time-date string
+ */
+// hsjs.tools.timeConverter = function(UNIX_timestamp){
+//   var a = new Date(UNIX_timestamp * 1000);
+//   var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+//   var year = a.getFullYear();
+//   var month = months[a.getMonth()];
+//   var date = a.getDate();
+//   var hour = a.getHours();
+//   var min = a.getMinutes();
+//   var sec = a.getSeconds();
+//   var time = date + " " + month + " " + year + " " + hour + ":" + min + ":" + sec ;
+//   return time;
+// };
+
+
+/*
+ * Format number into "k-format", as in 2.5k for 2,500
+ */
+// hsjs.tools.kFormatter = function(num){
+//   return num > 999 ? (num/1000).toFixed(1) + "k" : num
+// };
+
+
+/* 
+ * Count occurrences of a substring in a string;
+ * @param {String} string               The string
+ * @param {String} subString            The sub string to search for
+ * @param {Boolean} [allowOverlapping]  Optional. (Default:false)
+ */
+// hsjs.tools.countOccurrences = function(string, subString, allowOverlapping) {
+//     string += "";
+//     subString += "";
+//     if (subString.length <= 0) return (string.length + 1);
+
+//     var n = 0,
+//         pos = 0,
+//         step = allowOverlapping ? 1 : subString.length;
+
+//     while (true) {
+//         pos = string.indexOf(subString, pos);
+//         if (pos >= 0) {
+//             ++n;
+//             pos += step;
+//         } else break;
+//     }
+//     return n;
+// };
+
+
+// Count the un-indexed items/properties of an object
+// hsjs.tools.countProperties = function(obj){
+//   var count = 0;
+
+//   if (
+//     Object 
+//     && Object.keys(obj) 
+//     && Object.keys(obj).length
+//   ){
+
+//     count = Object.keys(obj).length;
+
+//   }
+//   else {
+
+//     for(var prop in obj) {
+//       if(prop in obj){
+//         ++count;
+//       }
+//     }
+
+//   };
+
+//   return count;
+
+// };
+
+
+
+// hsjs.tools.de_hash = function(){
+//   $('body').on('click', 'a[data-hash]', function (event) {
+//     if (event.shiftKey || event.ctrlKey || event.metaKey) {
+//       window.open(Base64.decode($(this).data("hash")), '_blank');
+//     } else {
+//       smoothTo(Base64.decode($(this).data("hash")));
+//     }
+//   });
+
+//   $('body').on('contextmenu', 'a[data-hash]', function () {
+//     $(this).attr('href', Base64.decode($(this).data("hash")));
+//   });
+// };
+
+
+/* Add one or more listeners to an element
+** @param {DOMElement} element - DOM element to add listeners to
+** @param {string} eventNames - space separated list of event names, e.g. 'click change'
+** @param {Function} listener - function to attach for each event as a listener
+*/
+hsjs.tools.addListenerMulti = function(element, eventNames, listener) {
+  var events = eventNames.split(' ');
+  for (var i=0, iLen=events.length; i<iLen; i++) {
+    element.addEventListener(events[i], listener, false);
+  }
+}
+
+
+
+hsjs.tools.reverse_string = function(string){
+  var reverse_string = '';
+  for (var i = string.length - 1; i >= 0; i--)
+    reverse_string += string[i];
+  return reverse_string;
+};
+
+
+hsjs.tools.decode_href = function(string){
+  $("body").on("hover click touch contextmenu mouseover", "a[data-reverse]", function (event) {
+    $(this).attr("href", hsjs.tools.reverse_string($(this).data("reverse")));
+    $(this)[0].removeAttribute("data-reverse");
+  });
+  
+//   function addReverseHref(){
+//     document.body.addEventListener("hover click touch contextmenu mouseover mouseenter ", (e) => {
+//       if (!e.target.matches("a[data-reverse]")){
+//         return;
+//       }
+//       this.setAttribute("href", hsjs.tools.reverse_string($(this).data("reverse"))
+//                         .removeAttribute("data-reverse"));
+//       console.log("reverser triggered!");
+//     });
+//   }
+//   hsjs.tools.addListenerMulti(window, 'mousemove touchmove', addReverseHref);  
+  
+};
+
+
+/*
+ * Lazysizes lazyload 
+ */
+hsjs.lazysizes.resetDataExpand = function(){
+
+  document.querySelectorAll("[data-expand]").forEach(elem => elem.removeAttribute("data-expand"));
+
+};
+
+
+
+/*============================================================================
+  (c) Copyright 2015 Shopify Inc. Author: Carson Shold (@cshold). All Rights Reserved.
+
+  Plugin Documentation - https://shopify.github.io/Timber/#ajax-cart
+
+  Ajaxify the add to cart experience and flip the button for inline confirmation,
+  show the cart in a modal, or a 3D drawer.
+
+  This file includes:
+    - Basic Shopify Ajax API calls
+    - Ajaxify plugin
+
+  This requires:
+    - jQuery 1.8+
+    - handlebars.min.js (for cart template)
+    - modernizer.min.js
+    - snippet/ajax-cart-template.liquid
+
+  JQUERY API (c) Copyright 2009-2015 Shopify Inc. Author: Caroline Schnapp. All Rights Reserved.
+  Includes slight modifications to addItemFromForm.
+==============================================================================*/
+// if (typeof(hsjs.Shopify) === "undefined") { hsjs.Shopify = window.Shopify || {}; }
+
+/*============================================================================
+  API Functions
+  - hsjs.Shopify.format money is defined in option_selection.js.
+    If that file is not included, it is redefined here.
+==============================================================================*/
+// if ( !hsjs.Shopify.formatMoney ) {
+//   hsjs.Shopify.formatMoney = function(cents, format) {
+//     var value = "",
+//         placeholderRegex = /\{\{\s*(\w+)\s*\}\}/,
+//         formatString = (format || this.money_format);
+
+//     if (typeof cents == "string") {
+//       cents = cents.replace(".","");
+//     }
+
+//     function defaultOption(opt, def) {
+//       return (typeof opt == "undefined" ? def : opt);
+//     }
+
+//     function formatWithDelimiters(number, precision, thousands, decimal) {
+//       precision = defaultOption(precision, 2);
+//       thousands = defaultOption(thousands, ",");
+//       decimal   = defaultOption(decimal, ".");
+
+//       if (isNaN(number) || number == null) {
+//         return 0;
+//       }
+
+//       number = (number/100.0).toFixed(precision);
+
+//       var parts   = number.split("."),
+//           dollars = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1" + thousands),
+//           cents   = parts[1] ? (decimal + parts[1]) : "";
+
+//       return dollars + cents;
+//     }
+
+//     switch(formatString.match(placeholderRegex)[1]) {
+//       case "amount":
+//         value = formatWithDelimiters(cents, 2);
+//         break;
+//       case "amount_no_decimals":
+//         value = formatWithDelimiters(cents, 0);
+//         break;
+//       case "amount_with_comma_separator":
+//         value = formatWithDelimiters(cents, 2, ".", ",");
+//         break;
+//       case "amount_no_decimals_with_comma_separator":
+//         value = formatWithDelimiters(cents, 0, ".", ",");
+//         break;
+//     }
+
+//     return formatString.replace(placeholderRegex, value);
+//   };
+// }
+
+// hsjs.Shopify.onProduct = function(product) {
+//   // alert("Received everything we ever wanted to know about " + product.title);
+// };
+
+// hsjs.Shopify.onCartUpdate = function(cart) {
+//   // alert("There are now " + cart.item_count + " items in the cart.");
+// };
+
+// hsjs.Shopify.updateCartNote = function(note, callback) {
+//   function attributeToString(attribute) {
+//     if ((typeof attribute) !== "string") {
+//       attribute += "";
+//       if (attribute === "undefined") {
+//         attribute = "";
+//       }
+//     }
+//     return jQuery.trim(attribute);
+//   }
+//   var params = {
+//     type: "POST",
+//     url: "/cart/update.js",
+//     data: "note=" + attributeToString(note),
+//     dataType: "json",
+//     success: function(cart) {
+//       if ((typeof callback) === "function") {
+//         callback(cart);
+//       }
+//       else {
+//         hsjs.Shopify.onCartUpdate(cart);
+//       }
+//     },
+//     error: function(XMLHttpRequest, textStatus) {
+//       hsjs.Shopify.onError(XMLHttpRequest, textStatus);
+//     }
+//   };
+//   jQuery.ajax(params);
+// };
+
+/*============================================================================
+  AJAX error callback
+==============================================================================*/
+// hsjs.Shopify.onError = function(XMLHttpRequest, textStatus) {
+//   var data = eval("(" + XMLHttpRequest.responseText + ")");
+//   if (!!data.message) {
+//     alert(data.message + "(" + data.status  + "): " + data.description);
+//   } else {
+//     alert("Error : " + hsjs.Shopify.fullMessagesFromErrors(data).join("; ") + ".");
+//   }
+// };
+
+/*============================================================================
+  POST to cart/add.js returns the JSON of the line item associated with the added item
+==============================================================================*/
+// hsjs.Shopify.addItem = function(variant_id, quantity, callback) {
+//   var quantity = quantity || 1;
+//   var params = {
+//     type: "POST",
+//     url: "/cart/add.js",
+//     data: "quantity=" + quantity + "&id=" + variant_id,
+//     dataType: "json",
+//     success: function(line_item) {
+//       if ((typeof callback) === "function") {
+//         callback(line_item);
+//       }
+//       else {
+//         hsjs.Shopify.onItemAdded(line_item);
+//       }
+//     },
+//     error: function(XMLHttpRequest, textStatus) {
+//       hsjs.Shopify.onError(XMLHttpRequest, textStatus);
+//     }
+//   };
+//   jQuery.ajax(params);
+// };
+
+/*============================================================================
+  POST JSON to cart/add.js returns the JSON of the line item associated with the added item
+==============================================================================*/
+// hsjs.Shopify.addItemJSON = function(product_json, callback) {
+//   var quantity = quantity || 1;
+//   var params = {
+//     type: "POST",
+//     url: "/cart/add.js",
+//     data: product_json,
+//     dataType: "json",
+//     success: function(line_item) {
+//       if ((typeof callback) === "function") {
+//         callback(line_item);
+//       }
+//       else {
+//         hsjs.Shopify.onItemAdded(line_item);
+//       }
+//     },
+//     error: function(XMLHttpRequest, textStatus) {
+//       hsjs.Shopify.onError(XMLHttpRequest, textStatus);
+//     }
+//   };
+//   jQuery.ajax(params);
+// };
+
+/*============================================================================
+  POST to cart/add.js returns the JSON of the line item
+    - Allow use of form element instead of id
+    - Allow custom error callback
+==============================================================================*/
+// hsjs.Shopify.addItemFromForm = function(form, callback, errorCallback) {
+//   if (form.indexOf("#") === -1){
+//     form = "#"+form;
+//   }
+//   var params = {
+//     type: "POST",
+//     url: "/cart/add.js",
+//     data: jQuery(form).serialize(),
+//     dataType: "json",
+//     success: function(line_item) {
+//       if ((typeof callback) === "function") {
+//         callback(line_item, form);
+//       }
+//       else {
+//         hsjs.Shopify.onItemAdded(line_item, form);
+//       }
+//     },
+//     error: function(XMLHttpRequest, textStatus) {
+//       if ((typeof errorCallback) === "function") {
+//         errorCallback(XMLHttpRequest, textStatus);
+//       }
+//       else {
+//         hsjs.Shopify.onError(XMLHttpRequest, textStatus);
+//       }
+//     }
+//   };
+//   jQuery.ajax(params);
+// };
+
+// Get from cart.js returns the cart in JSON
+// hsjs.Shopify.getCart = function(callback) {
+//   jQuery.getJSON("/cart.js", function (cart, textStatus) {
+//     if ((typeof callback) === "function") {
+//       callback(cart);
+//     }
+//     else {
+//       hsjs.Shopify.onCartUpdate(cart);
+//     }
+//   });
+// };
+
+// GET products/<product-handle>.js returns the product in JSON
+// hsjs.Shopify.getProduct = function(handle, callback) {
+//   jQuery.getJSON("/products/" + handle + ".js", function (product, textStatus) {
+//     if ((typeof callback) === "function") {
+//       callback(product);
+//     }
+//     else {
+//       hsjs.Shopify.onProduct(product);
+//     }
+//   });
+// };
+
+// POST to cart/change.js returns the cart in JSON
+// hsjs.Shopify.changeItem = function(line, quantity, callback) {
+//   var params = {
+//     type: "POST",
+//     url: "/cart/change.js",
+//     data:  "quantity=" + quantity + "&line=" + line,
+//     dataType: "json",
+//     success: function(cart) {
+//       if ((typeof callback) === "function") {
+//         callback(cart);
+//       }
+//       else {
+//         hsjs.Shopify.onCartUpdate(cart);
+//       }
+//     },
+//     error: function(XMLHttpRequest, textStatus) {
+//       hsjs.Shopify.onError(XMLHttpRequest, textStatus);
+//     }
+//   };
+//   jQuery.ajax(params);
+// };
+
+// ---------------------------------------------------------
+// POST to cart/change.js returns the cart in JSON.
+// ---------------------------------------------------------
+// hsjs.Shopify.changeItemByVarintId = function(variant_id, quantity, callback) {
+//   var params = {
+//     type: "POST",
+//     url: "/cart/change.js",
+//     data:  "quantity=" + quantity + "&id=" + variant_id,
+//     dataType: "json",
+//     success: function(cart) { 
+//       if ((typeof callback) === "function") {
+//         callback(cart);
+//       }
+//       else {
+//         hsjs.Shopify.onCartUpdate(cart);
+//       }
+//     },
+//     error: function(XMLHttpRequest, textStatus) {
+//       hsjs.Shopify.onError(XMLHttpRequest, textStatus);
+//     }
+//   };
+//   jQuery.ajax(params);
+// };
+
+/*
+ * Shopify - change item by line number
+ */
+// hsjs.Shopify.changeItemByLineNumber = function(line, quantity, callback) {
+//   var params = {
+//     type: "POST",
+//     url: "/cart/change.js",
+//     data:  "quantity=" + quantity + "&line=" + line,
+//     dataType: "json",
+//     success: function(cart) {
+//       if ((typeof callback) === "function") {
+//         callback(cart);
+//       }
+//       else {
+//         hsjs.Shopify.onCartUpdate(cart);
+//       }
+//     },
+//     error: function(XMLHttpRequest, textStatus) {
+//       hsjs.Shopify.onError(XMLHttpRequest, textStatus);
+//     }
+//   };
+//   jQuery.ajax(params);
+// };
+
+/*
+ * Shopify - remove item by line number
+ */
+// hsjs.Shopify.removeItemByLineNumber = function(line, callback) {
+//   var params = {
+//     type: "POST",
+//     url: "/cart/change.js",
+//     data:  "quantity=0&line=" + line,
+//     dataType: "json",
+//     success: function(cart) {
+//       if ((typeof callback) === "function") {
+//         callback(cart);
+//       }
+//       else {
+//         hsjs.Shopify.onCartUpdate(cart);
+//       }
+//     },
+//     error: function(XMLHttpRequest, textStatus) {
+//       hsjs.Shopify.onError(XMLHttpRequest, textStatus);
+//     }
+//   };
+//   jQuery.ajax(params);
+// };
+
+/*
+ * Shopify Cart Ajax
+ */
+// hsjs.shopifyCartAjax = {
+  
+//   scriptSrc: "shopify-ajax-cart.js",
+
+//   getScriptSrc: function(){
+//     return hsjs.cache.site_data.theme.shopify_cart_ajax;
+//   },
+  
+//   load: function(){
+    
+//     hsjs.tools.downloadJS(
+      
+//       this.getScriptSrc(),
+      
+//       function(){
+
+//         hsjs.tools.waitForJSObject(
+
+//           "Shopify", 
+
+//           function(){
+
+//             if (typeof(hsjs.Shopify) === "undefined") { hsjs.Shopify = window.Shopify; }
+
+//           },
+
+//           7000
+
+//         );
+
+//       }
+      
+//     );
+    
+//   },
+  
+//   init: function(){
+//     this.load();
+//   }
+  
+// }
+
+
+
+
+
+
+
+// ====================================================
+// ==== Site Functions - this needs a better name =====
+// ====================================================
+
+
+/*
+ * Age Gate Verification
+ */
+// hsjs.ageGateModal = function(){
+//   if ( ! hsjs.vars.ageGateEnable) return;
+//   if(document.cookie.indexOf("AGE_VERIFIED")==-1){var e=document.body?document.body:document.getElementsByTagName("body")[0],a=document.createElement("div");a.id="ageGate",a.innerHTML="<div id='ageGateModal' class='age-gate--modal'><div class='age-gate--content'><p><span>You must be 21</span> <span> or older to enter</span></p><div class='age-gate--choice'><button id='btnUnder21' class='age-gate--choice-link age-gate--under-21'><span>I am under 21</span></button><button id='btnOver21' class='age-gate--choice-link age-gate--over-21'><span>I am over 21</span></button></div></div></div><div class='age-gate--modal-overlay'></div>",e.classList?e.classList.add("body-no-scroll"):e.className+=" body-no-scroll",e.appendChild(a),a.classList?a.classList.add("is-visible"):a.className+=" is-visible";var s=document.getElementById("btnOver21"),t=document.getElementById("btnUnder21");function n(e,a,s){return e.attachEvent?e.attachEvent("on"+a,s):e.addEventListener(a,s,!1)}n(s,"click",function(){var now=new Date();var time=now.getTime();time+=3*3600*1000;now.setTime(time);document.cookie="AGE_VERIFIED=1"+"; expires="+now.toUTCString()+"; path=/",a.classList?a.classList.remove("is-visible"):a.className=a.className.replace(new RegExp("(?:^|\\s)is-visible(?:\\s|$)")," "),e.classList?e.classList.remove("body-no-scroll"):e.className=a.className.replace(new RegExp("(?:^|\\s)body-no-scroll(?:\\s|$)")," "),setTimeout(function(){a.parentNode.removeChild(a)},537)}),n(t,"click",function(){window.location.replace("https://google.com")})}
+// }
+
+
+
+/*
+ * Shipping delivery estimates
+ */
+hsjs.deliveryEstimates = function(){
+  
+  var shippingParams = { "customer_type": hsjs.vars.customerType };
+
+  var $sde_container = $(".shipping-estimate").first();
+  var shipping_lead_time = $sde_container.data("lead-time");
+  if (shipping_lead_time){
+	shippingParams.product_lead_time = shipping_lead_time;
+  }
+//   console.log(shipping_lead_time);
+//   console.log(shippingParams);
+  
+  var userloc = [];
+  
+  $.getJSON("https://portal.dankstop.com/shopify-pages/product.php", shippingParams, function(data) {
+    // Server will respond with false if the visitor's IP is not in MaxMind DB
+    if (data == false) {
+      $(".calc-est").remove();
+      return;
+    }
+    
+    hsjs.deliveryEstimates.data = data;
+    
+//     console.log("delivery estimate data => ", data);
+    
+    var daysLeft = 0,
+        daysLeftString = "",
+    	hoursLeft = data.hoursLeft,
+        minutesLeft = data.minutesLeft,
+        projectedDelivery = data.projectedDelivery,
+        shipDay = data.shipDay,
+        shippingMethod = data.shippingMethod,
+        userState = data.userState;
+
+    var $sde_container = $(".shipping-estimate");
+    var $time_container = $sde_container.find(".sde-time");
+    var $day_container = $sde_container.find(".sde-day");
+    var $date_container = $sde_container.find(".sde-date");
+    var $state_container = $sde_container.find(".sde-state");
+    var $method_container = $sde_container.find(".sde-method");
+    
+    // Populate time left
+    if (hoursLeft > 24){
+      var daysLeft = Math.floor(hoursLeft/24);
+      var days_left_word = ( (daysLeft > 1) ? "days" : "day" );
+      var daysLeftString = daysLeft + " " + days_left_word + " ";
+      var hoursLeft = hoursLeft % 24;
+    }
+    var time_left_string = daysLeftString + hoursLeft + " hrs " + Math.floor(minutesLeft) + " mins";
+    $time_container.each(function(){
+      $(this).text(time_left_string);
+    });
+    
+    // Determine day class
+    var day_class = "";
+    if (shipDay == "Today"){
+      day_class = "color-primary text-bold";
+    }
+
+    if ( "shipDay_max" in data ){
+      
+      // Populate relative day it'll be sent out, plus max days ahead
+      let ship_day_html = "<b class='color-primary'>" + shipDay + "</b>";
+      let exclamation_html = "&nbsp;<i class='fa fa-exclamation-triangle'></i>";
+      let ship_day_max_html = "<b class='color-orange'> - " + data.shipDay_max + exclamation_html + "</b>";
+      let tooltip_text = "For the health and safety of DankStop staff and customers, we are operating with a reduced staff. Orders may require an additional 1-2 business days to process.";
+      let ship_day_tooltip_html = "<span data-toggle='tooltip' data-placement='top' title='" + tooltip_text + "'>" + ship_day_html + ship_day_max_html + "</span>";
+      $day_container.html( ship_day_tooltip_html );
+
+      if ( window.Popper && window.Popper.Defaults && $.fn.tooltip ){
+        $('[data-toggle="tooltip"]').tooltip();
+      }
+      else {
+        
+        hsjs.tools.waitForJSObject(
+          "Popper.Defaults",
+          function(){
+
+            hsjs.tools.waitForJSObject(
+              "$tooltip", 
+              function(){
+                $('[data-toggle="tooltip"]').tooltip(); 
+              }
+              , 10000
+            );
+            
+          }
+          , 10000
+        );
+        
+      }
+
+    }
+    else {
+
+      // Populate relative day it'll be sent out
+      $day_container.addClass(day_class).text(shipDay);
+
+    }
+      
+    if ( "projectedDelivery_max" in data ){
+      
+      // Populate date of delivery estimate, plus max days ahead
+      $date_container.replaceWith("between <b>" + projectedDelivery + "</b> and <b>" + data.projectedDelivery_max + "</b>");
+
+    }
+    else {
+
+      // Populate date of delivery estimate 
+      $date_container.text(projectedDelivery);
+
+    }
+    
+    
+    // Populate state delivered to
+    $state_container.text(userState);
+    
+    // Populate method
+    $method_container.text(shippingMethod);
+    
+//     var deliveryEstimateHtml = '<span>Order within <span class="ds-salmon">' + hoursLeft + ' hrs ' + Math.floor(minutesLeft) + ' mins</span> to ship by ' + shipDay + '.</span>' +
+//         '<span>Estimated Delivery: <b>' + projectedDelivery + '</b> to <b>' + userState + '</b> via <i>' + shippingMethod + '</i></span>';
+//     $('.shipping-estimate .calc-est').fadeOut("normal", function(){
+//       if (userState !== "New Jersey"){
+//         $('.shipping-estimate .no-tax').fadeIn("normal");
+//       }
+//       $(this).replaceWith(deliveryEstimateHtml);
+//       $(this).fadeIn("normal");
+//     });
+  });
+};
+
+
+
+/*
+ * Redirect back to current page on login from modal
+ */
+hsjs.loginRedirect = function(){
+
+  //   $("input.redirect-url").val(window.location.href);
+
+//   document.querySelector("input.redirect-url").value = window.location.href;
+
+  if (document.querySelector("input.redirect-url") ){
+    document.querySelector("input.redirect-url").value = window.location.href;
+  }
+  
+}
+
+
+
+/*
+ * Populate Social Login when needed
+ */
+hsjs.socialLogin = {
+  
+  url: "https://social-login.oxiapps.com/widget?site=dankstop-9.myshopify.com",
+  
+  loginRegPageContainerSelector: ".social-login-cont",
+  
+  $loginRegPageContainer: false,
+  
+  oxiScriptTag: false,
+  
+  createScriptTag: function(){
+    var oxiIframe = document.createElement('iframe');
+    oxiIframe.id = "social_login_frame";
+    oxiIframe.src = hsjs.socialLogin.url;
+    oxiIframe.style.width = oxiIframe.style.maxWidth = "100%";
+    oxiIframe.style.height = "240px";
+    oxiIframe.style.border = "0";
+    oxiIframe.style.paddingTop = "0";
+    oxiIframe.style.paddingBottom = "5px";
+    oxiIframe.scrolling = "no";
+    return oxiIframe;
+  },
+  
+  setHeightListener: function(){
+    var response = function(event) {
+      if (event.origin+"/" == "https://social-login.oxiapps.com/") {
+        var message = event.data;
+        var key = message.split(":")[0];
+        var value = message.split(":")[1];
+        if (key == "height") {
+          var oxi_iframe = document.getElementById("social_login_frame");
+          if (oxi_iframe) {
+            oxi_iframe.style.height = value + "px";
+          }
+        }
+      }
+    }
+    if (window.addEventListener) {
+      window.addEventListener("message", response, false);
+    } else {
+      window.attachEvent("onmessage", response);
+    }
+  },
+  
+  setContent: function($appendToThis){
+    if ( ! this.oxiScriptTag ){
+      this.oxiScriptTag = hsjs.socialLogin.createScriptTag();
+    }
+    $appendToThis.each(function(){
+      $(this).append($(hsjs.socialLogin.oxiScriptTag).clone());
+    });
+    hsjs.socialLogin.setHeightListener();
+  },
+  
+  onDemand: function(){
+    var $mobileAccountTrigger = $("#mnAccTrgr");
+    var $mobileMenuSocialContainer = $(".mobile-nav").find(this.loginRegPageContainerSelector);
+    hsjs.cache.$mnAccTrgr.on("change", function(){
+      if ( $mobileMenuSocialContainer.first().find("iframe").length === 0 ) {
+        hsjs.socialLogin.setContent($mobileMenuSocialContainer);
+      }
+    });
+  },
+  
+  load: function(){
+    if ( this.$loginRegPageContainer.length > 0 ) {
+      hsjs.socialLogin.setContent(hsjs.socialLogin.$loginRegPageContainer);
+    }
+  },
+  
+  init: function(){
+    if ( ! hsjs.cache || ! hsjs.cache.$mainContent ){
+      hsjs.cache.$mainContent = $("#mainContent");
+    }
+    this.$loginRegPageContainer = hsjs.cache.$mainContent.find(this.loginRegPageContainerSelector);
+    this.load();
+    this.onDemand();
+  }
+  
+}
+
+
+
+/*
+ * Redirect back to current page on login from modal
+ */
+hsjs.googleSignIn = {
+  
+  scriptSrc: "https://accounts.google.com/gsi/client",
+
+  adjustReturnUrl: function(){
+    
+    var google_sign_in_el = document.getElementById("g_id_onload");
+    
+    if (google_sign_in_el && google_sign_in_el.getAttribute("data-return") !== null ){
+      google_sign_in_el.setAttribute("data-return", window.location.href);
+    }
+
+  },
+  
+  load: function(){
+    
+    this.adjustReturnUrl();
+    
+    hsjs.tools.downloadJS(hsjs.googleSignIn.scriptSrc);
+    
+  },
+
+  init: function(){
+
+    this.load();
+    
+  }
+  
+}
+
+
+
+/*
+ * Smooth scrolling on hashed anchors 
+ */
+hsjs.smoothScrollingOnAnchors = function(){
+  hsjs.cache.$document.on("click", ".smooth-scroll-btn:not([href='#'])", function(e) {
+    if ( ! this.pathname || (location.pathname.replace(/^\//,"") === this.pathname.replace(/^\//,"") && location.hostname === this.hostname) ) {
+      if (this.dataset.scrollTo){
+        var scrollTo = this.dataset.scrollTo;
+        var $target = $("."+scrollTo+":visible").length ? $("."+scrollTo+":visible") : $("#"+scrollTo+":visible");
+      }
+      else {
+        var scrollTo = this.hash.slice(1);
+        var $target = $(this.hash);
+      }
+      $target = $target.length ? $target : $("[name=" + scrollTo +"]");
+      if ($target.length) {
+        $("html, body").animate({
+          scrollTop: $target.offset().top - 60
+        }, 1000);
+        if ($target.find("a.tab-links:visible").length){
+          $target.find("a.tab-links:visible").click();
+        }
+        e.preventDefault();
+      }
+    }
+  });
+}
+  
+
+
+/*
+ * External Links Target Blank 
+ */
+hsjs.externalLinksTargetBlank = function(){
+  $("a[target!='_blank'], a[target='_blank'][rel!='noopener']")
+  .filter(function(index){
+    return (this.hostname) && (this.hostname != location.hostname) 
+  })
+  .attr("target", "_blank")
+  .attr("rel", "noopener")
+  .addClass("external-link");
+}
+
+
+
+/*
+ * Tab reminder and messenger
+ */
+// hsjs.tabReminder = {
+//   focused: true,
+//   baseTitle: "",
+//   tabReminder: function () {
+//     if( ! hsjs.tabReminder.focused) {
+//       window.document.title = "new title";
+//     }
+//   },
+//   init: function() {
+
+//     hsjs.tabReminder.baseTitle = window.document.title;
+
+//     $(window).focus(function() {
+//       hsjs.tabReminder.focused = true;
+//       //  window.document.title = hsjs.tabReminder.baseTitle;
+//       setTimeout(function() {
+//         document.title = hsjs.tabReminder.baseTitle;
+//       }, 137);
+//     });
+
+//     $(window).blur(function() {
+//       hsjs.tabReminder.focused = false;
+//     });
+
+//     window.setInterval('hsjs.tabReminder..tabReminder()', 13137);
+//   }
+// }
+
+
+
+/*
+ * Front Landing Home Page
+ */
+// hsjs.instagram = {
+  
+//   data: false,
+  
+//   /*
+//   * Format Instagram text - remove line endings from IG text
+//   */
+//   formatIgText: function(instagramRawText) {
+//     //var formattedtext = instagramRawText.replace(/(\r\n|\n|\r)/gm, "<br />");
+//     //return formattedtext;
+//     return instagramRawText.replace(/(\r\n|\n|\r)/gm, "<br />");
+//   },
+  
+//   getData: function(callback) {
+//     var instagramAPIUrl = "https://portal.dankstop.com/public/ig-api/instagram-api.php";
+//     $.getJSON(instagramAPIUrl, function(instagramResponse){
+//       hsjs.instagram.data = instagramResponse;
+
+// //       hsjs.instagram.data.about.data = {};
+// //       hsjs.instagram.data.about.data.counts = {};
+// //       hsjs.instagram.data.about.data.counts.followed_by = 290751;
+
+//       hsjs.tools.runCallback(callback);
+//     });
+//   },
+  
+//   checkData: function(callback) {
+//     if (hsjs.instagram.data === false) {
+//       hsjs.instagram.getData(callback);
+//     }
+//     else {
+//       hsjs.tools.runCallback(callback);
+//     }
+//   },
+  
+//   populateCount: function() {
+//     hsjs.instagram.checkData(function(){
+//       if (hsjs.instagram.data.about && hsjs.instagram.data.about.data) {
+//         var instacount = hsjs.tools.kFormatter(hsjs.instagram.data.about.data.counts.followed_by);
+//         $(".ig-count span").html(instacount).promise().done(function(){
+//           $(".ig-count").fadeIn();
+//           $(".ig-count span").attr("data-ig-count", hsjs.instagram.data.about.data.counts.followed_by);
+//         });
+//       }
+//     });
+//   },
+  
+//   showcase: function() {
+//     hsjs.instagram.checkData(function(){
+//       if (hsjs.instagram.data.about && hsjs.instagram.data.about.data) {
+//         $(hsjs.instagram.data.media.data).each( function(i) {
+//           var imageIndex = 1;
+//           var imageIndex = i + 1;
+//           // Stop function if its the 4th image
+//           if ( (imageIndex) > 3 ) return;
+          
+//           // Define Instagram media object and variables for Instagram Showcase thumbnails
+//           var mediaObj = hsjs.instagram.data.media.data[i];
+//           var mediaType = mediaObj.type;
+
+//           // Define Instagram media object and variables for Instagram Showcase thumbnails
+//           var imgSrcThumb = mediaObj.images.thumbnail.url;
+//           var imgSrcLQ = mediaObj.images.low_resolution.url;
+//           var imgSrcSQ = mediaObj.images.standard_resolution.url;
+//           var imgApiSQWidth = mediaObj.images.standard_resolution.width;
+//           var imgApiSQHeight = mediaObj.images.standard_resolution.height;
+//           var imgCaption = mediaObj.caption ? mediaObj.caption.text : "There is no caption for this image yet" ;
+
+//           // Define variables for Instagram Post meta information and comments
+//           var imgFromLogo = mediaObj.user.profile_picture;
+//           var imgFromName = "<a class='insta-username' href='https://www.instagram.com/dankstop/' title='" + mediaObj.user.username + "' target='_blank' rel='noopener'>" + mediaObj.user.username + "</a>";
+//           var instaPostLikes = mediaObj.likes.count;
+//           var instaPostFormattedLikes = hsjs.tools.numberWithCommas(instaPostLikes) + " likes";
+//           var instaPostCreatedTime = new Date(mediaObj.created_time * 1000);
+//           var currentDate = new Date();
+//           var instaPostAgoDate = hsjs.tools.timeDifference(currentDate, instaPostCreatedTime);
+
+//           // Populate Instagram Showcase Thumbnails for Lightbox Overlay image via img tag
+//           $(".instagram-image-" + imageIndex +" .image-outer")
+//           .addClass("image-loaded")
+//           .find(".ds-lightbox-link")
+//           .css({
+//             "background-image": "url('" + imgSrcLQ + "')"
+//           });
+//           // Populate Lightbox Overlay image via img tag
+//           $("#instagram-overlay-" + imageIndex + " .ds-overlay-content > img")
+//           .attr({
+//             "src": imgSrcSQ,
+//             "data-thumb": imgSrcThumb,
+//             "data-imgLQ": imgSrcLQ,
+//             "data-imgSQ": imgSrcSQ,
+//             "alt": imgCaption,
+//             "title": imgCaption,
+//           });
+
+//           if (mediaType == "video") {
+//             var instaVideoWidth = mediaObj.videos.standard_resolution.width;
+//             var instaVideoHeight = mediaObj.videos.standard_resolution.height;
+//             var instaVideoUrl = mediaObj.videos.standard_resolution.url;
+//             var instaVideoHtml = "<video width='" + instaVideoWidth + "' height='" + instaVideoHeight + "' controls><source src='" + instaVideoUrl + ".mp4' type='video/mp4' /></video>";
+//             $("#instagram-overlay-" + imageIndex + " .ds-overlay-content .ds-overlay-image .imod img").remove();
+//             $("#instagram-overlay-" + imageIndex + " .ds-overlay-content .ds-overlay-image .imod").append(instaVideoHtml);
+//           }
+
+//           else {          
+//             // Calculate Lightbox Overlay image proportions to maximize size and layout 
+//             // (insta images are ofvariables proportions)
+//             var screenImage = $("#instagram-overlay-" + imageIndex + " .ds-overlay-content img");
+//             var theImage = new Image();
+//             theImage.src = imgSrcSQ;
+//             theImage.onload = function() {
+//               var imageNaturalWidth = this.width;
+//               var imageNaturalHeight = this.height;
+//               var calcedDimension, commentsHeight;
+//               if (imageNaturalHeight > 600) {
+//                 var imgCalcWidth = imageNaturalWidth - (imageNaturalWidth * ((imageNaturalHeight - 600) / imageNaturalHeight));
+//                 calcedDimension = "width:" + imgCalcWidth + "px;"
+//               }
+//               if (imageNaturalWidth > 600)  {
+//                 var imgCalcHeight = imageNaturalHeight - (imageNaturalHeight * ((imageNaturalWidth - 600) / imageNaturalWidth));
+//                 calcedDimension = "height:" + imgCalcHeight + "px";
+//                 $("#instagram-overlay-" + imageIndex + " .ds-image-meta").attr("style", calcedDimension);
+//                 commentsHeight = imgCalcHeight - (58 + 78 + 68);
+//               }
+
+//               // Populate Lightbox Overlay image via background property
+//               $("#instagram-overlay-" + imageIndex + " .ds-overlay-content .ds-overlay-image .imod img")
+//               .attr({
+//                 "data-src": imgSrcSQ,
+//                 "data-srcset": imgSrcSQ,
+//                 "alt": imgCaption,
+//                 "title": imgCaption
+//               })
+//               .removeClass("lazyloaded").addClass("lazyload");
+//               // Add proper height to corresponding meta box-right
+//               $("#instagram-overlay-" + imageIndex + " .ds-overlay-content .insta-post-comments").css("height", commentsHeight);
+//             };
+//           }
+
+//           // Populate Instagram Post meta information to Lightbox Overlay Image area
+//           $(".instagram-image-"+imageIndex+" .ds-insta-logo img").attr("src", imgFromLogo);
+//           $(".instagram-image-"+imageIndex+" .ds-insta-name").html(imgFromName);
+//           if (mediaObj.location) {
+//             var imgLocName = mediaObj.location.name;
+//             var imgLocLink = "https://www.instagram.com/explore/locations/" + mediaObj.location.name + "/";
+//             $(".instagram-image-"+imageIndex+" .ds-insta-location").text(imgLocName);
+//             $(".instagram-image-"+imageIndex+" .ds-insta-location").attr("href", imgLocLink);
+//           }
+//           $(".instagram-image-"+imageIndex+" .ds-overlay-figcaption").text(imgCaption);
+//           $(".instagram-image-"+imageIndex+" .post-likes span").text(instaPostFormattedLikes);
+//           $(".instagram-image-"+imageIndex+" .post-time span").text(instaPostAgoDate);
+
+//           // Populate caption if one was created
+//           if (mediaObj.caption) {
+//             var imgCaptionFrom = "<a class='insta-username' href='https://www.instagram.com/dankstop/' title='" + mediaObj.caption.from.username + "' target='_blank' rel='noopener'>" + mediaObj.caption.from.username + "</a>";
+//             var imgCaption = "<span>" + hsjs.instagram.formatIgText(mediaObj.caption.text) + "</span>";
+//             var imgCaptionInsert = "<li class='insta-post-caption'>" + imgCaptionFrom + imgCaption + "</li>";
+//             $(".instagram-image-"+imageIndex+" .insta-post-comments").append(imgCaptionInsert);
+//           }      
+
+//           // Populate comments if there are any
+//           if (mediaObj.comments.data) {
+//             var commentCount = mediaObj.comments.count;
+//             if (commentCount > 4) {
+//               var viewAllComments = "<li><a class='view-all-comments' href='"+mediaObj.link+"' title='View all "+commentCount+" comments on Instagram' target='_blank' rel='noopener'>view all " + commentCount + " comments on Instagram</a></li>";
+//               $(".instagram-image-"+imageIndex+" .insta-post-comments").append(viewAllComments);
+//             }
+//             $(mediaObj.comments.data).each( function(c) {
+//               var currentComment = mediaObj.comments.data[c];
+//               var commentCount = mediaObj.comments.count;
+//               var commUser = currentComment.from.username;
+//               var imgCommentFrom = "<a class='insta-username' href='https://www.instagram.com/"+commUser+"/' title='" + commUser + "' target='_blank' rel='noopener'>" + commUser + "</a>";
+//               var imgComment = "<span>" + hsjs.instagram.formatIgText(currentComment.text) + "</span>";
+//               var imgCommentInsert = "<li>" + imgCommentFrom + imgComment + "</li>";
+//               $(".instagram-image-"+imageIndex+" .insta-post-comments").append(imgCommentInsert);
+//             });
+//           }
+          
+//           $(".instagram-image-"+imageIndex+" .insta-add-comment a").attr("href", mediaObj.link );
+
+//           imageIndex++;
+//         });
+//       }
+//     });
+//   }
+  
+// }
+
+
+/*
+ * Populate YouTube Video Image Links
+ */
+// hsjs.ytVideos = function() {
+//   var lazyloadPlaceholderSrc = hsjs.vars.lazyloadGifPlaceholder;
+//   var ytVid = document.querySelectorAll( ".yt-video:not(.js-done)" );
+//   for (var i = 0; i < ytVid.length; i++) {
+//     var standard_width = 480;
+//     var standard_height = 360;
+//     var source = "https://img.youtube.com/vi/"+ ytVid[i].dataset.embed +"/0.jpg"; 
+//     var image = new Image();
+//     //var imgAlt = $(ytVid[ 0 ]).parents('[class*="product-video-"]').find('.video-product-container a').text().trim() + " {{ 'homepage.other_sections.latest_videos_alt' | t }}";
+//     var imgAlt = $(ytVid[ 0 ]).parents('[class*="product-video-"]').find('.video-product-container a').text().trim() + "";
+//     image.className = "lazyload";
+//     image.src = lazyloadPlaceholderSrc;
+//     image.dataset.src = source;
+//     image.dataset.expand = "-1";
+//     image.alt = imgAlt;
+//     image.width = standard_width;
+//     image.height = standard_height;
+//     image.addEventListener( "load", function() {
+//       ytVid[ i ].appendChild( image );
+//     }( i ) );
+//     ytVid[i].addEventListener( "click", function() {
+//       var iframe = document.createElement( "iframe" );
+//       iframe.setAttribute( "frameborder", "0" );
+//       iframe.setAttribute( "allowfullscreen", "" );
+//       iframe.setAttribute( "src", "https://www.youtube.com/embed/"+ this.dataset.embed +"?wmode=transparent&enablejsapi=1&modestbranding=1&showinfo=0&controls=0&rel=0&loop=1&theme=light&fs=0&origin=" + window.location.hostname );
+
+//       this.innerHTML = "";
+//       this.appendChild( iframe );
+//     } );
+//     ytVid[ i ].classList.add("js-done");
+//   }
+// };
+
+
+
+/*
+ * ViaBill Payment Plan Program
+ */
+hsjs.viaBill = {
+
+  reloadTags: function(){
+    vb.buildTags();
+  },
+  
+  populateModal: function($this){
+    var product_price = $this.attr("data-product-price").replace("$","").replace(",","").replace(" USD","").trim().split(" ")[0]; 
+    var vb_monthly_price = (product_price / 4).toFixed(2);
+    hsjs.cache.viaBill.$product_price_container.html(product_price);
+    hsjs.cache.viaBill.$monthly_price_container.html(vb_monthly_price);
+    hsjs.cache.viaBill.$modal[0].style.display = "block";
+//     hsjs.cache.$body.append(hsjs.cache.viaBill.$modal);
+
+    // Attacg close handlers
+    hsjs.cache.viaBill.$close.one("click", function(){
+      hsjs.cache.viaBill.$modal[0].style.display = "none";
+//       hsjs.cache.viaBill.$modal.remove();
+    });
+
+    hsjs.cache.viaBill.$modal.one("click", function(event){
+      event.stopPropagation();
+      if ($(event.target).parents('.vbpt-modal__wrapper').length < 1){
+        hsjs.cache.viaBill.$modal[0].style.display = "none";
+//         hsjs.cache.viaBill.$modal.remove();
+      }
+    });
+  },
+
+  attachHandlers: function(){
+    hsjs.cache.$body.find(".viabill-custom")
+    .off("click.viaBillModal")
+    .on("click.viaBillModal", function(){
+      var $this = $(this);
+
+      if ($("#viaBillModal").length < 1){
+        hsjs.tools.ajaxCall("https://dankstop.com/?view=viabill-modal", function(data){
+          hsjs.cache.$body.append(data);
+          hsjs.tools.waitForElement(
+            "#viaBillModal",
+            function(){
+              hsjs.cache.viaBill = {};
+              var $vb_obj = hsjs.cache.viaBill
+              $vb_obj.$modal = hsjs.cache.$body.find("#viaBillModal");
+              $vb_obj.$close = $vb_obj.$modal.find(".vbpt-modal__button--x");
+              $vb_obj.$product_price_container = $vb_obj.$modal.find(".vb-product-price");
+              $vb_obj.$monthly_price_container = $vb_obj.$modal.find(".vb-monthly-price");
+              hsjs.viaBill.populateModal($this);
+            }
+          );
+        });
+      }
+      else {
+        hsjs.viaBill.populateModal($this);
+      }
+    });
+  },
+  
+  downloadViabill: function(){
+    if ($("#viaBillSettings").length > 0){
+      // ViaBill info
+      var $viabill_data = $("#viaBillSettings");
+      var viabill_shop_uri = $viabill_data.attr("data-shopuri");
+      var viabill_lang = $viabill_data.attr("data-lang");
+      var viabill_currency = $viabill_data.attr("data-currency");
+      (function(){var o=document.createElement('script');o.type='text/javascript';o.async=true;o.src='https://pricetag.viabill.com/script/'+viabill_shop_uri;var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(o,s);})();
+    }
+    else {
+      var o=document.createElement('script');
+      o.type='text/javascript';o.async=true;
+      o.src='https://pricetag.viabill.com/script/K60gnI_CpT8%3D';
+      var s=document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(o,s);
+    }
+  },
+
+  init: function(){
+    if (
+      hsjs.cache.site_data.theme.viabill_method 
+      && typeof hsjs.cache.site_data.theme.viabill_method === "string"
+    ){
+
+      if (hsjs.cache.site_data.theme.viabill_method == "manual"){
+
+        hsjs.viaBill.attachHandlers();
+      }
+
+      else {
+        
+        if (window.vb){
+          hsjs.viaBill.reloadTags();
+        }
+        else {
+          hsjs.viaBill.downloadViabill();
+        }
+
+      }
+
+    }
+    
+  }
+
+}
+
+
+
+/*
+ * ZenDesk Live Chat widget
+ */
+hsjs.liveChat = {
+  
+  scriptSrc: "https:\/\/cdn.shopify.com\/s\/files\/1\/1085\/8818\/t\/7\/assets\/zendesk-embeddable.js?24378\u0026shop=dankstop-9.myshopify.com",
+
+  getMainChatBtn: function(){ 
+    hsjs.liveChat.$mainChatBtn = (".chat-btn");
+    return hsjs.liveChat.$mainChatBtn; 
+  },
+  
+  $mainChatBtn: "",
+  showChatBtnClass: "chat-initialized",
+  attemptCount: 1,
+  maxAttempts: 37,
+  
+  chatNoWorkText: function(){
+    return hsjs.cache.site_data.theme.chat_closed_text
+  },
+  
+  windowToggle: function(){
+    if (
+      ( (typeof($zopim) == "function") && (typeof($zopim.livechat) !== "undefined") && (typeof($zopim.livechat.window) !== "undefined") ) 
+      || ( (typeof(zE) == "function") && (typeof(zE.activate) == "function") )
+    ){
+      
+      if ( (typeof($zopim) == "function") && (typeof($zopim.livechat) !== "undefined") && (typeof($zopim.livechat.window) !== "undefined") ) {
+        hsjs.liveChat.setZopimLiveChatCustomerDetails();
+        $zopim.livechat.window.toggle();
+      }
+      else if ( (typeof(zE) == "function") && (typeof(zE.activate) == "function") ) {
+        window.zESettings = {
+          webWidget: {
+            chat: {
+              suppress: false
+            },
+            contactForm: {
+              suppress: true
+            },
+            helpCenter: {
+              suppress: true
+            },
+            talk: {
+              suppress: true
+            },
+            answerBot: {
+              suppress: true
+            }
+          }
+        };
+        zE.activate();
+      }
+      
+      hsjs.ajax.hideLoading();
+      hsjs.liveChat.attachBtn();
+      
+    }
+    
+    else {
+      
+      hsjs.liveChat.detachBtn();
+      hsjs.liveChat.init();
+      hsjs.ajax.showLoading();
+      setTimeout(function(){
+        hsjs.liveChat.windowToggle();
+      }, 500);
+      
+    }
+    
+  },
+  
+  btnHandler: function(e){
+    e.preventDefault();
+    clearTimeout(hsjs.main_js.chat_init_timeout);
+    hsjs.liveChat.windowToggle();
+//     hsjs.liveChat.toggleChatWindow();
+  },
+  
+  attachBtn: function(){
+    hsjs.cache.$document.off( "click.chat-btn", ".chat-btn", hsjs.liveChat.btnHandler ).on( "click.chat-btn", ".chat-btn", hsjs.liveChat.btnHandler );
+  },
+  
+  detachBtn: function(){
+    hsjs.cache.$document.off( "click.chat-btn", ".chat-btn", hsjs.liveChat.btnHandler );
+  },
+  
+  load: function(){
+    
+    if ( hsjs.liveChat.$mainChatBtn === ""){
+      hsjs.liveChat.getMainChatBtn();
+    }
+    
+    setTimeout( function() {
+
+//       hsjs.tools.downloadJS("https://api.zopim.com/files/meshim/widget/controllers/liveChatAPI/Window-js.html");
+
+//       hsjs.tools.downloadJS("https:\/\/cdn.shopify.com\/s\/files\/1\/1085\/8818\/t\/7\/assets\/zendesk-embeddable.js?24378\u0026shop=dankstop-9.myshopify.com");
+
+//       hsjs.tools.downloadJS( hsjs.liveChat.scriptSrc );
+      
+      window.zEmbed||function(e,t){var n,o,d,i,s,a=[],r=document.createElement("iframe");window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,r.src="javascript:false",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="display: none",d=document.getElementsByTagName("script"),d=d[d.length-1],d.parentNode.insertBefore(r,d),i=r.contentWindow,s=i.document;try{o=s}catch(e){n=document.domain,r.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",o=s}o.open()._l=function(){var e=this.createElement("script");n&&(this.domain=n),e.id="js-iframe-async",e.src="https://assets.zendesk.com/embeddable_framework/main.js",this.t=+new Date,this.zendeskHost="dankstop.zendesk.com",this.zEQueue=a,this.body.appendChild(e)},o.write("<body onload='document._l();'>"),o.close()}();
+
+      hsjs.liveChat.attachBtn();
+
+    }, 1000);
+
+  },
+  
+  removeSpinnerFromChat: function() {
+    
+    $(".chat-btn").find(".loading-spinner").removeClass("loading-spinner");
+    if (hsjs.liveChat.$mainChatBtn.length) {
+      hsjs.liveChat.$mainChatBtn.removeClass(hsjs.liveChat.showChatBtnClass);
+//       setTimeout(function(){
+//         hsjs.liveChat.$mainChatBtn.remove();
+//       }, 735);
+    }
+    
+  },
+  
+  chatNoWorkAlert: function() {
+    
+    //hsjs.liveChat.removeSpinnerFromChat();
+//     alert(hsjs.liveChat.chatNoWorkText());
+    
+  },
+  
+  checkIfChatOpen: function() {
+    if ( $zopim.livechat.window.getDisplay() !== "undefined" && $zopim.livechat.window.getDisplay() !== true ) {
+      if (hsjs.liveChat.attemptCount <= hsjs.liveChat.maxAttempts) {
+        hsjs.liveChat.attemptCount++;
+        setTimeout( function() {
+          $zopim.livechat.window.toggle();
+          hsjs.liveChat.checkIfChatOpen();
+          return;
+        }, 357);
+      }
+      else {
+        hsjs.liveChat.chatNoWorkAlert();
+      }
+    }
+    else {
+      //hsjs.liveChat.removeSpinnerFromChat();
+    }
+  },
+  
+  toggleChatWindow: function() {
+    if ( (typeof($zopim.livechat) !== "undefined") && (typeof($zopim.livechat.window) !== "undefined") ) {
+      $zopim.livechat.window.toggle();
+      $(".chat-btn").find(".loading-spinner").removeClass("loading-spinner");
+      hsjs.liveChat.checkIfChatOpen();
+    }
+    else {
+      if (hsjs.liveChat.attemptCount <= hsjs.liveChat.maxAttempts) {
+        hsjs.liveChat.attemptCount++;
+        setTimeout( function() {
+          hsjs.liveChat.toggleChatWindow();
+          return;
+        }, 357);
+      }
+      else {
+        hsjs.liveChat.chatNoWorkAlert();
+      }
+    }
+  },
+  
+  setZopimLiveChatCustomerDetails: function(){
+    if (hsjs.vars && hsjs.vars.customer && hsjs.vars.customer.full_name && hsjs.vars.customer.email) {
+      $zopim.livechat.set({
+        language: "en",
+        name: hsjs.vars.customer.full_name,
+        email: hsjs.vars.customer.email
+      });
+      if (hsjs.vars.customer.phone) {
+        $zopim.livechat.set({
+          phone: hsjs.vars.customer.phone
+        });
+      }
+    }
+    else {
+      $zopim.livechat.set({
+        language: "en"
+      });
+    }
+  },
+  
+  loadZopimZendeskChat: function () {
+    if ( (typeof($zopim) == "function") && (typeof($zopim.livechat) !== "undefined") ) {
+      $zopim(function() {
+        hsjs.liveChat.setZopimLiveChatCustomerDetails();
+      });
+//       hsjs.liveChat.toggleChatWindow();
+    }
+    else {
+      hsjs.liveChat.load();
+      if (hsjs.liveChat.attemptCount <= hsjs.liveChat.maxAttempts) {
+        hsjs.liveChat.attemptCount++;
+        setTimeout( function() {
+          hsjs.liveChat.loadZopimZendeskChat();
+          return;
+        }, 357);
+      }
+      else {
+        hsjs.liveChat.chatNoWorkAlert();
+      }
+    }
+  },
+  
+  init: function(){
+    
+    if ( hsjs.liveChat.$mainChatBtn === ""){
+      hsjs.liveChat.getMainChatBtn();
+    }
+    
+    hsjs.liveChat.loadZopimZendeskChat();
+    hsjs.liveChat.attachBtn();
+    
+  }
+  
+}
+
+
+
+/*
+ * YotPo
+ */
+hsjs.yotpo = {
+  
+  scriptSrc: "//staticw2.yotpo.com/slO4cjcGIOnMsb78Mu313loqvxAp3HCWDc7KauBH/widget.js",
+
+  elementToWaitFor: ".yotpo",
+
+  // Reload yotpo widgets
+  refreshWidgets: function(){
+    
+    if (window.yotpo){
+      window.yotpo.refreshWidgets();
+    }
+    else {
+      var yotpoApi = new Yotpo.API(yotpo);
+      yotpoApi.refreshWidgets();
+    }
+    
+//     if ( $(".yotpo .yotpo-stars").length < 1 ){
+//       console.log($(".yotpo .yotpo-stars").length);
+//       yotpoReload();
+//     }
+    
+  },
+
+  load: function(){
+    hsjs.tools.downloadJS(this.scriptSrc);
+  },
+  
+  init: function(){
+    this.load();
+  }
+  
+}
+
+
+
+/*
+ * Okendo Reviews
+ */
+hsjs.okendo = {
+  
+  scriptSrc: "https:\/\/d3hw6dc1ow8pp2.cloudfront.net\/reviewsWidget.min.js?shop=dankstop-9.myshopify.com",
+  html_content: (window.site_data && window.site_data.theme && window.site_data.theme.okendo_html_content) ? window.site_data.theme.okendo_html_content : false,
+
+  elementToWaitFor: "[data-oke-reviews-widget]",
+
+  // Reload okendo widgets
+  refreshWidgets: function(){
+    
+    if (window.okendo){
+      window.okendo.refreshWidgets();
+    }
+    else {
+      var okendoApi = new okendo.API(okendo);
+      okendoApi.refreshWidgets();
+    }
+    
+  },
+
+  load: function(){
+    
+//     hsjs.tools.downloadJS(this.scriptSrc);
+    
+    hsjs.tools.attachToBody(
+      hsjs.okendo.html_content,
+      function(){
+        hsjs.tools.downloadJS(hsjs.okendo.scriptSrc);
+      }
+    );
+    
+  },
+  
+  init: function(){
+    this.load();
+  }
+  
+}
+
+
+
+/*
+ * Stamped.io Reviews
+ */
+hsjs.stamped = {
+  
+  scriptSrc: "https://cdn-stamped-io.azureedge.net/files/widget.min.js",
+  
+  elementToWaitFor: "#stamped-main-widget",
+
+  // Reload stamped widgets
+  refreshWidgets: function(){
+    
+//     if (window.okendo){
+//       window.okendo.refreshWidgets();
+//     }
+//     else {
+//       var okendoApi = new okendo.API(okendo);
+//       okendoApi.refreshWidgets();
+//     }
+    
+  },
+
+  load: function(){
+    
+    hsjs.tools.downloadJS(this.scriptSrc);
+    
+//     hsjs.tools.attachToBody(
+//       hsjs.stamped.html_content,
+//       function(){
+//         hsjs.tools.downloadJS(hsjs.stamped.scriptSrc);
+//       }
+//     );
+    
+  },
+  
+  init: function(){
+    this.load();
+  }
+  
+}
+
+
+
+/*
+ * Reviews - YotPo, Okendo, or else
+ */
+hsjs.reviews = {
+  
+  reviews_vendor: hsjs.cache.site_data.theme.reviews_vendor,
+  
+//   reviews_api: function(){
+//     return hsjs[hsjs.reviews.reviews_vendor]
+//   },
+  
+//   elementToWaitFor: hsjs[hsjs.reviews.reviews_vendor].elementToWaitFor,
+  elementToWaitFor: hsjs[hsjs.cache.site_data.theme.reviews_vendor].elementToWaitFor,
+
+  refreshWidgets: function(){
+  
+//     hsjs.reviews.reviews_api.refreshWidgets();
+    
+    hsjs[hsjs.reviews.reviews_vendor].refreshWidgets();
+    
+  },
+  
+  load: function(){
+
+//     hsjs.yotpo.init();
+//     hsjs.okendo.init();
+//     hsjs.stamped.init();
+
+    hsjs[hsjs.reviews.reviews_vendor].init();
+    
+  },
+  
+  init: function(){
+    this.load();
+  }
+  
+}
+
+
+
+/*
+ * Rewards Program -- Sweet Tooth / Smile.io Rewards Program
+ */
+hsjs.rewardsProgram = {
+  not_logged_in_handler: function(){
+    hsjs.cache.$body.on("click", ".sweettooth-cta", function(e){
+      if (hsjs.vars.customer.id === "Not Logged In") {
+        e.preventDefault();
+        //alert("{{ 'customer.login.login_for_rewards' | t }}");
+        alert("Please login to enjoy your Rewards.");
+        loginModalinitOrOpen();
+      }
+    });
+  },
+  smile_init_src: window.location.origin + "?view=smile-initializer",
+  
+  smile_script_src_old: "https:\/\/cdn.sweettooth.io\/assets\/storefront.js?shop=dankstop-9.myshopify.com",
+  
+  smile_script_src: "https:\/\/js.smile.io\/v1\/smile-shopify.js?shop=dankstop-9.myshopify.com",
+  
+  load_smile: function(){
+    //hsjs.tools.downloadJSScript(hsjs.rewardsProgram.smile_script_src);
+    hsjs.tools.ajaxCall(
+      this.smile_init_src, 
+      function(data){
+        hsjs.cache.$body.append(data);
+        hsjs.tools.downloadJS(hsjs.rewardsProgram.smile_script_src);
+      }
+    );
+  },
+  
+  init: function(){
+    hsjs.rewardsProgram.load_smile();
+    //hsjs.rewardsProgram.not_logged_in_handler();
+  }
+  
+}
+
+
+
+/*
+ * Product Auction by Webkul
+ */
+hsjs.product_auction = {
+  scriptSrc: ["https:\/\/sp-auction.webkul.com\/js\/wk_shopify_auction.js?shop=dankstop-9.myshopify.com","https:\/\/sp-auction.webkul.com\/js\/wk_auction_category.js?shop=dankstop-9.myshopify.com"],
+  load: function(){
+    hsjs.tools.downloadJS(this.scriptSrc);
+  },
+  init: function(){
+    this.load();
+  }
+}
+
+
+
+/*
+ * Klaviyo email campaigns and newsletter 
+ */
+hsjs.klaviyo = {
+  
+  scriptSrc: "https:\/\/static.klaviyo.com\/onsite\/js\/klaviyo.js?company_id=E8gYFp\u0026shop=dankstop-9.myshopify.com",
+  
+  attach: function(){
+    
+    // Attach to newsletter form
+//     hsjs.tools.downloadJS("//www.klaviyo.com/media/js/public/klaviyo_subscribe.js", function(){ 
+//       hsjs.tools.waitForJSObject("KlaviyoSubscribe", function(){
+//         KlaviyoSubscribe.attachToForms('#mc-embedded-subscribe-form', {
+//           hide_form_on_success: true
+//         });
+//         $("#mc-embedded-subscribe-form").removeClass("klaviyo_styling");
+//       }); 
+//     });
+    KlaviyoSubscribe.attachToForms('#mc-embedded-subscribe-form', {
+      hide_form_on_success: true
+    });
+    $("#mc-embedded-subscribe-form").removeClass("klaviyo_styling");
+    
+    // General Klaviyo analytics
+    var _learnq = _learnq || [];
+    _learnq.push(["account", "E8gYFp"]);
+    (function () {
+      var b = document.createElement("script"); b.type = "text/javascript"; b.async = true;
+      b.src = ("https:" == document.location.protocol ? "https://" : "http://") + "a.klaviyo.com/media/js/analytics/analytics.js";
+      var a = document.getElementsByTagName("script")[0]; a.parentNode.insertBefore(b, a);
+    })();
+    
+  },
+  
+  onloadCallback: function(){
+    
+    hsjs.tools.waitForJSObject("KlaviyoSubscribe", hsjs.klaviyo.attach);
+    
+  },
+  
+  load: function(){
+    
+    var klaviyo_script_url = "//www.klaviyo.com/media/js/public/klaviyo_subscribe.js";
+    hsjs.tools.downloadJS(klaviyo_script_url, hsjs.klaviyo.onloadCallback);
+    hsjs.tools.downloadJS(this.scriptSrc);
+    
+  },
+  
+  init: function(){
+    this.load();
+  }
+  
+}
+
+
+/*
+ * Route Insurance something - seems unnecessary for function of app
+ */
+hsjs.routeInsurance = {
+  scriptSrc: "https:\/\/cdn.routeapp.io\/route-widget-shopify\/stable\/route-widget-shopify-stable.min.js?shop=dankstop-9.myshopify.com",
+  load: function(){
+    hsjs.tools.downloadJS(this.scriptSrc);
+  },
+  init: function(){
+    this.load();
+  }
+}
+
+
+/*
+ * Affiliatly
+ */
+hsjs.affiliatly = {
+  scriptSrc: "https:\/\/static.affiliatly.com\/shopify\/shopify_stc.js?affiliatly_code=AF-101600\u0026shop=dankstop-9.myshopify.com",
+  init: function(){
+    hsjs.tools.downloadJS(hsjs.affiliatly.scriptSrc);
+  }
+}
+
+
+/*
+ * Klickly
+ */
+hsjs.klickly = {
+  scriptSrc: "https:\/\/track.klickly.com\/track.bundle.js?shop=dankstop-9.myshopify.com",
+  init: function(){
+    hsjs.tools.downloadJS(hsjs.klickly.scriptSrc);
+  }
+}
+
+
+/*
+ * Klickly
+ */
+hsjs.dovetale = {
+  scriptSrc: "https:\/\/dttrk.com\/shopify\/track.js?shop=dankstop-9.myshopify.com",
+  init: function(){
+    hsjs.tools.downloadJS(hsjs.dovetale.scriptSrc);
+  }
+}
+
+
+
+/*
+ * Printful something - seems unnecessary for function of app
+ */
+// hsjs.printful = {
+//   scriptSrc: "https:\/\/static.cdn.printful.com\/static\/js\/external\/shopify-product-customizer.js?v=0.16\u0026shop=dankstop-9.myshopify.com",
+//   load: function(){
+//     hsjs.tools.downloadJS(this.scriptSrc);
+//   },
+//   init: function(){
+//     this.load();
+//   }
+// }
+
+
+/*
+ * Search Auto Complete 
+ */
+// hsjs.searchAutoComplete = {
+  
+//   temp7Url: "https://cdnjs.cloudflare.com/ajax/libs/template7/1.4.0/template7.js",
+  
+//   handler: function(){
+
+//     (function ($) {
+//       var pluginName = 'Search',
+//           namespace = 'plugin_' + pluginName;
+
+//       function Plugin(element) {
+//         this.headerSearch = $(element);
+// //         this.headerSearchForm = this.headerSearch.find('.header-search__form');
+//         this.headerSearchForm = this.headerSearch;
+//         this.headerInput = this.headerSearch.find('.header-search__input');
+//         this.headerSearchResults = this.headerSearch.find('.header-search__results-wrapper');
+//         this.searchResultsTemplate = Template7.compile($('#search-results-template').html());
+//         this.PopularProducts = this.headerSearch.find(".header-search__product");
+//         this.searchMode = "product";
+//         this.searchTrending = $(".quickSearchResultsWrap .header-search__trending .item");
+//         this.trending = $(".header-search__trending");
+//         this.searchWrapper = this.headerSearch.find('.quickSearchResultsWrap');
+
+//         this.headerInput.off('focus').on('focus', function(e){
+//           e.stopPropagation();
+
+// //           $(this).closest('.header-search').find('.quickSearchResultsWrap').show();
+//           $(this).closest('.search-form').find('.quickSearchResultsWrap').show();
+//         });
+
+//         $(document).off('mouseup').on('mouseup', function (e) {
+//           var container = $(".search-form");
+
+//           if (!container.is(e.target) && container.has(e.target).length === 0){
+//             container.find('.quickSearchResultsWrap').hide();
+//           }
+//         });
+
+//         this.headerInput.off('focusin').on('focusin', $.proxy(this._focusin, this));
+
+
+//         this.headerInput.off('keyup').on('keyup', $.proxy(this._initSearch, this));
+//       };
+
+//       Plugin.prototype._initSearch = function(event) {
+//         var target = $(event.currentTarget);
+
+//         if ((event.keyCode ? event.keyCode : event.which) != 13) {
+//           clearTimeout(target.data('timeout'));
+//           target.data('timeout', setTimeout($.proxy(this._doSearch, this), 250));
+//         }
+//       };
+
+//       Plugin.prototype._doSearch = function(event) {
+
+//         if (this.headerInput.val().trim() === '') {
+//           this.headerSearchResults.empty();
+//           this.searchTrending.show();
+//           this.PopularProducts.show();
+//           this.searchWrapper.show();
+//           this.trending.show();
+
+//           return; 
+//         }
+//         else {
+//           this.headerSearchResults.html(this.searchResultsTemplate({is_loading: true}));
+//         }
+
+//         if (this.headerInput.val().length > 2) {
+//           this.searchWrapper.hide();
+//           this._doCompleteSearch();
+//         }
+//         else {
+//           this.headerSearchResults.html(this.searchResultsTemplate({is_show: false}));
+//           this.searchTrending.show();
+//           this.PopularProducts.show();
+//           this.searchWrapper.show();
+//         }
+
+//         if(this.searchTrending.css('display') == 'none') {
+//           this.trending.hide();
+//         } else {
+//           this.trending.show();
+//         }
+//       };
+
+//       Plugin.prototype._doCompleteSearch = function(event) {
+//         var self = this;
+
+//         $.ajax({
+//           method: 'GET',
+//           url: '/search?view=json',
+//           dataType: 'json',
+//           data: {
+//             q: this.headerInput.val() + '*',
+//             type: this.searchMode
+//           }
+//         }).then(function(data) {
+
+//           self.headerSearchResults.html(self.searchResultsTemplate({
+//             is_show: true,
+//             is_loading: false,
+//             results: data['results'],
+//             has_results: (data['results'].length > 0),
+//             results_count: data['results_count'],
+//             results_label: data['results_label'],
+//             results_url: (data['url'] + '&type=' + self.searchMode)
+//           }));
+
+//           self.PopularProducts.hide();
+
+
+//           var value = self.headerInput.val().toLowerCase();
+//           if (data && data.length) {
+//             self.searchTrending.filter(function(e) {
+//               $(this).toggle($(this).find('.highlight span').text().toLowerCase().indexOf(value) > -1);
+//             });
+//             self.trending.show();
+//           }
+//           else {
+//             self.trending.hide();
+//           }
+
+//           self.searchWrapper.show();
+//         });
+//       };
+
+//       $.fn[pluginName] = function(options) {
+//         var method = false,
+//             methodArgs = arguments;
+
+//         if (typeof options == 'string') {
+//           method = options;
+//         }
+
+//         return this.each(function() {
+//           var plugin = $.data(this, namespace);
+
+//           if (!plugin && !method) {
+//             $.data(this, namespace, new Plugin(this, options));
+//           } else if (method) {
+//             callMethod(plugin, method, Array.prototype.slice.call(methodArgs, 1));
+//           }
+//         });
+//       };
+//     }(jQuery));
+
+//     $(function() {
+// //       $('[data-ajax-search]').Search();
+//       $(".search-form").Search();
+//     });
+    
+//   },
+
+//   attachHandler: function(){
+  
+//     hsjs.tools.waitForJSObject(
+//       "Template7",
+//       function(){
+//         hsjs.tools.waitForElement(
+//           ".header-search__results-wrapper",
+//           hsjs.searchAutoComplete.handler,
+//           7300
+//         )
+//       },
+//       7300
+//     );
+    
+//   },
+  
+//   load: function(){
+    
+//     hsjs.tools.downloadJS(
+//       hsjs.searchAutoComplete.temp7Url, 
+//       hsjs.searchAutoComplete.attachHandler
+//     );
+    
+//   },
+  
+//   init: function(){
+  
+//     this.load();
+    
+//   }
+
+// }
+  
+
+
+/*
+ * Promotional Top-of-page Banner 
+ */
+hsjs.promoCountdown = {
+  
+  //countdownJsUrl: "//cdn.jsdelivr.net/npm/jquery-countdown@2.2.0/dist/jquery.countdown.min.js",
+//   countdownJsUrl: "//cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.1.0/js/jquery.countdown.min.js",
+  countdownJsUrl: "https://cdn.jsdelivr.net/npm/jquery-countdown@2.2.0/dist/jquery.countdown.min.js",
+  
+  countdownJsLoaded: false,
+  
+  countdownSelector: "[data-countdown]",
+  
+  $promoContainer: false,
+  
+  $promoBanner: false,
+  
+  $closePromo: false,
+  
+  promo_start: hsjs.cache.site_data.theme.promo_start,
+  
+  promo_end: hsjs.cache.site_data.theme.promo_end,
+  
+  promoExpirationString: undefined,
+  
+  removePromoBanner: function(){
+    //hsjs.promoCountdown.$promoContainer.remove();
+    if (hsjs.promoCountdown.$promoContainer){
+      hsjs.promoCountdown.$promoContainer.hide();
+    }
+  },
+  
+  showPromoBanner: function(){
+    
+    // force lazyload image
+    if (
+      //$(".header-top.lazyload")[0] 
+      hsjs.promoCountdown.$promoContainer.hasClass("lazyload") 
+      && hsjs.promoCountdown.$promoContainer.attr("data-load-method") == "lazy_user_x"
+      && typeof(window.lazySizes) !== "undefined" 
+      && window.lazySizes.loader && window.lazySizes.loader.unveil
+    ){
+      //lazySizes.loader.unveil( $(".header-top.lazyload")[0] );
+      window.lazySizes.loader.unveil( hsjs.promoCountdown.$promoContainer[0] );
+    }
+    
+    //hsjs.promoCountdown.$promoBanner.addClass("is-visible");
+    //hsjs.promoCountdown.$promoContainer.removeClass("hidden").addClass("is-visible").fadeIn();
+    //hsjs.promoCountdown.$promoContainer.animate({height: 'toggle'});
+    //hsjs.promoCountdown.$promoContainer.slideDown(750);
+    
+    hsjs.tools.waitForElement(
+      ".header-top.lazyloaded",
+      function(){
+        
+        hsjs.promoCountdown.$promoContainer
+        .fadeIn(
+          0, 
+          function(){
+
+            if ( hsjs.ajaxSiteNav && hsjs.ajaxSiteNav.adjustUI && typeof(hsjs.ajaxSiteNav.adjustUI) === "function"){
+              hsjs.ajaxSiteNav.adjustUI();
+            }
+
+          }
+        );
+        
+      }
+    );
+    
+  },
+
+  attachClosebanner: function(){
+    
+    hsjs.promoCountdown.$closePromo
+    .off(".hsjsClosePromoBanner")
+    .on("click.hsjsClosePromoBanner", function(event){
+      
+      event.preventDefault();
+      event.stopPropagation();
+
+      // Remove banner
+      hsjs.promoCountdown.removePromoBanner();
+
+      // Set remove banner expiration cookie
+      var close_banner_expiration_timestamp = new Date();
+      var close_banner_expiration_length = close_banner_expiration_timestamp.getTime();
+      // Cookie expiration time = 1 week = 7 days = 60s * 60m * 24h * 7d
+      close_banner_expiration_length += 60 * 60 * 24 * 7;
+      close_banner_expiration_timestamp.setTime(close_banner_expiration_length);
+      document.cookie = 
+        "CLOSED_BANNER=1" + 
+        "; expires=" + close_banner_expiration_timestamp.toUTCString() + 
+        "; path=/";
+
+    });
+    
+  },
+  
+  populatePromoTime: function(){
+
+	var $clockItems = hsjs.promoCountdown.$promoBanner.find(".clock-item .num");
+    var $days = $($clockItems[0]);
+    var $hours = $($clockItems[1]);
+    var $mins = $($clockItems[2]);
+    var $secs = $($clockItems[3]);
+
+    hsjs.promoCountdown.$promoBanner.countdown(hsjs.promoCountdown.promoExpirationString)
+
+    // On countdown update
+    .on("update.countdown", function(event){
+      
+      //$(this).removeClass("loading-spinner");
+      //var sp_pd_hrs = (event.offset.hours.toString().length === 2) ? event.offset.hours : "&nbsp;" + event.offset.hours;
+
+      // If one day or more 
+      if (event.strftime("%D") > 0){
+        //$(this).html(event.strftime("%-D day%!D "+sp_pd_hrs+":%M:%S"));
+
+        // As one string
+        //$(this).html(event.strftime("%-D day%!D %H:%M:%S"));
+        
+        // As separate digits
+        $days.text(event.strftime("%D"));
+        $hours.text(event.strftime("%H"));
+        $mins.text(event.strftime("%M"));
+        $secs.text(event.strftime("%S"));
+        
+      }
+
+      // If countdown is somehow 0 but not finished
+      else if (event.strftime("%D %H %M %S") == "00 00 00 00"){
+        hsjs.promoCountdown.removePromoBanner();
+      }
+
+      // In every other case
+      else {
+        
+        // As one string
+        //$(this).html(event.strftime("%-H hour%!H %-M min%!M %-S sec%!S"));
+        
+        // As separate digits
+        $days.text(event.strftime("%D"));
+        $hours.text(event.strftime("%H"));
+        $mins.text(event.strftime("%M"));
+        $secs.text(event.strftime("%S"));
+        
+      }   
+
+    })
+
+    // Once sale expires
+    .on("finish.countdown", function(){
+
+      hsjs.promoCountdown.removePromoBanner();
+
+    });
+    
+    // Attach close btn handler
+    hsjs.promoCountdown.attachClosebanner();
+    
+    // Make banner visible
+    hsjs.promoCountdown.showPromoBanner();
+
+  },
+
+  launchCountdown: function(){
+
+    // Set promoBanner element
+    hsjs.promoCountdown.$promoBanner = $("#promoBanner");
+
+    // Set promo banner container
+    hsjs.promoCountdown.$promoContainer = hsjs.cache.$body.find(".header-top");
+
+    // Set close btn
+    hsjs.promoCountdown.$closePromo = hsjs.promoCountdown.$promoContainer.find(".close[data-close-header-top]");
+
+    // Populate countdown timer
+    hsjs.promoCountdown.populatePromoTime();
+
+  }, 
+  
+  addLazyElement: function(){
+
+    var $promo_bar_lazy_div = $("<div id='promo-bar' class='promo-bar lazybit lazybit-load' data-lazy-url='" + window.location.origin + "?view=promo-bar'></div>");
+	hsjs.cache.$body.prepend($promo_bar_lazy_div);
+    
+    hsjs.lazybits.init();
+    
+    hsjs.tools.waitForElement(
+      "#promoBanner",
+      function(){
+        
+        // Launch countdown
+        hsjs.promoCountdown.launchCountdown();
+
+      },
+      0
+    );
+    
+  },
+  
+  onCountdownLoad: function(){
+
+    if ( ! document.querySelector(".header-top.staticload")){
+
+      // Populate countdown timer
+      hsjs.promoCountdown.addLazyElement();
+
+    }
+    else {
+
+      // Launch countdown
+      hsjs.promoCountdown.launchCountdown();
+
+    }
+    
+  },
+  
+  loadCountdownJs: function(){
+
+    hsjs.tools.downloadJS(
+      hsjs.promoCountdown.countdownJsUrl, 
+      function(){
+        
+        hsjs.tools.waitForJSObject(
+          "$countdown",
+          function(){
+            
+            // Set countdown loaded flag to true
+            hsjs.promoCountdown.countdownJsLoaded = true;
+
+            // Populate countdown timer
+            hsjs.promoCountdown.onCountdownLoad();
+
+          },
+          0
+        );
+        
+      }
+      
+    );
+
+  },
+  
+  setSaleTimer: function(){
+    
+    var nowDT = new Date();
+    var oneDay = 24*60*60*1000;
+    
+    // Calc promo start time
+    var promoStartVal = hsjs.promoCountdown.promo_start;
+    var promoStartString = hsjs.tools.timeStrToHHMMSS(promoStartVal);
+    var promoStartDateArray = promoStartString.split(" ")[0].split("/");
+    var promoStartTime = promoStartString.split(" ")[1];
+    var promoStartUTC = promoStartDateArray[2]+"-"+promoStartDateArray[0]+"-"+promoStartDateArray[1]+"T"+promoStartTime+"Z";
+    var promoStart = new Date(promoStartUTC);
+    
+    // Calc promo stop time
+    var promoEndVal = hsjs.promoCountdown.promo_end;
+    var promoExpirationString = hsjs.tools.timeStrToHHMMSS(promoEndVal);
+    hsjs.promoCountdown.promoExpirationString = promoExpirationString;
+    
+    var promoExpiration = new Date(promoExpirationString);
+    
+    // Calc promo length and days to promo end
+    var promoLength = Math.abs(promoExpiration - promoStart);
+    var daysToPromo = Math.round(Math.abs((promoStart.getTime() - nowDT.getTime())/(oneDay)));
+    
+//     console.log(promoStartString);
+//     console.log(promoExpirationString);
+//     console.log(hsjs.tools.timeOneIsLaterThanTimeTwo(nowDT, promoStartString));
+//     console.log(hsjs.tools.timeOneIsLaterThanTimeTwo(promoExpirationString, nowDT));
+
+    if ( 
+      // If promo has started
+      hsjs.tools.timeOneIsLaterThanTimeTwo(nowDT, promoStartString) 
+      // And promo has not yet ended
+      && hsjs.tools.timeOneIsLaterThanTimeTwo(promoExpirationString, nowDT) 
+    ){
+
+      if (hsjs.promoCountdown.countdownJsLoaded){
+        
+        // Populate countdown timer
+        hsjs.promoCountdown.onCountdownLoad();
+
+      }
+      else {
+
+        // Load countdown JS
+        hsjs.promoCountdown.loadCountdownJs();
+
+      }
+      
+    }
+    
+//     // If promo still more than a day away, remove banner
+//     else if ( daysToPromo > 1 ){
+
+//       hsjs.promoCountdown.removePromoBanner();
+      
+//     }
+
+  },
+
+  init: function(){
+
+//     // Set promoBanner element
+//     if ( hsjs.cache.$promoBanner.length ){
+
+//       hsjs.promoCountdown.$promoBanner = hsjs.cache.$promoBanner;
+
+//     }
+//     else {
+      
+//       hsjs.promoCountdown.$promoBanner = $("#promoBanner");
+
+//     }
+
+//     // Set promo banner container
+//     hsjs.promoCountdown.$promoContainer = hsjs.cache.$body.find(".header-top");
+
+    // Launch banner if not cookie=close
+    if (document.cookie.indexOf("CLOSED_BANNER") !== -1){
+
+      hsjs.promoCountdown.removePromoBanner();
+
+    }
+    else {
+
+      // Set close btn
+//       hsjs.promoCountdown.$closePromo = hsjs.promoCountdown.$promoBanner.find(".close-btn");
+      // Set close btn
+//       hsjs.promoCountdown.$closePromo = hsjs.promoCountdown.$promoContainer.find(".close[data-close-header-top]");
+
+      // Lazy load Promo bar if .staticload promo bar isn't already loaded, 
+      // then Set promoBanner countdown timer
+        setTimeout(function(){
+          hsjs.promoCountdown.setSaleTimer();
+        }, 0);
+        
+    }
+
+  }
+
+}
+
+
+
+/*
+ * Site Messages
+ *
+ */
+hsjs.site_msgs = {
+  
+  show_msgs: hsjs.cache.site_data.theme.show_site_msgs,
+  
+  init: function(){
+    
+    if (hsjs.site_msgs.show_msgs && hsjs.site_msgs.show_msgs !== "false"){
+      
+      // declare lazy loading div html
+      let lazy_div_html = "<div class='site-msg lazybit lazybit-load' data-lazy-url='https://dankstop.com?view=site-msgs'></div>";
+
+      // create div
+      let lazy_div = document.createElement('div');
+      lazy_div.innerHTML = lazy_div_html.trim();
+
+      // append to body
+      document.body.appendChild(lazy_div.firstChild);
+      
+      // load lazybit div
+      //hsjs.lazybits.init();
+      let site_msgs_lazybit = document.querySelector(".site-msg.lazybit.lazybit-load");
+      hsjs.lazybits.loadLazybit(site_msgs_lazybit);
+      
+    }
+    
+  }
+  
+}
+
+
+
+/*
+ * Dark Mode
+ *
+ */
+hsjs.darkMode = {
+  
+  enabledClass: "dark-mode",
+  
+  toggle: function(){
+    hsjs.cache.$body.toggleClass (this.enabledClass);
+  },
+  
+  off: function(){
+    hsjs.cache.$body.removeClass(this.enabledClass);
+  },
+  
+  on: function(){
+    hsjs.cache.$body.addClass(this.enabledClass);
+  },
+  
+  init: function(){
+    if ( ! hsjs.cache.$body || ! hsjs.cache.$body[0] ){
+      hsjs.cache.$body = $("body");
+    }
+    this.on();
+  }
+  
+}
+
+
+
+/*
+ * Shopify URL Template Parser
+ *
+ * Feed it a Shopify URL, and it outputs the template type used (eg, product, collection, etc).
+ */
+hsjs.urlTemplate = function(url){
+  var template_type = "";
+  if ( url === undefined || url === null || ! url){
+    var url_parser = window.location;
+    url = url_parser.href;
+  }
+  else {
+    var url_parser = document.createElement('a');
+    url_parser.href = url;
+  }
+
+  var pathnameSplit = url_parser.pathname.split('/');
+  if (pathnameSplit[1] == "products" 
+      || (pathnameSplit[1] == "collections" 
+          && pathnameSplit[3] == "products") 
+     ){
+    template_type = "product";
+  } 
+  else if (pathnameSplit[1] == "collections" 
+           && pathnameSplit[3] !== "products"
+          ){
+    template_type = "collection";
+  }
+  else if (url_parser.pathname == "" || url_parser.pathname == "/"){
+    template_type = "index";
+  }
+  else if (pathnameSplit[1] == "blogs" 
+           && pathnameSplit[2] == "blog"
+           && (pathnameSplit[3] === undefined || pathnameSplit[3] == "") 
+          ){
+    template_type = "blog";
+  }
+  else if (pathnameSplit[1] == "blogs" 
+           && pathnameSplit[2] == "blog"
+           && (pathnameSplit[3] !== "") 
+          ){
+    template_type = "article";
+  }
+  else if (pathnameSplit[1] == "cart"){
+    template_type = "cart";
+  }
+  else if (pathnameSplit[1] == "pages"){
+    template_type = "page";
+  }
+  else if (pathnameSplit[1] == "search"){
+    template_type = "search";
+  }
+  else if (pathnameSplit[1] == "account"){
+    template_type = "account";
+  }
+  else if (pathnameSplit[1] == "gemPage"){
+    template_type = "gemPage";
+  }
+  else if (pathnameSplit[1] == "apps"){
+    template_type = "apps";
+  }
+  else {
+    template_type = "other";
+  }
+
+  return template_type;
+}
+  
+
+  
+/*
+ * Lazy scripts
+ */
+hsjs.lazyscripts = {
+  
+  lazyscripts_url: hsjs.cache.site_data.theme.lazyscripts_js_urls,
+  
+  customSrc: hsjs.cache.site_data.theme.lazy_vendor_src,
+  
+  onloadCallback: function(){
+  },
+  
+  load: function(){
+
+    // Lazy load ella theme JS
+    hsjs.tools.downloadJS(this.lazyscripts_url);
+
+    hsjs.tools.downloadJS(
+      this.customSrc,
+      this.onloadCallback
+    );
+    
+  },
+  
+  init: function(){
+    this.load();
+  }
+  
+}
+
+
+
+/*
+ * Lazyload sectons
+ */
+hsjs.lazybits = {
+  
+  mainClassName: "lazybit",
+  
+  initClassName: "lazybit-load",
+
+  loadedClassName: "lazybit-loaded",
+
+  urlAttr: "data-lazy-url",
+
+  loadOnAttr: "data-lazy-loadon",
+  
+  screenAttr: "data-lazy-screen",
+
+  methodAttr: "data-lazy-method",
+  
+  removeAttr: "data-lazy-remove",
+
+  selectorPathAttr: "data-lazy-path",
+  
+  callbackAttr: "data-lazy-callback",
+  
+  tagsToProcess: "script:not([type='text/x-jquery-tmpl']):not([type='text/template7']):not([type='application/ld+json']):not([type='application/json']), link",
+  
+  observerMode: false,
+  
+  runCallback: function(lazybit){
+    
+    // Set content loaded class
+//     lazybit.classList.remove(hsjs.lazybits.initClassName);
+//     lazybit.classList.add(hsjs.lazybits.loadedClassName);
+    
+    const callbackString = lazybit.getAttribute(hsjs.lazybits.callbackAttr);
+    
+    if ( callbackString ){
+      // Try to run string as JS
+      try {
+        hsjs.tools.parseJs( callbackString );
+      } 
+      catch (e) {
+        console.log("AJS: Lazyload Sections calllback error => ", callbackString, e.message);
+      }
+    }
+    
+  },
+  
+  processSpecialTags: function(lazybit){
+    
+    const old_tags = lazybit.querySelectorAll( hsjs.lazybits.tagsToProcess );
+    
+    if (old_tags.length > 0) {
+      
+      old_tags.forEach( old_tag => {
+        
+        // get tag name
+        const tag_name = old_tag.nodeName;
+
+        // create new tag
+        const new_tag = document.createElement(tag_name);
+        
+        // add all attributes from old tag to new tag
+        [].slice.call(old_tag.attributes).forEach( attr => new_tag.setAttribute(attr.name, attr.value) );
+        
+        // add old tag text content to new tag
+        if ( old_tag.innerHTML !== "" ){
+          new_tag.appendChild(document.createTextNode(old_tag.innerHTML));
+        }
+        
+        // replace old tag with new tag, so browser parses it
+        old_tag.parentNode.replaceChild(new_tag, old_tag);
+
+      });
+      
+    }
+
+  },
+  
+  loadLazybitNow: function(lazybit){
+    
+    const lazyUrl = window.location.origin == "https://dankstop.com" ? lazybit.getAttribute(hsjs.lazybits.urlAttr) : lazybit.getAttribute(hsjs.lazybits.urlAttr).replace("https://dankstop.com", window.location.origin);
+    const lazyMethod = lazybit.getAttribute(hsjs.lazybits.methodAttr);
+
+    if ( lazyUrl ){
+
+      const lazySelector = lazybit.getAttribute(hsjs.lazybits.selectorPathAttr) ? lazybit.getAttribute(hsjs.lazybits.selectorPathAttr) : false;
+      const lazySelectorPath = lazySelector ? " " + lazySelector : "";
+//       const loadUrl = (lazyUrl + lazySelectorPath).trim();
+      const loadUrl = lazyUrl;
+
+      // Set content loaded class
+      lazybit.classList.remove(hsjs.lazybits.initClassName);
+      lazybit.classList.add(hsjs.lazybits.loadedClassName);
+
+      if ( lazyMethod == "append" ){
+        
+        hsjs.tools.ajaxCall(loadUrl, function(data){
+
+          if (lazySelector){
+            var parsing_div = document.createElement("div");
+            parsing_div.innerHTML = data;
+            var data = parsing_div.querySelector(lazySelector).innerHTML;
+          }
+
+          const lazyRemove = lazybit.getAttribute(hsjs.lazybits.removeAttr);
+          if ( lazyRemove ){
+            document.querySelectorAll(lazyRemove).forEach(el => el.remove());
+          }
+
+//           $(lazybit).append(data);
+
+          lazybit.insertAdjacentHTML("beforeend", data);
+          
+          hsjs.lazybits.processSpecialTags(lazybit);
+
+          hsjs.lazybits.runCallback(lazybit);
+
+        });
+
+      }
+      else {
+
+        hsjs.tools.ajaxCall(loadUrl, function(data){
+
+          if (lazySelector){
+            var parsing_div = document.createElement("div");
+            parsing_div.innerHTML = data;
+            var data = parsing_div.querySelector(lazySelector).innerHTML;
+          }
+
+//           $(lazybit).html(data);
+
+          lazybit.innerHTML = data;
+
+          hsjs.lazybits.processSpecialTags(lazybit);
+
+          hsjs.lazybits.runCallback(lazybit);
+
+        });
+
+      }
+
+    }
+
+  },
+
+  scrollObserver: function(lazybit){
+    
+    let active = false;
+
+    const lazyLoad = function() {
+      if (active === false) {
+        active = true;
+
+        setTimeout(function() {
+
+          if (
+            (
+              lazybit.getBoundingClientRect().top <= window.innerHeight 
+              && lazybit.getBoundingClientRect().bottom >= 0
+            ) 
+            && getComputedStyle(lazybit).display !== "none"
+          ){
+
+            hsjs.lazybits.loadLazybitNow(lazybit);
+            
+            document.removeEventListener("scroll", lazyLoad);
+            window.removeEventListener("resize", lazyLoad);
+            window.removeEventListener("orientationchange", lazyLoad);
+
+          }
+
+          active = false;
+        }, 200);
+      }
+    };
+
+    document.addEventListener("scroll", lazyLoad);
+    window.addEventListener("resize", lazyLoad);
+    window.addEventListener("orientationchange", lazyLoad);
+    
+  },
+  
+  intersectionObserver: function(lazybit){
+
+    const lazybitObserver = new IntersectionObserver(function(entries, observer) {
+
+      entries.forEach(function(entry) {
+
+        if (entry.isIntersecting && entry.isVisible) {
+
+          // Load lazybit
+          hsjs.lazybits.loadLazybitNow(entry.target);
+
+          // Stop observe lazybit
+          lazybitObserver.unobserve(lazybit);
+
+        }
+
+      });
+
+    });
+    
+    // Start observe lazybit
+    return lazybitObserver.observe(lazybit);
+    
+  },
+  
+  lazyObserve: function(lazybit){
+
+    if ("IntersectionObserver" in window) {
+
+//       hsjs.lazybits.lazyObserve = hsjs.lazybits.intersectionObserver().observe.bind(window, arguments);
+      
+//       return hsjs.lazybits.lazyObserve(lazybit);
+
+      hsjs.lazybits.intersectionObserver(lazybit);
+      
+    }
+    
+    else {
+    
+//       hsjs.lazybits.lazyObserve = hsjs.lazybits.scrollObserver;
+            
+//       return hsjs.lazybits.scrollObserver(lazybit);
+
+      hsjs.lazybits.scrollObserver(lazybit);
+
+    }
+
+  },
+  
+  loadLazybit: function(lazybit){
+    
+    const lazyScreen = lazybit.getAttribute(hsjs.lazybits.screenAttr);
+
+    if (
+      ( lazyScreen == "desktop" && hsjs.tools.isMobile() )
+      || ( lazyScreen == "mobile" && ! hsjs.tools.isMobile() )
+    ){
+      return;
+    }
+
+
+    const lazyLoadOn = lazybit.getAttribute(hsjs.lazybits.loadOnAttr);
+
+    if ( lazyLoadOn === null || lazyLoadOn === "" || lazyLoadOn === "auto" ){
+
+      hsjs.lazybits.loadLazybitNow(lazybit);
+
+    }
+
+    else if ( lazyLoadOn === "view" || lazyLoadOn === "sight" ){
+
+      hsjs.lazybits.lazyObserve(lazybit);
+
+    }
+
+    //         else if ( lazyLoadOn === "click" || lazyLoadOn === "touch" ){
+
+    //         }
+
+  },
+  
+  loadLazybits: function(lazybits){
+    
+    lazybits.forEach( lazybit => {
+
+      setTimeout(function(){
+        
+        hsjs.lazybits.loadLazybit(lazybit);
+
+      });
+
+    });
+    
+  },
+  
+  getLazybits: function(){
+    //return hsjs.cache.$body.find("."+hsjs.lazybits.lazyClassName);
+    //return hsjs.cache.$body.find("[" + hsjs.lazybits.urlAttr + "]");
+//     return hsjs.cache.$body.find("."+hsjs.lazybits.mainClassName+"."+hsjs.lazybits.initClassName+"[" + hsjs.lazybits.urlAttr + "]");
+    return [].slice.call(document.querySelectorAll("."+hsjs.lazybits.mainClassName+"."+hsjs.lazybits.initClassName+"[" + hsjs.lazybits.urlAttr + "]"));
+  },
+  
+  loadSections: function () {
+    
+    //var $lazySections = this.getLazybits();
+    const lazybits = hsjs.lazybits.getLazybits();
+    
+    hsjs.lazybits.loadLazybits(lazybits);
+    
+  },
+  
+  init: function(){
+    hsjs.lazybits.loadSections();
+  }
+  
+}
+
+
+
+/*
+ * Load template/page specific JS
+ */
+hsjs.loadTemplateJs = function(template_type){
+
+  if (typeof template_type === "undefined"){
+    template_type = hsjs.vars.template.name;
+  }
+
+  let template_js_var_name = template_type + "_template";
+  let template_js_url = template_js_var_name + "_js_url";
+
+  // If url for template js doesn't exist, return
+  if ( ! (template_js_url in hsjs.cache.site_data.theme) ) {
+    return;
+  }
+
+  // Load if not already loaded
+  let template_name_loaded = template_js_var_name + "_js_loaded";
+  if ( ! (template_name_loaded in hsjs.cache.site_data.theme) || ! hsjs.cache.site_data.theme[template_name_loaded]){
+    hsjs.tools.downloadJS(hsjs.cache.site_data.theme[template_js_url]);
+  }
+
+  // Reload template-specific JS functions, if template-specific JS has already been loaded
+  else {
+    hsjs[template_js_var_name].refresh();
+  }
+
+}
+
+
+
+
+
+/*
+ * Supernav - Site AJAX Nav 
+ */
+hsjs.ajaxSiteNav = {
+
+  // Flag indicating whether SN is enabled
+  enabled: false,
+  // Selector of Theme Setting element holding "data-" settings attributes
+  themeSettingsSelector: "#SNSettings",
+  
+  // Settings ojbect holding all of SN's options
+  settings: {
+    
+    // Flag indicating whether to show console.log debug messages
+    debug: false,
+    
+    // Method of loading new pages via Shopify's "url.com?view=name" parameter 
+    // html, json
+    method: "html",
+    
+    // URL Cache toggle - whether to store pages in custom cache (need to explore locationStorage)
+    useUrlCache: true,
+
+    // Max href items to hold in urlCache before  deletes them
+    cache_max_items: 50,
+    
+    // Time (in miliseconds) from its added_at timestamp, before a cache entry expires
+    cache_expiration_ms: (24 * 60 * 60),
+
+    // Prefetch toggle - whether to download pages on hover/touch and store in cache
+    prefetch: true,
+    
+    // Timeout holder for prefetch
+    prefetchTimeout: false,
+
+    // Timeout length for prefetch repeats, so as to not upset or overwhelm Shopify servers
+    prefetchTimeoutLength: 137,
+
+    // Delay length for prefetch repeats, so as to not upset or overwhelm Shopify servers
+    rateDelayLength: 700,
+    
+    // Calculated time in rate limiter, for when the delay wil end, for next prefetch to work
+    rateLimitDelayEnd: 0,
+
+    // Elements selectors, on which click and prefetch handlers will be applied
+    anchors: "a",
+    
+    // Form 
+    forms: "form[action='/search']",
+    
+    // Selector for main content into which to load content 
+    mainContentSelector: "#mainContent",
+
+    // Main content selector - will look for this in AJAX data, and load new content in same
+    $mainContent: false,
+    
+    // Shopify template name param value (ie, "?view=template-name") to use when fetching pages 
+    defaultThemeLayout: "no-layout",
+    
+    // Loading flag, indicating whether a click request is already in process
+    isLoading: false,
+    
+    // css, animate, jquery -- potentially obsolete as custom CSS seems best (and mostly viable) method by far
+    animation: "css",
+
+    initiatedBy: false,
+    initiatedByAnchorClick: "anchor-click",
+    initiatedByHistory: "history-button",
+    //observerParams: [document, {attributes: true, childList: true, characterData: false, subtree:true}],
+    timeToWait: 7300,
+    classes: {
+//       modal_show: "show transparent",
+      modal_show: "show",
+//       loading_content: "loading-content grayscale",
+      loading_content: "loading-content",
+      content_loaded: "content-loaded",
+      anchor_processed: "supernav-processed",
+      nav_attached: "supernav-attached",
+      nav_disabled: "supernav-disabled",
+      external_link: "external-link",
+      active_link: "supernav-active-link"
+    },
+    ajaxSetup: {
+      cache: true
+    },
+    excluded_classes: ["warp10-skip", "btn-checkout", "inf-scroll", "infinite-scroll", "supernav-disabled", "ajax-disable", "ajax-disabled", "chat-btn"],
+    excluded_paths: ["/cart/change", "/checkout", "/account", "/pages"]
+  },
+  
+  lastClickedLink: false,
+  lastRetrievedUrl: false,
+  currentPageType: false,
+  
+//   anchorObserver: false,
+  
+  urlCache: {},
+
+  downloadSettings: function(){
+  },
+  
+  downloadtemplates: function(){
+  },
+  
+  pageType: {
+    global: {
+      stopMenuHover: function(){
+        if (hsjs.cache){
+          if ( ! hsjs.cache.$verticalMenu ){
+            hsjs.cache.$verticalMenu = $(".vertical-menu");
+          }
+          if ( ! hsjs.cache.$mainMenu ){
+            hsjs.cache.$mainMenu = $(".vertical-menu .nav-bar");
+          }
+        }
+        
+        hsjs.cache.$verticalMenu.addClass("no-hover");
+        if ( ! hsjs.tools.isMobile ){
+          hsjs.cache.$mainMenu.addClass("hidden");
+        }
+        setTimeout(function(){
+          hsjs.cache.$verticalMenu.removeClass("no-hover");
+          if ( ! hsjs.tools.isMobile ){
+            hsjs.cache.$mainMenu.removeClass("hidden");
+          }
+        }, 100);
+        
+      },
+      funcs: function(){
+        if (hsjs.ajaxSiteNav.settings.debug){
+          console.log("SN: Loading Global JS funcs...");
+        }
+
+        // Set page handle
+        hsjs.vars.pageHandle = window.location.pathname.substr(window.location.pathname.lastIndexOf('/') + 1);
+      
+        // Load lazy sections
+        hsjs.lazybits.init();
+
+        // Reset data-expand on all lazyload images
+        hsjs.lazysizes.resetDataExpand();
+
+        // Re-load delivery estimates 
+        hsjs.tools.waitForElement(
+          ".shipping-estimate",
+          hsjs.deliveryEstimates,
+          hsjs.ajaxSiteNav.settings.timeToWait
+        );
+        
+        // Load Viabill
+        hsjs.viaBill.init();
+        
+        // Reload YouTube videos 
+//         hsjs.ytVideos();
+
+        // Reload Ella
+        hsjs.tools.waitForJSObject(
+          'hsjs.ella',
+          function(){
+            hsjs.ella(jQuery);
+          },
+          30000
+        );
+        
+        // Stop menu hover for amoment
+        hsjs.ajaxSiteNav.pageType.global.stopMenuHover();
+        
+        // Hide PushOwl
+        if (
+          hsjs.ajaxSiteNav.currentPageType != "product"
+          && window.pushowl
+        ){
+          hsjs.pushowl.hideWidget();
+        }
+        
+        // Process external links
+        hsjs.externalLinksTargetBlank();
+        // Remove the old active menu item class
+        $("."+hsjs.ajaxSiteNav.settings.classes.active_link).removeClass(hsjs.ajaxSiteNav.settings.classes.active_link);	
+        // Apply the ".active" class to the clicked menu item
+        $(hsjs.ajaxSiteNav.lastClickedLink).addClass(hsjs.ajaxSiteNav.settings.classes.active_link)
+
+        // TODO
+        // Reload Highife funcs 
+        //hsjs.loginRedirect();
+        
+        // record Google Analytics page view
+        if (window.ga) {
+          window.ga('send', 'pageview', window.location.pathname !== "undefined" ? window.location.pathname : hsjs.ajaxSiteNav.lastRetrievedUrl);
+        }
+        
+      }
+    },
+    product: {
+      settings: {},
+      template: "",
+      funcs: function(){
+        
+        if (hsjs.ajaxSiteNav.settings.debug){
+          hsjs.ajaxSiteNav.consl.log("Loading "+ hsjs.ajaxSiteNav.currentPageType.charAt(0).toUpperCase() + hsjs.ajaxSiteNav.currentPageType.slice(1) +" JS funcs...");
+        }
+
+        // Load template-specific JS, if not already loaded
+        hsjs.loadTemplateJs(hsjs.ajaxSiteNav.currentPageType);
+        
+        // Reload reviews
+        hsjs.reviews.init();
+        
+        if ( document.getElementById("wk-auction") ){
+          hsjs.product_auction.init();
+        }
+        
+      }
+    },
+    collection: {
+      template: "",
+      funcs: function(){
+        
+        if (hsjs.ajaxSiteNav.settings.debug){
+          console.log("SN: Loading "+ hsjs.ajaxSiteNav.currentPageType.charAt(0).toUpperCase() + hsjs.ajaxSiteNav.currentPageType.slice(1) +" JS funcs...");
+        }
+        
+        // Load template-specific JS, if not already loaded
+        hsjs.loadTemplateJs(hsjs.ajaxSiteNav.currentPageType);
+        
+        if ( document.querySelector(".wk-category-auction:empty") ){
+          hsjs.product_auction.init();
+        }
+        
+      }
+    },
+    index: {
+      template: "",
+      funcs: function(){
+        if (hsjs.ajaxSiteNav.settings.debug){
+          console.log("SN: Loading "+ hsjs.ajaxSiteNav.currentPageType.charAt(0).toUpperCase() + hsjs.ajaxSiteNav.currentPageType.slice(1) +" JS funcs...");
+        }
+
+        // Set slick slider height, in case its not set 
+        // TODO this is temporary
+        // need to make lazyload image into settings image obj, 
+        // and set its ratio manually to match slider aspect ratio
+        hsjs.tools.waitForElement(
+          ".slideshow .item .slide-image img.lazyloaded",
+          function(){
+            if ( $(".slideshow")[0] && $(".slideshow .item .slide-image img.lazyloaded")[0] ){
+              $(".slideshow")[0].style = "height: " + $(".slideshow .item .slide-image img.lazyloaded")[0].offsetHeight + "px;"; 
+            }
+          },
+          hsjs.ajaxSiteNav.settings.timeToWait
+        )
+        
+        // Load Instafeed blocks
+//         function instagramdBlocks(){
+//           var $instagramBlocks = $("[data-instagram-feed]");
+//           if ($instagramBlocks.length){
+//             if (
+//               window.instafeedBlocks 
+//               && {}.toString.call(window.instafeedBlocks) === "[object Function]"
+//               && typeof(window.instafeedBlocks) === "function"
+//             ){
+//               if (hsjs.ajaxSiteNav.settings.debug){
+//                 console.log("SN: Loading Instagram/Instafeed Blocks => ", $instagramBlocks);
+//               }
+//               window.instafeedBlocks();
+//             }
+//           }
+//         }
+//         instagramdBlocks();          
+        
+      }
+    },
+    blog: {
+      template: "",
+      funcs: function(){
+
+        if (hsjs.ajaxSiteNav.settings.debug){
+          console.log("SN: Loading "+ hsjs.ajaxSiteNav.currentPageType.charAt(0).toUpperCase() + hsjs.ajaxSiteNav.currentPageType.slice(1) +" JS funcs...");
+        }
+
+        // Load template-specific JS, if not already loaded
+        hsjs.loadTemplateJs(hsjs.ajaxSiteNav.currentPageType);
+        
+      }
+    },
+    article: {
+      template: "",
+      funcs: function(){
+        if (hsjs.ajaxSiteNav.settings.debug){
+          console.log("SN: Loading "+ hsjs.ajaxSiteNav.currentPageType.charAt(0).toUpperCase() + hsjs.ajaxSiteNav.currentPageType.slice(1) +" JS funcs...");
+        }
+      }
+    },
+    page: {
+      styles_href: function(){
+        return hsjs.cache.site_data.theme.page_styles
+      },
+      styles_loaded: false,
+      template: "",
+      funcs: function(){
+        if (hsjs.ajaxSiteNav.settings.debug){
+          console.log("SN: Loading "+ hsjs.ajaxSiteNav.currentPageType.charAt(0).toUpperCase() + hsjs.ajaxSiteNav.currentPageType.slice(1) +" JS funcs...");
+        }
+        
+        // Reload page if jotform
+        if ($("script[src^='https://form.jotform.com']").length){
+          window.location.reload();
+        };
+        
+
+        // Load template-specific JS, if not already loaded
+        hsjs.loadTemplateJs(hsjs.ajaxSiteNav.currentPageType);
+        
+        
+        // Determine if gemPage
+        if (
+          hsjs.ajaxSiteNav.$mainContent.find(".gf_page_style").length 
+          || hsjs.ajaxSiteNav.$mainContent.find("body.gempage").length
+          || hsjs.ajaxSiteNav.$mainContent.find(".gryffeditor").length
+        ){
+          // set current age type
+          hsjs.ajaxSiteNav.currentPageType = "gemPage";
+
+          // Page specific funcs
+          hsjs.ajaxSiteNav.pageType[hsjs.ajaxSiteNav.currentPageType].funcs();
+          
+          return;
+        }
+        
+        // Load page styles 
+        if ( ! hsjs.ajaxSiteNav.pageType[hsjs.ajaxSiteNav.currentPageType].styles_loaded ){
+          hsjs.tools.downloadCSS( hsjs.ajaxSiteNav.pageType[hsjs.ajaxSiteNav.currentPageType].styles_href() );
+        }
+        
+      }
+    },
+    cart: {
+      template: "",
+      funcs: function(){
+        if (hsjs.ajaxSiteNav.settings.debug){
+          console.log("SN: Loading "+ hsjs.ajaxSiteNav.currentPageType.charAt(0).toUpperCase() + hsjs.ajaxSiteNav.currentPageType.slice(1) +" JS funcs...");
+        }
+        
+        // Load template-specific JS, if not already loaded
+        hsjs.loadTemplateJs(hsjs.ajaxSiteNav.currentPageType);
+        
+      }
+    },
+    search: {
+      template: "",
+      funcs: function(){
+        
+        if (hsjs.ajaxSiteNav.settings.debug){
+          console.log("SN: Loading "+ hsjs.ajaxSiteNav.currentPageType.charAt(0).toUpperCase() + hsjs.ajaxSiteNav.currentPageType.slice(1) +" JS funcs...");
+        }
+        
+        // Load template-specific JS, if not already loaded
+        hsjs.loadTemplateJs(hsjs.ajaxSiteNav.currentPageType);
+        
+      }
+    },
+    account: {
+      template: "",
+      funcs: function(){
+        if (hsjs.ajaxSiteNav.settings.debug){
+          hsjs.ajaxSiteNav.consl.log("Loading "+ hsjs.ajaxSiteNav.currentPageType.charAt(0).toUpperCase() + hsjs.ajaxSiteNav.currentPageType.slice(1) +" JS funcs...");
+        }
+        
+        hsjs.socialLogin.init();
+        
+      }
+    },
+    apps: {
+      template: "",
+      funcs: function(){
+        if (hsjs.ajaxSiteNav.settings.debug){
+          console.log("SN: Loading "+ hsjs.ajaxSiteNav.currentPageType.charAt(0).toUpperCase() + hsjs.ajaxSiteNav.currentPageType.slice(1) +" JS funcs...");
+        }
+      }
+    },
+    other: {
+      template: "",
+      funcs: function(){
+        if (hsjs.ajaxSiteNav.settings.debug){
+          console.log("SN: Loading "+ hsjs.ajaxSiteNav.currentPageType.charAt(0).toUpperCase() + hsjs.ajaxSiteNav.currentPageType.slice(1) +" JS funcs...");
+        }
+      }
+    },
+    gemPage: {
+      template: "",
+      funcs: function(){
+        if (hsjs.ajaxSiteNav.settings.debug){
+          console.log("SN: Loading "+ hsjs.ajaxSiteNav.currentPageType.charAt(0).toUpperCase() + hsjs.ajaxSiteNav.currentPageType.slice(1) +" JS funcs...");
+        }
+        
+        // TODO figure out how to make gem pages work completely
+        // example not working page https://dankstop.com/pages/drop-shipping-program
+        window.location.reload();
+        
+//         if (typeof pageLibs !== "undefined"){
+          
+//           console.log(pageLibs);
+//           for (i = 0, gp_s_len = pageLibs.length; i < gp_s_len; ++i) {
+            
+//             // Download all GP scripts
+//             hsjs.tools.downloadJS(pageLibs[i]);
+            
+//           }
+          
+//         }
+        
+//        var $gem_page_content = $(".page-tpl .rte").addClass("gryffeditor").removeClass("rte");
+//        $(".page-tpl").replaceWith($gem_page_content);
+        
+      }
+    }
+  },
+  
+  consl: {
+    
+    log: function(msg) {
+      if ( ! hsjs.ajaxSiteNav.settings.debug || ! window.console ){
+        return; 
+      }
+      var sn_pre_log = "\x1b[36mSN:\x1b[0m";
+      console.log.apply(console, [sn_pre_log, msg].concat(Array.prototype.slice.call(arguments, 1)));
+    },
+    
+    warn: function(msg) {
+      if ( ! hsjs.ajaxSiteNav.settings.debug || ! window.console ){
+        return; 
+      }
+      var sn_pre_log = "\x1b[33mSN:\x1b[0m";
+      console.warn.apply(sn_pre_log + console, arguments);
+    },
+    
+    error: function(msg) {
+      if ( ! hsjs.ajaxSiteNav.settings.debug || ! window.console ){
+        return; 
+      }
+      var sn_pre_log = "\x1b[31mSN:\x1b[0m";
+      console.error.apply(sn_pre_log + console, arguments);
+    }
+    
+  },
+  
+  /**
+   * Return an a jQuery object of all anchors eligible for warp10
+   */
+  /**
+   eligibleAnchors: function(){
+
+//     var $eligible_anchors = $();
+
+//     $("a:not(."+hsjs.ajaxSiteNav.settings.classes.anchor_processed+")").each(function() {
+//       $(this).addClass(hsjs.ajaxSiteNav.settings.classes.anchor_processed);
+//       // label external links
+//       if ( (this.hostname) 
+//           && (this.hostname != location.hostname) 
+//          ){
+//         $(this).attr("target", "_blank").attr("rel", "noopener").addClass(hsjs.ajaxSiteNav.settings.classes.external_link);
+//       }
+//       else if (
+//         // Make sure its not an ampty 'href' or 'href=""'
+//         (this.hostname) 
+//         // Make sure its internal, ie same host/domain name
+//         && (this.hostname == location.hostname) 
+//         // Make sure its not the same page, and not a hash action 
+//         && (this.pathname != location.pathname && this.href.indexOf("#") === -1) 
+//         // Make sure its not an excluded class 
+//         && ( ! hsjs.ajaxSiteNav.settings.excluded_classes.some(excluded_class => this.classList.contains(excluded_class)) ) 
+//         // Make sure its not an excluded path 
+//         && ( ! hsjs.ajaxSiteNav.settings.excluded_paths.some(excluded_path => this.href.indexOf(excluded_path) !== -1) ) 
+//         // Make sure link is not a new tab opener
+//         && ( ! this.target )
+//       ){
+//         $eligible_anchors = $eligible_anchors.add($(this));
+//       }
+//       else {
+//         $(this).addClass(hsjs.ajaxSiteNav.settings.classes.nav_disabled);
+//       }
+//     });
+
+//     if (hsjs.ajaxSiteNav.settings.debug){
+//       //console.log("SN: Eligible anchors => ", $eligible_anchors.length);
+//     }
+
+//     return $eligible_anchors;
+   },
+   */
+  
+  cacheLengthLimiter: function(){
+
+	// Calc amount over limit
+    var cache_keys = Object.keys(hsjs.ajaxSiteNav.urlCache);
+//     var cache_length = hsjs.tools.countProperties(hsjs.ajaxSiteNav.urlCache);
+    var cache_length = cache_keys.length;
+    var amount_over_limit = cache_length - hsjs.ajaxSiteNav.settings.cache_max_items;
+    
+    var cache_index;
+    for (cache_index = 0; cache_index < amount_over_limit; cache_index++) {
+
+      delete hsjs.ajaxSiteNav.urlCache[ cache_keys[cache_index] ];
+
+    }
+
+
+  },
+
+  localStorageTest: function(){
+    
+    if (typeof localStorage !== 'undefined'){
+      var test = 'warp10_test';
+      try {
+        localStorage.setItem(test, test);
+        localStorage.removeItem(test);
+        hsjs.ajaxSiteNav.localStorageTest = function(){return true;};
+        return hsjs.ajaxSiteNav.localStorageTest();
+      } catch(e) {
+        hsjs.ajaxSiteNav.localStorageTest = function(){return false;};
+        return hsjs.ajaxSiteNav.localStorageTest();
+      }
+    }
+    else {
+      hsjs.ajaxSiteNav.localStorageTest = function(){return false;};
+      return hsjs.ajaxSiteNav.localStorageTest();
+    }
+    
+  },
+
+  restoreCache: function(){
+
+    setTimeout(function(){
+      
+      if ( hsjs.ajaxSiteNav.localStorageTest() === true ){
+
+        var cache_json = JSON.parse( localStorage.getItem("warp10_cache") );
+        if ( cache_json ){
+          hsjs.ajaxSiteNav.urlCache = cache_json;
+        }
+        else {
+          hsjs.ajaxSiteNav.urlCache = [];
+        }        
+
+      }
+      
+    });
+
+  },
+  
+  saveCache: function(){
+    
+    setTimeout(function(){
+      
+      if ( hsjs.ajaxSiteNav.localStorageTest() === true ){
+
+        localStorage.setItem("warp10_cache", JSON.stringify(hsjs.ajaxSiteNav.urlCache) );
+
+      }
+      
+    });
+    
+  },
+  
+  recordCache: function(href, ajaxURL, content, pageType, timestamp){
+    
+    if ( hsjs.ajaxSiteNav.settings.useUrlCache === false ){
+//         || pageType == "gemPage" ){
+      return;
+    }
+    
+    hsjs.ajaxSiteNav.consl.log("Recording to urlCache...");
+    
+    if(typeof timestamp === "undefined") {
+      timestamp = Math.round(new Date().getTime() / 1000);
+    }
+    
+    hsjs.ajaxSiteNav.urlCache[href] = {
+      href: href,
+      ajaxURL: ajaxURL,
+      htmlData: content,
+      pageType: pageType,
+      added_at: timestamp,
+      status: "loaded"
+    }
+    
+  },
+  
+  showLoading: function(){
+    // Show ajax loading progress icon
+    hsjs.ajax.showLoading();
+    
+    // Fade content out
+    hsjs.ajaxSiteNav.$mainContent.addClass("fade").removeClass("show");
+
+    // Show backdrop modal
+    //hsjs.cache.$modalBackdrop.addClass(hsjs.ajaxSiteNav.settings.classes.modal_show);
+
+//     // Animate content population
+//     if (hsjs.ajaxSiteNav.settings.animation == "css"){
+//       // Fade content out
+//       hsjs.ajaxSiteNav.$mainContent.addClass("fade").removeClass("show");
+//     }
+//     else if (hsjs.ajaxSiteNav.settings.animation == "animate"){
+//       // Fade content out
+//       hsjs.ajaxSiteNav.$mainContent.addClass("animated fadeIn fadeOut");
+//     }    
+
+//   -webkit-filter: grayscale(100%); 
+//   filter: grayscale(100%);
+
+    // Only inject the spinner if the plugin has been loaded	
+//     if (window.Spinner) {	
+//       // Ensures only one spinner is active at a time
+//       if (!$('#spinner').length) {$('body').append('<div id="spinner"></div>');}
+
+//       // Declare needed global variables	
+//       var spinnerLoader = '<div class="loader-container"><div class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div></div>';
+//       var cubeLoader = '<div class="loader-container"><div class="sk-folding-cube"><div class="sk-cube1 sk-cube"></div><div class="sk-cube2 sk-cube"></div><div class="sk-cube4 sk-cube"></div><div class="sk-cube3 sk-cube"></div></div></div>';
+
+//       // 				  setTimeout(function(){
+//       hsjs.ajaxSiteNav.$mainContent.css({"position":"relative"}).append("<div class=\"modal-backdrop ajax-backdrop fade show\"></div>").append(cubeLoader);
+//       // 				  }, 137);
+
+//       // Spinner settings
+//       var opts = {
+//         lines: 11, // The number of lines to draw
+//         length: 9, // The length of each line
+//         width: 5, // The line thickness
+//         radius: 12, // The radius of the inner circle
+//         corners: 0.4, // Corner roundness (0..1)
+//         color: '#a87fc6', // #rgb or #rrggbb or array of colors
+//         className: 'spinner', // The CSS class to assign to the spinner
+//         top: '45%', // Top position relative to parent
+//         left: '55%' // Left position relative to parent
+//       };
+//       var target = document.getElementById('spinner');
+//       var spinner = new Spinner(opts).spin(target);
+//     }
+  },
+  
+  hideLoading: function(){
+    // Hide spinner 
+    hsjs.ajax.hideLoading();
+    
+    // Fade content back in
+    hsjs.ajaxSiteNav.$mainContent.addClass("show");
+
+    // Hide backdrop modal
+    //hsjs.cache.$modalBackdrop.removeClass(hsjs.ajaxSiteNav.settings.classes.modal_show);
+    
+//     // Animate content population
+//     if (hsjs.ajaxSiteNav.settings.animation == "css"){
+//       // Fade content back in
+//       hsjs.ajaxSiteNav.$mainContent.addClass("show");
+//     }
+//     else if (hsjs.ajaxSiteNav.settings.animation == "animate"){
+//       // Fade content back in
+//       hsjs.ajaxSiteNav.$mainContent.addClass("fadeIn").removeClass("fadeOut");
+//     } 
+
+//     $(hsjs.ajaxSiteNav.settings.mainContentSelector + " > *").removeClass("animated animated-shortest fadeInUp");
+
+//     hsjs.ajaxSiteNav.$mainContent.css({"position":""});
+//     hsjs.ajaxSiteNav.$mainContent.find('<div class="modal-backdrop fade show"></div>').remove();
+//     hsjs.ajaxSiteNav.$mainContent.find(cubeLoader).remove();
+//     $('#spinner').empty();
+
+//     setTimeout(function() {
+//       //loadAllFunctions();
+//       hsjs.ajaxSiteNav.$mainContent.removeClass("animated animated-shortest fadeIn");
+//     },1000);
+
+    //   $(main_container_selector).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+    //	  $(main_container_selector).removeClass('animated animated-shortest fadeInUp fadeOut');
+    //  });
+  },
+
+  scrollToThemeTop: function(){
+    var y_scroll_amount = $("#sticky-wrapper")[0] ? ($("#sticky-wrapper")[0].offsetTop + 5) : 0;
+    window.scrollTo(0,y_scroll_amount);
+  },
+  
+  pluginUnload: function(){
+
+    // Ajax loading often involves loading the same plugin multiple times(different pages, etc).
+    // However some plugins can't be reinitilized on existing DOM elements or they will error. 
+    // This function list those plugins and detaches their handlers on load so that their 
+    // elements are free to be reattached to at a later time
+
+    // Unload attached handlers
+    $(window).off("scroll.infiniteScrolling");
+        
+    // List of plugins that require detachment
+    var pluginList = [
+//       '.dataTables_wrapper', 
+//       '.single-daterange', 
+//       '.datepicker', 
+//       '.rangepicker', 
+//       '.colorpicker', 
+//       '.rgbapicker', 
+//       '.timepicker', 
+//       '[data-toggle="tooltip"]', 
+      '#graph'
+    ];
+
+    if (hsjs.ajaxSiteNav.settings.debug){
+      console.log("SN: Plugin unload => ", pluginList.length);
+    }
+
+    // Cycle through each plugin and detach its handler
+    function unloadPlugins(){
+      $.each(pluginList, function(i, e) {
+        if ($(e).length) {
+          $(e).detach();
+        };
+      });
+    }
+    //unloadPlugins();
+  },
+  
+  closeAllMenusModals: function(){
+    
+    // Close all from Ella
+    hsjs.cache.$html.removeClass("translate-overlay cart-show customer-show sidebar-open options-show");
+    // TODO consider combining all the below somehow, with a class on setupUI or something
+    $(".close-menu-mb").removeClass("menu-open");
+    $(".main-menu.jas-mb-style").css({overflow: "" });
+    $(".site-nav").find("[data-toggle-menu-mb]").parent().next(".sub-menu-mobile").removeClass("sub-menu-open");
+    $("input:focus").blur();
+    
+    // Close all modals
+    var $modals = $("[data-ajax-cart-success], [data-quickview-modal]");
+    $modals.fadeOut(500);
+    
+    // Remove halo overlay
+    hsjs.cache.$html
+    .removeClass("halo-modal-open")
+    .css({
+      overflow: ""
+    });
+    
+    // Close search
+    hsjs.cache.$html.removeClass("search-open"); 
+    // The below may be unnecessary, as closing search already hides this search wrap 
+    $(".quickSearchResultsWrap").hide();
+
+    // On page content processing
+    $("#defaultModal, #formModal, #alertModal").remove();
+    
+  },
+
+  setHistory: function(page_title){
+    
+    // TODO
+    // Need to replace with https://github.com/browserstate/history.js
+    // Update browser pushstate
+    if (hsjs.ajaxSiteNav.settings.initiatedBy != hsjs.ajaxSiteNav.settings.initiatedByHistory){
+      if (hsjs.ajaxSiteNav.settings.debug){
+        console.log("hsjs.ajaxSiteNav.lastClickedLink.href ===>   ", hsjs.ajaxSiteNav.lastClickedLink.href);
+        console.log("window.history ===>   ", window.history);
+      }
+      if(hsjs.ajaxSiteNav.lastClickedLink.getAttribute('id') != 'filter_url'){ 
+        window.history.pushState(
+          hsjs.ajaxSiteNav.lastClickedLink.href, 
+          page_title, 
+          hsjs.ajaxSiteNav.lastClickedLink.href
+        );
+      }
+      
+      if (hsjs.ajaxSiteNav.settings.debug){
+        console.log("window.history ===>   ", window.history);
+      }
+    }
+    
+    // Set document title for browsers that dont support history title
+    document.title = page_title;
+    
+  },
+  
+  /**
+   * AJAX on callback run before sending request - used for prep
+   */
+  onBeforeSend: function(href){
+    
+    if (hsjs.ajaxSiteNav.settings.debug){
+      console.log("\x1b[36mSN:\x1b[0m", "Processing before send => ", href);
+    }
+
+    // Add loading content class to main content container
+    hsjs.ajaxSiteNav.$mainContent
+    .removeClass(hsjs.ajaxSiteNav.settings.classes.content_loaded)
+    .addClass(hsjs.ajaxSiteNav.settings.classes.loading_content);
+
+    // Start loading animation
+    hsjs.ajaxSiteNav.showLoading(); 
+
+    // Close all menus and modals
+    hsjs.ajaxSiteNav.closeAllMenusModals(); 
+    
+  },
+  
+  /**
+   * AJAX on success callback, before loading content
+   */
+  onSuccessPreContent: function(data){
+    
+    if (hsjs.ajaxSiteNav.settings.debug){
+      hsjs.ajaxSiteNav.consl.log("Downloaded content '"+hsjs.ajaxSiteNav.settings.mainContentSelector+"' length => ", $("<div>"+data+"</div>").find(hsjs.ajaxSiteNav.settings.mainContentSelector).length);
+//       console.log("\x1b[36mSN:\x1b[0m", "data => ", data);
+    }
+    
+    // Get page title 
+    var page_title = $("<div>"+data+"</div>").find("title").length ? $("<div>"+data+"</div>").find("title").text().trim() : hsjs.ajaxSiteNav.lastClickedLink.href;
+    
+    // Set history 
+    hsjs.ajaxSiteNav.setHistory(page_title);
+    
+    // Detach various handlers from DOM to prevent plugin errors
+    hsjs.ajaxSiteNav.pluginUnload();
+    
+  },
+  
+  /**
+   * Populate new content
+   */
+  populateNewContent: function(new_content, container_selector){
+    
+    if (hsjs.ajaxSiteNav.settings.debug){
+      hsjs.ajaxSiteNav.consl.log("Populating new content ...");
+//       console.log("\x1b[36mSN:\x1b[0m", "New content => ", new_content);
+    }
+    
+    // Scroll to theme top before populating new content
+    hsjs.ajaxSiteNav.scrollToThemeTop();
+
+    
+    // Set container to populate
+    var $container_to_populate = container_selector ? $(container_selector) : hsjs.ajaxSiteNav.$mainContent;
+    
+    // Populate new content
+    $container_to_populate
+    .html(new_content);
+
+    $container_to_populate
+    // Remove content loading class
+    .removeClass(hsjs.ajaxSiteNav.settings.classes.loading_content)
+    // Add content loaded class
+    .addClass(hsjs.ajaxSiteNav.settings.classes.content_loaded);
+
+    if (hsjs.ajaxSiteNav.settings.debug){
+      hsjs.ajaxSiteNav.consl.log("New content populated.");
+    }
+    
+  },
+  
+  /**
+   * AJAX on complete callback, after loading content
+   */
+  onComplete: function(href){
+
+    if (hsjs.ajaxSiteNav.settings.debug){
+      console.log("\x1b[36mSN:\x1b[0m", "onComplete fired.");
+    }
+
+    hsjs.tools.waitForElement(
+      hsjs.ajaxSiteNav.settings.mainContentSelector+"."+hsjs.ajaxSiteNav.settings.classes.content_loaded,
+      function(){
+        
+        // Reattach anchors and anchors observer
+        //hsjs.ajaxSiteNav.reattachAnchorsAndObserver();
+        
+        // Global JS specific funcs
+        hsjs.ajaxSiteNav.pageType.global.funcs();
+
+        // Page specific funcs
+        hsjs.ajaxSiteNav.pageType[hsjs.ajaxSiteNav.currentPageType].funcs();
+
+        // Record last retrieved url
+        hsjs.ajaxSiteNav.lastRetrievedUrl = href;
+
+        // Set isLoading to false
+        hsjs.ajaxSiteNav.settings.isLoading = false;
+
+        // Stop loading animation
+        hsjs.ajaxSiteNav.hideLoading(); 
+        
+        // Keep cache to items limit 
+        hsjs.ajaxSiteNav.cacheLengthLimiter();
+        
+        if (hsjs.ajaxSiteNav.settings.debug){
+          console.log("\x1b[36mSN:\x1b[0m", "onComplete finished.");
+        }
+
+      },
+      hsjs.ajaxSiteNav.settings.timeToWait
+    );
+    
+    // Record urlCache to localStorage
+    hsjs.ajaxSiteNav.saveCache();
+    
+  },
+
+  /**
+   * AJAX on error callback
+   */
+  onError: function(jqXHR, textStatus, errorThrown){
+    var errorMsg = "";
+    if (jqXHR.status === 0){
+      errorMsg = "Not connected. Verify Network.";
+    } else if (jqXHR.status == 404){
+      errorMsg = "Requested page not found [404].";
+    } else if (jqXHR.status == 500){
+      errorMsg = "Internal Server Error [500].";
+    } else if (textStatus === "parsererror"){
+      errorMsg = "Requested JSON parse failed."
+    } else if (textStatus === "timeout"){
+      errorMsg = "Timeout error."
+    } else if (textStatus === "abort"){
+      errorMsg = "Ajax request aborted."
+    } else {
+      errorMsg = "Uncaught Error: " + jqXHR.responseText;
+    }
+    if (hsjs.ajaxSiteNav.settings.debug){
+      console.log("SN: AJAX ERROR - " + errorMsg, errorThrown);
+    }
+    // Set error 
+    hsjs.ajaxSiteNav.error = {};
+    hsjs.ajaxSiteNav.error.jqXHR = jqXHR;
+    hsjs.ajaxSiteNav.error.textStatus = textStatus;
+    hsjs.ajaxSiteNav.error.errorThrown = errorThrown;
+    hsjs.ajaxSiteNav.error.errorMsg = errorMsg;
+    // Set isLoading to false
+    hsjs.ajaxSiteNav.settings.isLoading = false;
+    // Stop loading animation
+    hsjs.ajaxSiteNav.hideLoading();
+  },
+  
+  /**
+   * Cotent loader selector decides whether to load from cache, html, or json
+   *
+   */
+//   anchorObserver: { 
+//     obj: new MutationObserver(function(mutations) {
+//       if (document.querySelectorAll("a:not(."+hsjs.ajaxSiteNav.settings.classes.anchor_processed+"):not([target=_blank])").length) {
+//         if (hsjs.ajaxSiteNav.settings.debug){
+//           //console.log("SN: Unprocessed <a> detected => ", document.querySelectorAll("a:not(."+hsjs.ajaxSiteNav.settings.classes.anchor_processed+"):not([target=_blank])").length);
+//         }
+//         hsjs.ajaxSiteNav.attachClickHandler();
+//       }
+//     }),
+//     start: function(){
+//       // Launch observer
+//       hsjs.ajaxSiteNav.anchorObserver.obj.observe(hsjs.ajaxSiteNav.settings.observerParams[0], hsjs.ajaxSiteNav.settings.observerParams[1]);
+//       if (hsjs.ajaxSiteNav.settings.debug){
+//         console.log("SN: Anchor observer started");
+//       }
+//     },
+//     stop: function(){
+//       // Stop observer
+//       hsjs.ajaxSiteNav.anchorObserver.obj.disconnect();
+//       if (hsjs.ajaxSiteNav.settings.debug){
+//         console.log("SN: Anchor observer stopped");
+//       }
+//     }
+//   },
+
+  /**
+   * Checks to see if rate limited and should wait to fetch
+   *
+   */
+  rateLimit: {
+    
+    shouldWait: function () {
+      var isDelayLimited = (hsjs.ajaxSiteNav.settings.rateDelayLength === null);
+      var isDelayOver = (parseInt(Date.now()) > hsjs.ajaxSiteNav.settings.rateLimitDelayEnd);
+      return ( ! (isDelayLimited || isDelayOver) );
+    },
+    
+    setRepeatTime: function () {
+      hsjs.ajaxSiteNav.settings.rateLimitDelayEnd = parseInt(Date.now()) + parseInt(hsjs.ajaxSiteNav.settings.rateDelayLength);
+    }
+    
+  },
+
+  /**
+   * Checks to see if we should be loading the URL from this anchor/"link"
+   * @param   {a element}   anchor - anchor being evaluated
+   *
+   */
+  isEligibleAnchor: function (anchor) {
+    // If anchor is a string URL, turn it into an anchor object 
+    if (typeof anchor === "string"){
+      var anchor_href = anchor;
+      anchor = document.createElement("a");
+      anchor.href = anchor_href;
+    }
+    
+    if (hsjs.ajaxSiteNav.settings.debug){
+      console.log("\x1b[36mSN:\x1b[0m", "anchor.hostname => ", anchor.hostname);
+      console.log("\x1b[36mSN:\x1b[0m", "anchor.hostname == location.hostname => ", anchor.hostname == location.hostname);
+      console.log("\x1b[36mSN:\x1b[0m", "anchor.pathname != location.pathname => ", anchor.pathname != location.pathname);
+      console.log("\x1b[36mSN:\x1b[0m", "anchor.pathname != location.pathname || anchor.href.indexOf('#') === -1 => ", anchor.pathname != location.pathname, anchor.href.indexOf('#') === -1);
+      console.log("\x1b[36mSN:\x1b[0m", "class check => ", ( ! hsjs.ajaxSiteNav.settings.excluded_classes.some(excluded_class => anchor.classList.contains(excluded_class)) ) );
+      console.log("\x1b[36mSN:\x1b[0m", "path check => ", ( ! hsjs.ajaxSiteNav.settings.excluded_paths.some(excluded_path => anchor.href.indexOf(excluded_path) !== -1) ) );
+    }
+
+    // URL will only be loaded if 
+    // it's an internal link to a different page
+    return (
+      // Make sure its not an ampty 'href' or 'href=""'
+      (anchor.hostname) 
+      // Make sure its internal, ie same host/domain name
+      && (anchor.hostname == location.hostname) 
+      // Make sure its either not the same *pathname*, or if same path, then not a hash action 
+      && (anchor.pathname != location.pathname || anchor.href.indexOf('#') === -1) 
+      // Make sure its not an excluded class 
+      && ( ! hsjs.ajaxSiteNav.settings.excluded_classes.some(excluded_class => anchor.classList.contains(excluded_class)) ) 
+      // Make sure its not an excluded path 
+      && ( ! hsjs.ajaxSiteNav.settings.excluded_paths.some(excluded_path => anchor.href.indexOf(excluded_path) !== -1) ) 
+      // Make sure link is not a new tab opener
+      && ( ! anchor.target )
+    )
+    
+  },
+
+  /**
+   * Checks to see if we should be loading the URL from this event
+   * @param   {JS event}   event - event being evaluated
+   *
+   */
+  isEligibleEvent: function(event){
+    return (
+      // Allow new tab via Cntrl key (Windows)
+      ! event.metaKey 
+      // Allow new tab via Cmd key (Mac OS)
+      && ! event.ctrlKey 
+    )
+  },
+  
+  /**
+   * Builds URL to retrieve page via AJAX
+   * @param   {string}   href - href/URL of the fetched/clicked/prefetched anchor
+   *
+   */
+  buildAjaxUrl: function(href, href_page_type, content_to_grab_selector){
+    
+    // Set intial URL
+    var ajaxURL = href;
+
+    // Build ajaxUrl
+    if ( href.indexOf("?view=") === -1 && href.indexOf("&view=") === -1 ){
+      var append_char = href.indexOf("?") === -1 ? "?" : "&";
+      var layout_param_key = "view=";
+      var layout_to_use = hsjs.ajaxSiteNav.settings.defaultThemeLayout;
+      ajaxURL = href + append_char + layout_param_key + layout_to_use;
+    }
+    else {
+      ajaxURL = href;
+    }
+    
+    // Set page specific URL
+    if (href_page_type == "page"){
+      content_to_grab_selector = hsjs.ajaxSiteNav.settings.mainContentSelector;
+//       layout_param_key = "view=";
+//       layout_to_use = "supernav";
+//       ajaxURL = href;
+      var append_char = href.indexOf("?") === -1 ? "?" : "&";
+      var layout_param_key = "view=";
+      var layout_to_use = "supernav";
+      ajaxURL = href + append_char + layout_param_key + layout_to_use;
+    }
+    else if (href_page_type == "article"){
+      content_to_grab_selector = "#mainContent";
+      ajaxURL = href;
+    }
+    else if (href_page_type == "apps"){
+      content_to_grab_selector = hsjs.ajaxSiteNav.settings.mainContentSelector;
+    }
+
+    return ajaxURL;
+
+  },
+  
+  /**
+   * Prepare URL and content selector path, depending on page type
+   */
+  pageTpyePrep: function(){
+    
+    // Get page type
+    var href_page_type = hsjs.urlTemplate(href);
+
+    // Set page specific URL
+    var content_to_grab_selector = "*";
+    if (href_page_type == "page"){
+//       layout_param_key = "view=";
+//       layout_to_use = "supernav";
+      content_to_grab_selector = hsjs.ajaxSiteNav.settings.mainContentSelector;
+//       ajaxURL = href;
+    }
+    
+  },
+  
+  /**
+   * Cache Load content - load from urlCache
+   */
+  loadFromCache: function(href){
+    
+    hsjs.ajaxSiteNav.consl.log("Loading from urlCache => ", href);
+    
+    // Perform general data pre-processing applicable to all methods
+    //hsjs.ajaxSiteNav.onBeforeSend(href);
+    // Add loading content class to main content container
+    hsjs.ajaxSiteNav.$mainContent
+    .removeClass(hsjs.ajaxSiteNav.settings.classes.content_loaded)
+    .addClass(hsjs.ajaxSiteNav.settings.classes.loading_content);
+    // Close all menus and modals
+    hsjs.ajaxSiteNav.closeAllMenusModals(); 
+    
+    // Perform general data processing applicable to all methods
+    hsjs.ajaxSiteNav.onSuccessPreContent(hsjs.ajaxSiteNav.urlCache[href]["htmlData"]);
+
+    // Populate new content
+//     hsjs.ajaxSiteNav.populateNewContent(hsjs.ajaxSiteNav.urlCache[href]["htmlData"]);
+    
+    // Perform general data pre-processing applicable to all methods
+//     hsjs.ajaxSiteNav.onComplete();
+    
+    // Populate new content, with fade
+    // Fade out main content
+    hsjs.ajaxSiteNav.$mainContent
+    .fadeOut(150, function(){
+      
+      // Populate new content
+      hsjs.ajaxSiteNav.populateNewContent(hsjs.ajaxSiteNav.urlCache[href]["htmlData"]);
+
+      // Perform general data pre-processing applicable to all methods
+      hsjs.ajaxSiteNav.onComplete();
+      
+    })
+    // Fade main content back in
+    .fadeIn(150);
+    
+  },
+  
+  /**
+   * Extract HTML content to load from AJAX data response
+   */
+  extractNewContent: function(data, main_content_selector, content_to_grab_selector){
+    var new_content = false;
+    var $data = $("<div>" + data + "</div>");
+    var main_content_test = $data.find(main_content_selector).length;
+    if ($(data).find("body").length === 0 
+        && main_content_test === 0
+        && content_to_grab_selector == "*"
+       ){
+      new_content = data;
+    }
+    else if (main_content_test > 0){
+      new_content = $data.find(main_content_selector).contents();
+    }
+    else {
+      if (main_content_test > 0){
+        new_content = $data.find(content_to_grab_selector).contents();
+      }
+    }
+    return new_content;
+  },
+  
+  /**
+   * HTML Load content - default
+   */
+  loadHtmlContent: function(href){
+    
+    // Get page type
+    var href_page_type = hsjs.urlTemplate(href);
+
+	// Get ajaxUrl
+    var content_to_grab_selector = "*";
+    var ajaxURL = hsjs.ajaxSiteNav.buildAjaxUrl(href, href_page_type, content_to_grab_selector);
+        
+    $.ajax({
+      url: ajaxURL,
+      cache: true,
+      dataType: "html",
+      beforeSend: function() {
+        // Perform general data pre-processing applicable to all methods
+        hsjs.ajaxSiteNav.onBeforeSend(href);        
+      },
+
+      success: function(data, status, xhr) {
+        
+        // Perform general data processing applicable to all methods
+        hsjs.ajaxSiteNav.onSuccessPreContent(data);
+
+        // HTML Method - Append new AJAX content
+        if (hsjs.ajaxSiteNav.settings.debug){
+          console.log("SN: ajax data 'body' length => ", $(data).find("body").length);
+          console.log("SN: ajax data 'mainContentSelector' length => ", $(data).find(hsjs.ajaxSiteNav.settings.mainContentSelector).length);
+        }
+
+        // Extract new content from ajax data
+        var new_content = hsjs.ajaxSiteNav.extractNewContent(data, hsjs.ajaxSiteNav.settings.mainContentSelector, content_to_grab_selector);
+
+        // Populate new content
+        hsjs.ajaxSiteNav.populateNewContent(new_content);
+
+        // Record new content in urlCache
+        hsjs.ajaxSiteNav.recordCache(
+          href,
+          ajaxURL,
+          new_content, 
+          hsjs.ajaxSiteNav.currentPageType
+        );
+        
+      },
+
+      error: function(jqXHR, textStatus, errorThrown){
+        hsjs.ajaxSiteNav.onError(jqXHR, textStatus, errorThrown);        
+      },
+
+      complete: function() {
+        // Perform general data pre-processing applicable to all methods
+        hsjs.ajaxSiteNav.onComplete(href);        
+      }
+      
+    }); 
+    
+  },
+  
+  /**
+   * JSON Load content - not yet implemented
+   */
+  loadJsonContent: function(href){
+    // implement JS/Liquid templates 
+    // with Handlebars/Liquid-extension template processor 
+    // https://cdn.jsdelivr.net/npm/handlebars@4.4.5/lib/index.min.js
+    // https://github.com/jonschlinkert/liquid-to-handlebars
+  },
+  
+  /**
+   * Load content handler -- will select HTML or JSON URL to load
+   */
+  loadContent: function(href){
+
+    hsjs.ajaxSiteNav.consl.log("Load content => ", href);
+    
+    // Record href
+    hsjs.ajaxSiteNav.currentPageType = hsjs.urlTemplate(href);
+    hsjs.vars.template.name = hsjs.ajaxSiteNav.currentPageType;
+
+    // Get time now in miliseconds
+    var time_ms_now = Math.round(new Date().getTime() / 1000);
+    // Calc time of expiration, eg. if expiration is 24 hours ago, get the timestamp for 24 ago in miliseconds
+    var cache_expires_time = time_ms_now - hsjs.ajaxSiteNav.settings.cache_expiration_ms;
+    
+    if (
+      // Make sure not a page as gemPages cause bugs
+      hsjs.ajaxSiteNav.currentPageType != "page" 
+      // Check if url is stored in urlCache
+      && hsjs.ajaxSiteNav.urlCache[href] 
+      // Make sure href is already loaded
+      && (hsjs.ajaxSiteNav.urlCache[href].status 
+          && (hsjs.ajaxSiteNav.urlCache[href].status == "loaded" || hsjs.ajaxSiteNav.urlCache[href].status == "fetching") )
+      // Make sure urlCache entry is not expired
+      && hsjs.ajaxSiteNav.urlCache[href].added_at > cache_expires_time
+    ){
+      
+      if ( hsjs.ajaxSiteNav.urlCache[href].status == "fetching" ){
+        hsjs.tools.waitForJSObject(
+
+          "hsjs.ajaxSiteNav.urlCache['"+href+"']['htmlData']", 
+
+          function(){
+
+            // Load from urlCache
+            hsjs.ajaxSiteNav.loadFromCache(href);
+
+          },
+
+          7000
+
+        );
+      }
+      else {
+        // Load from urlCache
+        hsjs.ajaxSiteNav.loadFromCache(href);
+      }
+      
+    }
+    else {
+      
+      // Clear and reset prefetch timeout
+      if (hsjs.ajaxSiteNav.prefetchTimeout){
+        clearTimeout(hsjs.ajaxSiteNav.prefetchTimeout);
+        hsjs.ajaxSiteNav.prefetchTimeout = false;
+      }
+      
+      // Create entry in cache and record its status
+      hsjs.ajaxSiteNav.urlCache[href] = { status: "fetching" };
+
+      // We Ajax load the requested content and then prepare the main container for its arrival. 
+      if (hsjs.ajaxSiteNav.settings.method == "html"){
+        this.loadHtmlContent(href);
+      }
+      // Advanced, really fast method, which requires 
+      // - combining the snippets and sections inside templates into Liquid, 
+      // - which requires getting settings_schema.json, which contains sections' blocks data, 
+      // - then, converting the final Liquid templates into Handlebars templates via https://github.com/jonschlinkert/liquid-to-handlebars
+      else if (hsjs.ajaxSiteNav.settings.method == "json"){
+        this.loadJsonContent(href);
+      }
+      
+    }
+
+  },
+  
+  /**
+   * Define fetch action
+   */
+  fetch: function(href){
+    
+    if (hsjs.ajaxSiteNav.settings.debug){
+      hsjs.ajaxSiteNav.consl.log("Fetching  => ", href);
+    }
+    
+    // Record cache entry status
+    hsjs.ajaxSiteNav.urlCache[href] = { status: "fetching" };
+
+    // Get page type
+    var href_page_type = hsjs.urlTemplate(href);
+
+    // Get ajaxUrl
+    var content_to_grab_selector = "*";
+    var ajaxURL = hsjs.ajaxSiteNav.buildAjaxUrl(href, href_page_type, content_to_grab_selector);
+
+    $.ajax({
+      url: ajaxURL,
+      cache: true,
+      beforeSend: function() {
+        if (hsjs.ajaxSiteNav.settings.debug){
+          console.log("SN: beforeSend ajaxURL: ", ajaxURL);
+        }
+      },
+      
+      success: function(data, status, xhr) {
+        // Extract new content from ajax data
+        var new_content = hsjs.ajaxSiteNav.extractNewContent(data, hsjs.ajaxSiteNav.settings.mainContentSelector, content_to_grab_selector);
+
+        // Record new content in urlCache
+        hsjs.ajaxSiteNav.recordCache(
+          href,
+          ajaxURL,
+          new_content, 
+          href_page_type
+        );
+
+        // Record urlCache to localStorage
+        hsjs.ajaxSiteNav.saveCache();
+        
+      },
+      
+      error: function(jqXHR, textStatus, errorThrown){
+        if (hsjs.ajaxSiteNav.settings.debug){
+          console.log("SN: AJAX Fetch Error - " + errorMsg, errorThrown);
+        }
+        var errorMsg = "";
+        if (jqXHR.status === 0){
+          errorMsg = "Not connected. Verify Network.";
+        } else if (jqXHR.status == 404){
+          errorMsg = "Requested page not found [404].";
+        } else if (jqXHR.status == 500){
+          errorMsg = "Internal Server Error [500].";
+        } else if (textStatus === "parsererror"){
+          errorMsg = "Requested JSON parse failed."
+        } else if (textStatus === "timeout"){
+          errorMsg = "Time out error."
+        } else if (textStatus === "abort"){
+          errorMsg = "Ajax request aborted."
+        } else {
+          errorMsg = "Uncaught Error: " + jqXHR.responseText;
+        }
+        hsjs.ajaxSiteNav.urlCache[href].status = "error";
+        hsjs.ajaxSiteNav.urlCache[href].error = {
+          jqXHR: jqXHR,
+          textStatus: textStatus,
+          errorThrown: errorThrown,
+          errorMsg: errorMsg
+        }
+      },
+      
+      complete: function() {
+
+        // Keep cache to items limit 
+        hsjs.ajaxSiteNav.cacheLengthLimiter();
+
+      }
+
+    }); 
+    
+  },
+  
+  
+  /**
+   * Define cache delete 
+   *
+   * @param   {string}   URL - URL-name of the cache object to delete
+   */
+  deleteCache: function(cacheItem){
+    
+    delete hsjs.ajaxSiteNav.urlCache[cacheItem];
+    
+  },
+
+  
+  /**
+   * Define fetch handler 
+   *
+   * @param   {object}   event - JavaScript browser event object
+   */
+  fetchHandler: function(event){
+
+    this.prefetchTimeout = setTimeout(function(){
+      
+      var anchor = event.currentTarget;
+
+      // Check to see if this should be processed
+      
+      // If already loading, return
+      if ( hsjs.ajaxSiteNav.settings.isLoading ){
+        if (hsjs.ajaxSiteNav.settings.debug){
+          hsjs.ajaxSiteNav.consl.log("Already 'isLoading' - returning...", hsjs.ajaxSiteNav.settings.isLoading);
+        }
+        
+        return;
+      }
+
+      // Don't fetch if we already have the content in cache
+      if ( anchor.href in hsjs.ajaxSiteNav.urlCache ){
+        if (hsjs.ajaxSiteNav.settings.debug){
+          hsjs.ajaxSiteNav.consl.log("Already in cache - returning...", anchor.href, anchor.href in hsjs.ajaxSiteNav.urlCache);
+        }
+        
+        return;
+      }
+      
+      // Return if not an eligible anchor
+      if ( ! hsjs.ajaxSiteNav.isEligibleAnchor(anchor) ){
+        if (hsjs.ajaxSiteNav.settings.debug){
+          hsjs.ajaxSiteNav.consl.log("Not an eligible anchor - returning...", anchor.href, ! hsjs.ajaxSiteNav.isEligibleAnchor(anchor));
+        }
+        
+        return;
+      }
+      
+      // If rate limited, return
+      if ( hsjs.ajaxSiteNav.rateLimit.shouldWait() ){
+        if (hsjs.ajaxSiteNav.settings.debug){
+          hsjs.ajaxSiteNav.consl.log("Already 'rateLimited' - returning...", hsjs.ajaxSiteNav.rateLimit.shouldWait());
+        }
+        
+        return;
+      }
+      
+      // Set rate limit delay
+      hsjs.ajaxSiteNav.rateLimit.setRepeatTime();
+
+      // Prevent default action and stop propagation 
+      //event.stopPropagation();
+
+      // Create entry in cache and record its status
+      var href = anchor.href;
+      
+      hsjs.ajaxSiteNav.consl.log("Prefetching  => ", href);
+
+      // Fetch href
+      hsjs.ajaxSiteNav.fetch(href);
+      
+    }, hsjs.ajaxSiteNav.settings.prefetchTimeoutLength);
+
+  },
+  
+  /**
+   * Define form handler
+   *
+   * @param   {object}   event - JavaScript browser event object
+   */
+  formHandler: function(event){
+
+    var $submittedForm = $(event.currentTarget);
+    var anchor = document.createElement('a');
+    anchor.href = $submittedForm[0].action + "?" + $submittedForm.serialize();
+
+    if (hsjs.ajaxSiteNav.settings.debug){
+      console.log("\n");
+      console.log("\x1b[36mSN:\x1b[0m", "Submitted Form => ", anchor);
+    }
+
+    // Check to see if link ineligible
+    if ( 
+      // Return if not an eligible anchor
+      ! hsjs.ajaxSiteNav.isEligibleAnchor(anchor) 
+      // Or if not an eligible event
+      || ! hsjs.ajaxSiteNav.isEligibleEvent(event) 
+    ){
+      return;
+    }
+
+    // Prevent default action and stop propagation 
+    event.preventDefault();
+    event.stopPropagation();
+
+    // If already loading, return
+    if (hsjs.ajaxSiteNav.settings.isLoading){
+      if (hsjs.ajaxSiteNav.settings.debug){
+        console.log("\x1b[36mSN:\x1b[0m", "Already 'isLoading' - returning...", hsjs.ajaxSiteNav.settings.isLoading);
+      }
+      return;
+    }
+    // Set isLoading to true
+    hsjs.ajaxSiteNav.settings.isLoading = true;
+    // Set rate limit delay
+    hsjs.ajaxSiteNav.rateLimit.setRepeatTime();
+
+    // set initiated by 
+    hsjs.ajaxSiteNav.settings.initiatedBy = hsjs.ajaxSiteNav.settings.initiatedByAnchorClick;
+    // Record last clicked link
+    hsjs.ajaxSiteNav.lastClickedLink = anchor;
+
+    // Load content
+    hsjs.ajaxSiteNav.loadContent(anchor.href); 
+    
+  },
+  
+  /**
+   * Define click handler 
+   *
+   * @param   {object}   event - JavaScript browser event object
+   */
+  clickHandler: function(event){
+
+    var anchor = event.currentTarget;
+
+    if (hsjs.ajaxSiteNav.settings.debug){
+      hsjs.ajaxSiteNav.consl.log("\nClicked => ", anchor);
+    }
+
+    // Check to see if link ineligible
+    if ( 
+      // Return if not an eligible anchor
+      ! hsjs.ajaxSiteNav.isEligibleAnchor(anchor) 
+      // Or if not an eligible event
+      || ! hsjs.ajaxSiteNav.isEligibleEvent(event) 
+    ){
+      return;
+    }
+
+    // Prevent default action and stop propagation 
+    event.preventDefault();
+    event.stopPropagation();
+
+    // If already loading, return
+    if (hsjs.ajaxSiteNav.settings.isLoading){
+      if (hsjs.ajaxSiteNav.settings.debug){
+        hsjs.ajaxSiteNav.consl.log("Already 'isLoading' - returning...", hsjs.ajaxSiteNav.settings.isLoading);
+      }
+      return;
+    }
+    // Set isLoading to true
+    hsjs.ajaxSiteNav.settings.isLoading = true;
+    // Set rate limit delay
+    hsjs.ajaxSiteNav.rateLimit.setRepeatTime();
+
+    // set initiated by 
+    hsjs.ajaxSiteNav.settings.initiatedBy = hsjs.ajaxSiteNav.settings.initiatedByAnchorClick;
+    // Record last clicked link
+    hsjs.ajaxSiteNav.lastClickedLink = anchor;
+
+    // Load content
+    hsjs.ajaxSiteNav.loadContent(anchor.href); 
+    
+  },
+  
+  /**
+   * Attach history state handler
+   */
+  attachStateHandler: function(){
+    
+    // Set initial state
+    if(window.history.state === null) {
+      window.history.replaceState(
+        window.location.href, 
+        document.title, 
+        window.location.href
+      );
+    }
+    
+    // Attach onPopstate handler
+    window.addEventListener('popstate', function(event){
+      
+      event.preventDefault();
+      
+      if (
+        event.state === null 
+        || event.state === "" 
+        // the below method does not work and shhould be something like 
+        // Object.entries(obj).length === 0 && obj.constructor === Object
+        // or
+        // Object.keys(obj).length === 0 && obj.constructor === Object
+        || event.state === {} 
+        || jQuery.isEmptyObject(event.state)
+      ){
+        return false;
+      }
+        
+      if (hsjs.ajaxSiteNav.settings.debug){
+        console.log("\x1b[36mSN:\x1b[0m", "Popstate event => ", event);
+        //           console.log("\x1b[36mSN:\x1b[0m", "Popstate event.state => ", event.state);
+      }
+
+      // set initiated by 
+      hsjs.ajaxSiteNav.settings.initiatedBy = hsjs.ajaxSiteNav.settings.initiatedByHistory;
+
+      // set some vars to simulate click
+      //hsjs.ajaxSiteNav.lastClickedLink = hsjs.ajaxSiteNav.urlCache[hsjs.ajaxSiteNav.lastClickedLink.href];
+
+      console.log("event.state ", event.state);
+      // Load content
+      hsjs.ajaxSiteNav.loadContent(event.state);
+
+    });
+    
+    if (hsjs.ajaxSiteNav.settings.debug){
+      console.log("\x1b[36mSN:\x1b[0m", "History popstate handler attached.");
+    }
+
+  },
+
+  /**
+   * Attach Hover and touchstart background-fetch handlers
+   */
+  attachFetchHandler: function(){
+    
+    // Check if prefetch is enabled in settings 
+    if (hsjs.ajaxSiteNav.settings.prefetch === false){
+      return;
+    }
+    
+    // Attach prefetch mouseover and touchstart handlers
+    hsjs.cache.$body
+    .off(".supernavPrefetch")
+    .on(
+      "mouseover.supernavPrefetch touchstart.supernavPrefetch", 
+      hsjs.ajaxSiteNav.settings.anchors, 
+      hsjs.ajaxSiteNav.fetchHandler
+    );
+    
+    if (hsjs.ajaxSiteNav.settings.debug){
+      console.log("\x1b[36mSN:\x1b[0m", "Prefetch handler attached.");
+    }
+    
+  },
+  
+  /**
+   * Attach Form Submission Handlers
+   */
+  attachFormHandler: function(){
+    
+    // Attach handler to anchors
+    hsjs.cache.$body
+    .off(".supernavFormHandler")
+    .on(
+      "submit.supernavFormHandler", 
+      hsjs.ajaxSiteNav.settings.forms, 
+      hsjs.ajaxSiteNav.formHandler
+    );
+    
+    if (hsjs.ajaxSiteNav.settings.debug){
+      console.log("\x1b[36mSN:\x1b[0m", "Form submit handler attached.");
+    }
+    
+  },
+    
+  /**
+   * Attach anchor click handlers
+   */
+  attachClickHandler: function(){
+
+    hsjs.ajaxSiteNav.consl.log("Attaching click handler...");
+
+//     // Attach handler and add nav-processed indicator class
+//     hsjs.ajaxSiteNav.eligibleAnchors()
+    
+//     // Add nav-processed indicator class
+//     .addClass(hsjs.ajaxSiteNav.settings.classes.nav_attached)
+    
+    // Attach handler to anchors
+    hsjs.cache.$body
+    .off(".supernavClickHandler")
+    .on(
+      "click.supernavClickHandler", 
+      hsjs.ajaxSiteNav.settings.anchors, 
+      hsjs.ajaxSiteNav.clickHandler
+    );
+    
+    hsjs.ajaxSiteNav.consl.log("Click handler attached.");
+    
+  },
+
+  /**
+   * Re-attach anchors observer on new page load 
+   * - OBSOLETE
+   *
+   */
+//   reattachAnchorsAndObserver: function(){
+//     // Stop observer
+//     hsjs.ajaxSiteNav.anchorObserver.stop();
+//     // Attach handler to new anchors
+//     hsjs.ajaxSiteNav.attachClickHandler();
+// //     hsjs.tools.waitForElement(
+// //       hsjs.ajaxSiteNav.settings.mainContentSelector+"."+hsjs.ajaxSiteNav.settings.classes.content_loaded,
+// //       hsjs.ajaxSiteNav.attachClickHandler
+// //     );
+//     // Restart observer 
+//     hsjs.ajaxSiteNav.anchorObserver.start();
+//   },
+  
+  /**
+   * Setup UI - modal backdrop, and sticky elements
+   *
+   */
+  adjustUI: function(){
+    
+    hsjs.ajaxSiteNav.consl.log("UI adjustment.");
+
+    // add backdrop, if it doesn't exist
+    if ( ! hsjs.cache.$modalBackdrop){
+      hsjs.cache.$modalBackdrop = document.createElement("div");
+      hsjs.cache.$modalBackdrop.setAttribute("class", "supernav-backdrop modal-backdrop");
+      document.body.appendChild(hsjs.cache.$modalBackdrop);
+      hsjs.cache.$modalBackdrop = $(".supernav-backdrop.modal-backdrop");
+    }
+    
+    // adjust backdrop height 
+    function setModalTop(){
+      // calc top based on sticky nav
+      if ( hsjs.tools.isMobile() ) {
+        
+//       if ( true ) {
+
+        if ($(".site-header")[0]){
+          hsjs.cache.$modalBackdrop[0].style.top = $(".site-header")[0].offsetHeight + "px";
+        }
+        
+        // calc bottom based on sticky add to cart show_sticky 
+        if ($("body.show_sticky")[0] && $(".footbar-fixed.footbar-fixed-product")[0]){
+          hsjs.cache.$modalBackdrop[0].style.bottom = $(".footbar-fixed.footbar-fixed-product")[0].offsetHeight + "px";
+        }
+        else {
+          hsjs.cache.$modalBackdrop[0].style.bottom = "";
+        }
+
+      }
+      
+      else {
+      
+        if ($("#sticky-wrapper")[0]){
+          if ($("body.has_sticky")[0] || $("#sticky-wrapper.is-sticky")[0]){
+            hsjs.cache.$modalBackdrop[0].style.top = ($("#sticky-wrapper")[0].offsetHeight + 3) + "px";
+          }
+          else {
+            hsjs.cache.$modalBackdrop[0].style.top = ($("#sticky-wrapper")[0].offsetTop + $("#sticky-wrapper")[0].offsetHeight + 3) + "px";
+          }
+        }
+        
+      }
+        
+    }
+    
+//     if ( hsjs.tools.isMobile() ) {
+//     }
+    
+//       setModalTop();
+//       $(window).off(".hsjsSNsetModalTop").on("scroll.hsjsSNsetModalTop", function(){
+//         setModalTop();
+//       });
+    
+//     if (hsjs.ajaxSiteNav.settings.animation == "animate"){
+//       hsjs.tools.downloadCSS("https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css");
+//     }
+        
+    // load pace js and pace theme
+    //hsjs.tools.downloadJS("https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js");
+
+  },
+
+  /**
+   * Run setup -- adjust UI, set necessary helpers, and attach handler
+   *
+   */
+  runSetup: function(){
+    
+    // Attach SuperNav click handler to all eligible anchors
+    hsjs.ajaxSiteNav.downloadSettings();
+    
+    hsjs.ajaxSiteNav.downloadtemplates();
+    
+    hsjs.ajaxSiteNav.fetch(window.location.href);
+    
+    hsjs.ajaxSiteNav.attachClickHandler();
+    
+    hsjs.ajaxSiteNav.attachStateHandler();
+    
+    hsjs.ajaxSiteNav.attachFetchHandler();
+    
+    hsjs.ajaxSiteNav.attachFormHandler();
+    
+    //hsjs.ajaxSiteNav.anchorObserver.start();
+    
+    hsjs.ajaxSiteNav.adjustUI();
+    
+    // Restore urlCache to localStorage
+    hsjs.ajaxSiteNav.restoreCache();
+    
+    hsjs.ajaxSiteNav.pageType.product.settings.enableMultipleCurrencies = hsjs.cache.site_data.theme.enable_multiple_currencies;
+    
+    hsjs.ajaxSiteNav.consl.log("Setup complete!");
+
+  },
+  
+  /**
+   * Set settings first from Theme Settings element, 
+   * then override with passed params
+   * @param   {JSON object}   settings - settings to override defaults and theme settings
+   *
+   */
+  setSettings: function(settings){
+    
+    // Set settings from Theme Settings panel 
+    if ( hsjs.cache && hsjs.cache.site_data && hsjs.cache.site_data.warp10 ){
+      hsjs.ajaxSiteNav.$themeSettingsEl = hsjs.cache.site_data.warp10;
+      //var theme_settings = $themeSettingsEl[0].dataset;
+      var theme_settings = {
+        debug: (hsjs.cache.site_data.warp10.debug_enable == "true"),
+        anchors: hsjs.cache.site_data.warp10.anchors,
+        forms: hsjs.cache.site_data.warp10.forms,
+        excluded_classes: hsjs.cache.site_data.warp10.excluded_classes.replace(/^\s*|\s*$/g, "").split(/\s*,\s*/),
+        excluded_paths: hsjs.cache.site_data.warp10.excluded_paths.replace(/^\s*|\s*$/g, "").split(/\s*,\s*/),
+        useUrlCache: (hsjs.cache.site_data.warp10.urlcache_enable == "true"),
+        cache_max_items: parseInt(hsjs.cache.site_data.warp10.cache_max_items),
+        //cache_expiration_ms: eval(hsjs.cache.site_data.warp10.cache_expiration_length),
+        prefetch: (hsjs.cache.site_data.warp10.prefetch_enable == "true"),
+        rateDelayLength: parseInt(hsjs.cache.site_data.warp10.rate_limit_delay),
+        prefetchTimeoutLength: parseInt(hsjs.cache.site_data.warp10.prefetch_delay)
+      };
+      
+      // Set cache expiration - special treatment to prevent math equation entry syntax errors
+      try {
+        theme_settings.cache_expiration_ms = hsjs.tools.parseJs( hsjs.cache.site_data.warp10.cache_expiration_length );
+      } 
+      catch (e) {
+        //theme_settings.cache_expiration_ms = 0;
+        if (e instanceof SyntaxError) {
+          hsjs.ajaxSiteNav.consl.log("Cache expiration equation error: " + e.message);
+        }
+        else {
+          hsjs.ajaxSiteNav.consl.log("Cache expiration equation error: " + e.message);
+        }
+      }
+
+      // Update SuperNav settings
+      hsjs.ajaxSiteNav.settings = Object.assign({}, hsjs.ajaxSiteNav.settings, theme_settings);
+      
+    }
+    
+    // Set settings passed as parameter to init function - overrides all
+    if (settings){
+      // Update SuperNav settings
+      hsjs.ajaxSiteNav.settings = Object.assign({}, hsjs.ajaxSiteNav.settings, settings);
+    }
+
+    // Set main content 
+    if (
+      hsjs.cache 
+      && hsjs.cache.$mainContent 
+      && hsjs.cache.$mainContent.length
+      && hsjs.cache.$mainContent.attr("id") == hsjs.ajaxSiteNav.settings.mainContentSelector.replace("#", "")
+    ){
+      hsjs.ajaxSiteNav.$mainContent = hsjs.cache.$mainContent;
+    }
+    else {
+      hsjs.ajaxSiteNav.$mainContent = $(hsjs.ajaxSiteNav.settings.mainContentSelector);
+    }
+
+    // Set default jQuery Ajax settings
+    if (hsjs.ajaxSiteNav.ajaxSetup && hsjs.ajaxSiteNav.ajaxSetup.cache){
+      jQuery.ajaxSetup({cache: hsjs.ajaxSiteNav.settings.ajaxSetup.cache});
+    }
+
+    hsjs.ajaxSiteNav.consl.log("Settings set.");
+
+  },
+  
+  /**
+   * Initializes SN SuperNav - runs set settings and setup
+   * @param   {JSON object}   settings - settings to override defaults and theme settings
+   *
+   */
+  init: function(settings){
+    
+    // Check conditions for running
+    if (
+      // Make sure its not already enabled
+      hsjs.ajaxSiteNav.enabled === true
+    ){
+      
+      if (hsjs.ajaxSiteNav.settings.debug
+          || (settings && settings.debug === true)
+         ){
+        console.log("\x1b[36mSN:\x1b[0m", "Already initialized! ¯\\_(ツ)_/¯");
+      }
+      hsjs.ajaxSiteNav.consl.log("Already initialized! ¯\\_(ツ)_/¯");
+      
+      return;
+      
+    }
+
+    
+    // Make sure we're on our host/domain
+    var allowed_host = (hsjs.cache.site_data.theme && hsjs.cache.site_data.theme.shop_domain) ? hsjs.cache.site_data.theme.shop_domain : "dankstop.com";
+    if (window.location.host != allowed_host){
+      
+      if (hsjs.ajaxSiteNav.settings.debug
+          || (settings && settings.debug === true)
+         ){
+        console.log("\x1b[36mSN:\x1b[0m", "Not on '"+allowed_host+"'!  Exiting.");
+      }
+      hsjs.ajaxSiteNav.consl.log("Not on '"+allowed_host+"'!  Exiting.");
+      
+      return;
+      
+    }
+    
+    
+    // If no settings params passed, set empty object
+    if (typeof settings === "undefined"){
+      settings = {};      
+    }
+    
+    // First, set settings
+    hsjs.ajaxSiteNav.setSettings(settings);
+    
+    // Check for enable conditions
+    if (
+      // If set via theme settings
+      (hsjs.cache.site_data.theme && hsjs.cache.site_data.theme.supernav_enable === "true") 
+      // If set via URL query parameters, ie '?supernav="true"'
+      || (hsjs.vars && hsjs.vars.queryParams && hsjs.vars.queryParams.supernav === "true")
+      // If set via passed setting, 
+      // ie 'hsjs.ajaxSiteNav.init({debug:true, useUrlCache:true, enable:true});'
+      || (settings && settings.enable === true)
+    ){
+      
+      hsjs.ajaxSiteNav.consl.log("Initialized!  Enjoy yourself ¯\\_(ツ)_/¯");
+
+      // Set enabled flag to true
+      hsjs.ajaxSiteNav.enabled = true;
+
+      // Run setup
+      hsjs.ajaxSiteNav.runSetup();
+      
+    }   
+    else {
+      
+      hsjs.ajaxSiteNav.consl.log("NOT initialized! ¯\\_(ツ)_/¯");
+      
+      return false; 
+      
+    }
+    
+  }
+
+}
+
+
+
+
+
+/*
+ * Ella Inline - run inline script removed from Ella theme files 
+ */
+hsjs.ellaInline = {
+
+  header_supermarket: function(){
+    
+    var appendPrependMenuMobile = function() {
+      var headerPC =  $(".wrapper-header .header-pc"),
+          customerLinks = headerPC.find("[data-links-menu-mobile]"),
+          headerPanelTop = headerPC.find(".header-panel-top"),
+          wrapperNav = $(".wrapper-navigation"),
+          areaMb = wrapperNav.find(".mb-area");
+
+      if (window.innerWidth < 1200) {
+        if(customerLinks.length) {
+          customerLinks.appendTo(areaMb);
+        };
+
+        if(headerPanelTop.length) {
+          headerPanelTop.appendTo(areaMb);
+        };
+      } else {           
+        if(customerLinks.length) {
+          customerLinks.insertAfter(headerPC.find("[data-cart-header-supermarket]"));
+        };
+
+        if(headerPanelTop.length) {
+          headerPC.prepend(headerPanelTop);
+        };
+      };
+    };
+
+    $(document).ready(function() {
+      appendPrependMenuMobile();
+    });
+
+    var winWidth = $(window).innerWidth();
+
+    $(window).on("resize", function () {
+      var resizeTimerId;
+
+      clearTimeout(resizeTimerId);
+
+      resizeTimerId = setTimeout(function() {
+        var curWinWidth = $(window).innerWidth();
+
+        if ((curWinWidth < 1200 && winWidth >= 1200) || (curWinWidth >= 1200 && winWidth < 1200)) {
+          appendPrependMenuMobile();
+        };
+        winWidth = curWinWidth;
+      }, 0);
+    });
+
+    if (window.multi_lang){
+      translator.doTranslate(".site-header");
+    }
+
+  },
+  
+  navigation_supermarket: function(){
+    window.fixtop_menu = true;
+  },
+  
+  linked_options: function(){
+
+    var Shopify = window.Shopify || {};
+    // Required functionality from depricated options_selection.js
+    Shopify.arrayIncludes = function(e, t) {
+      for (var n = 0; n < e.length; n++)
+        if (e[n] == t) return !0;
+      return !1
+    };
+    Shopify.uniq = function(e) {
+      for (var t = [], n = 0; n < e.length; n++) Shopify.arrayIncludes(t, e[n]) || t.push(e[n]);
+      return t
+    };
+    
+    
+    Shopify.productOptionsMap = {};
+    Shopify.quickViewOptionsMap = {};
+
+    Shopify.updateOptionsInSelector = function(selectorIndex, wrapperSlt) {
+      Shopify.optionsMap = wrapperSlt === ".product-shop" ? Shopify.productOptionsMap : Shopify.quickViewOptionsMap;
+
+      switch (selectorIndex) {
+        case 0:
+          var key = 'root';
+          var selector = $(wrapperSlt + ' .single-option-selector:eq(0)');
+          break;
+        case 1:
+          var key = $(wrapperSlt + ' .single-option-selector:eq(0)').val();
+          var selector = $(wrapperSlt + ' .single-option-selector:eq(1)');
+          break;
+        case 2:
+          var key = $(wrapperSlt + ' .single-option-selector:eq(0)').val();
+          key += ' / ' + $(wrapperSlt + ' .single-option-selector:eq(1)').val();
+          var selector = $(wrapperSlt + ' .single-option-selector:eq(2)');
+      }
+
+      var initialValue = selector.val();
+
+      selector.empty();
+
+      var availableOptions = Shopify.optionsMap[key];
+
+      if (availableOptions && availableOptions.length) {
+        for (var i = 0; i < availableOptions.length; i++) {
+          var option = availableOptions[i];
+
+          var newOption = $('<option></option>').val(option).html(option);
+
+          selector.append(newOption);
+        }
+
+        $(wrapperSlt + ' .swatch[data-option-index="' + selectorIndex + '"] .swatch-element').each(function() {
+          if ($.inArray($(this).attr('data-value'), availableOptions) !== -1) {
+            $(this).removeClass('soldout').find(':radio').removeAttr('disabled', 'disabled').removeAttr('checked');
+          }
+          else {
+            $(this).addClass('soldout').find(':radio').removeAttr('checked').attr('disabled', 'disabled');
+          }
+        });
+
+        if ($.inArray(initialValue, availableOptions) !== -1) {
+          selector.val(initialValue);
+        }
+
+        selector.trigger('change');
+      };
+    };
+
+    Shopify.linkOptionSelectors = function(product, wrapperSlt) {
+      // Building our mapping object.
+      Shopify.optionsMap = wrapperSlt === ".product-shop" ? Shopify.productOptionsMap : Shopify.quickViewOptionsMap;
+
+      for (var i = 0; i < product.variants.length; i++) {
+        var variant = product.variants[i];
+
+        if (variant.available) {
+          // Gathering values for the 1st drop-down.
+          Shopify.optionsMap['root'] = Shopify.optionsMap['root'] || [];
+
+          Shopify.optionsMap['root'].push(variant.option1);
+          Shopify.optionsMap['root'] = Shopify.uniq(Shopify.optionsMap['root']);
+
+          // Gathering values for the 2nd drop-down.
+          if (product.options.length > 1) {
+            var key = variant.option1;
+            Shopify.optionsMap[key] = Shopify.optionsMap[key] || [];
+            Shopify.optionsMap[key].push(variant.option2);
+            Shopify.optionsMap[key] = Shopify.uniq(Shopify.optionsMap[key]);
+          }
+
+          // Gathering values for the 3rd drop-down.
+          if (product.options.length === 3) {
+            var key = variant.option1 + ' / ' + variant.option2;
+            Shopify.optionsMap[key] = Shopify.optionsMap[key] || [];
+            Shopify.optionsMap[key].push(variant.option3);
+            Shopify.optionsMap[key] = Shopify.uniq(Shopify.optionsMap[key]);
+          }
+        }
+      };
+
+      // Update options right away.
+      Shopify.updateOptionsInSelector(0, wrapperSlt);
+
+      if (product.options.length > 1) Shopify.updateOptionsInSelector(1, wrapperSlt);
+      if (product.options.length === 3) Shopify.updateOptionsInSelector(2, wrapperSlt);
+
+      // When there is an update in the first dropdown.
+      $(wrapperSlt + " .single-option-selector:eq(0)").change(function() {
+        Shopify.updateOptionsInSelector(1, wrapperSlt);
+        if (product.options.length === 3) Shopify.updateOptionsInSelector(2, wrapperSlt);
+        return true;
+      });
+
+      // When there is an update in the second dropdown.
+      $(wrapperSlt + " .single-option-selector:eq(1)").change(function() {
+        if (product.options.length === 3) Shopify.updateOptionsInSelector(2, wrapperSlt);
+        return true;
+      });
+    };
+
+  },
+
+//   next_prev_product: function(){
+//     // Only run on product pages which were navigated to from collection pages
+//     if ( ! $(".next-prev-product").length ){
+//       return;
+//     }
+
+//     var nextPrevProduct = $(".next-prev-product"),
+//         iconNextPrev = nextPrevProduct.find("[data-next-prev-icon]"),
+//         contentNextPrev = nextPrevProduct.find("[data-next-prev-content]"),
+//         modal = nextPrevProduct.find("[data-next-prev-modal]");
+
+//     if(!("ontouchstart" in document)) {
+//       iconNextPrev.hover(function() {
+//         var curLink = $(this),
+//             curContent = $(curLink.data("target"));    
+
+//         if(!$(this).hasClass("active")) {
+//           iconNextPrev.removeClass("active");
+//           contentNextPrev.removeClass("active");
+
+//           curLink.addClass("active");
+//           curContent.addClass("active");
+//           modal.show();
+//         }
+
+//         nextPrevProduct.mouseleave(function() {
+//           if(modal.is(":visible")) {
+//             iconNextPrev.removeClass("active");
+//             contentNextPrev.removeClass("active");
+//             modal.hide();
+//           };
+//         });   
+//       });
+//     }
+
+//     else {
+//       iconNextPrev.off("click").on("click", function(e) {
+//         e.preventDefault();
+//         e.stopPropagation();
+
+//         var curLink = $(this),
+//             curContent = $(curLink.data("target"));
+
+//         if(!$(this).hasClass("active")) {
+//           iconNextPrev.removeClass("active");
+//           contentNextPrev.removeClass("active");
+
+//           curLink.addClass("active");
+//           curContent.addClass("active");
+//           modal.show();
+//         }
+//         else {
+//           curLink.removeClass("active");
+//           curContent.removeClass("active");
+//           modal.hide();
+//         }
+//       });
+//     };
+
+//     $(document).off("click.nextPrevProduct").on("click.nextPrevProduct", function(e) {
+//       if(!$(e.target).closest("[data-next-prev-modal]").length && modal.is(":visible")) {
+//         iconNextPrev.removeClass("active");
+//         contentNextPrev.removeClass("active");
+//         modal.hide();
+//       };
+//     });
+
+//     // Preload next prev hover modal images 
+//     $(".next-prev-content .product-image .lazyload").addClass("lazypreload");
+
+//   },
+
+//   product_page_main: function(){
+//     // Only run on product pages
+//     if ( ! $(".product-template").length ){
+//       return;
+//     }
+
+//     this.linked_options();
+    
+//     hsjs.ajaxSiteNav.pageType.product.settings.displaySubtotal = hsjs.product_page_settings.display_subtotal;
+//     hsjs.ajaxSiteNav.pageType.product.settings.displayAvailability = hsjs.product_page_settings.display_availability;
+//     hsjs.ajaxSiteNav.pageType.product.settings.displayProductSku = hsjs.product_page_settings.display_product_sku;
+
+//     // Update pricing on qty change
+//     var $qty_selector = $('[data-qtt-id]');
+//     // Update subtotal on addons change 
+//     var $all_addons = $(".ao-line .attachment-checkbox"); 
+//     // Update on warranty 
+//     var $warranty_checkbox = $("#addWarrantyPlan");
+//     // Run subtotal price update on change
+//     $qty_selector
+//     .add($all_addons)
+//     .add($warranty_checkbox)
+//     .off("change.updatePricing")
+//     .on("change.updatePricing", updatePricing);
+
+//     var buttonSlt = "[data-minus-qtt], [data-plus-qtt]",
+//         buttonElm = $(buttonSlt);
+//     $(document).off("click.qttMinusPlus", buttonSlt).on("click.qttMinusPlus", buttonSlt, function(e) {
+//       e.preventDefault();
+//       e.stopPropagation();
+
+//       var self = $(this),
+//           input = $('.quantity input[name="quantity"]'),
+//           oldVal = parseInt(input.val()),
+//           newVal = 1;
+
+//       switch (true) {
+//         case (self.hasClass('plus')): {
+//           newVal = oldVal + 1;
+//           break;
+//         }
+//         case (self.hasClass('minus') && oldVal > 1): {
+//           newVal = oldVal - 1;
+//           break;
+//         }            
+//       }
+
+//       input.val(newVal);
+
+//       updatePricing();
+//     });
+
+//     function updatePricing() {
+//       //try pattern one before pattern 2
+//       var regex = /([0-9]+[.|,][0-9]+[.|,][0-9]+)/g;
+//       var unitPriceTextMatch = $('.product-shop .price').text().match(regex);
+
+//       if (!unitPriceTextMatch) {
+//         regex = /([0-9]+[.|,][0-9]+)/g;
+//         unitPriceTextMatch = $('.product-shop .price').text().match(regex);     
+//       }
+
+//       if (unitPriceTextMatch) {
+//         var unitPriceText = unitPriceTextMatch[0];     
+//         var unitPrice = unitPriceText.replace(/[.|,]/g,'');
+//         var quantity = parseInt($('[data-qtt-id]').val());
+//         var totalProductPrice = unitPrice * quantity;
+
+//         // Get total price of selected addons
+//         var $all_addons = $(".ao-line"); 
+//         var selected_addons_total = 0;
+//         $all_addons.each(function(){
+//           var $this_addon_checkbox = $(this).find(".attachment-checkbox");
+//           if ($this_addon_checkbox.prop("checked")){
+//             var this_addon_price = 0;
+//             if ( ! isNaN($(this).find(".ao-price > span").text())){
+//               this_addon_price = parseFloat($(this).find(".ao-price > span").text()) * 100;
+//             }
+//             selected_addons_total = selected_addons_total + this_addon_price;
+//           }
+//         });
+
+
+//         // Check if warranty is selected
+//         var $warranty_checkbox = $("#addWarrantyPlan");
+//         if ($warranty_checkbox.prop("checked")){
+//           var warranty_price = 0;
+//           var warranty_price_text = $(".warranty-program .warranty-price").text().replace("$", "");
+//           if ( ! isNaN(warranty_price_text)){
+//             warranty_price = parseFloat(warranty_price_text) * 100;
+//           }
+//           selected_addons_total = selected_addons_total + warranty_price;
+//         }
+
+
+//         // Calc cart subtotal
+//         var cart_subtotal = totalProductPrice + selected_addons_total; 
+
+//         var totalPriceText = Shopify.formatMoney(cart_subtotal, window.money_format);
+
+//         regex = /([0-9]+[.|,][0-9]+[.|,][0-9]+)/g;     
+//         if (!totalPriceText.match(regex)) {
+//           regex = /([0-9]+[.|,][0-9]+)/g;
+//         } 
+//         totalPriceText = totalPriceText.match(regex)[0];
+
+//         var regInput = new RegExp(unitPriceText, "g"); 
+//         var totalPriceHtml = $('.product-shop .price').html().replace(regInput ,totalPriceText);
+
+//         $('.product-shop .total-price span').html(totalPriceHtml); 
+//       };
+//     };         
+
+//     var selectCallback = function(variant, selector) {
+
+//       Shopify.variantSelected = variant;  
+//       hsjs.variantSelected = variant;  
+
+//       var addToCartBtn = $('#product-add-to-cart'),
+//           productPrice = $('.product-shop .price'),
+//           comparePrice = $('.product-shop .compare-price'),
+//           productInventory = $('.product-inventory'),
+//           productSku = $('.product-shop .sku-product'),
+//           $variantSku = $('#variantSku'),
+//           labelSave = $('.product-photos .sale-label');
+
+//       //       if ( ! variant) {
+//       //         $variantSku.text(variant.sku);
+//       //       }
+
+//       if (variant){
+
+//         // Set variant SKU
+//         $variantSku.text(variant.sku);
+
+//         // addToCartbtn
+//         if (variant.available) {
+//           addToCartBtn.removeClass('disabled').removeAttr('disabled').val(window.inventory_text.add_to_cart);
+//         }
+//         else {
+//           addToCartBtn.val(window.inventory_text.sold_out).addClass('disabled').attr('disabled', 'disabled');
+//         };
+
+
+//         // Set new variant price as dollar amount
+//         var new_variant_price_money = Shopify.formatMoney(variant.price, window.money_format);
+
+
+//         // Prices
+//         productPrice.html(new_variant_price_money);    
+
+//         if(variant.compare_at_price > variant.price) {
+//           productPrice.addClass("on-sale");
+//           comparePrice
+//           .html(Shopify.formatMoney(variant.compare_at_price, window.money_format))
+//           .show();
+//           labelSave.show();
+//         }                
+//         else {
+//           comparePrice.hide();
+//           productPrice.removeClass("on-sale");
+//           labelSave.hide();
+//         };
+
+//         if (hsjs.ajaxSiteNav.pageType.product.settings.displaySubtotal && hsjs.product.available){
+//           updatePricing();
+//         }
+
+
+//         function paymentPlanPrice(newPrice){
+//           var ppp_el = $(".pay-plan-price");
+//           if (ppp_el.length < 1) {
+//             return;
+//           }
+//           // Set payment plan price data attribute
+//           ppp_el.attr("data-product-price", newPrice);
+//           // Set payment plan price display Price
+//           var variant_naked_price = newPrice.replace("$","").replace(",","").replace(" USD","").trim().split(" ")[0]; 
+//           var ppp_monthly_price = (variant_naked_price / 4).toFixed(2);
+//           var ppp_price_el = ppp_el.find(".vb-price");
+//           ppp_price_el.html(ppp_monthly_price);
+//         }
+//         paymentPlanPrice(new_variant_price_money);
+
+
+//         if (hsjs.ajaxSiteNav.pageType.product.settings.enableMultipleCurrencies === "true"){
+//           Currency.convertAll(window.shop_currency, $('#currencies .active').attr('data-currency'), 'span.money', 'money_format');
+//         }
+
+
+//         if (hsjs.ajaxSiteNav.pageType.product.settings.displayAvailability){
+//           if (variant.available) {
+//             if (variant.inventory_management != null) {
+//               productInventory.find('span').text(window.inventory_text.in_stock);
+//             }
+//             else {
+//               productInventory.find('span').text(window.inventory_text.many_in_stock);
+//             }
+//           }
+//           else {
+//             productInventory.find('span').text(window.inventory_text.out_of_stock);
+//           }
+//         }     
+
+//         var form = $('#' + selector.domIdPrefix).closest('form');
+
+//         for (var i=0,length=variant.options.length; i<length; i++) {
+//           var radioButton = form.find('.swatch[data-option-index="' + i + '"] :radio[value="' + escape(variant.options[i]) +'"]');
+
+//           if (radioButton.length) {
+//             radioButton.get(0).checked = true;
+//           }
+//         };
+//       }
+//       else {
+//         addToCartBtn.val(window.inventory_text.sold_out).addClass("disabled").attr("disabled", true);                   
+//       };
+
+//       if (variant) {
+//         productSku.find("span").text(variant.sku);
+//       }
+//       else {
+//         productSku.find("span").empty();
+//       }
+
+//       if ( hsjs.vars.userInteracted ){
+
+//         /*begin variant image*/
+//         if (variant && variant.featured_image) {
+
+//           var variant_title = variant.title;
+//           var $slideToSelect = $(".slider-for .slick-slide[data-variants*='"+variant_title+"']");
+//           var slide_to_select_index = $slideToSelect.attr("data-slick-index");
+//           if ($slideToSelect && slide_to_select_index){
+//             $(".slider-for").slick('slickGoTo', parseInt(slide_to_select_index) );
+//           }
+          
+// //           var originalImage = $("img[id|='product-featured-image']");
+// //           var newImage = variant.featured_image;
+// //           var element = originalImage[0];
+
+// //           Shopify.Image.switchImage(newImage, element, function (newImageSizedSrc, newImage, element) {
+
+// //             newImageSizedSrc = newImageSizedSrc.split("?")[0].replace("https:", "");
+// //             var period = newImageSizedSrc.lastIndexOf(".");
+// //             newImageSizedSrc = newImageSizedSrc.substring(0, period);
+// //             var slideToSelect = $($(".slider-nav img[data-src*='"+newImageSizedSrc+"']")[0]).closest(".item");
+// //             slideToSelect.trigger('click');
+
+// //           });
+          
+//         };
+
+//       }
+
+//     };
+
+//     $(function($) {
+//       if (hsjs.product.available){
+
+//         new Shopify.OptionSelectors("product-selectors", {
+//           product: hsjs.product,
+//           onVariantSelected: selectCallback,
+//           enableHistoryState: false
+//         });
+
+//       }
+
+//       Shopify.linkOptionSelectors(hsjs.product, ".product-shop");
+
+//       if (hsjs.product.options.length == 1 && hsjs.product.options[0] != "Title"){
+//         $(".selector-wrapper:eq(0)").prepend("<label>"+hsjs.product.options[0]+"</label>");  
+//       }
+//       else if (hsjs.product.options.length > 1){
+//         $(".selector-wrapper").append("<span class='icon-dropdown'><i class='fa fa-angle-down'></i></span>");                                      
+//       }
+
+//       $(".product-shop .selector-wrapper label").append('<em>*</em>');    
+
+//       if (hsjs.product.variants.length == 1 && hsjs.product.variants[0] != "Title"){
+//         $(".selector-wrapper").hide();
+//       }
+
+//     });
+    
+//   },
+  
+  changeSwatch: function(r){
+    $(document).off("change.changeSwatch").on("change.changeSwatch", r, function() {
+      var t = $(this).data("filter"),
+          e = $(this).closest(".swatch").attr("data-option-index"),
+          i = $(this).val();
+      if ( 
+        $(this).closest("form").find(".single-option-selector").eq(e).val(i).trigger("change"), 
+        "variant_grouped" === window.color_swatch_style 
+        && window.use_color_swatch && void 0 !== t
+      ){
+
+      }
+    });
+  },
+  
+  loadFontawesome: function() {
+
+    hsjs.tools.downloadCSS('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+
+  },
+
+  init: function(){
+
+    hsjs.ellaInline.header_supermarket();
+    hsjs.ellaInline.navigation_supermarket();
+    
+//     hsjs.ellaInline.next_prev_product();
+//     hsjs.ellaInline.product_page_main();
+    
+    hsjs.ellaInline.changeSwatch("#add-to-cart-form .swatch :radio");
+    hsjs.ellaInline.loadFontawesome();
+    
+  }
+
+}
+
+
+
+
+// ===============================================
+// ==== Cache settings, selectors, variables =====
+// ===============================================
+// hsjs.cacheSelectors = function(){
+  
+//   hsjs.cache = {
+//     // General
+//     $document: $(document),
+//     $html: $("html"),
+//     $body: $("body"),
+//     $promoBanner: $("#promoBanner"),
+//     $removePromoBanner: $("#removePromoBanner"),
+//     $header: $(".site-header"),
+//     $navWrapper: $(".wrapper-navigation"),
+//     $breadcrumbs: $(".breadcrumb"),
+//     $mainContent: $("#mainContent"),
+//     $modalBackdrop: $(".modal-backdrop"),
+//     $loadingSpinner: $("<div class='loading-spinner'></div>"),
+//     $loadingSpinner3x: $("<div class='loading-spinner loading-centered loading-3x'></div>"),
+//     $openLiveChat: $(".chat-btn"),
+//     $mnAccTrgr: $("#mnAccTrgr"),
+
+//     // Page and Shop data
+//     site_data: window.site_data
+//   };
+  
+// };
+
+// hsjs.cacheVariables = function(){
+  
+//   hsjs.vars = {
+//     // Scroll Top Position used for setting page position
+//     scrollTopPos: 0,
+    
+//     // Set user interaction flag to false, 
+//     // and change to true on loadonUserInteraction trigger
+//     userInteracted: false,
+
+//     // MediaQueries 
+// //     isTouch: ('ontouchstart' in window) ? true : false,
+// //     isMobile: (hsjs.tools && hsjs.tools.isMobile) ? hsjs.tools.isMobile() : undefined,
+    
+//     // Current Page URL and related
+//     pageUrl: document.URL,
+//     originalPathname: window.location.pathname,
+//     originalHref: window.location.href.split(window.location.search||window.location.hash||/[?#]/)[0],
+//     scrollTopPos: (window.scrollY !== undefined) ? window.scrollY : ( (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop ),
+//     queryParams: (function(){
+//       return hsjs.tools.getQueryVal();
+//     })(),
+    
+//     // Checks
+// //     isJQueryLoaded: function () { return typeof jQuery !== "undefined" && window.jQuery},
+// //     isSlickLoaded: function () { return typeof $.fn.slick !== "undefined"},
+    
+//     // Lazyload Image
+//     lazyloadMainMenu: hsjs.cache.site_data.theme.lazyload_main_menu,
+//     lazyloadGifPlaceholder: hsjs.cache.site_data.theme.lazyload_gif_url,
+    
+//     // SuperNav 
+//     supernav: {
+//       enable: hsjs.cache.site_data.theme.supernav_enable
+//     },
+    
+//     // Apps
+//     norton: {
+//       enable: hsjs.cache.site_data.theme.norton_enable
+//     },
+    
+//     // Page data
+//     pageHandle: hsjs.cache.$body[0].dataset.pageHandle || window.location.pathname.substr(window.location.pathname.lastIndexOf('/') + 1),
+//     customer: {
+//       logged_in: hsjs.cache.site_data.customer.logged_in,
+//       id: hsjs.cache.site_data.customer.id,
+//       email: hsjs.cache.site_data.customer.email,
+//       phone: hsjs.cache.site_data.customer.phone,
+//       full_name: hsjs.cache.site_data.customer.full_name,
+//       first_name: hsjs.cache.site_data.customer.first_name,
+//       last_name: hsjs.cache.site_data.customer.last_name,
+//       tags: hsjs.cache.site_data.customer.tags,
+//       watchlist: {
+//         no_login_to_use: hsjs.cache.site_data.customer.watchlist_no_login_to_use,
+//         products: hsjs.cache.site_data.customer.watchlist_products,
+//         email: hsjs.cache.site_data.customer.watchlist_email,
+//         phone: hsjs.cache.site_data.customer.watchlist_phone
+//       }
+//     },
+//     template: {
+//       name: hsjs.cache.$body[0].dataset.templateName,
+//       suffix: hsjs.cache.$body[0].dataset.templateSuffix,
+//       directory: hsjs.cache.$body[0].dataset.templateDirectory
+//     }
+//   };
+
+//   hsjs.flags = {
+//     cartAjaxOpened: false
+//   };
+  
+// };
+
+
+/* 
+ * Load On User Interaction
+ */
+hsjs.loadOnUserInteraction = {
+
+  events: "click mouseup mouseover scroll touchstart touchmove",
+  
+  preFuncs: function(event){
+
+    //console.log("LoadOnUserInteraction triggered by ", event);
+    
+    // Set flag to true, so other events can know when to load
+    hsjs.vars.userInteracted = true;
+
+    // Turn off on user interaction lazy load handler
+    hsjs.loadOnUserInteraction.detachHandler();
+
+  },
+
+  funcs: function(event){
+    
+    // Execute all main.js functions
+    hsjs.main_js.init();
+
+  },
+  
+  attachOnLoad: function(event){
+
+    hsjs.loadOnUserInteraction.preFuncs(event);
+    hsjs.loadOnUserInteraction.funcs(event);
+
+  },
+  
+  detachHandler: function(){
+    
+    hsjs.tools.removeEvent(
+      document, 
+      hsjs.loadOnUserInteraction.events, 
+      hsjs.loadOnUserInteraction.attachOnLoad
+    );
+
+  },
+
+  attachHandler: function(){
+
+    // First remove events - may be obsolete
+//     hsjs.tools.removeEvent(
+//       document, 
+//       hsjs.loadOnUserInteraction.events, 
+//       hsjs.loadOnUserInteraction.attachOnLoad
+//     );
+    
+    hsjs.tools.addEvent(
+      document, 
+      hsjs.loadOnUserInteraction.events, 
+      hsjs.loadOnUserInteraction.attachOnLoad
+    );
+
+  },
+  
+  init: function(){
+    hsjs.loadOnUserInteraction.attachHandler();
+  }
+  
+}
+
+
+
+hsjs.main_js = {
+  
+  funcs: function(){
+    
+    // Load lazy main CSS 
+    hsjs.tools.downloadCSS( hsjs.cache.site_data.theme.main_css_url );
+    
+    // Download page-specific JS
+    hsjs.loadTemplateJs();
+    
+    // Skip loading the rest if not on DankStop on Shopify Theme Customization
+    if (window.location.host !== "dankstop.com" && window.location.host !== "dankstop-9.myshopify.com"){
+      return;
+    }
+    
+    // Load lazy sections
+    hsjs.lazybits.init();
+    
+    // Load non-critical vendor/third-party javascript
+    hsjs.lazyscripts.init();    
+
+    // Init Supernav
+    hsjs.ajaxSiteNav.init({
+
+//           debug:true, 
+      
+//           useUrlCache:true
+    });
+
+//     var funcs_to_load = [
+//       "hsjs.deliveryEstimates", 
+//       "hsjs.promoCountdown.init", 
+//       "hsjs.ellaInline.init", 
+//       "hsjs.loginRedirect", 
+//       "hsjs.smoothScrollingOnAnchors", 
+//       "hsjs.externalLinksTargetBlank", 
+//       "hsjs.socialLogin.init", 
+//       "hsjs.viaBill.init", 
+//       "hsjs.klaviyo.init", 
+//       "hsjs.routeInsurance.init", 
+//       "hsjs.affiliatly.init"
+//     ];
+//     hsjs.tools.easyLoad(funcs_to_load, 50, window);
+
+    
+    // Reset data-expand on all lazyload images
+    setTimeout(function(){
+      hsjs.lazysizes.resetDataExpand();
+      hsjs.googleSignIn.init();
+      hsjs.tools.decode_href(); 
+    }, 50);
+
+    // Shipping Delivery Estimates 
+    setTimeout(function(){
+      hsjs.deliveryEstimates();
+    }, 50);
+
+    // Promo countdown banner
+    setTimeout(function(){
+      hsjs.promoCountdown.init();
+    }, 100);
+
+    // Site messages
+    setTimeout(function(){
+      hsjs.site_msgs.init();    
+    }, 100);
+    
+    // Inline script removed from Ella theme
+    setTimeout(function(){
+      hsjs.ellaInline.init();
+    }, 150);
+
+    // Load lazy YouTube videos
+//     setTimeout(function(){
+//       hsjs.ytVideos();
+//     }, 50);
+
+    // Misc widgets
+    // redirect login back to origin page
+    setTimeout(function(){
+      hsjs.loginRedirect();
+    }, 200);
+    // init smooth scrolling hash anchors
+    setTimeout(function(){
+      hsjs.smoothScrollingOnAnchors();
+    }, 250);
+    // Process all external links to be target blank
+    setTimeout(function(){
+      hsjs.externalLinksTargetBlank();
+    }, 300);
+
+    // Social login display
+    setTimeout(function(){
+      hsjs.socialLogin.init();
+    }, 350);
+
+    // ViaBill Payment Plan
+    setTimeout(function(){
+      hsjs.viaBill.init();
+    }, 400);
+
+    setTimeout(function(){
+      hsjs.product_auction.init();
+    }, 425);
+
+    // Klaviyo email campaigns
+    setTimeout(function(){
+      hsjs.klaviyo.init();
+    }, 450);
+
+    // Route Insurance head script
+    setTimeout(function(){
+      hsjs.routeInsurance.init();
+    }, 500);
+
+    // Affiliatly re-targeting + Klickly click analytics
+    setTimeout(function(){
+      hsjs.affiliatly.init();
+      hsjs.klickly.init();
+      hsjs.dovetale.init();
+    }, 550);
+    
+    // 
+    setTimeout(function(){
+    }, 1000);
+    
+    // Reviews - Stamped, YotPo or Okendo
+    setTimeout(function(){
+      hsjs.reviews.init();
+    }, 4000);
+
+    // smile.io sweettooth rewards program
+    setTimeout(function(){
+      hsjs.rewardsProgram.init();
+    }, 7500);
+
+    // Load zendesk zopim livechat
+    hsjs.liveChat.attachBtn();
+    hsjs.main_js.chat_init_timeout = setTimeout(function(){
+      hsjs.liveChat.load();
+    }, 10000);
+    
+    // Printful head script
+//     hsjs.printful.init();
+    
+    // Enable if customer is logged in
+    //   if (hsjs.vars.customer.logged_in) {
+    //     hsjs.rewardsProgram.init();
+    //   }
+    
+    // Enabled if on blog or product page
+//     if (hsjs.vars.socialSharingBlog && hsjs.vars.template.name == "blog"
+//         || hsjs.vars.socialSharingProduct && hsjs.vars.template.name == "product") {
+//       hsjs.socialSharing();
+//     }
+    
+  },
+  
+  init: function(){
+  
+    hsjs.main_js.funcs();
+    
+    // Load on uIx
+//     hsjs.loadOnUserInteraction.funcs = hsjs.main_js.funcs;
+//     hsjs.loadOnUserInteraction.init();
+  
+  }
+
+}
+
+// Execute all main.js functions
+// hsjs.main_js.init();
+
+

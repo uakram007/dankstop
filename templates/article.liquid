@@ -1,0 +1,28 @@
+{%- comment -%}
+<!-- Article JSON Schema =============== -->
+{%- endcomment -%}
+
+<script>
+  if(window.location.href.indexOf('?view=amp-html') > -1) {
+    var ampHtml = window.location.href.replace('?view=amp-html', '');
+    window.location.href = ampHtml;
+  }
+</script>
+
+<div class="article-template">
+  <div class="container">
+    {%- include 'breadcrumb' -%}
+    
+    <div class="page-header"><h2>
+        {{- blog.title -}}
+      </h2></div>
+    
+    <div class="halo-blog-content article-content">
+      <div class="row {{ blog.template_suffix }}">
+        {%- section 'sidebar-blog' -%}
+        {%- section 'article-template' -%}
+      </div>      
+    </div>   
+  </div>
+</div>
+{%- include 'article-schema-json' -%}

@@ -1,0 +1,82 @@
+{%- layout none -%}
+
+{%- include 'lazyload-placeholder' -%} 
+
+{%- if cart.attributes.pagination != blank and cart.attributes.pagination -%}
+{%- assign product_per_page = cart.attributes.pagination -%}
+{%- else -%}
+{%- assign product_per_page = settings.collection_results_per_page -%}
+{%- endif -%}
+
+{%- paginate collection.products by product_per_page -%}
+
+{%- case settings.collection_results_per_row -%}
+{%- when '1' -%}
+    {%- assign grid_item_width = 'grid-item col-12' -%}
+    {%- assign rows = 'products-list' -%}
+
+  {%- when '2' -%}
+    {%- assign grid_item_width = 'grid-item col-6' -%}
+    {%- assign rows = 'products-grid' -%}
+
+  {%- when '3' -%}
+    {%- assign grid_item_width = 'grid-item col-6 col-md-4' -%}
+    {%- assign rows = 'products-grid' -%}
+
+  {%- when '4' -%}
+    {%- assign grid_item_width = 'grid-item col-6 col-md-4 col-lg-3' -%}
+    {%- assign rows = 'products-grid' -%}
+
+  {%- when '5' -%}
+    {%- assign grid_item_width = 'grid-item col-6 col-md-4 col-lg-3 col5' -%}
+    {%- assign rows = 'products-grid' -%}
+{%- endcase -%}
+
+{%- comment -%}
+{%- endcomment -%}
+
+{%- if sort_by_qty -%}  
+
+  {%- assign sortable_products = collection.products -%}
+  {%- include 'sort-by-qty', products_to_sort: sortable_products -%}
+  {%- for products_by_qty_index in products_by_qty_indexes -%}
+            
+    {%- if forloop.index < 6 -%}  
+      {%- continue -%}
+    {%- endif -%}
+            
+    {%- assign i = products_by_qty_index | split:'.' | last | abs -%}
+    {%- include 'product-skipper', product: sortable_products[i] -%}
+
+    {%- assign pgi_im_iep = blank -%}
+    {%- if forloop.index < 5 -%}  
+      {%- assign pgi_im_iep = 'data-expand="-1"' -%}
+    {%- endif -%}
+
+    {%- include 'product-grid-item', product: sortable_products[i], pgi_im_iep: pgi_im_iep, grid_item_class: grid_item_width,c_clss:'usman3' -%}
+
+  {%- endfor -%}
+
+{%- else -%}
+
+  {%- for product in collection.products -%}
+            
+    {%- if forloop.index < 6 -%}  
+      {%- continue -%}
+    {%- endif -%}
+
+    {%- include 'product-skipper', product: product -%}
+
+    {%- assign pgi_im_iep = blank -%}
+    {%- if forloop.index < 5 -%}  
+      {%- assign pgi_im_iep = 'data-expand="-1"' -%}
+    {%- endif -%}
+
+    {%- include 'product-grid-item', pgi_im_iep: pgi_im_iep, grid_item_class: grid_item_width,c_clss:'usmanl' -%}
+
+  {%- endfor -%}
+
+{%- endif -%}
+
+{%- endpaginate -%}
+

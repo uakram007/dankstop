@@ -1,0 +1,21 @@
+<dl class="feature-terms row">
+  {%- comment -%}
+  <div class="hidden ft-hidden">feature_term_keys_array: {{feature_term_keys_array | json}}</div>
+  {%- endcomment -%}
+  
+  {%- for feature_term_key in feature_term_keys_array -%}
+  {%- assign feature_term_key_underscore = feature_term_key | handle | replace: "-", "_" -%}
+  {%- capture feature_definition_string -%}features.{{ feature_term_key_underscore }}.definition{%- endcapture -%}
+  {%- assign feature_definition = feature_definition_string | t -%}
+
+  {%- comment -%}
+  <div class="hidden ft-hidden">feature_term_key: {{feature_term_key}}</div>
+  <div class="hidden ft-hidden">feature_term_key_underscore: {{feature_term_key_underscore}}</div>
+  <div class="hidden ft-hidden">feature_definition_string: {{feature_definition_string}}</div>
+  <div class="hidden ft-hidden">feature_definition: {{feature_definition}}</div>
+  {%- endcomment -%}
+ 
+  <dt class="col-lg-3 col-3"><span>{{ feature_translated_terms_array[forloop.index0] }}</span></dt>
+  <dd class="col-lg-9 col-9"><span>{{ feature_definition }}</span></dd>
+  {%- endfor -%}
+</dl>

@@ -1,0 +1,68 @@
+<ul class="item-swatch">
+    {% for option in product.options %}
+    {% if option == 'Color' %}
+    {% assign index = forloop.index0 %}
+    {% assign colorlist = '' %}
+    {% assign color = '' %}
+    {% assign option_count = 0 %}
+    {% for variant in product.variants %}
+    {% capture color %}
+    {{ variant.options[index] }}
+    {% endcapture %}
+    {% unless colorlist contains color %}  
+    {% assign text = color | handleize %}
+    
+    {% if option_count == 4 %}
+    {% break %}
+    {% endif %}
+    
+    <li>
+<div class="tooltip">
+    {{color}}
+</div>
+{% assign d_img_key = 'data-nothing' %}
+{% if variant.image != null %}  
+{% assign variant_img_src = variant.image.src | product_img_url: '800x' %}
+{% assign d_img_key = 'data-img' %}
+{% assign d_img_value = variant_img_src %}
+{% assign label_styles = "" %}
+{% assign bg_img_prop = variant.image.src | product_img_url: '24x' %}
+{% assign label_styles = "" %}
+{% assign label_styles = 'background-image: url(' | append: bg_img_prop | append: ');' %}
+{% else %}
+{% if text == 'white' %}
+{% assign label_styles = 'border: 1px solid #d1d1d1;' %}
+{% endif %}
+{% assign bg_color = color | split: ' ' | last | handle %}
+{% assign bg_color_prop = 'background-color:' | append: bg_color | append: ';' %}
+{% assign label_styles = label_styles | append: bg_color_prop %}
+{% endif %}
+
+<label data-value="{{ text }}" title="{{color}}" {{d_img_key}}="{{d_img_value}}" style="{{ label_styles }}"></label>
+
+{% assign option_count = option_count | plus : 1 %}
+    </li>
+
+    {% capture tempList %}
+    {{ colorlist | append: color | append: ' ' }}
+    {% endcapture %}
+
+    {% assign colorlist = tempList %}
+    {% endunless %}
+
+    {% endfor %}
+    {% endif %}
+    {% endfor %}
+    
+    {% for product_option in product.options_with_values %}
+    {% if product_option.name == 'Color' or product_option.name == 'Colour' %}
+    {% if product_option.values.size &gt; 4 %}
+    <li class="item-swatch-more">
+<a href="{{ product.url}}" title="More Color">
+    + {{ product_option.values.size | minus : 4 }}
+</a>
+    </li>
+    {% endif %}  
+    {% endif %}
+    {% endfor %}
+</ul>

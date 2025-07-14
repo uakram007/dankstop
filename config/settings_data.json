@@ -1,0 +1,4259 @@
+{
+  "current": {
+    "elite_product": "elite-yearly-membership",
+    "display_header_top": true,
+    "header_top_image": "shopify:\/\/shop_images\/why_dankstop.jpg",
+    "site__promo_discount": "20%",
+    "top_message_text": "Take <b class=\"promo-code\">#PROMO_DISCOUNT# OFF SITEWIDE <\/b> with coupon \n code: <b class=\"promo-code\">BFCM20<\/b><br>",
+    "site__promo_timer_start": "11\/25\/2022 00:00:00",
+    "site__promo_timer_expiration": "11\/28\/2023 23:59:59",
+    "bg_header_top": "#ffffff",
+    "text_header_top_color": "#ffffff",
+    "site__promo_code_text_color": "#000000",
+    "site__promo_code_bg_color": "#f9a5a5",
+    "site__promo_bar_load_method": "static",
+    "site__promotional_sale": false,
+    "site__promo_text": "",
+    "site__promo_code": "",
+    "site__promo_text_color": "#585858",
+    "site__promo_banner_color": "#fff",
+    "site__promo_banner_color_opacity": "1",
+    "site__promo_banner_texture": "",
+    "site__promo_banner_btn_elements": "#666",
+    "site__promo_banner_btn_bg": "#fff",
+    "site__promo_sale_hero_enable": false,
+    "site__promo_sale_hero_link": "dankstop.com",
+    "site__promo_sale_hero": "shopify:\/\/shop_images\/bfcm.png",
+    "show_site_msgs": false,
+    "site_msgs__text": "<div>Orders may be delayed. Click to learn more on our response to COVID-19.<\/div><i>Please bear with us: due to a surge in demand, you may experience shipping delays.<\/i>",
+    "site_msgs__bg_color": "#000",
+    "site_msgs__text_color": "#fff",
+    "site_msgs__delay_length": 5,
+    "google_sin_in__enable": true,
+    "google_sin_in__auto_select": true,
+    "pluginseo_pageTitleTruncateChars": "999",
+    "pluginseo_pageTitleEnableAppender": true,
+    "pluginseo_pageTitleAppenderTemplate": "| %% shop.name %%",
+    "pluginseo_pageTitleAppenderTargetLength": "70",
+    "pluginseo_pageTitleTemplateApplyToAll": true,
+    "pluginseo_pageTitleDefaultTemplate": "%% page_title %%",
+    "pluginseo_pageTitleIndexTemplate": "",
+    "pluginseo_pageTitlePageTemplate": "%% page_title %%",
+    "pluginseo_pageTitleSearchTemplate": "Shop %% search.terms %% at %% shop.name %%",
+    "pluginseo_pageTitleProductTemplate": "%% product.title %%%% product.selected_variant.title || prepend_not_empty: ' ' %%",
+    "pluginseo_pageTitleCollectionTemplate": "Shop %% current_tags || join: ', ' || append_not_empty: ' ' %%%% collection.title || escape %% at %% shop.name %%",
+    "pluginseo_pageTitleCatalogTemplate": "Browse %% collection.products || map: 'collections' || map: 'title' || uniq || take: '5' || join: ', ' || escape || remove: 'Home page, ' || remove: 'home page, '  || remove: 'Home page' || remove: 'Home page'  %% at %% shop.name %%",
+    "pluginseo_pageTitleBlogTemplate": "%% shop.name %% %% blog.title %%%% blog.all_tags || take: '5' || join: ', ' || prepend_not_empty: ' blog: ' || append_not_empty: ' and more' %%",
+    "pluginseo_pageTitleArticleTemplate": "%% article.title %%%% article.tags || take: '3' || join: ', ' || prepend_not_empty: ' | ' || append_not_empty: ' and more' %% | %% shop.name %% %% blog.title %% blog",
+    "pluginseo_pageTitle404Template": "404: Page Not Found - %% shop.name %%",
+    "pluginseo_metaDescriptionTruncateChars": "170",
+    "pluginseo_metaDescriptionTemplateApplyToAll": true,
+    "pluginseo_metaDescriptionDefaultTemplate": "%% page_description %%",
+    "pluginseo_metaDescriptionIndexTemplate": "",
+    "pluginseo_metaDescriptionPageTemplate": "%% page.content || strip_newlines || strip_html || escape || append_not_empty: '.' %% Visit %% shop.name %%",
+    "pluginseo_metaDescriptionSearchTemplate": "Find %% search.terms || default: 'it' %% here%% search.results || map: 'title' || take: '3' || join: ', ' || prepend_not_empty: ' including ' || append_not_empty: ' and more' %% at %% shop.name %%",
+    "pluginseo_metaDescriptionProductTemplate": "%% product.description || strip_newlines || replace: '.,', ',' || strip_html || escape %%",
+    "pluginseo_metaDescriptionCollectionTemplate": "%% collection.all_tags || take: '3' || join: ', ' || prepend_not_empty: 'Shop ' || append_not_empty: ' and more ' %%%% collection.title || escape %% at %% shop.name %% %% collection.description || strip_html || strip_newlines || escape || strip %%",
+    "pluginseo_metaDescriptionCatalogTemplate": "Discover %% collection.products || map: 'title' || uniq || take: '3' || join: ', ' || escape %% and more.",
+    "pluginseo_metaDescriptionBlogTemplate": "%% blog.articles || map: 'title' || take: '3' || join: ', ' || prepend_not_empty: 'Read about ' || append_not_empty: ' and more on the '%%%% shop.name %% %% blog.title %% blog.",
+    "pluginseo_metaDescriptionArticleTemplate": "%% article.excerpt_or_content || strip_newlines || strip_html || escape %%%% article.tags || take: '6' || join: ', ' || prepend_not_empty: ' Read about ' || append_not_empty: ' and more' %% %% article.title %% on the %% shop.name %% %% blog.title %% blog",
+    "pluginseo_metaDescription404Template": "The page you requested can't be found, please visit %% shop.domain %% instead",
+    "pluginseo_structuredDataDisplayLogo": false,
+    "pluginseo_structuredDataSocialProfileLinks": "",
+    "pluginseo_structuredDataReviewApp": "autodetect",
+    "layout_body": "default",
+    "bg_body_boxed": "#f8f8f8",
+    "header_layout": "supermarket",
+    "list_collections_layout": "collections_01_grid",
+    "category_layout": "default",
+    "product_layout": "default",
+    "blog_layout": "default",
+    "footer_layout": "05",
+    "enable_multilang": false,
+    "lange_1": "ENG",
+    "lange_2": "GER",
+    "display_sticky": true,
+    "display_sticky_mb": true,
+    "display_countdown": true,
+    "bg_sticky": "#fff",
+    "color_sticky": "#3c3c3c",
+    "color_variants": "#646464",
+    "social_facebook_link": "http:\/\/facebook.com\/dankstop",
+    "social_twitter_link": "http:\/\/twitter.com\/dankstop",
+    "social_vimeo_link": "",
+    "social_instagram_link": "http:\/\/instagram.com\/dankstop",
+    "social_google_plus_link": "http:\/\/plus.google.com\/+dankstop",
+    "social_pinterest_link": "https:\/\/pinterest.com\/dankstop",
+    "social_tumblr_link": "",
+    "social_snapchat_link": "https:\/\/www.snapchat.com\/add\/dankstop",
+    "social_youtube_link": "https:\/\/www.youtube.com\/dankstop",
+    "logo_use_image": true,
+    "favicon": "shopify:\/\/shop_images\/dankstop-favicon.png",
+    "body_font_size": "12",
+    "body_bg": "#ffffff",
+    "body_color": "#3c3c3c",
+    "link_color": "#0688e2",
+    "link_color_hover": "#232323",
+    "lazyload_main_menu": true,
+    "nav_vertical_menu": "vertical-menu",
+    "display_breadcrumb": true,
+    "breadcrumb_color": "#999999",
+    "breadcrumb_text_transform": "capitalize",
+    "show_back_to_top": false,
+    "page_title_font_size": "20",
+    "page_title_color": "#232323",
+    "page_title_text_align": "left",
+    "enable_sidebar_multiple_choice": false,
+    "product_name_text_transform": "uppercase",
+    "product_name_text_align": "left",
+    "color_title_product": "#232323",
+    "color_title_product_hover": "#232323",
+    "color_vendor": "#232323",
+    "sale_text": "#fff",
+    "bg_sale": "#e95144",
+    "custom_label_text": "#fff",
+    "custom_label_bg": "#323232",
+    "sold_out_text": "#fff",
+    "bg_sold_out": "#c1c1c1",
+    "color_price": "#232323",
+    "color_price_sale": "#e95144",
+    "color_compare_price": "#969696",
+    "color_quick_view": "#ffffff",
+    "bg_quick_view": "#000000",
+    "color_wishlist": "#232323",
+    "bg_wishlist": "#ffe5e5",
+    "enable_hover_image": false,
+    "use_color_swatch": true,
+    "color_swatch_style": "normal",
+    "btn_1_bg_color": "#39b54a",
+    "btn_1_border_color": "#232323",
+    "btn_1_text_color": "#ffffff",
+    "btn_2_bg_color": "#fff",
+    "btn_2_border_color": "#232323",
+    "btn_2_text_color": "#232323",
+    "btn_3_bg_color": "#e95144",
+    "btn_3_border_color": "#e95144",
+    "btn_3_text_color": "#ffffff",
+    "homepage_mailing_list_form_action": "\/\/manage.kmail-lists.com\/subscriptions\/subscribe",
+    "homepage_mailing_list_form_list_id": "NYEdBp",
+    "display_popup_newsletter": false,
+    "newsletter": "",
+    "popup_newsletter_title": "Join Our Mailing List",
+    "popup_newsletter_des": "Sign Up for exclusive updates,  <br>new arrivals & insider-only discounts",
+    "popup_newsletter_text_note": "No, thanks",
+    "display_popup_social": false,
+    "brand_type": "text",
+    "brand_text": "",
+    "logo": "shopify:\/\/shop_images\/LogoG-circle.webp",
+    "max_height_logo_mb": "26px",
+    "logo_pc": "",
+    "max_height_logo_pc": "33px",
+    "bg_header_middel": "#f8f8f8",
+    "header_middel_text_color": "#5a5a5a",
+    "header_middel_icon_color": "#c3c3c3",
+    "info_icon_1": "",
+    "info_text_1": "",
+    "info_icon_2": "",
+    "info_text_2": "",
+    "display_free_shipping": false,
+    "free_shipping_text": "FREE DELIVERY WORLDWIDE",
+    "free_shipping_color": "#d64123",
+    "header-link_1_text": "Theme FAQs",
+    "header-link_1": "",
+    "header-link_2_text": "Need Help?",
+    "header-link_2": "",
+    "bg_header_bottom_color": "#fff",
+    "header_bottom_link_color": "#232323",
+    "header_bottom_icon_color": "#323232",
+    "bg_search_color": "#fff",
+    "search_color": "#323232",
+    "search_border_color": "#dcdcdc",
+    "bg_cart_color": "#e95144",
+    "cart_color": "#fff",
+    "bg_menu_mb": "#fff",
+    "color_menu_mb": "#232323",
+    "border_color_menu_mb": "#ebebeb",
+    "color_menu_mb_lv1": "#232323",
+    "color_menu_mb_lv1_hover": "#0688e2",
+    "bg_color_menu_mb_lv1_hover": "#f8f8f8",
+    "color_menu_mb_lv2": "#232323",
+    "color_menu_mb_lv2_hover": "#232323",
+    "color_menu_mb_lv3": "#3c3c3c",
+    "color_menu_mb_lv3_hover": "#0688e2",
+    "home__sections_margin": 40,
+    "excluded_category_filters": "included, video, category",
+    "display_collection_image": false,
+    "display_collection_des": true,
+    "sort_by_qty": false,
+    "limited_view": true,
+    "sort_enable": true,
+    "display_warranty_eligibility": true,
+    "collection_results_per_row": "4",
+    "collection_results_per_page": "30",
+    "collection__banner_default": "",
+    "collection__banner_url_default": "",
+    "collection__banner_bongs": "",
+    "collection__banner_url_bongs": "",
+    "collection__banner_empire-glassworks": "",
+    "collection__banner_url_empire-glassworks": "",
+    "collection__banner_green-locker": "",
+    "collection__banner_url_green-locker": "",
+    "collection__banner_grenco-science": "",
+    "collection__banner_url_grenco-science": "",
+    "collection__banner_macdizzle420": "",
+    "collection__banner_url_macdizzle420": "",
+    "collection__banner_raw": "",
+    "collection__banner_url_raw": "",
+    "collection__banner_roast-toast": "shopify:\/\/shop_images\/collection-roasttoast-2.jpg",
+    "collection__banner_url_roast-toast": "shopify:\/\/collections\/roast-toast",
+    "collection__banner_sweet-tooth": "",
+    "collection__banner_url_sweet-tooth": "",
+    "collection__banner_the-kind-pen": "",
+    "collection__banner_url_the-kind-pen": "",
+    "style_moreview": "left_vertical",
+    "video_product": true,
+    "video_product_icon": "#c1c1c1",
+    "enable_payment_button": true,
+    "show_sold_in": false,
+    "item_prd": "3,5,6,7,8,10,12,15",
+    "item_prds": "sold in last",
+    "hours_prs": "10,15,16,17,18,20,25,35",
+    "item_hours": "hours",
+    "display_vendor": false,
+    "text_vendor": "Vendor:",
+    "display_product_sku": false,
+    "text_product_sku": "SKU:",
+    "display_availability": false,
+    "text_availability": "Availability:",
+    "display_product_type": false,
+    "text_product_type": "Product Type:",
+    "countdown": "countdown_1",
+    "text_countdown": "Limited-Time Offers, End in:",
+    "progressbar_1": "Please hurry, only",
+    "progressbar_2": "left in stock",
+    "total_items": "100",
+    "min_items_left": "8",
+    "max_items_left": "26",
+    "progressbar_color": "#f5f5f5",
+    "progressbar_active_color": "#69c69c",
+    "dpl_customers_view": false,
+    "title_view": "customers are viewing this product",
+    "number_view": "283, 100, 59, 11, 14, 185, 193, 165, 50, 38, 99, 112, 46, 10, 125, 200, 250, 18",
+    "show_desc": "no-show",
+    "display_subtotal": false,
+    "display_product_detail_tag": false,
+    "display_product_detail_share": false,
+    "share_text": "Share",
+    "display_trust_img": false,
+    "display_warranty": true,
+    "display_attachment_addons": true,
+    "display_shipping_delivery_estimate": true,
+    "display_watchlist": true,
+    "display_norton": false,
+    "display_product_bullet_points": true,
+    "show_tab": "horizontal",
+    "display_product_detail_description": true,
+    "product_description_title": "Description",
+    "display_product_feature_terms": true,
+    "product_feature_terms_title": "Features",
+    "display_product_specs": true,
+    "product_specs_title": "Specs",
+    "display_product_reviews": true,
+    "product_review_title": "Customer Reviews",
+    "display_shipping_returns": true,
+    "shipping_returns_title": "Shipping & Returns",
+    "shipping_returns_content": "<div class=\"row\">\n<div class=\"col-12 col-lg-4\">\n<h5>Return Policy<\/h5>\n<p>DankStop is proud to offer the industry's most customer friendly return policy :) If you are unsatisfied with your purchase for any reason, you may file a return for unused items within 7 days of delivery. Due to legal liability, DankStop does not accept returns on items that have been used. You can contact our support team directly via live-chat, phone, or email at 1-844-DANKSTOP (326-5786) and support@dankstop.com.<\/p>\n<p><a href=\"\/pages\/file-a-return\">FILE A RETURN<\/a><\/p>\n<p><a href=\"\/pages\/return-policy\">View our entire Return Policy<\/a><\/p>\n<\/div>\n<div class=\"col-12 col-lg-8\" style=\"\n\">\n<h5>Shipping Info<\/h5>\n<dl>\n<dt class=\"shipping-info-table_td-l\"><p>How much does shipping cost?<\/p><\/dt>\n<dd class=\"shipping-info-table_td-r\"><p>DankStop offers free USA shipping on all orders. In addition, you may choose to purchase expedited shipping (2-day, Overnight, etc) at checkout. International customers receive free shipping on orders over $300.<\/p><\/dd>\n<dt class=\"shipping-info-table_td-l\"><p>How long does free shipping take?<\/p><\/dt>\n<dd class=\"shipping-info-table_td-r\"><p>Free shipping is delivered via USPS or FedEx, and takes anywhere from 3-5 business days.<\/p><\/dd>\n<dt class=\"shipping-info-table_td-l\"><p>How long until my order ships?<\/p><\/dt>\n<dd class=\"shipping-info-table_td-r\"><p>All orders placed before 2pm EST ship out same day (Mon-Fri). Orders placed after 2pm ship the following business day.<\/p><\/dd>\n<dt class=\"shipping-info-table_td-l\"><p>Do you offer discreet packaging?<\/p><\/dt>\n<dd class=\"shipping-info-table_td-r\">At DankStop, we completely understand our customers needs for discreet packing. For your privacy, all packages are shipped in unmarked brown or standard USPS Priority boxes with a return address of DS Distribution LLC. There will be no mention of DankStop on your package.<\/dd>\n<\/dl>\n<\/div>\n<\/div>",
+    "display_custom_tab": true,
+    "custom_tab_title": "Custom Product Tab",
+    "display_related_products": true,
+    "related_products_title": "Related Products",
+    "number_of_related_products": "5",
+    "dpl_lookbook_description": true,
+    "style_lookbook_description": "all_product",
+    "quote_title": "",
+    "quote_des": "",
+    "quote_title_2": "",
+    "quote_des_2": "",
+    "dpl_gallery_lookbook": true,
+    "style_lookbook_gallery": "all_product",
+    "enable_wishlist": true,
+    "image_swap": true,
+    "product_image_border": false,
+    "product_image_border_color": "#e6e6e6",
+    "product_image_resize": false,
+    "show_vendor": true,
+    "display_item_size": true,
+    "display_item_swatch": true,
+    "display_button": false,
+    "collection_infinite_scrolling": true,
+    "infinity_scroll_feature": true,
+    "enable_quick_view": true,
+    "qv_display_product_reviews": true,
+    "qv_show_sold_in": true,
+    "qv_item_prd": "3,5,6,7,8,10,12,15",
+    "qv_item_prds": "sold in last",
+    "qv_hours_prs": "10,15,16,17,18,20,25,35",
+    "qv_item_hours": "hours",
+    "display_quickview_vendor": true,
+    "quickview_text_vendor": "Brand:",
+    "display_quickview_product_sku": true,
+    "text_quickview_product_sku": "Product Code:",
+    "display_quickview_availability": true,
+    "quickview_text_availability": "Availability",
+    "display_quickview_product_type": false,
+    "quickview_text_product_type": "Product Type",
+    "quickview_text_countdown": "Limited-Time Offers, End in:",
+    "display_quickview_short_desc": true,
+    "display_quickview_subtotal": true,
+    "dpl_customers_view_qv": true,
+    "title_view_qv": "customers are viewing this product",
+    "number_view_qv": "283, 100, 59, 11, 14, 185, 193, 165, 50, 38, 99, 112, 46, 10, 125, 200, 250, 18",
+    "display_size_chart": false,
+    "size_guide_text": "Size Guide",
+    "custom_size_chart_header": "Size Chart",
+    "size_chart": "none",
+    "custom_size_chart": "",
+    "enable_ask_an_expert": true,
+    "ask_an_expert": "<i class=\"fa fa-question-circle\"><\/i><span class=\"text\">Have a Question?<\/span><a href=\"javascript:void(0)\" title=\"Ask An Expert\">Ask An Expert<\/a>",
+    "ask_an_expert_header": "Have Questions?",
+    "ask_an_expert_title": "Ask one of our friendly headshop experts for tips :) \n\nClick the live chat button to chat now, or reach out using the form below. Our support team is available for 10am-6pm EST",
+    "ask_an_expert_des": "We will follow up with you via email within 24-36 hours",
+    "ask_an_expert_questions": "Please answer the following questionnaire",
+    "enable_ask_do_you_need": false,
+    "ask_do_you_need": "Do You Need:",
+    "ask_do_you_need_1": "Help With My Order",
+    "ask_do_you_need_2": "Help with a Product",
+    "ask_do_you_need_3": "Both",
+    "ask_form_mess": "Please provide a brief note about your request.",
+    "enable_how_would_you_like_me_to_contact_you": true,
+    "how_would_you_like_me_to_contact_you": "How would you like us to contact you?",
+    "contact_with_you_1": "Phone",
+    "contact_with_you_2": "Email",
+    "contact_with_you_3": "Both",
+    "ajax_popup_cart": "upsell",
+    "cart_popup_related_title": "YOU MAY ALSO LIKE",
+    "secure_text": "Secure Shopping Guarantee.",
+    "img_trust": "shopify:\/\/shop_images\/trust_800x-compressor_800x_419e9900-10a1-460d-9fb8-64d5da20e583.png",
+    "show_shipping_calculator": true,
+    "shipping_calculator_heading": "Get shipping estimates | Holen Versand Schätzungen",
+    "shipping_calculator_default_country": "United States",
+    "register_text_desc": "Earn 500 DankStop Loyalty Nugs just for creating an account!",
+    "register_text_desc_1": "Earn 500 DankStop Loyalty Nugs",
+    "register_text_desc_2": "just for creating an account!",
+    "login_text_desc": "Register with us for a faster checkout, <br> to track the status of your order, and more.",
+    "search_1": "Your search for",
+    "search_2": "did not yield any results.",
+    "search_3": "Your search for",
+    "search_4": "revealed the following:",
+    "enable_search_trending": true,
+    "trending_search_title": "trending",
+    "trending_search_item_1": "Bong",
+    "trending_search_item_2": "Quartz Banger",
+    "trending_search_item_3": "Grinder",
+    "trending_search_item_4": "Vaporizer",
+    "trending_search_item_5": "Glass Pipe",
+    "trending_search_item_6": "Dab Rig",
+    "enable_search_popular_products": true,
+    "popular_products_search_title": "Popular Products",
+    "popular_products_collection": "best-sellers",
+    "popular_products_limit": 6,
+    "enable_multiple_currencies": false,
+    "currency_1_unit": "USD",
+    "currency_2_unit": "EUR",
+    "currency_3_unit": "GBP",
+    "currency_4_unit": "CHF",
+    "font": "google_fonts",
+    "fonts_name": "Poppins",
+    "image_quality_multiplier": 2,
+    "enable_lazy_load": true,
+    "lazyload_placeholder_gif": "shopify:\/\/shop_images\/loading.webp",
+    "enableImgix": false,
+    "imgixUrl": "",
+    "imgixShopifyUrl": "\/\/cdn.shopify.com",
+    "imgix_quality": "75",
+    "color_primary": "#b53939",
+    "color_dsorange": "#ff9900",
+    "color_dsblue": "#33ccff",
+    "color_salmon": "#f8593a",
+    "color_lightgray": "#e8e8e8",
+    "color_mediumgray": "#b2b2b2",
+    "color_darkgray": "#5c5c5c",
+    "color_secondary": "#dcdcdc",
+    "color_accent": "#ffea00",
+    "color_body_bg": "#ffffff",
+    "color_body_bg_2": "#faf8f2",
+    "color_borders": "#ececec",
+    "review_stars": "#ebd700",
+    "color_super_header_bg": "#f8593a",
+    "color_header_bottom_nav_bg": "#ff9900",
+    "color_header_background": "#fff",
+    "color_header_text": "#fff",
+    "color_header_cart_search": "#fff",
+    "color_nav_bg": "#000",
+    "color_nav_bg_2": "#fff",
+    "color_nav_text": "#fff",
+    "color_nav_text_2": "#000",
+    "color_mobile_nav_bg": "#767676",
+    "color_body_text": "#333333",
+    "color_body_alt_text": "#fff",
+    "color_heading_text": "#000000",
+    "color_footer_bg": "#f2f2f2",
+    "color_footer_text": "#636363",
+    "color_footer_social_link": "#bbbbbb",
+    "color_amber": "#ffbf00",
+    "color_black": "#000000",
+    "color_blue": "#0343df",
+    "color_brown": "#653700",
+    "color_dichro": "#204a80",
+    "color_fumed": "#fbff7a",
+    "color_gold": "#ffd700",
+    "color_gray": "#808080",
+    "color_grey": "#808080",
+    "color_green": "#39b54a",
+    "color_green_slyme": "#a5f759",
+    "color_orange": "#ffa500",
+    "color_pink": "#ff81c0",
+    "color_purple": "#7e1e9c",
+    "color_purple_slyme": "#d27efc",
+    "color_red": "#e50000",
+    "color_ruby": "#e0115f",
+    "color_silver": "#c0c0c0",
+    "color_slyme": "#a5f759",
+    "color_tan": "#d2b48c",
+    "color_teal": "#008080",
+    "color_turquoise": "#30d5c8",
+    "color_white": "#fff",
+    "color_yellow": "#ffff14",
+    "color_aqua": "#00ffff",
+    "color_light_blue": "#add8e6",
+    "color_light_green": "#90ee90",
+    "color_cobalt_blue": "#0047ab",
+    "color_jade": "#00a86b",
+    "color_gun_metal": "#2c3539",
+    "color_dark_green": "#006400",
+    "color_olive": "#556b2f",
+    "color_chrome": "#556b2f",
+    "color_dark_blue": "#00008b",
+    "color_black_chrome": "#696969",
+    "color_platinum": "#e5e4e2",
+    "color_pearl": "#eae0c8",
+    "color_bordeaux": "#8b0000",
+    "color_aluminum": "#848789",
+    "type_base_family": "'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, 'AppleGothic', sans-serif",
+    "type_base_size": "12px",
+    "type_header_family": "'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, 'AppleGothic', sans-serif",
+    "type_header_transform": false,
+    "type_accent_family": "'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, 'AppleGothic', sans-serif",
+    "type_navigation_size": "14px",
+    "type_navigation_transform": false,
+    "type_button_size": "14px",
+    "type_button_transform": false,
+    "watchlist__enable": true,
+    "watchlist__no_login_to_use": true,
+    "reviews_display": "custom",
+    "product__payment_program": "sezzle",
+    "viabill__widget_delivery": "manual",
+    "payment_plan__max_price": 750,
+    "sezzle__product_price_min": "0",
+    "sezzle__product_price_max": "100000",
+    "sezzle__product_max_width": "500",
+    "sezzle__product_widget_alignment": "left",
+    "sezzle__product_show_international": false,
+    "sezzle__cart_subtotal_min": "0",
+    "sezzle__cart_subtotal_max": "100000",
+    "sezzle__cart_max_width": "500",
+    "sezzle__cart_widget_alignment": "center",
+    "sezzle__cart_show_international": false,
+    "total_addons_limit": 16,
+    "collection_addons_limit": 16,
+    "addons_collection_apparel": "home-lifestyle-products",
+    "addons_collection_ashcatcher": "smoking-accessories",
+    "addons_collection_ashtray": "all",
+    "addons_collection_bong": "smoking-accessories",
+    "addons_collection_bundle-set": "smoking-accessories",
+    "addons_collection_candle": "",
+    "addons_collection_carb-cap": "cleaning-supplies",
+    "addons_collection_cleaner": "smoking-accessories",
+    "addons_collection_container": "smell-proof-storage",
+    "addons_collection_cooking-supply": "dab-mats-silicone-jars",
+    "addons_collection_dab-mat": "",
+    "addons_collection_dab-nail": "carb-caps",
+    "addons_collection_dab-rig": "dab-nails-dabbers-accessories",
+    "addons_collection_dabber": "carb-caps",
+    "addons_collection_dome": "",
+    "addons_collection_downstem": "glass-bowls",
+    "addons_collection_e-nail": "dab-nails-dabbers-accessories",
+    "addons_collection_eye-drops": "",
+    "addons_collection_extractor": "",
+    "addons_collection_filter-tip": "",
+    "addons_collection_food": "",
+    "addons_collection_free-gift": "",
+    "addons_collection_gift-card": "",
+    "addons_collection_glass-adapter": "",
+    "addons_collection_glass-rods": "",
+    "addons_collection_grinder": "smoking-accessories",
+    "addons_collection_hand-pipe": "hand-pipe-accessories",
+    "addons_collection_hemp-wick": "lighter-cases",
+    "addons_collection_hookah": "",
+    "addons_collection_incense": "",
+    "addons_collection_infuser": "",
+    "addons_collection_jewelry": "",
+    "addons_collection_joint-clip": "",
+    "addons_collection_lighter": "lighters-hempwick",
+    "addons_collection_mouthpiece": "",
+    "addons_collection_odor-eliminator": "",
+    "addons_collection_oem-part": "",
+    "addons_collection_peak-accessory": "everything-puffco-old",
+    "addons_collection_replacement-bowl": "bong-adapters-parts-and-attachments",
+    "addons_collection_rolling-machine": "rolling-papers-machines-and-accessories",
+    "addons_collection_rolling-papers": "rolling-papers-machines-and-accessories",
+    "addons_collection_rolling-tray": "",
+    "addons_collection_scale": "",
+    "addons_collection_screens": "",
+    "addons_collection_service": "",
+    "addons_collection_shipping": "",
+    "addons_collection_stickers": "",
+    "addons_collection_subscription-box": "",
+    "addons_collection_torch": "",
+    "addons_collection_toy": "",
+    "addons_collection_travel-bag": "",
+    "addons_collection_vaporizer": "",
+    "addons_collection_vaporizer-accessory": "",
+    "addons_collection_wall-art": "",
+    "product_types_with_attachments": "Bong, dab rig, bong",
+    "attachment_mj_fbi_option_0": "female-pinch-bowl-bundle",
+    "attachment_mj_fbi_option_1": "14-18mm-female-ceramic-domeless-nail-bundle",
+    "attachment_mj_fbi_option_2": "quartz-banger-nail-female-joint-bundle",
+    "attachment_mj_fbi_option_3": "",
+    "attachment_mj_qbi_option_0": "quartz-banger-nail-female-joint-bundle",
+    "attachment_mj_qbi_option_1": "female-pinch-bowl-bundle",
+    "attachment_mj_qbi_option_2": "14-18mm-female-ceramic-domeless-nail-bundle",
+    "attachment_mj_qbi_option_3": "",
+    "attachment_mj_cni_option_0": "14-18mm-female-ceramic-domeless-nail-bundle",
+    "attachment_mj_cni_option_1": "female-pinch-bowl-bundle",
+    "attachment_mj_cni_option_2": "quartz-banger-nail-female-joint-bundle",
+    "attachment_mj_cni_option_3": "",
+    "attachment_mj_tni_option_0": "",
+    "attachment_mj_tni_option_1": "female-pinch-bowl-bundle",
+    "attachment_mj_tni_option_2": "quartz-banger-nail-female-joint-bundle",
+    "attachment_mj_tni_option_3": "14-18mm-female-ceramic-domeless-nail-bundle",
+    "attachment_mj_nit_option_0": "glass-dome-and-nail",
+    "attachment_mj_nit_option_1": "female-pinch-bowl-bundle",
+    "attachment_mj_nit_option_2": "14-18mm-female-ceramic-domeless-nail-bundle",
+    "attachment_mj_nit_option_3": "quartz-banger-nail-female-joint-bundle",
+    "attachment_mj_nit_option_4": "",
+    "attachment_fj_qbi_option_0": "male-quartz-banger-nail-bundle",
+    "attachment_fj_qbi_option_1": "glass-bowl-bundle",
+    "attachment_fj_qbi_option_2": "14-18mm-male-ceramic-domeless-nail-bundle",
+    "attachment_fj_qbi_option_3": "",
+    "attachment_fj_cni_option_0": "14-18mm-male-ceramic-domeless-nail-bundle",
+    "attachment_fj_cni_option_1": "glass-bowl-bundle",
+    "attachment_fj_cni_option_2": "male-quartz-banger-nail-bundle",
+    "attachment_fj_cni_option_3": "",
+    "attachment_fj_tni_option_0": "",
+    "attachment_fj_tni_option_1": "glass-bowl-bundle",
+    "attachment_fj_tni_option_2": "quartz-banger-nail-female-joint-bundle",
+    "attachment_fj_tni_option_3": "14-18mm-male-ceramic-domeless-nail-bundle",
+    "attachment_fj_nit_option_0": "glass-bowl-bundle",
+    "attachment_fj_nit_option_1": "14-18mm-male-ceramic-domeless-nail-bundle",
+    "attachment_fj_nit_option_2": "male-quartz-banger-nail-bundle",
+    "attachment_fj_nit_option_3": "",
+    "warranty__name": "Warranty Program",
+    "warranty__elibigle_brands": "DankStop, BoroDirect, Nucleus, Ronin, Diamond Glass, Grav Labs, Empire Glassworks, Lavatech, My Bud Vase, Diamond Glass, Mathematix, Sweet Tooth, The Kind Pen,",
+    "warranty__ineligible_types": "rolling papers, cleaner, atomizer, pipe case",
+    "warranty__ineligible_tag": "not_eligible_for_warranty",
+    "warranty__page_handle": "pieceprotect-warranty-program",
+    "warranty__product": "pieceprotect",
+    "warranty__collection": "pieceprotect-warranty-eligible",
+    "warranty__percentage": "9",
+    "warranty__show_cart_percentage": false,
+    "warranty__enable_in_product_details": true,
+    "display_free_gift_progress": false,
+    "display_free_gift_cart_top": false,
+    "free_gifts_tag_start": "free gift at $",
+    "free_gifts_tier_1_total": "39",
+    "free_gifts_tier_1_product": "mesh-pipe-screens",
+    "free_gifts_tier_2_total": "79",
+    "free_gifts_tier_2_product": "color-changing-spoon",
+    "free_gifts_tier_3_total": "249",
+    "free_gifts_tier_3_product": "dankstop-four-piece-herb-grinder",
+    "free_gifts_tier_4_total": "420",
+    "free_gifts_tier_4_product": "nucleus-iso-dry-herb-vaporizer-kit",
+    "free_gifts_tier_5_total": "420",
+    "free_gifts_tier_5_product": "",
+    "show_shipping_insurance": "custom",
+    "shipping_insurance_product_handle": "shipping-insurance",
+    "shipping_insurance_cart_show_coverage": false,
+    "blog_nav_1_type": "tag",
+    "blog_nav_1_title": "News",
+    "blog_nav_1_tag": "news",
+    "blog_nav_2_type": "tag",
+    "blog_nav_2_title": "Reviews",
+    "blog_nav_2_tag": "review",
+    "blog_nav_3_type": "tag",
+    "blog_nav_3_title": "Learn",
+    "blog_nav_3_tag": "learn",
+    "blog_nav_4_type": "tag",
+    "blog_nav_4_title": "Buyers Guides",
+    "blog_nav_4_tag": "buyers-guide",
+    "blog_nav_5_type": "tag",
+    "blog_nav_5_title": "Videos",
+    "blog_nav_5_tag": "video",
+    "blog_nav_6_type": "tag",
+    "blog_nav_6_title": "Giveaways! 🎁",
+    "blog_nav_6_tag": "giveaway",
+    "points_earning_rule": "Earn Points",
+    "earn_points_value": "$1 = 1 point",
+    "your_balance_button": "Your Balance: <span class=\"greenFont\"> Log in to view <\/span>",
+    "points_spending_rule": "Spend Points",
+    "spent_points_value": "100 Points = $1",
+    "rewards_cta": "Join the Rewards Program",
+    "enable_vip": false,
+    "vip_milestone_type": "revenue-alltime",
+    "vip_tier_1_name": "Bronze",
+    "vip_tier_1_threshold": "0 - 99",
+    "vip_tier_2_name": "Silver",
+    "vip_tier_2_threshold": "100 - 199",
+    "vip_tier_3_name": "Gold",
+    "vip_tier_3_threshold": "200+",
+    "sm_brand_color": "#ac9456",
+    "st_accent_color": "#ba9d4c",
+    "earning_section_header": "Ways to Earn",
+    "about_program": "To demonstrate how much we cherish our loyal customers, you can gain rewards in more ways than purchasing your favorite products.",
+    "welcome_points": true,
+    "welcome_points_label": "For creating an account.",
+    "points_for_account": "",
+    "sm_follow_facebook": true,
+    "sm_follow_fb_label": "For liking on Facebook.",
+    "points_for_facebook": "",
+    "sm_share_facebook": true,
+    "sm_share_fb_label": "Sharing on Facebook label",
+    "points_for_share_fb": "",
+    "sm_follow_twitter": true,
+    "sm_follow_twitter_label": "For following on Twitter.",
+    "points_for_twitter": "",
+    "sm_share_twitter": true,
+    "sm_share_twitter_label": "For sharing on Twitter.",
+    "points_for_share_tw": "",
+    "sm_follow_instagram": true,
+    "sm_follow_instagram_label": "For following on Instagram.",
+    "points_for_instagram": "",
+    "birthday_points": true,
+    "birthday_points_label": "On your birthday.",
+    "points_for_birthday": "",
+    "review_points": true,
+    "review_points_label": "For writing a review.",
+    "points_for_review": "",
+    "referral_section_header": "Invite a friend",
+    "referral_program": true,
+    "referral_description": "Here at our store, we firmly believe that sharing is caring. Invite your friends to our store and be rewarded for your referral!",
+    "referral_reward_1": false,
+    "points_name": "Points",
+    "points_for_referral": "",
+    "referral_reward_2": false,
+    "discount_name": "Off",
+    "discount_for_referral": "",
+    "referral_label": "When friend makes first purchase.",
+    "spending_section_header": "Ways to Spend",
+    "rewards": true,
+    "spending_description": "Now that you have some hard earned points, here's how you can spend them.",
+    "reward_1a": true,
+    "sm_for_hemp_rolling_papers_label": "For 1-1\/4 hemp rolling papers",
+    "nugs_for_hemp_rolling_papers": "",
+    "reward_2a": true,
+    "sm_for_glass_nail_label": "For 18mm glass nail",
+    "nugs_for_glass_nail": "",
+    "reward_3a": true,
+    "sm_for_hemp_wick_label": "For 1-1\/4 hemp wick (3-pack)",
+    "nugs_for_hemp_wick": "",
+    "reward_4a": true,
+    "sm_for_five_off_coupon_label": "For $5 off coupon",
+    "nugs_for_five_off_coupon": "",
+    "reward_5a": true,
+    "sm_for_silicone_cone_bubbler_label": "For 1-1\/4 silicone cone bubbler",
+    "nugs_for_silicone_cone_bubbler": "",
+    "reward_6a": true,
+    "sm_for_herb_grinder_label": "For 50mm 4-piece herb grinder",
+    "nugs_for_herb_grinder": "",
+    "reward_7a": true,
+    "sm_for_ten_off_coupon_label": "For $10 off coupon",
+    "nugs_for_ten_off_coupon": "",
+    "reward_8a": true,
+    "sm_for_twentyfive_off_coupon_label": "For $25 off coupon",
+    "nugs_for_twentyfive_off_coupon": "",
+    "reward_9a": true,
+    "sm_for_iso_dry_herb_vaporizer_label": "For iso dry herb vaporizer",
+    "nugs_for_iso_dry_herb_vaporizer": "",
+    "reward_1": false,
+    "reward_1_amt": "",
+    "reward_1_type": "off",
+    "reward_1_points": "",
+    "reward_2": false,
+    "reward_2_amt": "",
+    "reward_2_type": "off",
+    "reward_2_points": "",
+    "reward_3": false,
+    "reward_3_amt": "",
+    "reward_3_type": "off",
+    "reward_3_points": "",
+    "reward_4": false,
+    "reward_4_amt": "",
+    "reward_4_type": "off",
+    "reward_4_points": "",
+    "reward_5": false,
+    "reward_5_amt": "",
+    "reward_5_type": "off",
+    "reward_5_points": "",
+    "reward_6": false,
+    "reward_6_amt": "",
+    "reward_6_type": "off",
+    "reward_6_points": "",
+    "reward_7": false,
+    "reward_7_amt": "",
+    "reward_7_type": "off",
+    "reward_7_points": "",
+    "reward_8": false,
+    "reward_8_amt": "",
+    "reward_8_type": "off",
+    "reward_8_points": "",
+    "reward_freeship": false,
+    "reward_freeship_points": "",
+    "giftcard": false,
+    "points_for_giftcard": "",
+    "amt_for_giftcard": "",
+    "enable_faq": false,
+    "faq_section_header": "Frequently Asked Questions",
+    "sm_question_1": "How Do I Spend Points?",
+    "sm_answer_1": "You can spend your points by logging into your customer account and then clicking on the launcher. Under the 'Rewards' section, you can click 'Redeem' next to the reward that you want to claim!",
+    "sm_question_2": "How much does it cost to join?",
+    "sm_answer_2": "Our rewards program is totally free! We do it to say 'thank you' to our awesome customers!",
+    "sm_question_3": "Is there a limit to how many order points I can get?",
+    "sm_answer_3": "There is no limit! Collect as many points as you please.",
+    "sm_question_4": "",
+    "sm_answer_4": "",
+    "sm_question_5": "",
+    "sm_answer_5": "",
+    "sm_question_6": "",
+    "sm_answer_6": "",
+    "sm_question_7": "",
+    "sm_answer_7": "",
+    "sm_question_8": "",
+    "sm_answer_8": "",
+    "sm_question_9": "",
+    "sm_answer_9": "",
+    "sm_question_10": "",
+    "sm_answer_10": "",
+    "subscribable_tag": "subscription box",
+    "subscribable_collection": "subscribe-save",
+    "recurring-orders-loading": "Loading subscription info...",
+    "recurring-orders-inherit-classes": false,
+    "bold_hide_prepaid": false,
+    "recurring-orders-additional-button-classes": "",
+    "checkout__order_minimum": "1",
+    "shipping_hider": true,
+    "wholesale_approval_tag": "wholesale_shipping",
+    "wholesale_approval_tag_2": "enterprise_shipping",
+    "enable_norton": true,
+    "supernav_enable": true,
+    "supernav_anchors": "a",
+    "supernav_forms": "form[action='\/search']",
+    "supernav_excluded_classes": "warp10-skip, btn-checkout, inf-scroll, infinite-scroll, ajax-disable, ajax-disabled, chat-btn",
+    "supernav_excluded_paths": "\/cart\/change, \/checkout, \/account, \/pages",
+    "supernav_urlcache_enable": true,
+    "supernav_cache_max_items": 50,
+    "supernav_cache_expiration_length": "24 * 60 * 60",
+    "supernav_prefetch_enable": true,
+    "supernav_rate_limit_delay": 700,
+    "supernav_prefetch_delay": 37,
+    "supernav_debug_enable": true,
+    "checkout_header_image": "",
+    "checkout_logo_image": "",
+    "checkout_logo_position": "left",
+    "checkout_logo_size": "medium",
+    "checkout_body_background_image": "",
+    "checkout_body_background_color": "#ffffff",
+    "checkout_input_background_color_mode": "white",
+    "checkout_sidebar_background_image": "",
+    "checkout_sidebar_background_color": "#fafafa",
+    "checkout_heading_font": "Helvetica Neue",
+    "checkout_body_font": "Helvetica Neue",
+    "checkout_accent_color": "#2d2d2d",
+    "checkout_button_color": "#000000",
+    "checkout_error_color": "#ff6d6d",
+    "homepage_mailing_list_form_id": "NYEdBp",
+    "site_msgs_text_color": "#fff",
+    "site_msgs_text": "<div>Orders may be delayed. Click to learn more on our response to COVID-19.<\/div>\n      <div><i>Please bear with us: due to a surge in demand, you may experience shipping delays.<\/i><\/div>",
+    "product_setting_1": "true",
+    "free_gifts_tier_1": "79",
+    "free_gifts_tier_2": "130",
+    "free_gifts_tier_3": "250",
+    "color_clear": "#fafcff",
+    "color_rasta": "#204a80",
+    "mailing_list_form_action": "\/\/myshopify.us9.list-manage.com\/subscribe\/post?u=f03cabb421b3912425cda25cc&amp;id=2b084b0139",
+    "checkout_use_header_image": true,
+    "checkout_logo": "checkout_logo.png",
+    "checkout_use_body_background_image": false,
+    "checkout_use_sidebar_background_image": false,
+    "checkout_banner_background_color": "#ffffff",
+    "checkout_headline": "",
+    "checkout_call_to_action_color": "#000000",
+    "customer_layout": "theme",
+    "search_placeholder": "Suche | search",
+    "sections": {
+      "footer-5": {
+        "type": "footer-5",
+        "blocks": {
+          "1550802143506": {
+            "type": "footer_link",
+            "settings": {
+              "footer_title": "Quick Links",
+              "footer_linklist": "footer"
+            }
+          },
+          "1550802158689": {
+            "type": "footer_link",
+            "settings": {
+              "footer_title": "Customer Service",
+              "footer_linklist": "footer-section-four"
+            }
+          },
+          "1550802180789": {
+            "type": "footer_link",
+            "settings": {
+              "footer_title": "Company info",
+              "footer_linklist": "footer-section-two"
+            }
+          },
+          "1555541603250": {
+            "type": "footer_link",
+            "settings": {
+              "footer_title": "Partner With Us",
+              "footer_linklist": "partner-with-dankstop"
+            }
+          },
+          "1599785175991": {
+            "type": "footer_link",
+            "settings": {
+              "footer_title": "Resources",
+              "footer_linklist": "resources"
+            }
+          }
+        },
+        "block_order": [
+          "1550802143506",
+          "1550802158689",
+          "1550802180789",
+          "1555541603250",
+          "1599785175991"
+        ],
+        "settings": {
+          "footer_border_top": true,
+          "bg_footer_img": "none",
+          "bg_footer_color": "#f8f8f8",
+          "bg_footer_position_x": "left",
+          "bg_footer_position_y": "top",
+          "bg_footer_repeat": "repeat",
+          "bg_footer_attachment": "scroll",
+          "bg-footer-img": "",
+          "footer_title_color": "#141414",
+          "footer_link_color": "#3c3c3c",
+          "footer_link_hover_color": "#3c3c3c",
+          "bg_footer_line_color": "#ebebeb",
+          "footer_newsletter_enable": true,
+          "footer_newsletter_title": "Newsletter Sign Up",
+          "des_newslette": "Receive our latest updates about our products and promotions.",
+          "bg_newsletter_color": "#fff",
+          "newsletter_color": "#9d9d9d",
+          "newsletter_border_color": "#d2d2d2",
+          "bg_newsletter_button_color": "#39b54a",
+          "newsletter_button_color": "#fff",
+          "footer_social_enable": true,
+          "footer_typography_label": true,
+          "img_1": "",
+          "img_2": "",
+          "bg_footer_bottom_color": "#232323",
+          "footer_bottom_color": "#969696",
+          "footer_address_code": "All Content © 2020 DankStop - <a href=\"https:\/\/www.hightideinc.com\/\" title=\"High Tide Inc\" target=\"_blank\" rel=\"noopener\">A High Tide Inc. Company.<\/a> All Rights Reserved.",
+          "show_payment_icons": true,
+          "payment_display_visa": true,
+          "payment_display_visa_electron": false,
+          "payment_display_american_express": true,
+          "payment_display_master": true,
+          "payment_display_maestro": false,
+          "payment_display_solo": false,
+          "payment_display_paypal": false,
+          "payment_display_amazon_payments": false,
+          "payment_display_apple_pay": false,
+          "payment_display_bitcoin": true,
+          "payment_display_cirrus": false,
+          "payment_display_dankort": false,
+          "payment_display_diners_club": false,
+          "payment_display_discover": true,
+          "payment_display_dogecoin": false,
+          "payment_display_dwolla": false,
+          "payment_display_forbrugsforeningen": false,
+          "payment_display_interac": false,
+          "payment_display_jcb": false,
+          "payment_display_litecoin": false,
+          "payment_display_stripe": false,
+          "payment_display_sage": false,
+          "payment_display_wallet": false,
+          "icon_visa": "shopify:\/\/shop_images\/Visa_Inverted_x32_png.jpg",
+          "icon_visa_electron": "",
+          "icon_master": "shopify:\/\/shop_images\/MasterCard_x32_png.jpg",
+          "icon_american_express": "shopify:\/\/shop_images\/American-Express_x32_png.jpg",
+          "icon_maestro": "",
+          "icon_solo": "",
+          "icon_paypal": "",
+          "icon_amazon_payments": "",
+          "icon_apple_pay": "",
+          "icon_bitcoin": "shopify:\/\/shop_images\/BC_Rnd_64px.png",
+          "icon_cirrus": "",
+          "icon_dankort": "",
+          "icon_diners_club": "",
+          "icon_discover": "shopify:\/\/shop_images\/Discover_x32_png.jpg",
+          "icon_dogecoin": "",
+          "icon_dwolla": "",
+          "icon_forbrugsforeningen": "",
+          "icon_interac": "",
+          "icon_jcb": "",
+          "icon_litecoin": "",
+          "icon_stripe": "",
+          "icon_sage": "",
+          "icon_wallet": ""
+        }
+      },
+      "recently-viewed-products": {
+        "type": "recently-viewed-products",
+        "settings": {
+          "display_recently_viewed_products": true,
+          "recently_viewed_products_title": "Recently Viewed Products",
+          "number_of_recently_viewed_products": "10"
+        }
+      },
+      "blog-template": {
+        "type": "blog-template",
+        "settings": {
+          "blog_post": "10",
+          "blog_text_align": "left",
+          "blog_show_author": true,
+          "blog_show_date": true
+        }
+      },
+      "contact-template": {
+        "type": "contact-template",
+        "settings": {
+          "display_google_map": true,
+          "google_map_code": "<iframe src=\"https:\/\/maps.google.com\/maps?f=q&source=s_q&hl=vi&geocode=&q=4+Nguy%E1%BB%85n+%C4%90%C3%ACnh+chi%E1%BB%83u,+%C4%90a+Kao,+Qu%E1%BA%ADn+1&aq=&sll=37.0625,-95.677068&sspn=41.903538,86.572266&ie=UTF8&hq=&hnear=4+Nguy%E1%BB%85n+%C4%90%C3%ACnh+Chi%E1%BB%83u,+%C4%90a+Kao,+Qu%E1%BA%ADn+1,+H%E1%BB%93+Ch%C3%AD+Minh,+Vi%E1%BB%87t+Nam&t=m&ll=10.797518,106.700377&spn=0.014754,0.071197&z=15&iwloc=A&output=embed\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\" width=\"100%\" height=\"350\"><\/iframe>",
+          "contact_title": "DROP US A LINE | Schreiben Sie uns",
+          "contact_text_desc": "Have a question or comment? Use the form below to send us a message or contact us by mail at:",
+          "contact_your_name": "",
+          "contact_phone_number": "",
+          "contact_your_email": "",
+          "display_location": true,
+          "location_code": "<h4>Store Information<\/h4>\n<p>We'd love to hear from you - please use the form to send us your message or ideas. Or simply pop in for a cup of fresh tea and a cookie:<\/p>\n<p class=\"addr\">8808 Ave Dermentum, Onsectetur Adipiscing<br>Tortor Sagittis, CA 880986,<br>United States\n<\/p>\n\n<p class=\"addr\">Email: <a href=\"mailto:support@halothemes.com\">support@halothemes.com<\/a><br>Toll-free: <strong>1-888-699-8900<\/strong><\/p><div class=\"open-hours\">\n<strong>Opening Hours:<\/strong>\n<br>Monday to Saturday: 9am - 10pm\n<br>Sundays: 10am - 6pm\n<p><\/p>\n<\/div>"
+        }
+      },
+      "lookbook": {
+        "type": "lookbook",
+        "blocks": {
+          "1489975455753": {
+            "type": "image",
+            "settings": {
+              "dpl_slide_img": true,
+              "image_slide": "",
+              "alignment": "left",
+              "heading": "",
+              "font_size_heading": "40px",
+              "color_heading": "#232323",
+              "slide-des": "",
+              "font_size_des": "12px",
+              "color_des": "#232323",
+              "button_slide": "",
+              "link": "",
+              "bg_button": "#232323",
+              "border_button": "#232323",
+              "color_button": "#fff",
+              "lb_product_1": "",
+              "top_position_1": "41",
+              "left_position_1": "55",
+              "dots_color_1": "#fff",
+              "dots_bg_color_1": "#323232",
+              "dots_shadow_color_1": "#323232",
+              "lb_product_2": "",
+              "top_position_2": "10",
+              "left_position_2": "10",
+              "dots_color_2": "#fff",
+              "dots_bg_color_2": "#323232",
+              "dots_shadow_color_2": "#fff",
+              "lb_product_3": "",
+              "top_position_3": "10",
+              "left_position_3": "10",
+              "dots_color_3": "#fff",
+              "dots_bg_color_3": "#323232",
+              "dots_shadow_color_3": "#fff"
+            }
+          },
+          "1489975477125": {
+            "type": "image",
+            "settings": {
+              "dpl_slide_img": true,
+              "image_slide": "",
+              "alignment": "left",
+              "heading": "",
+              "font_size_heading": "40px",
+              "color_heading": "#232323",
+              "slide-des": "",
+              "font_size_des": "12px",
+              "color_des": "#232323",
+              "button_slide": "",
+              "link": "",
+              "bg_button": "#232323",
+              "border_button": "#232323",
+              "color_button": "#fff",
+              "lb_product_1": "",
+              "top_position_1": "34",
+              "left_position_1": "19",
+              "dots_color_1": "#fff",
+              "dots_bg_color_1": "#323232",
+              "dots_shadow_color_1": "#323232",
+              "lb_product_2": "",
+              "top_position_2": "81",
+              "left_position_2": "48",
+              "dots_color_2": "#fff",
+              "dots_bg_color_2": "#323232",
+              "dots_shadow_color_2": "#323232",
+              "lb_product_3": "",
+              "top_position_3": "10",
+              "left_position_3": "10",
+              "dots_color_3": "#fff",
+              "dots_bg_color_3": "#323232",
+              "dots_shadow_color_3": "#fff"
+            }
+          },
+          "1532404848065": {
+            "type": "image",
+            "settings": {
+              "dpl_slide_img": true,
+              "image_slide": "",
+              "alignment": "left",
+              "heading": "",
+              "font_size_heading": "40px",
+              "color_heading": "#232323",
+              "slide-des": "",
+              "font_size_des": "12px",
+              "color_des": "#232323",
+              "button_slide": "",
+              "link": "",
+              "bg_button": "#232323",
+              "border_button": "#232323",
+              "color_button": "#fff",
+              "lb_product_1": "",
+              "top_position_1": "28",
+              "left_position_1": "33.5",
+              "dots_color_1": "#fff",
+              "dots_bg_color_1": "#323232",
+              "dots_shadow_color_1": "#323232",
+              "lb_product_2": "",
+              "top_position_2": "84",
+              "left_position_2": "40",
+              "dots_color_2": "#fff",
+              "dots_bg_color_2": "#323232",
+              "dots_shadow_color_2": "#323232",
+              "lb_product_3": "",
+              "top_position_3": "10",
+              "left_position_3": "10",
+              "dots_color_3": "#fff",
+              "dots_bg_color_3": "#323232",
+              "dots_shadow_color_3": "#fff"
+            }
+          }
+        },
+        "block_order": [
+          "1489975455753",
+          "1489975477125",
+          "1532404848065"
+        ],
+        "settings": {
+          "display_product_detail_share": true,
+          "share_text": "Share",
+          "button": "Shop LookBook",
+          "link": "shopify:\/\/collections\/all",
+          "autoplay": false,
+          "speed": "5000",
+          "transition": "true",
+          "arrow_color": "#727272",
+          "arrow_border_color": "#d3d3d3",
+          "arrow_bg_color": "#ffffff",
+          "position_slick_arrow": "-35px"
+        }
+      },
+      "cart-template": {
+        "type": "cart-template",
+        "settings": {
+          "cart_notes": true,
+          "display_shipping_estimate": true,
+          "display_norton": true
+        }
+      },
+      "faq-page": {
+        "type": "faq-page",
+        "blocks": {
+          "1507878888245": {
+            "type": "text",
+            "settings": {
+              "question_faqs": "Will your template be fully compatible with Shopify?",
+              "answer_faqs": "Yes it is."
+            }
+          },
+          "1507879452149": {
+            "type": "text",
+            "settings": {
+              "question_faqs": "I cannot upload the theme to my Shopify store \/ Shopify alerts that the file is too big to upload, what is the problem?",
+              "answer_faqs": "<p>Please make sure that you follow below steps:<\/p>\n\n<p>1\/ Download the package from themeforest.net (the file is in zip format)\n<br>\n<br>\n2\/ Extract the file you've just downloaded.\n<br>\n<br>\n3\/ Find this file: ella-3.0.0-sections-ready.zip in the folder Ella Sections Ready 3.0.0, then you just need to upload ella-3.0.0-sections-ready.zip file to your Shopify store.\n<\/p>"
+            }
+          },
+          "1507879511326": {
+            "type": "text",
+            "settings": {
+              "question_faqs": "What I have to do when I need your support?",
+              "answer_faqs": "<p>To save your time and reach our support quickly, please follow below steps:\n<\/p><p>1\/ Create a staff account for us (with Themes permission and Settings permission) <a href=\"http:\/\/docs.shopify.com\/manual\/settings\/account\/staff-members\" target=\"_blank\" style=\"color: #e66f65;\" rel=\"noopener noreferrer\">http:\/\/docs.shopify.com\/manual\/settings\/account\/staff-members<\/a><\/p>\n<p>2\/ Capture screenshot or video for the issue you get.<\/p>\n<p>3\/ Specify which template and version you are using.<\/p>\n<p>4\/ Describe clearly how to reproduce the issue.<\/p>\n<p>5\/ Send all information (staff account, screenshot, video, template name and version, description of the issues, link) to <a href=\"mailto:support@halothemes.com\" target=\"_blank\" style=\"color: #e66f65;\" rel=\"noopener noreferrer\">support@halothemes.com<\/a><\/p>\n<p><\/p>"
+            }
+          },
+          "1507879518615": {
+            "type": "text",
+            "settings": {
+              "question_faqs": "Would assistance be available to upload the template if needed?",
+              "answer_faqs": "Yes, we will assist you to install the template if needed"
+            }
+          },
+          "1507879528740": {
+            "type": "text",
+            "settings": {
+              "question_faqs": "Do you guys offer customisation services for your themes?",
+              "answer_faqs": "Yes, we do. Please send your customisation requests to support@halothemes.com, we will give you our quote. Thank you."
+            }
+          },
+          "1507879543697": {
+            "type": "text",
+            "settings": {
+              "question_faqs": "Can I turn on\/off Lazy Loading Image \/ Item Animation \/ Fade Up on the page?",
+              "answer_faqs": "Yes. You can turn on\/off the animation in the Setting page."
+            }
+          },
+          "1507879557094": {
+            "type": "text",
+            "settings": {
+              "question_faqs": "Can I turn on\/off some blocks on the page?",
+              "answer_faqs": "Yes. You can turn on\/off almost any blocks on the page (featured products, slideshow, banners, related products, recent products,...)."
+            }
+          },
+          "1507879567640": {
+            "type": "text",
+            "settings": {
+              "question_faqs": "I want to have the dropdown cart displayed automatically every time clients hover over it (instead of clicking on it). Is it possible?",
+              "answer_faqs": "Yes, we have a setting for you to switch between these two options: Display on Hover and Display on Click."
+            }
+          },
+          "1507879577808": {
+            "type": "text",
+            "settings": {
+              "question_faqs": "What is included in the theme package?",
+              "answer_faqs": "The theme package includes theme source, Photoshop design files, sample data and manual guide."
+            }
+          },
+          "1507879582861": {
+            "type": "text",
+            "settings": {
+              "question_faqs": "I notice that the images used in the theme are all portrait. Will that be a problem if I use square images for our products? How will they be displayed in the theme?",
+              "answer_faqs": "That is not a problem. You just need to modify the width\/height ratio in theme settings."
+            }
+          },
+          "1507879597073": {
+            "type": "text",
+            "settings": {
+              "question_faqs": "Does the theme support image resizing and cropping?",
+              "answer_faqs": "Yes. Normally, the theme will resize images to a default size (based on your width\/height ratio setting). We also have Crop setting if you don’t want to scale the image."
+            }
+          },
+          "1507879608326": {
+            "type": "text",
+            "settings": {
+              "question_faqs": "Can I add borders around our product images?",
+              "answer_faqs": "Yes, you can. You can also set image border colours."
+            }
+          },
+          "1507879613494": {
+            "type": "text",
+            "settings": {
+              "question_faqs": "Can I have multi level menu?",
+              "answer_faqs": "Yes, you can. Just simply follow the instructions in our Manual Guide, you will be able to easily create a multi-level menu."
+            }
+          },
+          "1507879626512": {
+            "type": "text",
+            "settings": {
+              "question_faqs": "Do you guys provide customer support during weekends \/ holidays?",
+              "answer_faqs": "Normally we don't provide support during weekends, except for urgent cases. In these cases, you only need to mark “Urgent” in your email, we will get back to you ASAP."
+            }
+          },
+          "1507879632829": {
+            "type": "text",
+            "settings": {
+              "question_faqs": "Does the theme support Variant Image?",
+              "answer_faqs": "Yes, it does. Please check it out here to see how it works: <a href=\"https:\/\/sneake-demo.myshopify.com\/products\/sample-proin-de-corper-nulla-dan-melementum-1?variant=10214763888684\">https:\/\/sneake-demo.myshopify.com\/products\/sample-proin-de-corper-nulla-dan-melementum-1?variant=10214763888684<\/a>"
+            }
+          }
+        },
+        "block_order": [
+          "1507878888245",
+          "1507879452149",
+          "1507879511326",
+          "1507879518615",
+          "1507879528740",
+          "1507879543697",
+          "1507879557094",
+          "1507879567640",
+          "1507879577808",
+          "1507879582861",
+          "1507879597073",
+          "1507879608326",
+          "1507879613494",
+          "1507879626512",
+          "1507879632829"
+        ],
+        "settings": {
+          "des_faqs": "Below FAQ are some common concerns of our clients before purchasing the theme, if you have other questions, please just send it to <a href=\"mailto:support@halothemes.com\" target=\"_blank\">support@halothemes.com<\/a>",
+          "contact_text": "Unable to find satisfactory answers ?",
+          "contact_link_text": "Contact Support",
+          "contact_link": "https:\/\/www.halothemes.com\/",
+          "icon_faqs": "Question",
+          "bg_icon_qs": "#ef6454",
+          "color_icon_qs": "#ffffff",
+          "bg_question": "#fafafa",
+          "color_question": "#323232",
+          "font_size_qs": "12",
+          "bg_question_acitve": "#232323",
+          "color_question_acitve": "#ffffff",
+          "icon_answer": "Answer",
+          "bg_icon_answer": "#69c69c",
+          "color_icon_answer": "#ffffff",
+          "color_question_answer": "#3c3c3c",
+          "font_size_answer": "12",
+          "color_question_link": "#0688e2"
+        }
+      },
+      "list-collections-template": {
+        "type": "list-collections-template",
+        "blocks": {
+          "1543214716857": {
+            "type": "collection",
+            "settings": {
+              "image": "",
+              "collection": ""
+            }
+          },
+          "1543214733702": {
+            "type": "collection",
+            "settings": {
+              "image": "",
+              "collection": ""
+            }
+          },
+          "1543214800120": {
+            "type": "collection",
+            "settings": {
+              "image": "",
+              "collection": "glass-pipes-hand-pipes"
+            }
+          },
+          "1543214818887": {
+            "type": "collection",
+            "settings": {
+              "image": "",
+              "collection": ""
+            }
+          },
+          "1543214834303": {
+            "type": "collection",
+            "settings": {
+              "image": "",
+              "collection": ""
+            }
+          },
+          "1543214844672": {
+            "type": "collection",
+            "settings": {
+              "image": "",
+              "collection": ""
+            }
+          },
+          "1543214860592": {
+            "type": "collection",
+            "settings": {
+              "image": "",
+              "collection": ""
+            }
+          },
+          "1543214872428": {
+            "type": "collection",
+            "settings": {
+              "image": "",
+              "collection": ""
+            }
+          },
+          "1543214881800": {
+            "type": "collection",
+            "settings": {
+              "image": "",
+              "collection": ""
+            }
+          }
+        },
+        "block_order": [
+          "1543214716857",
+          "1543214733702",
+          "1543214800120",
+          "1543214818887",
+          "1543214834303",
+          "1543214844672",
+          "1543214860592",
+          "1543214872428",
+          "1543214881800"
+        ],
+        "settings": {
+          "list_collection_results_per_row": "3",
+          "list_collection_title_size": "20",
+          "style_categories": "style_little"
+        }
+      },
+      "sidebar-section": {
+        "type": "sidebar-section",
+        "blocks": {
+          "1543314984589": {
+            "type": "menu",
+            "settings": {
+              "enable": true,
+              "title": "Categories",
+              "style_categories": "style_little",
+              "link_list": "categories"
+            }
+          },
+          "1543315002517": {
+            "type": "product",
+            "settings": {
+              "enable": true,
+              "title": "Featured Products",
+              "collection": "",
+              "limit": "5"
+            }
+          },
+          "1543315033286": {
+            "type": "image",
+            "settings": {
+              "enable": true,
+              "image": "shopify:\/\/shop_images\/Banner_081620c1-638a-459a-87c6-ca53f30759fd.png",
+              "link": "shopify:\/\/collections\/cosmopolis"
+            }
+          },
+          "1543315049567": {
+            "type": "image",
+            "settings": {
+              "enable": true,
+              "image": "shopify:\/\/shop_images\/Untitled-1_84bdc7ca-385c-4894-8bed-4b9ae9cb6263.png",
+              "link": "shopify:\/\/collections\/blaz-ro"
+            }
+          },
+          "1543315088462": {
+            "type": "quote",
+            "settings": {
+              "enable": true,
+              "title": "Custom Block",
+              "quote": "<p>Custom CMS block displayed at the left sidebar on the Catalog Page. Put your own content here: text, html, images, media... whatever you like.<\/p>\n<p>There are many similar sample content placeholders across the store. All editable from admin panel.<\/p>"
+            }
+          }
+        },
+        "block_order": [
+          "1543314984589",
+          "1543315002517",
+          "1543315033286",
+          "1543315049567",
+          "1543315088462"
+        ],
+        "settings": {
+          "display_sidebar": false,
+          "show_sidebar": "left"
+        }
+      },
+      "collection-template-default": {
+        "type": "collection-template-default",
+        "settings": {
+          "display_collection_image": false,
+          "collection_image": "",
+          "display_collection_des": true,
+          "sort_by_qty": true,
+          "limited_view": true,
+          "sort_enable": true,
+          "display_warranty_eligibility": true,
+          "collection_results_per_row": "5",
+          "collection_results_per_page": "20"
+        }
+      },
+      "sidebar-filter": {
+        "type": "sidebar-filter",
+        "settings": {
+          "display_sidebar": true,
+          "show_sidebar": "left",
+          "enable_categories": false,
+          "title_categories": "Categories | Categories",
+          "style_categories": "style_main_menu",
+          "link_list": "",
+          "enable_product": true,
+          "title_product": "Featured Products | Featured Products",
+          "collection": "newest-products",
+          "limit": "5",
+          "enable_img_1": false,
+          "image_img_1": "",
+          "link_img_1": "https:\/\/dankstop.com\/collections\/essentials",
+          "enable_img_2": false,
+          "image_img_2": "",
+          "link_img_2": "",
+          "enable_custom_block": false,
+          "title_custom_block": "Why Shop At DankStop?  | Custom Block",
+          "quote_custom_block": "<p>Custom CMS block displayed at the left sidebar on the Catalog Page. Put your own content here: text, html, images, media... whatever you like.<\/p>\n<p>There are many similar sample content placeholders across the store. All editable from admin panel.<\/p>"
+        }
+      },
+      "product-template-default": {
+        "type": "product-template-default",
+        "settings": {
+          "style_moreview": "left_vertical",
+          "video_product": true,
+          "video_product_icon": "#c1c1c1",
+          "enable_payment_button": true,
+          "show_sold_in": false,
+          "item_prd": "3,5,6,7,8,10,12,15",
+          "item_prds": "sold in last",
+          "hours_prs": "10,15,16,17,18,20,25,35",
+          "item_hours": "hours",
+          "display_vendor": false,
+          "text_vendor": "Brand:",
+          "display_product_sku": false,
+          "text_product_sku": "Product Code:",
+          "display_availability": false,
+          "text_availability": "Availability:",
+          "display_product_type": false,
+          "text_product_type": "Product Type:",
+          "countdown": "countdown_1",
+          "text_countdown": "Limited-Time Offers, End in:",
+          "progressbar_1": "Please hurry, only",
+          "progressbar_2": "left in stock",
+          "total_items": "100",
+          "min_items_left": "15",
+          "max_items_left": "50",
+          "progressbar_color": "#f5f5f5",
+          "progressbar_active_color": "#69c69c",
+          "dpl_customers_view": false,
+          "title_view": "customers are viewing this product",
+          "number_view": "91, 87, 83, 73, 84, 73, 90, 88, 85, 83, 80, 75, 73, 72, 70, 69, 74, 79, 91, 88, 84, 86, 99, 101, 112, 115, 119, 122, 124, 118, 131, 122, 138, 149, 155, 157, 153, 151, 149, 155, 138, 135, 144, 137, 138, 128, 135, 129, 126, 133, 121, 119, 118, 124, 124, 123, 120, 118, 117, 116, 121, 122, 123, 117, 113, 109, 118, 115, 109, 104, 100, 98, 105, 103, 101, 95, 92",
+          "show_desc": "no-show",
+          "display_subtotal": true,
+          "display_product_detail_tag": false,
+          "display_product_detail_share": false,
+          "share_text": "Like it? Share it!",
+          "display_trust_img": false,
+          "display_warranty": true,
+          "display_attachment_addons": true,
+          "display_shipping_delivery_estimate": true,
+          "display_watchlist": false,
+          "display_norton": true,
+          "display_product_bullet_points": true,
+          "show_tab": "horizontal",
+          "display_product_detail_description": true,
+          "product_description_title": "Description",
+          "display_product_feature_terms": true,
+          "product_feature_terms_title": "Features",
+          "display_product_specs": true,
+          "product_specs_title": "Specs",
+          "display_product_reviews": true,
+          "product_review_title": "Customer Reviews",
+          "display_shipping_returns": true,
+          "shipping_returns_title": "Shipping & Returns",
+          "shipping_returns_content": "<p><\/p><h3>RETURN POLICY<\/h3><p><\/p><p>DankStop is proud to offer the industry's most customer friendly return policy :) If you are unsatisfied with your purchase for any reason, you may file a return for unused items within 7 days of delivery. Due to legal liability, DankStop does not accept returns on items that have been used. You can contact our support team directly via live-chat, phone, or email at 1-844-DANKSTOP (326-5786) and support@dankstop.com.<\/p><p><\/p><p><a href=\"\/pages\/file-a-return\">FILE A RETURN<\/a><\/p><p><\/p><p><a href=\"\/pages\/return-policy\">View our entire Return Policy<\/a><\/p><p><\/p><h3>SHIPPING INFO<\/h3><table border=\"1\" class=\"shipping-info-table\"><tbody>\n<tr class=\"shipping-info-table_tr\">\n<td class=\"shipping-info-table_td-l\"><p>How much does shipping cost?<\/p><\/td>\n<td class=\"shipping-info-table_td-r\"><p>DankStop offers free USA shipping on all orders. In addition, you may choose to purchase expedited shipping (2-day, Overnight, etc) at checkout. International customers receive free shipping on orders over $300.<\/p><\/td>\n<\/tr>\n<tr class=\"shipping-info-table_tr\">\n<td class=\"shipping-info-table_td-l\"><p>How long does free shipping take?<\/p><\/td>\n<td class=\"shipping-info-table_td-r\"><p>Free shipping is delivered via USPS or FedEx, and takes anywhere from 3-5 business days.<\/p><\/td>\n<\/tr>\n<tr class=\"shipping-info-table_tr\">\n<td class=\"shipping-info-table_td-l\"><p>How long until my order ships?<\/p><\/td>\n<td class=\"shipping-info-table_td-r\"><p>All orders placed before 2pm EST ship out same day (Mon-Fri). Orders placed after 2pm ship the following business day.<\/p><\/td>\n<\/tr>\n<tr class=\"shipping-info-table_tr\">\n<td class=\"shipping-info-table_td-l\"><p>Do you offer discreet packaging?<\/p><\/td>\n<td class=\"shipping-info-table_td-r\">At DankStop, we completely understand our customers needs for discreet packing. For your privacy, all packages are shipped in unmarked brown or standard USPS Priority boxes with a return address of DS Distribution LLC. There will be no mention of DankStop on your package.<\/td>\n<\/tr>\n<\/tbody><\/table><p><\/p>",
+          "display_custom_tab": true,
+          "custom_tab_title": "Custom Product Tab",
+          "display_related_products": true,
+          "related_products_title": "Related Products",
+          "number_of_related_products": "8",
+          "dpl_lookbook_description": true,
+          "style_lookbook_description": "all_product",
+          "quote_title": "Need some help?",
+          "quote_des": "Have a question about one this product? Our support team is standing by to help you make the right decision. Use the live chat button in the corner of your screen or give us a call at <b>1-844-DANKSTOP (1-844-326-5786)<\/b>",
+          "quote_title_2": "The Best Brands. The Best Prices. Guaranteed.",
+          "quote_des_2": "<p>\nWe're proud of our products, our service, and our prices. If you find a competitor selling one of our products for less, let us know. We'll match their price and give you free USA shipping!\n<\/p>",
+          "dpl_gallery_lookbook": false,
+          "style_lookbook_gallery": "different_product"
+        }
+      },
+      "cart-best-sellers": {
+        "type": "cart-best-sellers",
+        "settings": {
+          "show_cart_best_sellers_product": true,
+          "title": "Best Sellers",
+          "show_slider_featured_collection": "best-sellers",
+          "slider_featured_limit_all": 20,
+          "collection_results_per_row1": "6"
+        }
+      },
+      "sidebar-blog": {
+        "type": "sidebar-blog",
+        "blocks": {
+          "1546400210430": {
+            "type": "image",
+            "settings": {
+              "enable": true,
+              "image": "shopify:\/\/shop_images\/blog-sidebar1.jpg",
+              "link": "https:\/\/dankstop.com\/blogs\/wiki\/why-you-should-use-a-pipe-screen"
+            }
+          },
+          "1546400245437": {
+            "type": "image",
+            "settings": {
+              "enable": true,
+              "image": "shopify:\/\/shop_images\/blog-sidebar2_93f7049f-9ae9-493c-8cd5-0f6d38be2fd2.gif",
+              "link": "https:\/\/dankstop.com\/blogs\/wiki\/how-bongs-are-made"
+            }
+          },
+          "1566838281886": {
+            "type": "image",
+            "settings": {
+              "enable": true,
+              "image": "shopify:\/\/shop_images\/blog-sidebar3.jpg",
+              "link": "https:\/\/dankstop.com\/blogs\/wiki\/glycerin-coils-whats-so-cool-about-them"
+            }
+          }
+        },
+        "block_order": [
+          "1546400210430",
+          "1546400245437",
+          "1566838281886"
+        ],
+        "settings": {
+          "display_sidebar_blog_page": true,
+          "show_sidebar": "right",
+          "display_sidebar_link": false,
+          "sidebar_link_title": "",
+          "style_categories": "style_little",
+          "link_list": "",
+          "sidebar_recent_art": true,
+          "sidebar_blog_tags": false
+        }
+      },
+      "article-template": {
+        "type": "article-template",
+        "blocks": {
+          "1546501567008": {
+            "type": "image",
+            "settings": {
+              "lb_product_1_1": "",
+              "top_position_1_1": "27",
+              "left_position_1_1": "64",
+              "dots_color_1_1": "#ffffff",
+              "dots_bg_color_1_1": "#323232",
+              "dots_shadow_color_1_1": "#323232",
+              "lb_product_1_2": "",
+              "top_position_1_2": "10",
+              "left_position_1_2": "10",
+              "dots_color_1_2": "#ffffff",
+              "dots_bg_color_1_2": "#323232",
+              "dots_shadow_color_1_2": "#ffffff",
+              "lb_product_1_3": "",
+              "top_position_1_3": "10",
+              "left_position_1_3": "10",
+              "dots_color_1_3": "#ffffff",
+              "dots_bg_color_1_3": "#323232",
+              "dots_shadow_color_1_3": "#ffffff",
+              "lb_product_2_1": "",
+              "top_position_2_1": "28",
+              "left_position_2_1": "28",
+              "dots_color_2_1": "#ffffff",
+              "dots_bg_color_2_1": "#323232",
+              "dots_shadow_color_2_1": "#323232",
+              "lb_product_2_2": "",
+              "top_position_2_2": "83",
+              "left_position_2_2": "66",
+              "dots_color_2_2": "#ffffff",
+              "dots_bg_color_2_2": "#323232",
+              "dots_shadow_color_2_2": "#323232",
+              "lb_product_2_3": "",
+              "top_position_2_3": "10",
+              "left_position_2_3": "10",
+              "dots_color_2_3": "#ffffff",
+              "dots_bg_color_2_3": "#323232",
+              "dots_shadow_color_2_3": "#ffffff",
+              "lb_product_3_1": "",
+              "top_position_3_1": "26",
+              "left_position_3_1": "68",
+              "dots_color_3_1": "#ffffff",
+              "dots_bg_color_3_1": "#323232",
+              "dots_shadow_color_3_1": "#323232",
+              "lb_product_3_2": "",
+              "top_position_3_2": "10",
+              "left_position_3_2": "10",
+              "dots_color_3_2": "#ffffff",
+              "dots_bg_color_3_2": "#323232",
+              "dots_shadow_color_3_2": "#ffffff",
+              "lb_product_3_3": "",
+              "top_position_3_3": "10",
+              "left_position_3_3": "10",
+              "dots_color_3_3": "#ffffff",
+              "dots_bg_color_3_3": "#323232",
+              "dots_shadow_color_3_3": "#ffffff"
+            }
+          }
+        },
+        "block_order": [
+          "1546501567008"
+        ],
+        "settings": {
+          "blog_show_author": false,
+          "blog_show_date": true,
+          "dpl_lookbook_description": false,
+          "quote_title": "Sample Block Quote",
+          "quote_des": "Praesent vestibulum congue tellus at fringilla. Curabitur vitae semper sem, eu convallis est. Cras felis nunc commodo loremous convallis vitae interdum non nisl. Maecenas ac est sit amet augue pharetra convallis nec danos.",
+          "quote_title_2": "Sample Paragraph Text",
+          "quote_des_2": "<p>\nPraesent vestibulum congue tellus at fringilla. Curabitur vitae semper sem, eu convallis est. Cras felis nunc commodo eu convallis vitae interdum non nisl. Maecenas ac est sit amet augue pharetra convallis nec danos dui.\n<\/p>\n<p>\nCras suscipit quam et turpis eleifend vitae malesuada magna congue. Damus id ullamcorper neque. Sed vitae mi a mi pretium aliquet ac sed elitos. Pellentesque nulla eros accumsan quis justo at tincidunt lobortis denimes loremous. Suspendisse vestibulum lectus in lectus volutpat, ut dapibus purus pulvinar. Vestibulum sit amet auctor ipsum.\n<\/p>",
+          "dpl_gallery_lookbook": false,
+          "gallery_lb_title": "LookBook Gallery",
+          "show_cart_best_sellers_product": false,
+          "title": "Editor’s Picks",
+          "show_slider_featured_collection": "",
+          "slider_featured_limit_all": 8,
+          "collection_results_per_row1": "4"
+        }
+      },
+      "brands-page": {
+        "type": "brands-page",
+        "blocks": {
+          "1546921086313": {
+            "type": "image",
+            "settings": {
+              "image": "",
+              "title": "Loremous",
+              "link": ""
+            }
+          },
+          "1546921152681": {
+            "type": "image",
+            "settings": {
+              "image": "",
+              "title": "Isablella",
+              "link": ""
+            }
+          },
+          "1546921217742": {
+            "type": "image",
+            "settings": {
+              "image": "",
+              "title": "Benjamin Button",
+              "link": ""
+            }
+          },
+          "1546921256644": {
+            "type": "image",
+            "settings": {
+              "image": "",
+              "title": "Fermends",
+              "link": ""
+            }
+          },
+          "1546921290795": {
+            "type": "image",
+            "settings": {
+              "image": "",
+              "title": "conseqaur",
+              "link": ""
+            }
+          },
+          "1546921315910": {
+            "type": "image",
+            "settings": {
+              "image": "",
+              "title": "Benjamin Button",
+              "link": ""
+            }
+          }
+        },
+        "block_order": [
+          "1546921086313",
+          "1546921152681",
+          "1546921217742",
+          "1546921256644",
+          "1546921290795",
+          "1546921315910"
+        ],
+        "settings": {
+          "display_brand": true
+        }
+      },
+      "shop-instagram": {
+        "type": "shop-instagram",
+        "settings": {
+          "title": "Shop Instagram",
+          "des": "Nullam aliquet vestibulum augue non varius cras de congue elitos. Duis tristique delos ante an daliquam. Praesent urna tellus laoreet an tellus ullamcorper fermentum facilisis.",
+          "embed_code": "<script src=\"https:\/\/snapppt.com\/widgets\/widget_loader\/33732d63-5077-4f49-a869-7d4ddc227b6f\/grid.js\" defer class=\"snapppt-widget\"><\/script>"
+        }
+      },
+      "someone-purchased": {
+        "type": "someone-purchased",
+        "blocks": {
+          "1548643650260": {
+            "type": "image",
+            "settings": {
+              "product": "",
+              "from_ago": "from Blackburn, UK",
+              "time_ago": "20 minutes ago,"
+            }
+          },
+          "1548643708120": {
+            "type": "image",
+            "settings": {
+              "product": "",
+              "from_ago": "from Washington, US",
+              "time_ago": "30 minutes ago,"
+            }
+          },
+          "1548643726643": {
+            "type": "image",
+            "settings": {
+              "product": "",
+              "from_ago": "in Blumenau, Brazil",
+              "time_ago": "10 minutes ago,"
+            }
+          },
+          "1548643747526": {
+            "type": "image",
+            "settings": {
+              "product": "",
+              "from_ago": "from Bauru, Brazil",
+              "time_ago": "35 minutes ago,"
+            }
+          }
+        },
+        "block_order": [
+          "1548643650260",
+          "1548643708120",
+          "1548643726643",
+          "1548643747526"
+        ],
+        "settings": {
+          "display_someone-purchased": false,
+          "display_someone-purchased_mb": false,
+          "show_someone-purchased": "right",
+          "someone_speed": "60000",
+          "text": "Someone recently bought a"
+        }
+      },
+      "GDPR-modal": {
+        "type": "GDPR-modal",
+        "settings": {
+          "display_gdpr": false,
+          "show_gdp": "left",
+          "bg_color": "#141414",
+          "text_color": "#ffffff",
+          "privacy_policy_color": "#818181",
+          "content": "The cookie settings on this website are set to 'allow all cookies' to give you the very best experience. Please click Accept Cookies to continue to use the site.",
+          "privacy_policy_text": "privacy policy",
+          "privacy_policy_link": "https:\/\/policies.google.com\/",
+          "accept_cookies_text": "accept"
+        }
+      },
+      "1550574152101": {
+        "type": "home-brands-2",
+        "blocks": {
+          "1550574192649": {
+            "type": "image",
+            "settings": {
+              "title": "Nucleus",
+              "link": "shopify:\/\/collections\/nucleus"
+            }
+          },
+          "1550574590271": {
+            "type": "image",
+            "settings": {
+              "title": "Empire Glassworks",
+              "link": "shopify:\/\/collections\/empire-glassworks"
+            }
+          },
+          "1550574625228": {
+            "type": "image",
+            "settings": {
+              "title": "RAW",
+              "link": "shopify:\/\/collections\/raw"
+            }
+          },
+          "1585246528547": {
+            "type": "image",
+            "settings": {
+              "title": "GRAV",
+              "link": "shopify:\/\/collections\/grav"
+            }
+          },
+          "1550574458016": {
+            "type": "image",
+            "settings": {
+              "title": "LavaTech",
+              "link": "shopify:\/\/collections\/lavatech"
+            }
+          },
+          "1550574469089": {
+            "type": "image",
+            "settings": {
+              "title": "Sweet Tooth",
+              "link": "shopify:\/\/collections\/sweet-tooth"
+            }
+          },
+          "1550574633224": {
+            "type": "image",
+            "settings": {
+              "title": "Diamond Glass",
+              "link": "shopify:\/\/collections\/diamond-glass"
+            }
+          },
+          "1550574640908": {
+            "type": "image",
+            "settings": {
+              "title": "Storz & Bickel",
+              "link": "shopify:\/\/collections\/storz-bickel"
+            }
+          },
+          "1550574601445": {
+            "type": "image",
+            "settings": {
+              "title": "Santa Cruz Shredder",
+              "link": "shopify:\/\/collections\/santa-cruz-shredder"
+            }
+          },
+          "1550574441955": {
+            "type": "image",
+            "settings": {
+              "title": "My Bud Vase",
+              "link": "shopify:\/\/collections\/my-bud-vase"
+            }
+          }
+        },
+        "block_order": [
+          "1550574192649",
+          "1550574590271",
+          "1550574625228",
+          "1585246528547",
+          "1550574458016",
+          "1550574469089",
+          "1550574633224",
+          "1550574640908",
+          "1550574601445",
+          "1550574441955"
+        ],
+        "disabled": true,
+        "settings": {
+          "layout": "default",
+          "view_all": "Shop By Brand",
+          "link_view_all": "shopify:\/\/pages\/all-brands",
+          "margin_bottom_mb": 15,
+          "margin_bottom_tab": 15,
+          "margin_bottom": 40,
+          "brand_title": "Brands We Love",
+          "brand_des": "",
+          "title_style": "style_2",
+          "brand_rows": "5"
+        }
+      },
+      "1550720181092": {
+        "type": "supermarket-product-tabs",
+        "blocks": {
+          "product_tabs_PTtJaG": {
+            "type": "ProductTabs",
+            "settings": {
+              "title": "Featured",
+              "collection": "best-sellers"
+            }
+          },
+          "1550720941591": {
+            "type": "ProductTabs",
+            "settings": {
+              "title": "Bongs",
+              "collection": "bongs"
+            }
+          },
+          "product_tabs_AmhXmX": {
+            "type": "ProductTabs",
+            "settings": {
+              "title": "Dab Rigs",
+              "collection": "dab-rigs-and-oil-rigs"
+            }
+          },
+          "product_tabs_3fWLhh": {
+            "type": "ProductTabs",
+            "settings": {
+              "title": "Glass Pipes",
+              "collection": "glass-pipes-hand-pipes"
+            }
+          },
+          "product_tabs_9dpQAW": {
+            "type": "ProductTabs",
+            "settings": {
+              "title": "Vaporizers",
+              "collection": "vaporizers"
+            }
+          },
+          "product_tabs_7nqe6L": {
+            "type": "ProductTabs",
+            "settings": {
+              "title": "Accessories",
+              "collection": "accessories"
+            }
+          },
+          "product_tabs_PPDNbH": {
+            "type": "ProductTabs",
+            "disabled": true,
+            "settings": {
+              "title": "Womens",
+              "collection": ""
+            }
+          }
+        },
+        "block_order": [
+          "product_tabs_PTtJaG",
+          "1550720941591",
+          "product_tabs_AmhXmX",
+          "product_tabs_3fWLhh",
+          "product_tabs_9dpQAW",
+          "product_tabs_7nqe6L",
+          "product_tabs_PPDNbH"
+        ],
+        "custom_css": [],
+        "settings": {
+          "featured_products_title": "Best Sellers",
+          "display_banner": false,
+          "font_size_banner_heading": "30px",
+          "font_size_banner_des": "12px",
+          "bg_banner_button": "#ffffff",
+          "border_banner_button": "#ffffff",
+          "color_banner_button": "#232323",
+          "banner_heading_1": "FRESH OUT THE KILN",
+          "banner_des_1": "View our newly added bongs, pipes, vapes and accessories!",
+          "banner_button_1": "Shop New Arrivals",
+          "link_1": "",
+          "color_banner_1": "#ffffff",
+          "banner_heading_2": "#Cosmó",
+          "banner_des_2": "Phasellus lorem pulvinar maecenas cosmopolis",
+          "banner_button_2": "Shop Now",
+          "link_2": "",
+          "color_banner_2": "#ffffff",
+          "banner_heading_3": "#Dapbõe",
+          "banner_des_3": "Phasellus lorem pulvinar maecenas cosmopolis",
+          "banner_button_3": "Shop Now",
+          "link_3": "",
+          "color_banner_3": "#ffffff",
+          "collection_results_per_row": "5",
+          "margin_bottom_mb": 40,
+          "margin_bottom_tab": 40,
+          "margin_bottom": 40
+        }
+      },
+      "1547794993064": {
+        "type": "home-blog-posts",
+        "settings": {
+          "layout": "default",
+          "blog_posts": "blog",
+          "blog_results_per_row": "3",
+          "post_limit": 3,
+          "blog_show_author": true,
+          "blog_show_date": true,
+          "blog_post_title": "Learn with us",
+          "blog_post_des": "New to smoking? Just looking to learn about your favorite hobby? Check out our blog for fun and informative articles!",
+          "title_style": "style_2",
+          "margin_bottom_mb": 40,
+          "margin_bottom_tab": 40,
+          "margin_bottom": 40
+        }
+      },
+      "1541566560488": {
+        "type": "home-instagram",
+        "disabled": true,
+        "settings": {
+          "show_instagram": true,
+          "layout": "default",
+          "display_border_top": false,
+          "instagram_bg": "#ffffff",
+          "instagram_title": "#dankstop On Instagram",
+          "instagram_des": "Discover new products & follow us for Instagram-exclusive giveaways.",
+          "title_style": "style_2",
+          "display_instagram_button": false,
+          "instagram_button_text": "SHOP OUR INSTAGRAM",
+          "instagram_button_link": "http:\/\/instashop.co\/dankstop",
+          "accessToken": "884494772.1677ed0.9710218cb8ff4f6eb7b982f6e2728074",
+          "limit": "10",
+          "images_per_row": "6",
+          "slide_ins": "centermode",
+          "display_arrow": true,
+          "slide_rows": "1",
+          "resolution_images": "thumbnail"
+        }
+      },
+      "1550745498097": {
+        "type": "home-store-info",
+        "blocks": {
+          "1550745516795": {
+            "type": "Text",
+            "settings": {
+              "icon": "<i class=\"fa fa-truck\" aria-hidden=\"true\"><\/i>",
+              "title": "Free same-day shipping",
+              "text": "All U.S. orders placed by 2pm EST will ship the same day. We also ship worldwide!"
+            }
+          },
+          "1550745595729": {
+            "type": "Text",
+            "settings": {
+              "icon": "<i class=\"fa fa-credit-card\" aria-hidden=\"true\"><\/i>",
+              "title": "Easy Returns",
+              "text": "We provide a hassle-free return process if you're unsatisfied with your purchase for any reason."
+            }
+          },
+          "1550745607091": {
+            "type": "Text",
+            "settings": {
+              "icon": "<i class=\"fa fa-shield\" aria-hidden=\"true\"><\/i>",
+              "title": "Glass Warranty",
+              "text": "PieceProtect™ is the fastest, friendliest, and most affordable way to protect your smoking gear."
+            }
+          },
+          "1550745631571": {
+            "type": "Text",
+            "settings": {
+              "icon": "<i class=\"fa fa-phone\" aria-hidden=\"true\"><\/i>",
+              "title": "Customer Support",
+              "text": "Our friendly, expert staff is here to assist you with your shopping experience. Email, call, or live chat with us!"
+            }
+          }
+        },
+        "block_order": [
+          "1550745516795",
+          "1550745595729",
+          "1550745607091",
+          "1550745631571"
+        ],
+        "disabled": true,
+        "settings": {
+          "layout": "default",
+          "border_block": "#e3e3e3",
+          "border_item": "#e3e3e3",
+          "margin_bottom_mb": 30,
+          "margin_bottom_tab": 30,
+          "margin_bottom": 50
+        }
+      },
+      "header-supermarket": {
+        "type": "header-supermarket",
+        "settings": {
+          "brand_type": "image",
+          "brand_text": "",
+          "logo": "shopify:\/\/shop_images\/LogoB-green_copy_199x_ffbb68b7-61b6-4745-a9f0-1bb632bbad19.png",
+          "max_height_logo_mb": "120px",
+          "logo_pc": "shopify:\/\/shop_images\/LogoB-green_copy_199x_ffbb68b7-61b6-4745-a9f0-1bb632bbad19.png",
+          "max_height_logo_pc": "80px",
+          "bg_header_middel": "#f8f8f8",
+          "header_middel_text_color": "#252525",
+          "header_middel_icon_color": "#252525",
+          "info_icon_1": "",
+          "info_text_1": "🇺🇸&nbsp;&nbsp;FREE USA SHIPPING ABOVE $50",
+          "info_icon_2": "",
+          "info_text_2": "",
+          "display_free_shipping": true,
+          "free_shipping_text": "The lowest prices online, GUARANTEED",
+          "free_shipping_color": "#dc2500",
+          "header-link_1_text": "Membership",
+          "header-link_1": "shopify:\/\/pages\/membership",
+          "header-link_2_text": "Need Help?",
+          "header-link_2": "",
+          "bg_header_bottom_color": "#ffffff",
+          "header_bottom_link_color": "#252525",
+          "header_bottom_icon_color": "#252525",
+          "bg_search_color": "#ffffff",
+          "search_color": "#323232",
+          "search_border_color": "#dcdcdc",
+          "bg_cart_color": "#39b54a",
+          "cart_color": "#ffffff"
+        }
+      },
+      "navigation-supermarket": {
+        "type": "navigation-supermarket",
+        "blocks": {
+          "1564895385251": {
+            "type": "style_1",
+            "settings": {
+              "megamenu_items_1": "Rolling Papers and Supplies",
+              "title_featured_product": "Subscribe & Save",
+              "featured_product": "dankstop-monthly-smoker-essentials-pack",
+              "banner_first_style_1": "shopify:\/\/shop_images\/rollingpapers1.jpg",
+              "link_banner_first_style_1": ""
+            }
+          },
+          "1564895537870": {
+            "type": "style_5",
+            "settings": {
+              "megamenu_items_5": "Home and Lifestyle",
+              "banner_first_style_5": "shopify:\/\/shop_images\/homelifestyle1.jpg",
+              "link_banner_first_style_5": "https:\/\/dankstop.com\/collections\/vendors?q=Cali%20Sweets",
+              "link_banner_second_style_5": "",
+              "link_banner_third_style_5": "",
+              "display_cms_custom": false,
+              "cms_custom_title": "Custom Block",
+              "quote": "",
+              "cms_read_more_text": "Read More",
+              "cms_read_more_link": ""
+            }
+          },
+          "1567200429488": {
+            "type": "style_6",
+            "settings": {
+              "megamenu_items_6": "Dabbing Accessories"
+            }
+          },
+          "1568155493743": {
+            "type": "style_6",
+            "settings": {
+              "megamenu_items_6": "Bongs"
+            }
+          },
+          "1568168168737": {
+            "type": "style_6",
+            "settings": {
+              "megamenu_items_6": "HAND PIPES"
+            }
+          },
+          "1568172899920": {
+            "type": "style_6",
+            "settings": {
+              "megamenu_items_6": "Dab Rigs"
+            }
+          },
+          "1568180545144": {
+            "type": "style_6",
+            "settings": {
+              "megamenu_items_6": "Vaporizers"
+            }
+          },
+          "1568180792657": {
+            "type": "style_6",
+            "settings": {
+              "megamenu_items_6": "Rolling Papers and Supplies"
+            }
+          },
+          "1568322644572": {
+            "type": "style_6",
+            "settings": {
+              "megamenu_items_6": "Accessories"
+            }
+          },
+          "1572211216031": {
+            "type": "style_6",
+            "settings": {
+              "megamenu_items_6": "Extraction Supplies"
+            }
+          },
+          "1574579838980": {
+            "type": "style_6",
+            "settings": {
+              "megamenu_items_6": "Influencers"
+            }
+          },
+          "40a59810-4376-48fc-9a66-7f8e04240797": {
+            "type": "style_6",
+            "settings": {
+              "megamenu_items_6": "CBD Products"
+            }
+          }
+        },
+        "block_order": [
+          "1564895385251",
+          "1564895537870",
+          "1567200429488",
+          "1568155493743",
+          "1568168168737",
+          "1568172899920",
+          "1568180545144",
+          "1568180792657",
+          "1568322644572",
+          "1572211216031",
+          "1574579838980",
+          "40a59810-4376-48fc-9a66-7f8e04240797"
+        ],
+        "settings": {
+          "display_fixtop_menu": true,
+          "logo_fix": "shopify:\/\/shop_images\/dankstop-logo2.gif",
+          "horizontal_linklist": "top-nav-menu",
+          "show_ig_count": false,
+          "show_fb_like": false,
+          "fb_like_code_text": "Like us",
+          "social_facebook_link": "https:\/\/facebook.com\/dankstop",
+          "alignment": "left",
+          "display_vertical_menu": true,
+          "vertical_linklist": "main-menu",
+          "categories_title": "Online Headshop",
+          "view_all": "View All",
+          "link_view_all": "shopify:\/\/pages\/shop-by",
+          "show_menu_at_mb": false,
+          "bg_title": "#39b54a",
+          "color_title": "#ffffff",
+          "color_view_all": "#ffffff",
+          "bg_menu": "#ffffff",
+          "bg_dropdown_menu": "#ffffff",
+          "color_menu_lv1": "#232323",
+          "hover_color_mnu_lv1": "#232323",
+          "font_size_mnu_lv1": "12px",
+          "color_menu_lv2": "#232323",
+          "hover_color_mnu_lv2": "#232323",
+          "font_size_mnu_lv2": "12px",
+          "color_menu_lv3": "#3c3c3c",
+          "hover_color_mnu_lv3": "#39b54a",
+          "font_size_mnu_lv3": "12px",
+          "enable_sale": true,
+          "lb_sale": "Clearance",
+          "sale_item": "On Sale",
+          "bg_lb_sale": "#ff1a00",
+          "color_lb_sale": "#ffffff",
+          "enable_new": false,
+          "lb_new": "🎁",
+          "new_item": "Gift Guides",
+          "bg_lb_new": "#06bfe2",
+          "color_lb_new": "#ffffff",
+          "enable_hot": true,
+          "lb_hot": "Follow Us",
+          "hot_item": "Shop Instagram",
+          "bg_lb_hot": "#39b54a",
+          "color_lb_hot": "#ffffff",
+          "display_megamenu": true
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "display_header_top": true,
+          "top_message_text": "Mid-Season Sale Up to 70% OFF.",
+          "bg_header_top": "#ffe8e8",
+          "text_header_top_color": "#b05d5d",
+          "brand_type": "text",
+          "brand_text": "",
+          "logo": "",
+          "max_height_logo_mb": "26px",
+          "logo_pc": "",
+          "max_height_logo_pc": "44px",
+          "bg_search_color": "#fafafa",
+          "search_color": "#323232",
+          "search_border_color": "#e7e7e7",
+          "bg_header_bottom_color": "#fff",
+          "header_bottom_link_color": "#232323",
+          "header_bottom_text_color": "#323232",
+          "display_customer_service": true,
+          "customer_service_text": "Customer Service 1.900.000.6690",
+          "display_free_shipping": true,
+          "free_shipping_text": "Free shipping on All Orders. No Minimum Purchase",
+          "bg_cart_color": "#ffe5e5",
+          "cart_color": "#323232",
+          "dropdowncart_type": "hover"
+        }
+      },
+      "navigation": {
+        "type": "navigation",
+        "settings": {
+          "display_fixtop_menu": true,
+          "logo_fix": "",
+          "alignment": "left",
+          "bg_menu": "#232323",
+          "bg_dropdown_menu": "#fff",
+          "color_menu_lv1": "#fff",
+          "hover_color_mnu_lv1": "#fff",
+          "font_size_mnu_lv1": "13px",
+          "color_menu_lv2": "#232323",
+          "hover_color_mnu_lv2": "#232323",
+          "font_size_mnu_lv2": "12px",
+          "color_menu_lv3": "#3c3c3c",
+          "hover_color_mnu_lv3": "#0688e2",
+          "font_size_mnu_lv3": "12px",
+          "enable_sale": true,
+          "lb_sale": "Sale",
+          "sale_item": "",
+          "bg_lb_sale": "#ef6454",
+          "color_lb_sale": "#fff",
+          "enable_new": true,
+          "lb_new": "New",
+          "new_item": "",
+          "bg_lb_new": "#06bfe2",
+          "color_lb_new": "#fff",
+          "enable_hot": true,
+          "lb_hot": "Hot",
+          "hot_item": "",
+          "bg_lb_hot": "#ffbb49",
+          "color_lb_hot": "#fff",
+          "display_megamenu": true
+        }
+      },
+      "header-parallax": {
+        "type": "header-parallax",
+        "settings": {
+          "display_header_top": true,
+          "top_message_text": "Mid-Season Sale Up to 70% OFF.",
+          "font_weight_bold": true,
+          "bg_header_top": "#ef6454",
+          "text_header_top_color": "#fff",
+          "brand_type": "text",
+          "brand_text": "",
+          "logo": "",
+          "max_height_logo_mb": "26px",
+          "logo_pc": "",
+          "max_height_logo_pc": "33px",
+          "display_parallax": true,
+          "font_weight_nav": false,
+          "logo_parallax": "",
+          "menu_parallax_color": "#fff",
+          "bg_search_color": "#f8f8f8",
+          "search_color": "#787878",
+          "search_color_btn": "#333",
+          "bg_cart_color": "#1e1e1e",
+          "cart_color": "#fff",
+          "display_fixtop_menu": true,
+          "alignment": "left",
+          "bg_menu": "#fff",
+          "bg_dropdown_menu": "#f8f8f8",
+          "color_menu_lv1": "#232323",
+          "hover_color_mnu_lv1": "#232323",
+          "font_size_mnu_lv1": "13px",
+          "color_menu_lv2": "#232323",
+          "hover_color_mnu_lv2": "#232323",
+          "font_size_mnu_lv2": "12px",
+          "color_menu_lv3": "#3c3c3c",
+          "hover_color_mnu_lv3": "#0688e2",
+          "font_size_mnu_lv3": "12px",
+          "enable_sale": true,
+          "lb_sale": "Sale",
+          "sale_item": "",
+          "bg_lb_sale": "#ef6454",
+          "color_lb_sale": "#fff",
+          "enable_new": true,
+          "lb_new": "New",
+          "new_item": "",
+          "bg_lb_new": "#06bfe2",
+          "color_lb_new": "#fff",
+          "enable_hot": true,
+          "lb_hot": "Hot",
+          "hot_item": "",
+          "bg_lb_hot": "#ffbb49",
+          "color_lb_hot": "#fff",
+          "display_megamenu": true
+        }
+      },
+      "header-02": {
+        "type": "header-02",
+        "settings": {
+          "display_header_top": true,
+          "top_message_text": "Mid-Season Sale Up to 70% OFF.",
+          "bg_header_top": "#ffe8e8",
+          "text_header_top_color": "#b05d5d",
+          "brand_type": "text",
+          "brand_text": "",
+          "logo": "",
+          "max_height_logo_mb": "26px",
+          "logo_pc": "",
+          "max_height_logo_pc": "37px",
+          "bg_search_color": "#fff",
+          "search_color": "#646464",
+          "search_border_color": "#cbcbcb",
+          "bg_header_bottom_color": "#fff",
+          "header_bottom_link_color": "#646464",
+          "free_shipping_text_1": "Free Express Shipping for all orders",
+          "free_shipping_text_2": "Free In-store returns",
+          "bg_cart_color": "#fff",
+          "cart_color": "#646464"
+        }
+      },
+      "header-03": {
+        "type": "header-03",
+        "settings": {
+          "display_header_top": true,
+          "top_message_text": "Top Promotion Bar Description",
+          "font_weight_bold": false,
+          "bg_header_top": "#232323",
+          "text_header_top_color": "#fff",
+          "display_parallax": false,
+          "logo_parallax": "",
+          "menu_parallax_color": "#fff",
+          "bg_header_bottom_color_1": "#f8f8f8",
+          "bg_header_bottom_color": "#fff",
+          "header_bottom_icon_color": "#232323",
+          "header_bottom_text_color": "#3c3c3c",
+          "display_header_social": true,
+          "display_customer_service": true,
+          "customer_service_text": "Customer Service 1.900.000.6690",
+          "display_free_shipping": true,
+          "free_shipping_text": "Mid-Season Sale Up to 70% OFF",
+          "brand_type": "text",
+          "brand_text": "",
+          "logo": "",
+          "max_height_logo_mb": "26px",
+          "logo_pc": "",
+          "max_height_logo_pc": "37px",
+          "bg_search_color": "#fff",
+          "search_color": "#848484",
+          "search_border_color": "#ebebeb",
+          "bg_cart_color": "#e95144",
+          "cart_color": "#fff"
+        }
+      },
+      "header-04": {
+        "type": "header-04",
+        "settings": {
+          "brand_type": "text",
+          "brand_text": "",
+          "logo": "",
+          "max_height_logo_mb": "26px",
+          "logo_pc": "",
+          "max_height_logo_pc": "30px",
+          "bg_search_color": "#fff",
+          "search_color": "#232323",
+          "search_color_border": "#3c3c3c",
+          "bg_cart_color": "#1e1e1e",
+          "cart_color": "#fff",
+          "display_fixtop_menu": true,
+          "alignment": "left",
+          "bg_menu": "#fff",
+          "bg_dropdown_menu": "#f8f8f8",
+          "color_menu_lv1": "#232323",
+          "hover_color_mnu_lv1": "#232323",
+          "font_size_mnu_lv1": "13px",
+          "color_menu_lv2": "#232323",
+          "hover_color_mnu_lv2": "#232323",
+          "font_size_mnu_lv2": "12px",
+          "color_menu_lv3": "#3c3c3c",
+          "hover_color_mnu_lv3": "#0688e2",
+          "font_size_mnu_lv3": "12px",
+          "enable_sale": true,
+          "lb_sale": "Sale",
+          "sale_item": "",
+          "bg_lb_sale": "#ef6454",
+          "color_lb_sale": "#fff",
+          "enable_new": true,
+          "lb_new": "New",
+          "new_item": "",
+          "bg_lb_new": "#06bfe2",
+          "color_lb_new": "#fff",
+          "enable_hot": true,
+          "lb_hot": "Hot",
+          "hot_item": "",
+          "bg_lb_hot": "#ffbb49",
+          "color_lb_hot": "#fff",
+          "display_header_policies": true,
+          "policies_border_color": "#a7a7a7",
+          "policies_bg_color": "#232323",
+          "policies_color": "#fff",
+          "icon_1": "",
+          "text_1": "Free Shipping on all orders *",
+          "link_1": "",
+          "icon_2": "",
+          "text_2": "Free Shipping on all orders *",
+          "link_2": "",
+          "icon_3": "",
+          "text_3": "Free Shipping on all orders *",
+          "link_3": "",
+          "display_megamenu": true
+        }
+      },
+      "header-vertical": {
+        "type": "header-vertical",
+        "settings": {
+          "bg_header": "#fff",
+          "color_header": "#282828",
+          "brand_type": "text",
+          "brand_text": "",
+          "logo": "",
+          "max_height_logo_mb": "26px",
+          "logo_pc": "",
+          "max_height_logo_pc": "33px",
+          "bg_search_color": "#fff",
+          "search_color": "#969696",
+          "search_color_border": "#c1c1c1",
+          "bg_cart_color": "#e95144",
+          "cart_color": "#fff",
+          "display_fixtop_menu": true,
+          "bg_menu": "#fff",
+          "bg_dropdown_menu": "#fff",
+          "color_menu_lv1": "#232323",
+          "hover_color_mnu_lv1": "#232323",
+          "font_size_mnu_lv1": "13px",
+          "color_menu_lv2": "#232323",
+          "hover_color_mnu_lv2": "#232323",
+          "font_size_mnu_lv2": "12px",
+          "color_menu_lv3": "#3c3c3c",
+          "hover_color_mnu_lv3": "#0688e2",
+          "font_size_mnu_lv3": "12px",
+          "enable_sale": true,
+          "lb_sale": "Sale",
+          "sale_item": "",
+          "bg_lb_sale": "#ef6454",
+          "color_lb_sale": "#fff",
+          "enable_new": true,
+          "lb_new": "New",
+          "new_item": "",
+          "bg_lb_new": "#06bfe2",
+          "color_lb_new": "#fff",
+          "enable_hot": true,
+          "lb_hot": "Hot",
+          "hot_item": "",
+          "bg_lb_hot": "#ffbb49",
+          "color_lb_hot": "#fff",
+          "display_megamenu": true
+        }
+      },
+      "navigation-vertical-menu": {
+        "type": "navigation-vertical-menu",
+        "settings": {
+          "brand_type": "text",
+          "brand_text": "",
+          "logo_pc": "",
+          "max_height_logo_pc": "33px",
+          "display_social": true,
+          "address_code": "Shopify themes by Halothemes",
+          "display_typography_label": true,
+          "img_1": "",
+          "img_2": "",
+          "alignment": "left",
+          "bg_menu": "#232323",
+          "bg_dropdown_menu": "#fff",
+          "color_menu_lv1": "#fff",
+          "hover_color_mnu_lv1": "#fff",
+          "font_size_mnu_lv1": "13px",
+          "color_menu_lv2": "#232323",
+          "hover_color_mnu_lv2": "#232323",
+          "font_size_mnu_lv2": "12px",
+          "color_menu_lv3": "#3c3c3c",
+          "hover_color_mnu_lv3": "#0688e2",
+          "font_size_mnu_lv3": "12px",
+          "enable_sale": true,
+          "lb_sale": "Sale",
+          "sale_item": "",
+          "bg_lb_sale": "#ef6454",
+          "color_lb_sale": "#fff",
+          "enable_new": true,
+          "lb_new": "New",
+          "new_item": "",
+          "bg_lb_new": "#06bfe2",
+          "color_lb_new": "#fff",
+          "enable_hot": true,
+          "lb_hot": "Hot",
+          "hot_item": "",
+          "bg_lb_hot": "#ffbb49",
+          "color_lb_hot": "#fff",
+          "display_megamenu": true
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "bg_footer_img": "bg-footer",
+          "bg_footer_color": "#232323",
+          "bg_footer_position_x": "left",
+          "bg_footer_position_y": "top",
+          "bg_footer_repeat": "repeat",
+          "bg_footer_attachment": "scroll",
+          "bg-footer-img": "",
+          "footer_title_color": "#000000",
+          "footer_link_color": "#178dc9",
+          "footer_link_hover_color": "#178dc9",
+          "bg_footer_line_color": "#282828",
+          "footer_newsletter_enable": false,
+          "footer_newsletter_title": "",
+          "footer_newsletter_des": "",
+          "bg_newsletter_color": "#fff",
+          "newsletter_color": "#717171",
+          "newsletter_border_color": "#3b3b3b",
+          "bg_newsletter_button_color": "#3b3b3b",
+          "newsletter_button_color": "#fff",
+          "footer_social_enable": false,
+          "footer_social_title": "",
+          "fb_like_code_text": "<span>LIKE US <i>on<\/i> FACEBOOK<\/span>",
+          "fb_like_code": "",
+          "social_icon_color": "#141414",
+          "social_icon_bg_color": "#fff",
+          "bg_footer_bottom_color": "#000",
+          "footer_bottom_color": "#cbcbcb",
+          "footer_address_code": "",
+          "show_payment_icons": false,
+          "payment_display_visa": false,
+          "payment_display_visa_electron": false,
+          "payment_display_american_express": false,
+          "payment_display_master": false,
+          "payment_display_maestro": false,
+          "payment_display_solo": false,
+          "payment_display_paypal": false,
+          "payment_display_amazon_payments": false,
+          "payment_display_apple_pay": false,
+          "payment_display_bitcoin": false,
+          "payment_display_cirrus": false,
+          "payment_display_dankort": false,
+          "payment_display_diners_club": false,
+          "payment_display_discover": false,
+          "payment_display_dogecoin": false,
+          "payment_display_dwolla": false,
+          "payment_display_forbrugsforeningen": false,
+          "payment_display_interac": false,
+          "payment_display_jcb": false,
+          "payment_display_litecoin": false,
+          "payment_display_stripe": false,
+          "payment_display_sage": false,
+          "payment_display_wallet": false,
+          "icon_visa": "",
+          "icon_visa_electron": "",
+          "icon_master": "",
+          "icon_american_express": "",
+          "icon_maestro": "",
+          "icon_solo": "",
+          "icon_paypal": "",
+          "icon_amazon_payments": "",
+          "icon_apple_pay": "",
+          "icon_bitcoin": "",
+          "icon_cirrus": "",
+          "icon_dankort": "",
+          "icon_diners_club": "",
+          "icon_discover": "",
+          "icon_dogecoin": "",
+          "icon_dwolla": "",
+          "icon_forbrugsforeningen": "",
+          "icon_interac": "",
+          "icon_jcb": "",
+          "icon_litecoin": "",
+          "icon_stripe": "",
+          "icon_sage": "",
+          "icon_wallet": ""
+        }
+      },
+      "footer-parallax": {
+        "type": "footer-parallax",
+        "settings": {
+          "footer_border_top": true,
+          "bg_footer_img": "bg-footer",
+          "bg_footer_color": "#f8f8f8",
+          "bg_footer_position_x": "left",
+          "bg_footer_position_y": "top",
+          "bg_footer_repeat": "repeat",
+          "bg_footer_attachment": "scroll",
+          "bg-footer-img": "",
+          "footer_title_color": "#232323",
+          "footer_link_color": "#707070",
+          "footer_link_hover_color": "#707070",
+          "bg_footer_line_color": "#ebebeb",
+          "footer_social_enable": false,
+          "footer_newsletter_enable": false,
+          "footer_newsletter_title": "",
+          "des_newslette": "",
+          "bg_newsletter_color": "#fff",
+          "newsletter_color": "#acacac",
+          "newsletter_border_color": "#d7d7d7",
+          "bg_newsletter_button_color": "#232323",
+          "newsletter_button_color": "#fff",
+          "bg_footer_bottom_color": "#f8f8f8",
+          "footer_bottom_color": "#707070",
+          "footer_address_code": "",
+          "show_payment_icons": false,
+          "payment_display_visa": false,
+          "payment_display_visa_electron": false,
+          "payment_display_american_express": false,
+          "payment_display_master": false,
+          "payment_display_maestro": false,
+          "payment_display_solo": false,
+          "payment_display_paypal": false,
+          "payment_display_amazon_payments": false,
+          "payment_display_apple_pay": false,
+          "payment_display_bitcoin": false,
+          "payment_display_cirrus": false,
+          "payment_display_dankort": false,
+          "payment_display_diners_club": false,
+          "payment_display_discover": false,
+          "payment_display_dogecoin": false,
+          "payment_display_dwolla": false,
+          "payment_display_forbrugsforeningen": false,
+          "payment_display_interac": false,
+          "payment_display_jcb": false,
+          "payment_display_litecoin": false,
+          "payment_display_stripe": false,
+          "payment_display_sage": false,
+          "payment_display_wallet": false,
+          "icon_visa": "",
+          "icon_visa_electron": "",
+          "icon_master": "",
+          "icon_american_express": "",
+          "icon_maestro": "",
+          "icon_solo": "",
+          "icon_paypal": "",
+          "icon_amazon_payments": "",
+          "icon_apple_pay": "",
+          "icon_bitcoin": "",
+          "icon_cirrus": "",
+          "icon_dankort": "",
+          "icon_diners_club": "",
+          "icon_discover": "",
+          "icon_dogecoin": "",
+          "icon_dwolla": "",
+          "icon_forbrugsforeningen": "",
+          "icon_interac": "",
+          "icon_jcb": "",
+          "icon_litecoin": "",
+          "icon_stripe": "",
+          "icon_sage": "",
+          "icon_wallet": ""
+        }
+      },
+      "footer-4": {
+        "type": "footer-4",
+        "settings": {
+          "layout": "padd_60",
+          "bg_footer_img": "none",
+          "bg_footer_color": "#fafafa",
+          "bg_footer_position_x": "left",
+          "bg_footer_position_y": "top",
+          "bg_footer_repeat": "repeat",
+          "bg_footer_attachment": "scroll",
+          "bg-footer-img": "",
+          "footer_title_color": "#232323",
+          "footer_link_color": "#707070",
+          "footer_link_hover_color": "#707070",
+          "bg_footer_line_color": "#ebebeb",
+          "display_store_location": false,
+          "footer_logo": "",
+          "footer_info_store": "",
+          "footer_social_enable": false,
+          "social_icon_color": "#232323",
+          "footer_newsletter_enable": false,
+          "footer_newsletter_title": "",
+          "footer_newsletter_des": "",
+          "guarantee_img": "",
+          "bg_newsletter_color": "#fff",
+          "newsletter_color": "#aaaaaa",
+          "newsletter_border_color": "#d7d7d7",
+          "bg_newsletter_button_color": "#232323",
+          "newsletter_button_color": "#fff",
+          "bg_footer_bottom_color": "#fff",
+          "footer_bottom_color": "#707070",
+          "footer_address_code": "",
+          "show_payment_icons": false,
+          "payment_display_visa": false,
+          "payment_display_visa_electron": false,
+          "payment_display_american_express": false,
+          "payment_display_master": false,
+          "payment_display_maestro": false,
+          "payment_display_solo": false,
+          "payment_display_paypal": false,
+          "payment_display_amazon_payments": false,
+          "payment_display_apple_pay": false,
+          "payment_display_bitcoin": false,
+          "payment_display_cirrus": false,
+          "payment_display_dankort": false,
+          "payment_display_diners_club": false,
+          "payment_display_discover": false,
+          "payment_display_dogecoin": false,
+          "payment_display_dwolla": false,
+          "payment_display_forbrugsforeningen": false,
+          "payment_display_interac": false,
+          "payment_display_jcb": false,
+          "payment_display_litecoin": false,
+          "payment_display_stripe": false,
+          "payment_display_sage": false,
+          "payment_display_wallet": false,
+          "icon_visa": "",
+          "icon_visa_electron": "",
+          "icon_master": "",
+          "icon_american_express": "",
+          "icon_maestro": "",
+          "icon_solo": "",
+          "icon_paypal": "",
+          "icon_amazon_payments": "",
+          "icon_apple_pay": "",
+          "icon_bitcoin": "",
+          "icon_cirrus": "",
+          "icon_dankort": "",
+          "icon_diners_club": "",
+          "icon_discover": "",
+          "icon_dogecoin": "",
+          "icon_dwolla": "",
+          "icon_forbrugsforeningen": "",
+          "icon_interac": "",
+          "icon_jcb": "",
+          "icon_litecoin": "",
+          "icon_stripe": "",
+          "icon_sage": "",
+          "icon_wallet": ""
+        }
+      },
+      "collection-header": {
+        "type": "collection-header",
+        "settings": {
+          "display_collection_image": true,
+          "collection_image": "",
+          "display_collection_des": true,
+          "color_wrapper": "#fff",
+          "height_img": "240px"
+        }
+      },
+      "collection-template-with-banner": {
+        "type": "collection-template-with-banner",
+        "settings": {
+          "limited_view": true,
+          "sort_enable": true,
+          "collection_results_per_row": "5",
+          "collection_results_per_page": "50",
+          "show_banner_1": false,
+          "img_banner1": "",
+          "link_banner_1": "",
+          "show_banner_2": false,
+          "img_banner2": "",
+          "link_banner_2": "",
+          "show_banner_3": false,
+          "img_banner3": "",
+          "link_banner_3": "",
+          "show_banner_4": false,
+          "img_banner4": "",
+          "link_banner_4": ""
+        }
+      },
+      "product-template-grouped": {
+        "type": "product-template-grouped",
+        "blocks": {
+          "1555694545034": {
+            "type": "image",
+            "settings": {
+              "main_pr_look": "",
+              "image_1": "",
+              "lb_product_1_1": "",
+              "top_position_1_1": "10",
+              "left_position_1_1": "10",
+              "dots_color_1_1": "#fff",
+              "dots_bg_color_1_1": "#323232",
+              "dots_shadow_color_1_1": "#fff",
+              "lb_product_1_2": "",
+              "top_position_1_2": "10",
+              "left_position_1_2": "10",
+              "dots_color_1_2": "#fff",
+              "dots_bg_color_1_2": "#323232",
+              "dots_shadow_color_1_2": "#fff",
+              "lb_product_1_3": "",
+              "top_position_1_3": "10",
+              "left_position_1_3": "10",
+              "dots_color_1_3": "#fff",
+              "dots_bg_color_1_3": "#323232",
+              "dots_shadow_color_1_3": "#fff",
+              "image_2": "",
+              "lb_product_2_1": "",
+              "top_position_2_1": "10",
+              "left_position_2_1": "10",
+              "dots_color_2_1": "#fff",
+              "dots_bg_color_2_1": "#323232",
+              "dots_shadow_color_2_1": "#fff",
+              "lb_product_2_2": "",
+              "top_position_2_2": "10",
+              "left_position_2_2": "10",
+              "dots_color_2_2": "#fff",
+              "dots_bg_color_2_2": "#323232",
+              "dots_shadow_color_2_2": "#fff",
+              "lb_product_2_3": "",
+              "top_position_2_3": "10",
+              "left_position_2_3": "10",
+              "dots_color_2_3": "#fff",
+              "dots_bg_color_2_3": "#323232",
+              "dots_shadow_color_2_3": "#fff",
+              "image_3": "",
+              "lb_product_3_1": "",
+              "top_position_3_1": "10",
+              "left_position_3_1": "10",
+              "dots_color_3_1": "#fff",
+              "dots_bg_color_3_1": "#323232",
+              "dots_shadow_color_3_1": "#fff",
+              "lb_product_3_2": "",
+              "top_position_3_2": "10",
+              "left_position_3_2": "10",
+              "dots_color_3_2": "#fff",
+              "dots_bg_color_3_2": "#323232",
+              "dots_shadow_color_3_2": "#fff",
+              "lb_product_3_3": "",
+              "top_position_3_3": "10",
+              "left_position_3_3": "10",
+              "dots_color_3_3": "#fff",
+              "dots_bg_color_3_3": "#323232",
+              "dots_shadow_color_3_3": "#fff"
+            }
+          }
+        },
+        "block_order": [
+          "1555694545034"
+        ],
+        "settings": {
+          "style_moreview": "horizontal",
+          "video_product": true,
+          "video_product_icon": "#c1c1c1",
+          "show_sold_in": true,
+          "item_prd": "3,5,6,7,8,10,12,15",
+          "item_prds": "sold in last",
+          "hours_prs": "10,15,16,17,18,20,25,35",
+          "item_hours": "hours",
+          "display_vendor": true,
+          "text_vendor": "Vendor:",
+          "display_product_sku": true,
+          "text_product_sku": "SKU:",
+          "display_availability": true,
+          "text_availability": "Availability:",
+          "display_product_type": true,
+          "text_product_type": "Product Type:",
+          "countdown": "countdown_1",
+          "text_countdown": "Limited-Time Offers, End in:",
+          "progressbar_1": "Please hurry, only",
+          "progressbar_2": "left in stock",
+          "total_items": "100",
+          "min_items_left": "8",
+          "max_items_left": "26",
+          "progressbar_color": "#f5f5f5",
+          "progressbar_active_color": "#69c69c",
+          "dpl_customers_view": true,
+          "title_view": "customers are viewing this product",
+          "number_view": "283, 100, 59, 11, 14, 185, 193, 165, 50, 38, 99, 112, 46, 10, 125, 200, 250, 18",
+          "show_desc": "short",
+          "display_subtotal": true,
+          "display_qty": true,
+          "display_product_detail_tag": true,
+          "display_product_detail_share": true,
+          "share_text": "Share",
+          "display_trust_img": true,
+          "show_tab": "horizontal",
+          "display_product_detail_description": true,
+          "product_description_title": "Description",
+          "display_product_reviews": true,
+          "product_review_title": "Customer Reviews",
+          "display_shipping_returns": true,
+          "shipping_returns_title": "Shipping & Returns",
+          "shipping_returns_content": "",
+          "display_custom_tab": true,
+          "custom_tab_title": "Custom Product Tab",
+          "display_related_products": true,
+          "related_products_title": "Related Products",
+          "number_of_related_products": "8",
+          "dpl_lookbook_description": true,
+          "style_lookbook_description": "all_product",
+          "quote_title": "",
+          "quote_des": "",
+          "quote_title_2": "",
+          "quote_des_2": "",
+          "dpl_gallery_lookbook": true,
+          "style_lookbook_gallery": "all_product",
+          "dpl_grouped_product": true
+        }
+      },
+      "product-template-full-width": {
+        "type": "product-template-full-width",
+        "settings": {
+          "video_product": true,
+          "video_product_icon": "#c1c1c1",
+          "enable_payment_button": true,
+          "show_sold_in": true,
+          "item_prd": "3,5,6,7,8,10,12,15",
+          "item_prds": "sold in last",
+          "hours_prs": "10,15,16,17,18,20,25,35",
+          "item_hours": "hours",
+          "display_vendor": true,
+          "text_vendor": "Vendor:",
+          "display_product_sku": true,
+          "text_product_sku": "SKU:",
+          "display_availability": true,
+          "text_availability": "Availability:",
+          "display_product_type": true,
+          "text_product_type": "Product Type:",
+          "countdown": "countdown_1",
+          "text_countdown": "Limited-Time Offers, End in:",
+          "progressbar_1": "Please hurry, only",
+          "progressbar_2": "left in stock",
+          "total_items": "100",
+          "min_items_left": "8",
+          "max_items_left": "26",
+          "progressbar_color": "#f5f5f5",
+          "progressbar_active_color": "#69c69c",
+          "dpl_customers_view": true,
+          "title_view": "customers are viewing this product",
+          "number_view": "283, 100, 59, 11, 14, 185, 193, 165, 50, 38, 99, 112, 46, 10, 125, 200, 250, 18",
+          "show_desc": "short",
+          "display_subtotal": true,
+          "display_product_detail_tag": true,
+          "display_product_detail_share": true,
+          "share_text": "Share",
+          "display_trust_img": true,
+          "display_product_detail_description": true,
+          "product_description_title": "Description",
+          "display_product_reviews": true,
+          "product_review_title": "Customer Reviews",
+          "display_shipping_returns": true,
+          "shipping_returns_title": "Shipping & Returns",
+          "shipping_returns_content": "",
+          "display_custom_tab": true,
+          "custom_tab_title": "Custom Product Tab",
+          "display_related_products": true,
+          "related_products_title": "Related Products",
+          "number_of_related_products": "8",
+          "dpl_lookbook_description": true,
+          "style_lookbook_description": "all_product",
+          "quote_title": "",
+          "quote_des": "",
+          "quote_title_2": "",
+          "quote_des_2": "",
+          "dpl_gallery_lookbook": true,
+          "style_lookbook_gallery": "all_product"
+        }
+      },
+      "product-template-slider": {
+        "type": "product-template-slider",
+        "settings": {
+          "video_product": true,
+          "video_product_icon": "#c1c1c1",
+          "enable_payment_button": true,
+          "show_sold_in": true,
+          "item_prd": "3,5,6,7,8,10,12,15",
+          "item_prds": "sold in last",
+          "hours_prs": "10,15,16,17,18,20,25,35",
+          "item_hours": "hours",
+          "display_vendor": true,
+          "text_vendor": "Vendor:",
+          "display_product_sku": true,
+          "text_product_sku": "SKU:",
+          "display_availability": true,
+          "text_availability": "Availability:",
+          "display_product_type": true,
+          "text_product_type": "Product Type:",
+          "countdown": "countdown_1",
+          "text_countdown": "Limited-Time Offers, End in:",
+          "progressbar_1": "Please hurry, only",
+          "progressbar_2": "left in stock",
+          "total_items": "100",
+          "min_items_left": "8",
+          "max_items_left": "26",
+          "progressbar_color": "#f5f5f5",
+          "progressbar_active_color": "#69c69c",
+          "dpl_customers_view": true,
+          "title_view": "customers are viewing this product",
+          "number_view": "283, 100, 59, 11, 14, 185, 193, 165, 50, 38, 99, 112, 46, 10, 125, 200, 250, 18",
+          "show_desc": "short",
+          "display_subtotal": true,
+          "display_product_detail_tag": true,
+          "display_product_detail_share": true,
+          "share_text": "Share",
+          "display_trust_img": true,
+          "show_tab": "horizontal",
+          "display_product_detail_description": true,
+          "product_description_title": "Description",
+          "display_product_reviews": true,
+          "product_review_title": "Customer Reviews",
+          "display_shipping_returns": true,
+          "shipping_returns_title": "Shipping & Returns",
+          "shipping_returns_content": "",
+          "display_custom_tab": true,
+          "custom_tab_title": "Custom Product Tab",
+          "display_related_products": true,
+          "related_products_title": "Related Products",
+          "number_of_related_products": "8",
+          "dpl_lookbook_description": true,
+          "style_lookbook_description": "all_product",
+          "quote_title": "",
+          "quote_des": "",
+          "quote_title_2": "",
+          "quote_des_2": "",
+          "dpl_gallery_lookbook": true,
+          "style_lookbook_gallery": "all_product"
+        }
+      },
+      "1556830037086": {
+        "type": "home-sub-banner",
+        "blocks": {
+          "1556830037086-0": {
+            "type": "image",
+            "settings": {
+              "title": "",
+              "color_title": "#ffffff",
+              "link": "shopify:\/\/pages\/rewards-program-1"
+            }
+          },
+          "1556830037086-1": {
+            "type": "image",
+            "settings": {
+              "title": "",
+              "color_title": "#ffffff",
+              "link": "shopify:\/\/pages\/viabill"
+            }
+          },
+          "1556830037086-2": {
+            "type": "image",
+            "settings": {
+              "title": "",
+              "color_title": "#ffffff",
+              "link": "https:\/\/dankstop.com\/pages\/affiliate-info"
+            }
+          }
+        },
+        "block_order": [
+          "1556830037086-0",
+          "1556830037086-1",
+          "1556830037086-2"
+        ],
+        "disabled": true,
+        "settings": {
+          "display_sub_banner": true,
+          "layout": "default",
+          "margin_bottom_mb": 40,
+          "margin_bottom_tab": 40,
+          "margin_bottom": 40,
+          "font_size_title": "16px",
+          "display_padding": true
+        }
+      },
+      "1557973567345": {
+        "type": "home-new-arrivals",
+        "disabled": true,
+        "settings": {
+          "layout": "default",
+          "new_arrivals_title": "newest drops",
+          "new_arrivals_des": "",
+          "title_style": "style_1",
+          "view_all": "View All",
+          "link_view_all": "shopify:\/\/collections\/newest-products",
+          "product_list_collection": "new-products-december-2024",
+          "product_list_limit_all": 5,
+          "display_infinite_scrolling_homepage": true,
+          "display_collection_link_btn_homepage": false,
+          "product_list_limit": "5",
+          "collection_results_per_row1": "5",
+          "margin_bottom_mb": 60,
+          "margin_bottom_tab": 60,
+          "margin_bottom": 53
+        }
+      },
+      "1558027392290": {
+        "type": "home-collections",
+        "blocks": {
+          "1558027392290-0": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/bongs_300x_crop_center_3449b8bc-9330-4acd-8282-4de275a560b4.webp",
+              "title": "Bongs",
+              "color_title": "#000000",
+              "btn_shop_now": "Shop Water Pipes",
+              "link": "bongs"
+            }
+          },
+          "1558027392290-1": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/dab_rigs.png",
+              "title": "Dab Rigs",
+              "color_title": "#000000",
+              "btn_shop_now": "Shop Dab Rigs",
+              "link": "dab-rigs-and-oil-rigs"
+            }
+          },
+          "1558027392290-2": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/hand_pipes.png",
+              "title": "Hand Pipes",
+              "color_title": "#000000",
+              "btn_shop_now": "Shop Glass Pipes",
+              "link": "glass-pipes-hand-pipes"
+            }
+          },
+          "1558027392290-3": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/bubblers.png",
+              "title": "Bubblers",
+              "color_title": "#000000",
+              "btn_shop_now": "Shop Bubblers",
+              "link": "bubblers"
+            }
+          },
+          "1558027392290-4": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/vaporizers_300x_crop_center_50ae187f-efe2-4165-aa13-156bd0f4dc1a.webp",
+              "title": "Vaporizers",
+              "color_title": "#000000",
+              "btn_shop_now": "Shop Vapes",
+              "link": "vaporizers"
+            }
+          },
+          "1558027592616": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/roll_your_own.png",
+              "title": "Roll Your Own",
+              "color_title": "#000000",
+              "btn_shop_now": "Shop Papers",
+              "link": "rolling-papers-machines-and-accessories"
+            }
+          }
+        },
+        "block_order": [
+          "1558027392290-0",
+          "1558027392290-1",
+          "1558027392290-2",
+          "1558027392290-3",
+          "1558027392290-4",
+          "1558027592616"
+        ],
+        "settings": {
+          "title": "SHOP BY CATEGORY",
+          "title_style": "style_1",
+          "layout": "default",
+          "bg_color": "#ffffff",
+          "font_size_title": "15px",
+          "collection_results_per_row": "6",
+          "btn_view_all": "View All Collections",
+          "link_view_all": "shopify:\/\/pages\/shop-by",
+          "margin_bottom_mb": 60,
+          "margin_bottom_tab": 60,
+          "margin_bottom": 60
+        }
+      },
+      "1564880050776": {
+        "type": "home-spotlight-slider",
+        "blocks": {
+          "1564880050776-0": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/Sequence_04_5.gif",
+              "sub_heading": "Torchless & Portable Dabs",
+              "text_style": "top-and-bottom",
+              "font_size_sub_heading": "14px",
+              "heading": "shop e-rigs",
+              "font_size_heading": "12px",
+              "title": "",
+              "link_text": "",
+              "link": "shopify:\/\/collections\/e-nails"
+            }
+          },
+          "1564880050776-2": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/Sequence_04_3.gif",
+              "sub_heading": "Add Flair To Your Sesh",
+              "text_style": "top-and-bottom",
+              "font_size_sub_heading": "14px",
+              "heading": "shop themed pipes",
+              "font_size_heading": "12px",
+              "title": "",
+              "link_text": "",
+              "link": "shopify:\/\/collections\/themed-novelty-pipes"
+            }
+          },
+          "1570204746062": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/Sequence_04_9.gif",
+              "sub_heading": "NEW! Shatterproof Glass Trays & More",
+              "text_style": "top-and-bottom",
+              "font_size_sub_heading": "14px",
+              "heading": "shop rolling trays",
+              "font_size_heading": "12px",
+              "title": "",
+              "link_text": "",
+              "link": "shopify:\/\/collections\/rolling-trays"
+            }
+          }
+        },
+        "block_order": [
+          "1564880050776-0",
+          "1564880050776-2",
+          "1570204746062"
+        ],
+        "settings": {
+          "layout": "default",
+          "display_padding": false,
+          "animate_on_hover": false,
+          "bg_color": "#ffffff",
+          "spotlight_block_title": "",
+          "spotlight_block_des": "",
+          "title_style": "style_1",
+          "margin_bottom_mb": 30,
+          "margin_bottom": 50
+        }
+      },
+      "1565807706020": {
+        "type": "home-slideshow",
+        "blocks": {
+          "1565807706020-0": {
+            "type": "image",
+            "settings": {
+              "dpl_slide_img": true,
+              "alignment": "right",
+              "heading": "",
+              "font_size_heading": "40px",
+              "color_heading": "#232323",
+              "slide-des": "",
+              "font_size_des": "12px",
+              "color_des": "#232323",
+              "button_slide": "",
+              "link": "shopify:\/\/collections\/subscribe-save",
+              "bg_button": "#232323",
+              "border_button": "#232323",
+              "color_button": "#ffffff",
+              "lb_product_1": "",
+              "top_position_1": "10",
+              "left_position_1": "10",
+              "dots_color_1": "#ffffff",
+              "dots_bg_color_1": "#323232",
+              "dots_shadow_color_1": "#ffffff",
+              "lb_product_2": "",
+              "top_position_2": "10",
+              "left_position_2": "10",
+              "dots_color_2": "#ffffff",
+              "dots_bg_color_2": "#323232",
+              "dots_shadow_color_2": "#ffffff",
+              "lb_product_3": "",
+              "top_position_3": "10",
+              "left_position_3": "10",
+              "dots_color_3": "#ffffff",
+              "dots_bg_color_3": "#323232",
+              "dots_shadow_color_3": "#ffffff"
+            }
+          }
+        },
+        "block_order": [
+          "1565807706020-0"
+        ],
+        "disabled": true,
+        "settings": {
+          "layout": "default",
+          "margin_bottom_mb": 30,
+          "margin_bottom_tab": 30,
+          "margin_bottom": 40,
+          "autoplay": false,
+          "slideshow_speed": "5000",
+          "slideshow_transition": "true",
+          "dots": "true",
+          "dots_color": "#707979",
+          "dots_active_color": "#505656",
+          "dots_opacity": false,
+          "arrow_color": "#666d6d",
+          "arrow_border_color": "#666d6d",
+          "arrow_bg_color": "#ffffff",
+          "position_slick_arrow": "10%",
+          "min_width_banner_button": "",
+          "bg_video": "#866965",
+          "bg_overlay_opacity": 40,
+          "video_height": "41.7%",
+          "auto_playvideo": false
+        }
+      },
+      "collection--articles": {
+        "type": "collection--articles",
+        "settings": {
+          "collection_articles_title": "Related Articles"
+        }
+      },
+      "list-collections-02-template": {
+        "type": "list-collections-02-template",
+        "settings": {
+          "list_collection_title_size": "30",
+          "style_categories": "style_show_all",
+          "bg_color": "#fafafa"
+        }
+      },
+      "list-collections_mansory-template": {
+        "type": "list-collections_mansory-template",
+        "settings": {
+          "list_collection_results_per_row": "2",
+          "list_collection_title_size": "20",
+          "style_categories": "style_show_all"
+        }
+      },
+      "list-collections-03-template": {
+        "type": "list-collections-03-template",
+        "settings": {
+          "list_collection_results_per_row": "3",
+          "style_categories": "style_show_all"
+        }
+      },
+      "list-collections-full-template": {
+        "type": "list-collections-full-template",
+        "settings": {
+          "list_collection_results_per_row": "3",
+          "list_collection_title_size": "20",
+          "style_categories": "style_show_all"
+        }
+      },
+      "collection-template-sorted": {
+        "type": "collection-template-sorted",
+        "settings": {
+          "display_collection_image": false,
+          "collection_image": "",
+          "display_collection_des": true,
+          "sort_by_qty": true,
+          "limited_view": true,
+          "sort_enable": true,
+          "display_warranty_eligibility": true,
+          "collection_results_per_row": "5",
+          "collection_results_per_page": "24"
+        }
+      },
+      "dank-facts": {
+        "type": "dank-facts",
+        "blocks": {
+          "1570525831267": {
+            "type": "text",
+            "settings": {
+              "fact_name": "Canvas",
+              "fact_text": "The word “canvas” is related to the word “cannabis.” Historically, canvases were made of hemp.",
+              "fact_color": "",
+              "fact_related_product": "",
+              "fact_related_collection": "",
+              "fact_related_page": "",
+              "fact_related_url": ""
+            }
+          }
+        },
+        "block_order": [
+          "1570525831267"
+        ],
+        "settings": {
+          "display_dank_facts": true
+        }
+      },
+      "1571071845501": {
+        "type": "home-custom-block-baner",
+        "blocks": {
+          "1571071845501-0": {
+            "type": "largeImg",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/why_dankstop.jpg",
+              "display_parallax": false,
+              "dpl_down_arrow": false,
+              "height_img_parallax": "200px",
+              "alignment": "left",
+              "banner_heading": "THE #1 ONLINE HEADSHOP",
+              "font_size_banner_heading": "14px",
+              "color_banner_heading": "#ffffff",
+              "banner_des": "Welcome to Dankstop. Since 2014, our online headshop has helped more than 1 million consumers from all over the world make their favorite hobby even more enjoyable. Our online smoke shop carries a massive variety of bongs, dab rigs, and vaporizers in addition to extraction supplies, apparel, and smoking accessories from all the top name brands. Our team of “cannaisseurs” personally tests and hand-curates every product featured in our store -- so matter what your preference, we have the right pipe and accessories to fit your lifestyle! Shop below to see why we're one of the longest running online headshops.",
+              "font_size_banner_des": "12px",
+              "color_banner_des": "#ffffff",
+              "countdown": "",
+              "banner_button": "",
+              "link": "",
+              "bg_banner_button": "#232323",
+              "border_banner_button": "#232323",
+              "color_banner_button": "#ffffff",
+              "min_width_banner_button": "237px"
+            }
+          }
+        },
+        "block_order": [
+          "1571071845501-0"
+        ],
+        "settings": {
+          "layout": "default",
+          "widget_title": "",
+          "widget_des": "",
+          "title_style": "style_1",
+          "img_align": "center",
+          "margin_bottom_mb": 20,
+          "margin_bottom_tab": 30,
+          "margin_bottom": 52
+        }
+      },
+      "1571072124479": {
+        "type": "home-featured-products",
+        "settings": {
+          "display_banner": false,
+          "banner_is": "left",
+          "banner_heading": "",
+          "font_size_banner_heading": "40px",
+          "color_banner_heading": "#ffffff",
+          "banner_sub_heading": "",
+          "font_size_banner_sub_heading": "13px",
+          "color_banner_sub_heading": "#ffffff",
+          "banner_des": "",
+          "font_size_banner_des": "12px",
+          "color_banner_des": "#ffffff",
+          "banner_button": "Shop Now",
+          "link": "",
+          "bg_banner_button": "#ffffff",
+          "border_banner_button": "#ffffff",
+          "color_banner_button": "#232323",
+          "featured_products_title": "420 Kits 'N' Bundles",
+          "featured_products_des": "",
+          "title_style": "style_1",
+          "show_slider_featured_collection": "headshop-bundles",
+          "slider_featured_limit_all": 15,
+          "collection_results_per_row1": "5",
+          "margin_bottom_mb": 50,
+          "margin_bottom_tab": 40,
+          "margin_bottom": 60
+        }
+      },
+      "filter-no-sidebar": {
+        "type": "filter-no-sidebar",
+        "settings": {
+          "display_sidebar": true,
+          "enable_categories": true,
+          "title_categories": "",
+          "style_categories": "style_show_all"
+        }
+      },
+      "collection-template-no-sidebar": {
+        "type": "collection-template-no-sidebar",
+        "settings": {
+          "limited_view": true,
+          "sort_enable": true,
+          "collection_results_per_row": "5",
+          "collection_results_per_page": "50"
+        }
+      },
+      "1588274015951": {
+        "type": "home-custom-sub-banner",
+        "blocks": {
+          "1588274104310": {
+            "type": "fourImage",
+            "settings": {
+              "title_1": "Loremous",
+              "color_1": "#ffffff",
+              "link_1": "",
+              "title_2": "Cosmopolis",
+              "color_2": "#ffffff",
+              "link_2": "",
+              "title_3": "Loremous",
+              "color_3": "#ffffff",
+              "link_3": "",
+              "title_4": "Cosmopolis",
+              "color_4": "#ffffff",
+              "link_4": ""
+            }
+          },
+          "1588274196434": {
+            "type": "fourImage",
+            "settings": {
+              "title_1": "Loremous",
+              "color_1": "#ffffff",
+              "link_1": "",
+              "title_2": "Cosmopolis",
+              "color_2": "#ffffff",
+              "link_2": "",
+              "title_3": "Loremous",
+              "color_3": "#ffffff",
+              "link_3": "",
+              "title_4": "Cosmopolis",
+              "color_4": "#ffffff",
+              "link_4": ""
+            }
+          }
+        },
+        "block_order": [
+          "1588274104310",
+          "1588274196434"
+        ],
+        "disabled": true,
+        "settings": {
+          "font_size_title": "20px",
+          "block_des": "",
+          "margin_bottom_mb": 0,
+          "margin_bottom_tab": 0,
+          "margin_bottom": 30
+        }
+      },
+      "1589223022170": {
+        "type": "home-spotlight-slider",
+        "blocks": {
+          "1589223022170-2": {
+            "type": "image",
+            "settings": {
+              "sub_heading": "Super Smooth Hits",
+              "text_style": "top-and-bottom",
+              "font_size_sub_heading": "14px",
+              "heading": "shop bongs & water pipes",
+              "font_size_heading": "12px",
+              "title": "",
+              "link_text": "",
+              "link": "shopify:\/\/collections\/bongs_obsolete"
+            }
+          },
+          "1589223022170-1": {
+            "type": "image",
+            "settings": {
+              "sub_heading": "Keep Smoking Simple & Convenient",
+              "text_style": "top-and-bottom",
+              "font_size_sub_heading": "14px",
+              "heading": "shop hand pipes",
+              "font_size_heading": "12px",
+              "title": "",
+              "link_text": "",
+              "link": "shopify:\/\/collections\/glass-pipes-hand-pipes"
+            }
+          }
+        },
+        "block_order": [
+          "1589223022170-2",
+          "1589223022170-1"
+        ],
+        "disabled": true,
+        "settings": {
+          "layout": "default",
+          "display_padding": false,
+          "animate_on_hover": false,
+          "bg_color": "#f5f5f5",
+          "spotlight_block_title": "",
+          "spotlight_block_des": "",
+          "title_style": "style_2",
+          "margin_bottom_mb": 0,
+          "margin_bottom": 0
+        }
+      },
+      "1589223424403": {
+        "type": "home-spotlight-slider",
+        "blocks": {
+          "1589223424403-1": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/empire.png",
+              "sub_heading": "A Conversation Starter In Any Sesh",
+              "text_style": "top-and-bottom",
+              "font_size_sub_heading": "14px",
+              "heading": "shop Empire Glassworks",
+              "font_size_heading": "12px",
+              "title": "",
+              "link_text": "",
+              "link": "shopify:\/\/collections\/empire-glassworks"
+            }
+          },
+          "1589223424403-0": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/Sequence_08.gif",
+              "sub_heading": "The Leading Classic, Modern Day Pipes",
+              "text_style": "top-and-bottom",
+              "font_size_sub_heading": "14px",
+              "heading": "Shop Storz & Bickel",
+              "font_size_heading": "12px",
+              "title": "",
+              "link_text": "",
+              "link": "shopify:\/\/collections\/storz-bickel"
+            }
+          },
+          "image_VQPYkQ": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/mav.png",
+              "sub_heading": "The Leading Classic, Modern Day Pipes",
+              "text_style": "top-and-bottom",
+              "font_size_sub_heading": "14px",
+              "heading": "shop MAV",
+              "font_size_heading": "12px",
+              "title": "",
+              "link_text": "",
+              "link": "shopify:\/\/collections\/mav-glass"
+            }
+          }
+        },
+        "block_order": [
+          "1589223424403-1",
+          "1589223424403-0",
+          "image_VQPYkQ"
+        ],
+        "settings": {
+          "layout": "default",
+          "display_padding": true,
+          "animate_on_hover": false,
+          "bg_color": "#f5f5f5",
+          "spotlight_block_title": "",
+          "spotlight_block_des": "",
+          "title_style": "style_2",
+          "margin_bottom_mb": 0,
+          "margin_bottom": 50
+        }
+      },
+      "1589223897219": {
+        "type": "home-spotlight-slider",
+        "blocks": {
+          "1589223897219-0": {
+            "type": "image",
+            "settings": {
+              "sub_heading": "Keep Your Piece Fresh & Clean",
+              "text_style": "top-and-bottom",
+              "font_size_sub_heading": "14px",
+              "heading": "shop cleaning supplies",
+              "font_size_heading": "12px",
+              "title": "",
+              "link_text": "",
+              "link": "shopify:\/\/collections\/cleaning-supplies"
+            }
+          },
+          "1589223897219-1": {
+            "type": "image",
+            "settings": {
+              "sub_heading": "Get On That Grind",
+              "text_style": "top-and-bottom",
+              "font_size_sub_heading": "14px",
+              "heading": "shop grinders",
+              "font_size_heading": "12px",
+              "title": "",
+              "link_text": "",
+              "link": "shopify:\/\/collections\/grinders"
+            }
+          },
+          "1589223897219-2": {
+            "type": "image",
+            "settings": {
+              "sub_heading": "Add A Little 420 Spark To Your Life",
+              "text_style": "top-and-bottom",
+              "font_size_sub_heading": "14px",
+              "heading": "shop home & lifestyle",
+              "font_size_heading": "12px",
+              "title": "",
+              "link_text": "",
+              "link": "shopify:\/\/collections\/home-lifestyle-products"
+            }
+          }
+        },
+        "block_order": [
+          "1589223897219-0",
+          "1589223897219-1",
+          "1589223897219-2"
+        ],
+        "disabled": true,
+        "settings": {
+          "layout": "default",
+          "display_padding": false,
+          "animate_on_hover": false,
+          "bg_color": "#f5f5f5",
+          "spotlight_block_title": "",
+          "spotlight_block_des": "",
+          "title_style": "style_2",
+          "margin_bottom_mb": 0,
+          "margin_bottom": 0
+        }
+      },
+      "1590082125549": {
+        "type": "home-spotlight-slider",
+        "blocks": {
+          "1590082125549-1": {
+            "type": "image",
+            "settings": {
+              "sub_heading": "Modern and Artfully Crafted Smoking",
+              "text_style": "top-and-bottom",
+              "font_size_sub_heading": "14px",
+              "heading": "Shop Session Goods",
+              "font_size_heading": "12px",
+              "title": "",
+              "link_text": "",
+              "link": "shopify:\/\/collections\/session-goods"
+            }
+          },
+          "1590082125549-2": {
+            "type": "image",
+            "settings": {
+              "sub_heading": "It's A Bong. It's A Vase.",
+              "text_style": "top-and-bottom",
+              "font_size_sub_heading": "14px",
+              "heading": "Shop My Bud Vase",
+              "font_size_heading": "12px",
+              "title": "",
+              "link_text": "",
+              "link": "shopify:\/\/collections\/my-bud-vase"
+            }
+          },
+          "1590082125549-0": {
+            "type": "image",
+            "settings": {
+              "sub_heading": "MouthPeace: Share Safely & Smoke Clean",
+              "text_style": "top-and-bottom",
+              "font_size_sub_heading": "14px",
+              "heading": "Shop Moose Labs",
+              "font_size_heading": "12px",
+              "title": "",
+              "link_text": "",
+              "link": "shopify:\/\/collections\/moose-labs"
+            }
+          }
+        },
+        "block_order": [
+          "1590082125549-1",
+          "1590082125549-2",
+          "1590082125549-0"
+        ],
+        "disabled": true,
+        "settings": {
+          "layout": "default",
+          "display_padding": true,
+          "animate_on_hover": false,
+          "bg_color": "#f5f5f5",
+          "spotlight_block_title": "",
+          "spotlight_block_des": "",
+          "title_style": "style_2",
+          "margin_bottom_mb": 0,
+          "margin_bottom": 0
+        }
+      },
+      "1590150558681": {
+        "type": "home-slideshow",
+        "blocks": {
+          "1590150558681-0": {
+            "type": "image",
+            "settings": {
+              "dpl_slide_img": false,
+              "alignment": "left",
+              "heading": "",
+              "font_size_heading": "40px",
+              "color_heading": "#232323",
+              "slide-des": "",
+              "font_size_des": "12px",
+              "color_des": "#232323",
+              "button_slide": "",
+              "link": "shopify:\/\/collections\/newest-products",
+              "bg_button": "#232323",
+              "border_button": "#232323",
+              "color_button": "#ffffff",
+              "lb_product_1": "",
+              "top_position_1": "10",
+              "left_position_1": "10",
+              "dots_color_1": "#ffffff",
+              "dots_bg_color_1": "#323232",
+              "dots_shadow_color_1": "#ffffff",
+              "lb_product_2": "",
+              "top_position_2": "10",
+              "left_position_2": "10",
+              "dots_color_2": "#ffffff",
+              "dots_bg_color_2": "#323232",
+              "dots_shadow_color_2": "#ffffff",
+              "lb_product_3": "",
+              "top_position_3": "10",
+              "left_position_3": "10",
+              "dots_color_3": "#ffffff",
+              "dots_bg_color_3": "#323232",
+              "dots_shadow_color_3": "#ffffff"
+            }
+          },
+          "00277727-b0a4-472e-9e6e-23399d68379a": {
+            "type": "image",
+            "settings": {
+              "dpl_slide_img": true,
+              "alignment": "left",
+              "heading": "",
+              "font_size_heading": "40px",
+              "color_heading": "#232323",
+              "slide-des": "",
+              "font_size_des": "12px",
+              "color_des": "#232323",
+              "button_slide": "",
+              "link": "shopify:\/\/collections\/staff-picks-3",
+              "bg_button": "#232323",
+              "border_button": "#232323",
+              "color_button": "#ffffff",
+              "lb_product_1": "",
+              "top_position_1": "10",
+              "left_position_1": "10",
+              "dots_color_1": "#ffffff",
+              "dots_bg_color_1": "#323232",
+              "dots_shadow_color_1": "#ffffff",
+              "lb_product_2": "",
+              "top_position_2": "10",
+              "left_position_2": "10",
+              "dots_color_2": "#ffffff",
+              "dots_bg_color_2": "#323232",
+              "dots_shadow_color_2": "#ffffff",
+              "lb_product_3": "",
+              "top_position_3": "10",
+              "left_position_3": "10",
+              "dots_color_3": "#ffffff",
+              "dots_bg_color_3": "#323232",
+              "dots_shadow_color_3": "#ffffff"
+            }
+          }
+        },
+        "block_order": [
+          "1590150558681-0",
+          "00277727-b0a4-472e-9e6e-23399d68379a"
+        ],
+        "disabled": true,
+        "settings": {
+          "layout": "default",
+          "margin_bottom_mb": 20,
+          "margin_bottom_tab": 20,
+          "margin_bottom": 30,
+          "autoplay": false,
+          "slideshow_speed": "5000",
+          "slideshow_transition": "true",
+          "dots": "true",
+          "dots_color": "#707979",
+          "dots_active_color": "#505656",
+          "dots_opacity": false,
+          "arrow_color": "#666d6d",
+          "arrow_border_color": "#666d6d",
+          "arrow_bg_color": "#ffffff",
+          "position_slick_arrow": "10%",
+          "min_width_banner_button": "",
+          "bg_video": "#866965",
+          "bg_overlay_opacity": 40,
+          "video_height": "41.7%",
+          "auto_playvideo": true
+        }
+      },
+      "1612933488071b8a69": {
+        "type": "home-custom-sub-banner",
+        "blocks": {
+          "1612933488299d399e-1": {
+            "type": "oneImage",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/Dankstop_July_Monthly_Banners_1st_Banner.jpg",
+              "title": "",
+              "des": "",
+              "countdown": "",
+              "color": "#000000",
+              "link": "shopify:\/\/collections\/featured-picks",
+              "title_2": "",
+              "des_2": "",
+              "countdown_2": "",
+              "color_2": "#ffffff",
+              "link_2": ""
+            }
+          },
+          "792d1936-341a-4cf8-9bb1-ff0b3861fb79": {
+            "type": "threeImage",
+            "settings": {
+              "image_1": "shopify:\/\/shop_images\/Dankstop_July_Monthly_Banners_DS_2nd_Banner.jpg",
+              "title_1": "",
+              "color_1": "#ffffff",
+              "button_1": "",
+              "link_1": "shopify:\/\/pages\/membership",
+              "bg_button_1": "#ffffff",
+              "border_button_1": "#ffffff",
+              "color_button_1": "#232323",
+              "image_2": "shopify:\/\/shop_images\/Dankstop_July_Monthly_Banners_DS_3rd_Banner.jpg",
+              "title_2": "",
+              "color_2": "#ffffff",
+              "button_2": "",
+              "link_2": "shopify:\/\/products\/arizer-solo-3-portable-vaporizer",
+              "bg_button_2": "#ffffff",
+              "border_button_2": "#ffffff",
+              "color_button_2": "#232323",
+              "image_3": "shopify:\/\/shop_images\/Dankstop_July_Monthly_Banners_DS_4th_Banner.jpg",
+              "title_3": "",
+              "color_3": "#ffffff",
+              "button_3": "",
+              "link_3": "shopify:\/\/collections\/jay-silent-bob",
+              "bg_button_3": "#ffffff",
+              "border_button_3": "#ffffff",
+              "color_button_3": "#232323"
+            }
+          }
+        },
+        "block_order": [
+          "1612933488299d399e-1",
+          "792d1936-341a-4cf8-9bb1-ff0b3861fb79"
+        ],
+        "settings": {
+          "font_size_title": "20px",
+          "block_des": "",
+          "margin_bottom_mb": 0,
+          "margin_bottom_tab": 0,
+          "margin_bottom": 0
+        }
+      },
+      "info-marquee": {
+        "type": "info-marquee",
+        "settings": {}
+      },
+      "cc_join_banner_gKC9N9": {
+        "type": "cc-join-banner",
+        "settings": {}
+      },
+      "cc_newsletter_eN9PdX": {
+        "type": "cc-newsletter",
+        "settings": {}
+      },
+      "home_custom_sub_banner_M4rHcH": {
+        "type": "home-custom-sub-banner",
+        "blocks": {
+          "three_image_yWUUBT": {
+            "type": "threeImage",
+            "settings": {
+              "image_1": "shopify:\/\/shop_images\/Shop-Sale_0cdc22f3-b37b-4ca3-a236-2d472276f26d.jpg",
+              "title_1": "",
+              "color_1": "#ffffff",
+              "button_1": "",
+              "link_1": "shopify:\/\/collections\/clearance",
+              "bg_button_1": "#ffffff",
+              "border_button_1": "#ffffff",
+              "color_button_1": "#232323",
+              "image_2": "shopify:\/\/shop_images\/Sequence_03_1.gif",
+              "title_2": "",
+              "color_2": "#ffffff",
+              "button_2": "",
+              "link_2": "shopify:\/\/collections\/grinders",
+              "bg_button_2": "#ffffff",
+              "border_button_2": "#ffffff",
+              "color_button_2": "#232323",
+              "image_3": "shopify:\/\/shop_images\/DS-InternationalMunchies.png",
+              "title_3": "",
+              "color_3": "#ffffff",
+              "button_3": "",
+              "link_3": "shopify:\/\/collections\/snacks",
+              "bg_button_3": "#ffffff",
+              "border_button_3": "#ffffff",
+              "color_button_3": "#232323"
+            }
+          },
+          "one_image_tKMWKx": {
+            "type": "oneImage",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/Sequence_01_5.gif",
+              "title": "",
+              "des": "",
+              "countdown": "",
+              "color": "#000000",
+              "link": "shopify:\/\/collections\/perc-bongs",
+              "title_2": "",
+              "des_2": "",
+              "countdown_2": "",
+              "color_2": "#ffffff",
+              "link_2": ""
+            }
+          }
+        },
+        "block_order": [
+          "three_image_yWUUBT",
+          "one_image_tKMWKx"
+        ],
+        "settings": {
+          "font_size_title": "20px",
+          "block_des": "",
+          "margin_bottom_mb": 0,
+          "margin_bottom_tab": 0,
+          "margin_bottom": 0
+        }
+      },
+      "home_spotlight_slider_3RgUBD": {
+        "type": "home-spotlight-slider",
+        "blocks": {
+          "image_ecAByW": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/1-e-rigs_6c7b4b9b-8f71-4314-a495-229517e4f409.jpg",
+              "sub_heading": "Torchless & Portable Dabs",
+              "text_style": "top-and-bottom",
+              "font_size_sub_heading": "14px",
+              "heading": "shop e-rigs",
+              "font_size_heading": "12px",
+              "title": "",
+              "link_text": "",
+              "link": "shopify:\/\/collections\/e-nails"
+            }
+          },
+          "image_F6NY93": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/1-themed_34a997f6-e028-4617-a0cb-3d5e26dc0591.jpg",
+              "sub_heading": "Add Flair To Your Sesh",
+              "text_style": "top-and-bottom",
+              "font_size_sub_heading": "14px",
+              "heading": "shop themed pipes",
+              "font_size_heading": "12px",
+              "title": "",
+              "link_text": "",
+              "link": "shopify:\/\/collections\/themed-novelty-pipes"
+            }
+          },
+          "image_yF7AaC": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/Untitled_design_24_370x_411a6d7f-222f-43f4-a62a-c4b03a659fd3.png",
+              "sub_heading": "NEW! Shatterproof Glass Trays & More",
+              "text_style": "top-and-bottom",
+              "font_size_sub_heading": "14px",
+              "heading": "shop rolling trays",
+              "font_size_heading": "12px",
+              "title": "",
+              "link_text": "",
+              "link": "shopify:\/\/collections\/rolling-trays"
+            }
+          }
+        },
+        "block_order": [
+          "image_ecAByW",
+          "image_F6NY93",
+          "image_yF7AaC"
+        ],
+        "disabled": true,
+        "settings": {
+          "layout": "default",
+          "display_padding": false,
+          "animate_on_hover": false,
+          "bg_color": "#ffffff",
+          "spotlight_block_title": "",
+          "spotlight_block_des": "",
+          "title_style": "style_1",
+          "margin_bottom_mb": 30,
+          "margin_bottom": 50
+        }
+      },
+      "home_featured_products_z6atY7": {
+        "type": "home-featured-products",
+        "settings": {
+          "display_banner": false,
+          "banner_is": "left",
+          "banner_heading": "",
+          "font_size_banner_heading": "40px",
+          "color_banner_heading": "#ffffff",
+          "banner_sub_heading": "",
+          "font_size_banner_sub_heading": "13px",
+          "color_banner_sub_heading": "#ffffff",
+          "banner_des": "",
+          "font_size_banner_des": "12px",
+          "color_banner_des": "#ffffff",
+          "banner_button": "Shop Now",
+          "link": "",
+          "bg_banner_button": "#ffffff",
+          "border_banner_button": "#ffffff",
+          "color_banner_button": "#232323",
+          "featured_products_title": "Newest Drops",
+          "featured_products_des": "",
+          "title_style": "style_1",
+          "show_slider_featured_collection": "newest-products",
+          "slider_featured_limit_all": 20,
+          "collection_results_per_row1": "5",
+          "margin_bottom_mb": 50,
+          "margin_bottom_tab": 40,
+          "margin_bottom": 60
+        }
+      }
+    },
+    "content_for_index": [
+      "1612933488071b8a69",
+      "1558027392290",
+      "home_custom_sub_banner_M4rHcH",
+      "1550720181092",
+      "cc_join_banner_gKC9N9",
+      "1564880050776",
+      "1557973567345",
+      "home_spotlight_slider_3RgUBD",
+      "1590150558681",
+      "1590082125549",
+      "1589223022170",
+      "1565807706020",
+      "1589223897219",
+      "home_featured_products_z6atY7",
+      "1589223424403",
+      "1571072124479",
+      "1571071845501",
+      "1550574152101",
+      "1541566560488",
+      "1588274015951",
+      "1547794993064",
+      "1556830037086",
+      "1550745498097",
+      "cc_newsletter_eN9PdX"
+    ],
+    "blocks": {
+      "6478312753674380289": {
+        "type": "shopify:\/\/apps\/gempages-builder\/blocks\/embed-gp-script-head\/20b379d4-1b20-474c-a6ca-665c331919f3",
+        "disabled": false,
+        "settings": {}
+      },
+      "855628211100114053": {
+        "type": "shopify:\/\/apps\/klaviyo-email-marketing-sms\/blocks\/klaviyo-onsite-embed\/2632fe16-c075-4321-a88b-50b567f42507",
+        "disabled": false,
+        "settings": {}
+      },
+      "6770548097779500122": {
+        "type": "shopify:\/\/apps\/koala-free-gift\/blocks\/gifts-embed\/baf92dc5-8ffa-40c0-967e-57b74cddc9e3",
+        "disabled": false,
+        "settings": {}
+      },
+      "17790009454750450185": {
+        "type": "shopify:\/\/apps\/nofraud-fraud-protection\/blocks\/nf_device\/5c2706cf-d458-49c5-a6fa-4fb6b79ce2b4",
+        "disabled": false,
+        "settings": {}
+      }
+    }
+  },
+  "presets": {
+    "Default": {
+      "search_placeholder": "search",
+      "mailing_list_form_action": "\/\/halothemes.us3.list-manage.com\/subscribe\/post?u=0bf85dc81d846feb53a235178&amp;id=89ea28643a",
+      "body_font_size": "12",
+      "body_color": "#3c3c3c",
+      "display_breadcrumb": true,
+      "breadcrumb_color": "#999999",
+      "breadcrumb_text_transform": "capitalize",
+      "page_title_color": "#232323",
+      "page_title_text_align": "left",
+      "display_popup_newsletter": true,
+      "popup_newsletter_title": "Join Our Mailing List",
+      "display_popup_social": true,
+      "enable_wishlist": true,
+      "product_image_border": false,
+      "product_image_border_color": "#e6e6e6",
+      "use_color_swatch": true,
+      "display_size_chart": true,
+      "display_product_reviews": true,
+      "enable_quick_view": true,
+      "display_quickview_availability": true,
+      "display_quickview_product_type": true,
+      "display_quickview_vendor": true,
+      "display_quickview_subtotal": true,
+      "show_shipping_calculator": true,
+      "shipping_calculator_heading": "Get shipping estimates",
+      "shipping_calculator_default_country": "United States",
+      "shipping_calculator_submit_button_label": "Calculate Shipping",
+      "shipping_calculator_submit_button_label_disabled": "Calculating...",
+      "enable_multiple_currencies": true,
+      "currency_1_unit": "USD",
+      "currency_2_unit": "EUR",
+      "currency_3_unit": "GBP",
+      "currency_4_unit": "CHF",
+      "checkout_use_header_image": true,
+      "checkout_banner_background_color": "#ffffff",
+      "checkout_logo": "checkout_logo.png",
+      "checkout_headline": "",
+      "checkout_accent_color": "#2d2d2d",
+      "checkout_button_color": "#000000",
+      "checkout_call_to_action_color": "#000000",
+      "customer_layout": "theme",
+      "link_color": "#0688e2",
+      "type_base_family": "'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+      "type_base_size": "12px",
+      "type_header_family": "'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+      "type_header_transform": true,
+      "type_accent_family": "'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+      "type_navigation_size": "16px",
+      "type_navigation_transform": true,
+      "type_button_size": "14px",
+      "type_button_transform": true,
+      "color_accent": "#ffea00",
+      "color_body_bg": "#fff",
+      "color_body_text": "#585858",
+      "color_borders": "#ececec",
+      "color_footer_bg": "#f2f2f2",
+      "color_footer_social_link": "#bbbbbb",
+      "color_footer_text": "#636363",
+      "color_header_background": "#204a80",
+      "color_header_cart_search": "#1c4170",
+      "color_header_text": "#fff",
+      "color_heading_text": "#000",
+      "color_nav_bg": "#000",
+      "color_nav_text": "#fff",
+      "color_primary": "#204a80",
+      "color_secondary": "#dcdcdc"
+    }
+  },
+  "platform_customizations": {
+    "custom_css": [
+      ".fa-twitter:before {}"
+    ]
+  }
+}

@@ -1,0 +1,184 @@
+<style>
+  .row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+  .justify-content-center {
+    -webkit-box-pack: center !important;
+    -ms-flex-pack: center !important;
+    justify-content: center !important;
+  }
+  @media (min-width: 576px){
+    .col-sm-12 {
+      -webkit-box-flex: 0;
+      -ms-flex: 0 0 100%;
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+  .col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  .col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  @media (min-width: 576px){
+    .col-sm-12 {
+      -webkit-box-flex: 0;
+      -ms-flex: 0 0 100%;
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+  @media (min-width: 768px){
+    .col-md-8 {
+      -webkit-box-flex: 0;
+      -ms-flex: 0 0 66.666667%;
+      flex: 0 0 66.666667%;
+      max-width: 66.666667%;
+    }
+  }
+  @media (min-width: 992px){
+    .col-lg-8 {
+      -webkit-box-flex: 0;
+      -ms-flex: 0 0 66.666667%;
+      flex: 0 0 66.666667%;
+      max-width: 66.666667%;
+    }
+  }  
+  @media (min-width: 768px){
+    .col-md-8 {
+      -webkit-box-flex: 0;
+      -ms-flex: 0 0 66.666667%;
+      flex: 0 0 66.666667%;
+      max-width: 66.666667%;
+    }
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.25em;
+    margin: 0;
+    padding: 0;
+  }
+  h1 {
+    font-size: 2.307692308em;
+    margin-bottom: 1em;
+  }
+  
+  
+  body .yotpo .yotpo-icon-default-star:before, body .yotpo .yotpo-icon-star:before, body .yotpo .yotpo-icon-half-star:before, body .yotpo .yotpo-icon-default-empty-star:before, body .yotpo .yotpo-icon-empty-star:before, body .yotpo.bottomLine .yotpo-bottomline .yotpo-icon-default-star, body .yotpo.bottomLine .yotpo-bottomline .yotpo-icon-star, body .yotpo.bottomLine .yotpo-bottomline .yotpo-icon-half-star, body .yotpo.bottomLine .yotpo-bottomline .yotpo-icon-default-empty-star, body .yotpo.bottomLine .yotpo-bottomline .yotpo-icon-empty-star, body .yotpo.yotpo-main-widget .yotpo-bottomline.yotpo-bottomline-3-boxes .yotpo-bottomline-box-2 .yotpo-star-distribution .yotpo-star-distribution-content .yotpo-distibutions-stars .review-stars .yotpo-icon-empty-star, body .yotpo .yotpo-reviews-carousel .carousel-display-wrapper #carousel-top-panel .yotpo-icon-half-star, body .yotpo-placeholder .yotpo-icon-default-star:before, body .yotpo-placeholder .yotpo-icon-star:before, body .yotpo-placeholder .yotpo-icon-half-star:before, body .yotpo-placeholder .yotpo-icon-default-empty-star:before, body .yotpo-placeholder .yotpo-icon-empty-star:before, body .yotpo-placeholder.bottomLine .yotpo-bottomline .yotpo-icon-default-star, body .yotpo-placeholder.bottomLine .yotpo-bottomline .yotpo-icon-star, body .yotpo-placeholder.bottomLine .yotpo-bottomline .yotpo-icon-half-star, body .yotpo-placeholder.bottomLine .yotpo-bottomline .yotpo-icon-default-empty-star, body .yotpo-placeholder.bottomLine .yotpo-bottomline .yotpo-icon-empty-star, body .yotpo-placeholder.yotpo-main-widget .yotpo-bottomline.yotpo-bottomline-3-boxes .yotpo-bottomline-box-2 .yotpo-star-distribution .yotpo-star-distribution-content .yotpo-distibutions-stars .review-stars .yotpo-icon-empty-star, body .yotpo-placeholder .yotpo-reviews-carousel .carousel-display-wrapper #carousel-top-panel .yotpo-icon-half-star {
+    color: #52c939;
+  }
+  body .yotpo.bottomLine .yotpo-bottomline .yotpo-icon-star, body .yotpo.bottomLine .yotpo-bottomline .yotpo-icon-half-star, body .yotpo.bottomLine .yotpo-bottomline .yotpo-icon-empty-star, body .yotpo.bottomLine .yotpo-bottomline .yotpo-icon-star, body .yotpo.bottomLine .yotpo-bottomline .yotpo-icon-half-star, body .yotpo.bottomLine .yotpo-bottomline .yotpo-icon-empty-star, body .yotpo .yotpo-modal-bottom-line .yotpo-bottomline .yotpo-icon-star, body .yotpo .yotpo-modal-bottom-line .yotpo-bottomline .yotpo-icon-half-star, body .yotpo .yotpo-modal-bottom-line .yotpo-bottomline .yotpo-icon-empty-star, body .yotpo-placeholder.bottomLine .yotpo-bottomline .yotpo-icon-star, body .yotpo-placeholder.bottomLine .yotpo-bottomline .yotpo-icon-half-star, body .yotpo-placeholder.bottomLine .yotpo-bottomline .yotpo-icon-empty-star, body .yotpo-placeholder.bottomLine .yotpo-bottomline .yotpo-icon-star, body .yotpo-placeholder.bottomLine .yotpo-bottomline .yotpo-icon-half-star, body .yotpo-placeholder.bottomLine .yotpo-bottomline .yotpo-icon-empty-star, body .yotpo-placeholder .yotpo-modal-bottom-line .yotpo-bottomline .yotpo-icon-star, body .yotpo-placeholder .yotpo-modal-bottom-line .yotpo-bottomline .yotpo-icon-half-star, body .yotpo-placeholder .yotpo-modal-bottom-line .yotpo-bottomline .yotpo-icon-empty-star {
+    font-size: 15px;
+  }
+  body .yotpo .text-m, body .yotpo .text-m:hover, body .yotpo-placeholder .text-m, body .yotpo-placeholder .text-m:hover {
+    color: #242424 !important;
+    text-decoration: underline !important;
+    text-decoration-color: #d7d7d7 !important;
+    text-underline-position: under;
+    font-size: 10px;
+    vertical-align: middle;
+    top: 1px;
+    position: relative;
+  }
+</style>
+
+<div class="container">
+
+  {% include 'breadcrumb' %}
+
+  <div class="row justify-content-center">
+
+    <div class="col-sm-12 col-md-8 col-lg-8">
+
+      <h1>{{ page.title }}</h1>
+
+      {{- page.content -}}
+
+      {%- if settings.reviews_vendor == "stamped" -%}
+        <style>
+          div#stamped-badge-3 {
+            text-align: center;
+          } 
+
+          #stamped-badge-svg-3 {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+          }
+
+          .stamped-badge-powered {
+            visibility: hidden;
+          }
+        </style>
+        <div id="stamped-reviews-widget" data-widget-type="site-badge" data-title="" data-link="https://www.dankstop.com/pages/reviews" data-lang="en"></div>
+        <div id="stamped-main-widget"></div>
+      
+      {%- elsif settings.reviews_vendor == "okendo" -%}
+        <style>
+          svg.okeReviews-ratingsBadge-svg {
+            height: initial;
+            width: initial;
+          }
+          [data-oke-reviews-widget]:empty:before {
+            background: transparent;
+            content: "Loading reviews...";
+            position: absolute;
+            width: 100%;
+            height: 30vh;
+            line-height: 30vh;
+            font-size: 23px;
+            color: #000;
+            display: block;
+            text-align: center;
+          }
+        </style>
+        {{ shop.metafields.okendo.ReviewsWidgetStyleTag }}
+        {{ shop.metafields.okendo.StyleCustomizations }}
+        <div class="row justify-content-center">
+          <div data-oke-reviews-badge data-oke-reviews-badge-size="large" data-oke-reviews-badge-link="/pages/reviews"></div>
+        </div>
+        <div class="row justify-content-center">
+          <div data-oke-reviews-widget></div>
+        </div>
+        <script src="https://d3hw6dc1ow8pp2.cloudfront.net/reviewsWidget.min.js?shop=dankstop-9.myshopify.com"></script>
+
+      {%- elsif settings.reviews_vendor == "yotpo" -%}
+        <script type="text/javascript"> (function e(){var e=document.createElement("script");e.type="text/javascript",e.async=!0, e.src="//staticw2.yotpo.com/slO4cjcGIOnMsb78Mu313loqvxAp3HCWDc7KauBH/widget.js";var t=document.getElementsByTagName("script")[0]; t.parentNode.insertBefore(e,t)})(); </script>
+        <div id='yotpo-testimonials-custom-tab'></div>
+
+      {%- endif -%}      
+      
+      {%- comment -%}
+      <!-- Okendo =========================================== -->
+      <div data-oke-reviews-widget=""></div>
+      <div data-oke-reviews-badge data-oke-reviews-badge-size="large" data-oke-reviews-badge-link="/pages/reviews"></div>
+      <div hidden class="ok-meta-2">
+        {{ shop.metafields.okendo.StyleCustomizations }}
+      </div>
+      <div hidden class="ok-meta-1">
+        {{ shop.metafields.okendo.ReviewsWidgetStyleTag }}
+      </div>
+      <!-- Yotpo =========================================== -->
+      {%- endcomment -%}
+      
+    </div>
+
+  </div>
+
+</div>

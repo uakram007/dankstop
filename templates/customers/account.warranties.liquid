@@ -1,0 +1,128 @@
+{% comment %}
+  This template will be automatically generated for you if the file doesn't exist,
+  but where's the fun in having no control? Define your layout below.
+
+  The 'layout settings.customer_layout' line is inserted at the top of every customer account template.
+  Your theme's settings determine to use the 'default' or 'theme' customer templates.
+  More info:
+    - http://www.tetchi.ca/shopify-theme-from-scratch-part-11/
+
+  Template note:
+    - All IDs on this template are required to make the form(s) submit properly
+
+  For all available customer liquid tags:
+    - http://docs.shopify.com/themes/liquid-variables/customer
+{% layout settings.customer_layout %}
+{% endcomment %}
+
+
+{%- include 'customers-head' -%}
+
+<div class="account-page custom-acc-page">
+  <div class="container">
+    <header class="page-header">
+      <h1 {% if settings.enable_multilang %}data-translate="customer.account.title"{%endif%}>
+        {{ 'customer.account.title' | t }}
+      </h1>
+    </header>
+    
+    <div class="grid row">
+      
+      <div class="grid-item col-sm-12 col-md-3 col-lg-2">
+        {%- include "customer_account_details" -%}
+      </div>
+      
+      
+      <div class="grid-item col-sm-12 col-md-9 col-lg-10">
+        <h4 class="box-title" {% if settings.enable_multilang %}data-translate="customer.warranties.title"{%endif%}>
+          {{ 'customer.warranties.title' | t }}
+        </h4>
+
+        <div id="load-user-warranties"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">-->
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> --> 
+
+<script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-3.3.1.js"></script>
+
+<script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+  {% if customer %}
+  
+    {% assign customer_id = customer.id %}
+
+{%- comment -%}
+    {% if customer.email == "andre.bulatov@gmail.com" %}
+      console.log("hello andre");
+      {% assign customer_id = "5039964946506" %}
+    {% endif %}
+{%- endcomment -%}
+    
+  // Old server path
+//   var redeem_warranty_page_path = '//portal.dankstop.com/product-warranty/redeem.php';
+  // Native dankstop.com redemption page path
+  var redeem_warranty_page_path = '/account?view=redeem-warranty';
+
+  $.getJSON('//portal.dankstop.com/product-warranty/get-warranties.php?customer_id={{ customer_id }}&client=1', function(resp) {
+
+    var warranty_target = $('#load-user-warranties');            
+    warranty_target.attr('class', 'muted-panel rounded').attr('style', 'margin: 20px 0;').append('<table id="warranties-table"><thead><tr><th>Order</th><th>Covered Product</th><th>Status</th><th>Action</th></tr></thead><tbody></tbody></table>');
+            
+//     console.log("resp.length", Object.keys(resp).length);
+//     console.log(resp);
+    if ( ! Object.keys(resp).length){
+       warranty_target.find('tbody').append('<tr><td>No warranties found.</td></tr>');
+    }
+    
+    else {
+
+    $.each(resp, function(i, r) {
+      var status = '<span class="green">ELIGIBLE</span>';
+      if(r.status != 'eligible') {
+        status = '<span class="red">'+r.status.toUpperCase()+'</span>';
+      }
+
+//       console.log(r);
+      var options = 'N/A';
+      var redeem_warranty_page_url_with_params = redeem_warranty_page_path + '&client=1&policy='+r.policy_id+'&customer_id={{ customer.id }}';
+      if(r.status == 'eligible') {
+        options = '<a href="'+redeem_warranty_page_url_with_params+'" class="btn small" style="display: inline-block;">Redeem Policy</a>';
+      }
+      else if(r.status == 'redeemed') {
+        
+//         console.log(r.status);
+        if (r.redeemed) {
+          
+//           console.log(r.redeemed.status);
+          if(r.redeemed.status == 'approved') {
+            status = '<span class="green">'+r.redeemed.status.toUpperCase()+'</span>';
+            options = '<p>Redeemed for $'+r.redeemed.value+' Off any <a href="https://dankstop.com/collections/pieceprotect-warranty-eligible">PieceProtect Eligible Product</a> over $'+r.value+'</p>Use the coupon code: <span class="tag">'+r.redeemed.code+'</span>';
+          }
+          else {
+            status = '<span>PENDING</span>';
+            options = 'Request submitted for review!  Check back soon!';
+          }
+        }
+      }
+
+
+      warranty_target.find('tbody').append('<tr><td><a href="https://dankstop.com/account/orders/' + r.order_token + '">View Order</td><td><a href="/products/'+r.product_id+'">'+r.product_name+'</a></td><td>'+status+'</td><td>'+options+'</td></tr>');
+    });
+
+  }
+
+  });
+  {% endif %}
+</script>

@@ -1,0 +1,88 @@
+{%- comment -%}
+<!-- Lazy Assets -- Lazyload All JS + CSS ======================================= -->
+<script>
+  // promoBanner fix for closed banners flicker "bug"
+  //if(document.cookie.indexOf("CLOSED_BANNER")!=-1){document.getElementById("promoBanner").remove();}
+  
+  window.hsjs = window.hsjs || {};
+  hsjs.tools = hsjs.tools || {};
+
+  // Run function at onload event
+  hsjs.tools.runAtOnload = function(func, param) {
+    if (window.addEventListener)
+      window.addEventListener("load", func(param), false);
+    else if (window.attachEvent)
+      window.attachEvent("onload", func(param));
+    else window.onload = func(param);
+  }
+
+  // Append a CSS style link as a child of the head
+  hsjs.tools.load_css_onload = function(href){
+    var cb = function() {
+      var l = document.createElement("link"); l.rel = "stylesheet";
+      l.href = href;
+      var h = document.getElementsByTagName("head")[0];
+      // Prepend styles before head
+      //h.parentNode.insertBefore(l, h);
+      // Append styles to head
+      h.appendChild(l);
+    };
+    var raf = requestAnimationFrame || webkitRequestAnimationFrame ||
+        mozRequestAnimationFrame || msRequestAnimationFrame;
+    if (raf) raf(cb);
+    else hsjs.tools.runAtOnload(cb);
+  }
+  //hsjs.tools.load_css_onload("\{{ 'highife.min.css' | asset_url }}");
+  //hsjs.load_css_onload("\{{ 'highife.scss.css' | asset_url }}");
+
+  {%- comment -%}
+  // Ajax Call
+  hsjs.tools.ajaxCall = function(ajax_url, callback, method, some_boolean) {
+    ajax_url = (ajax_url) ? ajax_url : "URL Not Set";
+    method = (method) ? method : "GET"; 
+    some_boolean = true;
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function() {
+      if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+        if (xmlhttp.status == 200) {
+          if (typeof callback === "function"){
+            callback(xmlhttp.responseText);
+          }
+        }
+        else if (xmlhttp.status == 400) {
+          console.log("There was an error 400");
+        }
+        else {
+          console.log("Something else other than 200 or 400 was returned");
+        }
+      }
+    }
+
+    xmlhttp.open(method, ajax_url, some_boolean);
+    xmlhttp.send();
+  }
+
+  // Get Theme Strings JSON
+  hsjs.tools.runAtOnload(function(){
+    hsjs.tools.ajaxCall("https://dankstop.com/?view=theme-strings", function(data){console.log("STRINGS loaded");hsjs.cache.themeStrings = JSON.parse(data);})
+  });
+  // Get Theme Settings JSON
+  hsjs.tools.runAtOnload(function(){
+    hsjs.tools.ajaxCall("https://dankstop.com/?view=theme-settings", function(data){console.log("settings Loaded");hsjs.cache.themeObj = JSON.parse(data);})
+  });
+  {%- endcomment -%}
+
+  // Append a JS script tag as a child of the body
+  hsjs.tools.appendScriptTag = function(src) {
+    var s = document.createElement("script");
+    s.src = src;
+    document.body.appendChild(s);
+  }
+  //hsjs.tools.runAtOnload(hsjs.tools.appendScriptTag, "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js");
+  //hsjs.tools.runAtOnload(hsjs.tools.appendScriptTag, "//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js");
+  //hsjs.tools.runAtOnload(hsjs.tools.appendScriptTag, "//cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js");
+  //hsjs.tools.runAtOnload(hsjs.tools.appendScriptTag, "\{{ 'highlife.min.js' | asset_url }}");
+  //hsjs.tools.runAtOnload(hsjs.tools.appendScriptTag, "\{{ 'highlife.js' | asset_url }}");
+</script>
+{%- endcomment -%}

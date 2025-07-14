@@ -1,0 +1,1533 @@
+{% assign logo_url = 'https://dankstop.com/cdn/shop/files/LogoB-green_copy_199x_ffbb68b7-61b6-4745-a9f0-1bb632bbad19_398x.png?v=1699497784' %}
+{% assign client = 'py3qTnKoiVxzNsDPNbc4EQ==:SFonKV4MhTviRkjQoPnZd0Ns8s+lbU0n2hy2imhpCGaWLs51MNYaNTX3z01jUkO5' %}
+{% assign elite_id = '46302742249691' %}
+
+<div id="new_popup-overlay2" class="new_popup-overlay"></div>
+
+<div id="new_popup-modal2" class="new_custom_popup_main2"  data-customer="{%- if customer -%} true {%- else -%} false {%- endif -%}" >
+  <button class="close_popup">&times;</button>
+  
+
+  <div class="new_form_container">
+    <div class="main_login_form new_forms">
+        <div class="img_logo_popup">
+            <img
+            src="{{ logo_url }}"
+            alt="Logo"
+            />
+        </div>
+        <form id="loginForm">
+            <h2>Welcome back!</h2> 
+            <div class="form-group">
+                <label for="email" class="required">Email address</label>
+                <input type="email" id="email" >
+                <span class="error new_hidden">Email is required</span>
+            </div>
+            
+            <div class="form-group">
+                <label for="password" class="required">Password</label>
+                <div class="password-field">
+                    <input type="password" id="password" >
+                    <span class="show-pass"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg></span>
+                    <span class="hide-pass new_hidden"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c8.4-19.3 10.6-41.4 4.8-63.3c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zM373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5L373 389.9z"/></svg></span>
+                </div>
+                <span class="error new_hidden">Password is required</span>
+            </div>
+            <span class="c_error"></span>
+            <button type="button" class="forgot-password">Forgot password?</button> 
+            
+            <button type="submit" class="login-btn transparent_btn">Log In</button>
+            
+            <div class="footer">
+                Not a Member Yet? <button  type="button" class="signup-link">Sign Up for Free</button>
+            </div>
+        </form>
+
+        <div class="footer_logos">
+            <h3>One Simple Login <br/> The only memebership you'll need.</h3>
+            <div class="new_logos_scroll">
+                <ul>
+                    {% for i in (1..4) %}
+                        <li>
+                            <img src="{{ 'cc-partner1.png' | file_url }}" class="img-responsive" loading="lazy">
+                        </li>
+                        <li>
+                            <img src="{{ 'cc-partner2.png' | file_url }}" class="img-responsive" loading="lazy">
+                        </li>
+                        <li>
+                            <img src="{{ 'cc-partner3.png' | file_url }}" class="img-responsive" loading="lazy">
+                        </li>
+                        <li>
+                            <img src="{{ 'cc-partner4.png' | file_url }}" class="img-responsive" loading="lazy">
+                        </li>
+                        <li>
+                            <img src="{{ 'cc-partner5.png' | file_url }}" class="img-responsive" loading="lazy">
+                        </li>
+                        <li>
+                            <img src="{{ 'cc-partner6.png' | file_url }}" class="img-responsive" loading="lazy">
+                        </li>
+                    {% endfor %}
+                    
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="main_forget_password new_forms new_hidden">
+        <div class="img_logo_popup">
+            <img
+            src="{{ logo_url }}"
+            alt="Logo"
+            />
+        </div>
+        <form id="forgetForm">
+            <h2>Check your email</h2>
+            <p class="text_sub">Dont worry we will help you to recover your password</p>
+            <div class="form-group">
+                <label for="email" class="required">Email address</label>
+                <input type="email" id="email" >
+                <span class="error new_hidden">Email is required</span>
+            </div> 
+             
+            <span class="c_error"></span>
+            <button type="submit" class="fill_btn">Reset Password</button>
+            <button type="button" class="transparent_btn show_login_form">Back</button> 
+        </form>
+        <form id="verifyOTP" class="new_hidden">
+            <h2>Verify OTP</h2>
+            <p class="text_sub">Please enter the OTP you recevied in your email.</p>
+            <input type="hidden" id="email" />
+            <div class="form-group">
+                <label for="text" class="required">OTP</label>
+                <input type="number" id="otp" >
+                <span class="error new_hidden">OTP is required</span>
+            </div> 
+             
+            <span class="c_error"></span>
+            <button type="submit" class="fill_btn">Verify</button> 
+            <div class="footer">
+                Didn't recevie OTP? <button type="button" class="resend_otp">Resend OTP.</button>
+            </div>
+        </form>
+        <form id="newPasswordForm" class="new_hidden">
+            <h2>Enter New Password</h2>
+            <input type="hidden" id="jwt" />
+            <div class="form-group">
+                <label for="password" class="required">Password</label>
+                <div class="password-field">
+                    <input type="password" id="password" >
+                    <span class="show-pass"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg></span>
+                    <span class="hide-pass new_hidden"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c8.4-19.3 10.6-41.4 4.8-63.3c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zM373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5L373 389.9z"/></svg></span>
+                </div>
+                <span class="error new_hidden">Password is required</span>
+            </div>
+            <div class="form-group">
+                <label for="c_password" class="required">Confirm Password*</label>
+                <div class="password-field">
+                    <input type="password" id="c_password" >
+                    <span class="show-pass"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg></span>
+                    <span class="hide-pass new_hidden"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c8.4-19.3 10.6-41.4 4.8-63.3c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zM373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5L373 389.9z"/></svg></span>
+                </div>
+                <span class="error new_hidden">Confirm Password is required</span>
+            </div>
+            <span class="c_error"></span>
+            <button type="submit" class="fill_btn">Reset</button>
+        </form>
+    </div>
+
+    <div class="main_signup_form new_forms new_hidden">
+        <div class="img_logo_popup">
+            <img
+            src="{{ logo_url }}"
+            alt="Logo"
+            />
+        </div>
+        <form id="signupForm">
+            <div class="sign_up_first_step">
+                <h2>Join for FREE & Unlock<br/>
+                Instant Savings</h2>
+                <p class="text_sub">Access <strong>UNBEATABLE Member Prices</strong><br/>
+                    at the <strong>Lowest Price Guaranteed</strong></p>
+                <div class="form-group">
+                    <label for="email" class="required">Email address</label>
+                    <input type="email" id="email" >
+                    <span class="error new_hidden">Email is required</span>
+                </div> 
+                
+                <div class="i_agree_main">
+                    <label for="i_agree">
+                    <input style="margin-right: 5px;position: relative;top: 4px;display: inline;width: 15px;height: 15px;" type="checkbox" required id="i_agree"/>
+                        <span>I agree to <a href="https://cabanaclubusa.com/terms-and-conditions/">terms of use</a> / <a href="https://cabanaclubusa.com/terms-and-conditions/">privacy policy</a>.</span>
+                    </label>
+                </div>
+                <span class="c_error"></span>
+                <button type="button" class="transparent_btn signup_first_btn">Join Cabana Club for Free </button> 
+            </div>
+
+            <div class="signup_second_step new_hidden">
+                <h2>Almost There!</h2>
+
+                <div class="form_grid">
+                    <div class="form-group">
+                        <label for="f_name" class="required">First Name</label>
+                        <input type="text" id="f_name" >
+                        <span class="error new_hidden">First Name is required</span>
+                    </div> 
+                    <div class="form-group">
+                        <label for="l_name" class="required">Last Name</label>
+                        <input type="text" id="l_name" >
+                        <span class="error new_hidden">Last Name is required</span>
+                    </div> 
+                </div>
+                <div class="form-group">
+                    <label for="zip_code" class="required">Zip Code</label>
+                    <input type="number" id="zip_code" >
+                    <span class="error new_hidden">Zip Code is required</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="required">Password</label>
+                    <div class="password-field">
+                        <input type="password" id="password" >
+                        <span class="show-pass"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg></span>
+                        <span class="hide-pass new_hidden"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c8.4-19.3 10.6-41.4 4.8-63.3c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zM373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5L373 389.9z"/></svg></span>
+                    </div>
+                    <span class="error new_hidden">Password is required</span>
+                </div>
+
+                <span class="c_error"></span>
+                <button type="submit" class="transparent_btn">
+                    Submit
+                </button>
+            </div>
+            
+            <div class="footer">
+                Already a Member? <button type="button" class="signup_login">Log In</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="main_elite_signup_form new_forms elite new_hidden">
+        <div class="img_logo_popup">
+            <img
+            src="https://cdn.shopify.com/s/files/1/0350/8253/files/elite-logo.png?v=1740644974"
+            alt="Logo"
+            />
+        </div>
+        <form id="signupEliteForm">
+            <div class="sign_up_first_step_elite">
+                <h2>Unlock UNBELIEVABLE Savings</h2>
+                <p class="text_sub">Access ELITE Prices, Free Shipping & VIP perks at top<br/>
+                    CBD & smoking accessory sites for only $30/yr</p>
+                <div class="form-group"> 
+                    <input type="email" id="email" placeholder="Email address*">
+                    <span class="error new_hidden">Email is required</span>
+                </div> 
+                
+                <div class="i_agree_main">
+                    <label for="i_agree_elite">
+                    <input style="margin-right: 5px;position: relative;top: 4px;display: inline;width: 15px;height: 15px;" type="checkbox" required id="i_agree_elite"/>
+                        <span>I agree to <a href="https://cabanaclubusa.com/terms-and-conditions/">terms of use</a> / <a href="https://cabanaclubusa.com/terms-and-conditions/">privacy policy</a>.</span>
+                    </label>
+                </div>
+                <span class="c_error"></span>
+                <button type="button" class="elite_btn signup_elite_first_btn">Upgrade to ELITE </button> 
+                <div class="footer">
+                    Already a Member? <button type="button" class="signup_login_elite">Log In</button>
+                </div>
+            </div>
+
+            <div class="signup_second_step_elite new_hidden">
+                <h2>Almost There!</h2>
+
+                <div class="form_grid">
+                    <div class="form-group"> 
+                        <input type="text" id="f_name" placeholder="First Name*">
+                        <span class="error new_hidden">First Name is required</span>
+                    </div> 
+                    <div class="form-group"> 
+                        <input type="text" id="l_name" placeholder="Last Name*">
+                        <span class="error new_hidden">Last Name is required</span>
+                    </div> 
+                </div>
+                <div class="form-group"> 
+                    <input type="text" id="zip_code" placeholder="Zip Code*">
+                    <span class="error new_hidden">Zip Code is required</span>
+                </div>
+                
+                <div class="form-group"> 
+                    <div class="password-field">
+                        <input type="password" id="password" placeholder="Password*">
+                        <span class="show-pass"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg></span>
+                        <span class="hide-pass new_hidden"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c8.4-19.3 10.6-41.4 4.8-63.3c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zM373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5L373 389.9z"/></svg></span>
+                    </div>
+                    <span class="error new_hidden">Password is required</span>
+                </div>
+
+                <button type="button" class="signup_elite_second_btn elite_btn">
+                    Next
+                </button>
+
+                <div class="footer">
+                    Already a Member? <button type="button" class="signup_login_elite">Log In</button>
+                </div>
+            </div>
+
+            <div class="signup_third_step_elite new_hidden">
+                <h2>ELITE Members Get Birthday<br/>
+                    Rewards!</h2>
+                <p class="text_sub">Share your birthday below</p>
+                <div class="form-group"> 
+                    <input type="date" id="dob">
+                    <span class="error new_hidden">Invalid date format. Please enter a valid date.</span>
+                </div> 
+
+                <button type="button" class="signup_elite_third_btn elite_btn">
+                    Next
+                </button>
+                <button type="button" class="signup_elite_thirdskip_btn transparent_btn">
+                    Skip
+                </button>
+
+                <div class="footer">
+                    Already a Member? <button type="button" class="signup_login_elite">Log In</button>
+                </div>
+            </div>
+
+            <div class="signup_fourth_step_elite new_hidden">
+                <div style="padding:0 20px 20px;">
+                    <h2>Your ELITE Membership Has Been<br/>
+                        Added to Cart!</h2>
+                    <p class="text_sub">You can now shop at ELITE price!<br/>
+                        Continue shopping & complete checkout to unlock<br/>
+                        UNBELIEVABLE savings, free shipping & VIP perks!</p> 
+
+                    <span class="c_error"></span>
+
+                    <button type="submit" class="signup_elite_submit_btn elite_btn">
+                        Continue Shopping
+                    </button> 
+                </div>
+                <div class="footer_logos">
+                    <h3>One Simple Login <br/> The only memebership you'll need.</h3>
+                    <div class="new_logos_scroll">
+                        <ul>
+                            {% for i in (1..4) %}
+                                <li>
+                                    <img src="{{ 'cc-partner1.png' | file_url }}" class="img-responsive" loading="lazy">
+                                </li>
+                                <li>
+                                    <img src="{{ 'cc-partner2.png' | file_url }}" class="img-responsive" loading="lazy">
+                                </li>
+                                <li>
+                                    <img src="{{ 'cc-partner3.png' | file_url }}" class="img-responsive" loading="lazy">
+                                </li>
+                                <li>
+                                    <img src="{{ 'cc-partner4.png' | file_url }}" class="img-responsive" loading="lazy">
+                                </li>
+                                <li>
+                                    <img src="{{ 'cc-partner5.png' | file_url }}" class="img-responsive" loading="lazy">
+                                </li>
+                                <li>
+                                    <img src="{{ 'cc-partner6.png' | file_url }}" class="img-responsive" loading="lazy">
+                                </li>
+                            {% endfor %}
+                            
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div> 
+        </form>
+    </div>
+
+    <div class="main_elite_upgrade_form new_forms elite new_hidden">
+        
+        <form id="eliteUpgradeForm"> 
+            <div class="img_logo_popup">
+                <img
+                src="https://cdn.shopify.com/s/files/1/0350/8253/files/elite-logo.png?v=1740644974"
+                alt="Logo"
+                />
+            </div>
+            <div class="upgrade_first_step_elite">  
+                <div style="padding:0 20px 20px;">
+                    <h2>Unlock UNBELIEVABLE Savings</h2>
+                    <p class="text_sub">Access ELITE Prices, Free Shipping & VIP perks at top<br/>
+                        CBD & smoking accessory sites for only $30/yr</p> 
+
+                    <div class="i_agree_main">
+                        <label for="i_agree_elite_upgrade">
+                        <input style="margin-right: 5px;position: relative;top: 4px;display: inline;width: 15px;height: 15px;" type="checkbox" required id="i_agree_elite_upgrade"/>
+                            <span>I agree to <a href="https://cabanaclubusa.com/terms-and-conditions/">terms of use</a> / <a href="https://cabanaclubusa.com/terms-and-conditions/">privacy policy</a>.</span>
+                        </label>
+                    </div>
+                    <span class="c_error"></span>
+                    <button type="button" class="elite_upgrade_first_btn elite_btn">
+                        Upgrade to Elite
+                    </button> 
+                </div> 
+            </div> 
+            <div class="upgrade_second_step_elite new_hidden" style="padding: 0 20px 20px;">
+                <h2>ELITE Members Get Birthday<br/>
+                    Rewards!</h2>
+                <p class="text_sub">Share your birthday below</p>
+                <div class="form-group"> 
+                    <input type="date" id="dob">
+                    <span class="error new_hidden">Invalid date format. Please enter a valid date.</span>
+                </div> 
+
+                <button type="button" class="upgrade_elite_second_btn elite_btn">
+                    Next
+                </button>
+                <button type="button" class="upgrade_elite_secondskip_btn  transparent_btn">
+                    Skip
+                </button>
+
+                {% unless customer %}
+                <div class="footer">
+                    Already a Member? <button type="button" class="signup_login_elite">Log In</button>
+                </div>
+                {% endunless %}
+            </div> 
+            <div class="upgrade_third_step_elite new_hidden">
+                <div style="padding:0 20px 20px;">
+                    <h2>Your ELITE Membership Has Been<br/>
+                        Added to Cart!</h2>
+                    <p class="text_sub">You can now shop at ELITE price!<br/>
+                        Continue shopping & complete checkout to unlock<br/>
+                        UNBELIEVABLE savings, free shipping & VIP perks!</p> 
+
+                    <span class="c_error"></span>
+
+                    <button type="submit" class="upgrade_elite_submit_btn elite_btn">
+                        Continue Shopping
+                    </button> 
+                </div>
+                <div class="footer_logos">
+                    <h3>One Simple Login <br/> The only memebership you'll need.</h3>
+                    <div class="new_logos_scroll">
+                        <ul>
+                            {% for i in (1..4) %}
+                                <li>
+                                    <img src="{{ 'cc-partner1.png' | file_url }}" class="img-responsive" loading="lazy">
+                                </li>
+                                <li>
+                                    <img src="{{ 'cc-partner2.png' | file_url }}" class="img-responsive" loading="lazy">
+                                </li>
+                                <li>
+                                    <img src="{{ 'cc-partner3.png' | file_url }}" class="img-responsive" loading="lazy">
+                                </li>
+                                <li>
+                                    <img src="{{ 'cc-partner4.png' | file_url }}" class="img-responsive" loading="lazy">
+                                </li>
+                                <li>
+                                    <img src="{{ 'cc-partner5.png' | file_url }}" class="img-responsive" loading="lazy">
+                                </li>
+                                <li>
+                                    <img src="{{ 'cc-partner6.png' | file_url }}" class="img-responsive" loading="lazy">
+                                </li>
+                            {% endfor %}
+                            
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div> 
+        </form>
+    </div>
+  </div>
+  
+</div>
+
+
+<script>
+
+
+    const internalSSO = "https://sso.cabanaclubusa.com/api"
+    const client = "{{ client }}"
+
+    async function checkEmailExists(email) {
+        const checkEmail = await fetch(`${internalSSO}/auth/emailexists/${email}`)
+        const result = await checkEmail.json()
+        return result
+    }
+
+    async function registerUser(email,password,first_name,last_name,address_postcode,errorDiv,elite=false){
+        const url = `${internalSSO}/auth/register`
+        try {
+        
+            if(elite){
+                addEliteProductToCart() 
+            }
+
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                }, 
+                body: JSON.stringify({ 
+                    client: client,
+                    email: email,
+                    password: password,
+                    first_name: first_name,
+                    last_name: last_name,
+                    address_postcode: address_postcode,
+                    privacyPolicy: true,
+                    redirect_url:  window.location.href
+                }), 
+            });
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+
+            const json = await response.json();
+            console.log(json);
+            window.location.href = json.redirect_uri
+            
+        } catch (error) {
+            console.error(error.message);
+        }
+
+    }
+
+    async function loginUser(email,password,errorDiv,elite=false){
+        const url = `${internalSSO}/auth/authenticate`
+        try { 
+
+            const emailexists = await checkEmailExists(email) 
+            if(emailexists.exists){
+                errorDiv.textContent = '';
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    }, 
+                    body: JSON.stringify({
+                        userData: {
+                            client: client,
+                            email: email,
+                            password: password,
+                            login_type:"password",
+                            return_to:  btoa(window.location.href)
+                        } 
+                    }), 
+                });
+                if (!response.ok) {
+                    throw new Error(`Response status: ${response.status}`);
+                }
+
+                const json = await response.json();
+                console.log(json);
+                window.location.href = json.redirect_uri
+                    
+            }else{
+                errorDiv.textContent = 'Email does not exist';
+            }  
+        } catch (error) {
+            console.error(error.message);
+            errorDiv.textContent = 'Invalid email or password';
+        }
+    }
+
+    async function forgetPassword(emailInput){
+        const url = `${internalSSO}/auth/forgot-password`
+        try { 
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                }, 
+                body: JSON.stringify({
+                    email: emailInput,
+                    client : client,
+                }), 
+            });
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            } 
+            const json = await response.json(); 
+            return json
+        } catch (error) {
+            console.error(error.message);
+            return error.message
+        }
+    }
+
+    async function verifyOTP(email,otp){
+        const url = `${internalSSO}/otp/verify`
+        try { 
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                }, 
+                body: JSON.stringify({
+                    email: email,
+                    otp : otp,
+                }), 
+            }); 
+            const json = await response.json();
+            console.log(json); 
+            return json
+        } catch (error) {
+            console.error(error.message);
+            return error
+        }
+    }
+    
+    async function passwordReset(jwt,password){ 
+        const url = `${internalSSO}/auth/password/reset`
+        try { 
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                }, 
+                body: JSON.stringify({
+                    token: jwt,
+                    password : password,
+                }), 
+            }); 
+            const json = await response.json();
+            console.log(json); 
+            return json
+        } catch (error) {
+            console.error(error.message);
+            return error
+        }
+    }
+
+    async function resendOTP(email){
+        const url = `${internalSSO}/otp/generate`
+        try { 
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                }, 
+                body: JSON.stringify({
+                    email: email,
+                }), 
+            }); 
+            const json = await response.json();
+            console.log(json); 
+            return json
+        } catch (error) {
+            console.error(error.message);
+            return error
+        }
+    }
+
+    async function addEliteProductToCart() {
+		const id = "{{ elite_id }}";
+	  
+		const get_cart = await getCart();
+		const matched_item = get_cart.items.find((item) => item.variant_id == id);
+
+        if (matched_item) {
+		  const updates = { [id]: 1 };
+	  
+		  try {
+			const response = await fetch(
+			  window.Shopify.routes.root + "cart/update.js",
+			  {
+				method: "POST",
+				headers: {
+				  "Content-Type": "application/json",
+				},
+				body: JSON.stringify({ updates }),
+			  }
+			);
+	  
+			if (!response.ok) throw new Error("Failed to remove item from cart");
+	  
+			const data = await response.json();
+			console.log("updating quantity to 1:", data); 
+            return true
+		  } catch (error) {
+			console.error("Error removing item from cart:", error);
+            return false
+		  }
+		} else {
+		  const formData = {
+			items: [
+			  {
+				id: +id, // Ensure `id` is a number
+				quantity: 1,
+				properties: { _type: "hide" },
+			  },
+			],
+		  };
+	  
+		  try {
+			const response = await fetch(`${window.Shopify.routes.root}cart/add.js`, {
+			  method: "POST",
+			  headers: {
+				"Content-Type": "application/json",
+			  },
+			  body: JSON.stringify(formData),
+			});
+	  
+			if (!response.ok) throw new Error("Failed to add item to cart");
+	  
+			const data = await response.json();
+			return true
+		  } catch (error) {
+			console.error("Error adding item to cart:", error);
+			return false
+		  }
+		}
+    }
+
+
+    // password show/hide
+    document.querySelectorAll('.show-pass').forEach( s => {
+        s.addEventListener('click',function(e){
+            s.parentElement.querySelector('input[type="password"]').setAttribute('type','text')
+            s.classList.add('new_hidden')
+            s.parentElement.querySelector('.hide-pass').classList.remove('new_hidden')
+        })
+    }) 
+    document.querySelectorAll('.hide-pass').forEach( h => {
+        h.addEventListener('click',function(e){
+            h.parentElement.querySelector('input[type="text"]').setAttribute('type','password')
+            h.classList.add('new_hidden')
+            h.parentElement.querySelector('.show-pass').classList.remove('new_hidden')
+        })
+    })
+    // ----------
+
+    //login form validations 
+    document.getElementById('loginForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const emailInput = document.querySelector('#loginForm #email');
+        const passwordInput = document.querySelector('#loginForm #password');
+        let isValid = true;
+         
+        const errorMessages = document.querySelectorAll('#loginForm .error');
+        errorMessages.forEach(msg => msg.classList.add('new_hidden'));
+         
+        if (emailInput.value.trim() === '') {
+            const emailError = emailInput.nextElementSibling;
+            emailError.textContent = 'Email is required';
+            emailError.classList.remove('new_hidden');
+            isValid = false;
+        } else if (!isValidEmail(emailInput.value)) {
+            const emailError = emailInput.nextElementSibling;
+            emailError.textContent = 'Please enter a valid email address';
+            emailError.classList.remove('new_hidden');
+            isValid = false;
+        }
+        
+        // Validate password
+        if (passwordInput.value.trim() === '') {
+            const passwordError = passwordInput.parentElement.nextElementSibling;
+            passwordError.textContent = 'Password is required';
+            passwordError.classList.remove('new_hidden');
+            isValid = false;
+        }
+         
+        if (isValid) {
+            console.log('Form submitted successfully'); 
+            loginUser(emailInput.value.trim(),passwordInput.value.trim(),document.querySelector('.main_login_form .c_error'))  
+        }
+    }); 
+    
+    // -------------
+
+    // onclick forget pass/ back button toggeling form
+    document.querySelector('.forgot-password').addEventListener('click',function(){
+        document.querySelector('.main_login_form').classList.add('new_hidden')
+        document.querySelector('.main_forget_password').classList.remove('new_hidden', 'hidden')
+    })
+    document.querySelector('.show_login_form').addEventListener('click',function(){
+        document.querySelector('.main_login_form').classList.remove('new_hidden', 'hidden')
+        document.querySelector('.main_forget_password').classList.add('new_hidden')
+    })
+    // -------------
+
+    // forget password form email validations
+    document.getElementById('forgetForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const emailInput = document.querySelector('#forgetForm #email'); 
+        let isValid = true;
+         
+        const errorMessages = document.querySelectorAll('#forgetForm .error');
+        errorMessages.forEach(msg => msg.classList.add('new_hidden'));
+         
+        if (emailInput.value.trim() === '') {
+            const emailError = emailInput.nextElementSibling;
+            emailError.textContent = 'Email is required';
+            emailError.classList.remove('new_hidden');
+            isValid = false;
+        } else if (!isValidEmail(emailInput.value)) {
+            const emailError = emailInput.nextElementSibling;
+            emailError.textContent = 'Please enter a valid email address';
+            emailError.classList.remove('new_hidden');
+            isValid = false;
+        } 
+         
+        if (isValid) {
+            document.querySelector('.main_forget_password #forgetForm .c_error').textContent = '';
+            document.querySelector('.main_forget_password #forgetForm .c_error').setAttribute('style','color:red')
+            const emailexists = await checkEmailExists(emailInput.value.trim()) 
+            if(emailexists.exists){
+                let data = await forgetPassword(emailInput.value.trim()) 
+                document.querySelector('#verifyOTP #email').value = emailInput.value.trim()
+                document.querySelector('#newPasswordForm #jwt').value = data.jwtToken
+                document.querySelector('#verifyOTP').classList.remove('new_hidden')
+                document.querySelector('#forgetForm').classList.add('new_hidden')
+                
+            }else{
+                document.querySelector('.main_forget_password #forgetForm .c_error').textContent = 'Email does not exist';
+            }
+            
+            console.log('Form submitted successfully'); 
+             
+        }
+    }); 
+    // ---------------------
+
+    
+
+    // verify opt form
+
+    document.getElementById('verifyOTP').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const otpInput = document.querySelector('#verifyOTP #otp'); 
+        let isValid = true;
+         
+        const errorMessages = document.querySelectorAll('#verifyOTP .error');
+        errorMessages.forEach(msg => msg.classList.add('new_hidden'));
+         
+        if (otpInput.value.trim() === '') {
+            const otpError = otpInput.nextElementSibling; 
+            otpError.textContent = 'OTP is required';
+            otpError.classList.remove('new_hidden');
+            isValid = false;
+        } 
+
+        if (otpInput.value.trim().length !== 6 ) {
+            const otpError = otpInput.nextElementSibling; 
+            otpError.textContent = 'Please enter a valid 6-digit OTP';
+            otpError.classList.remove('new_hidden');
+            isValid = false;
+        } 
+
+        const digitsOnlyRegex = /^\d+$/;
+        if (digitsOnlyRegex.test(otpInput.value) == false ) {
+            const otpError = otpInput.nextElementSibling; 
+            otpError.textContent = 'Only digits are acceptable';
+            otpError.classList.remove('new_hidden');
+            isValid = false;
+        } 
+         
+        if (isValid) {
+            document.querySelector('.main_forget_password #verifyOTP .error').textContent = '';  
+            console.log('Form submitted successfully'); 
+
+            let email = document.querySelector('#verifyOTP #email').value 
+            let verifyotp = await verifyOTP(email,otpInput.value.trim())
+            if(verifyotp.statusCode == 400){
+                document.querySelector('.main_forget_password #verifyOTP .error').textContent = 'Incorrect OTP';
+                document.querySelector('.main_forget_password #verifyOTP .error').classList.remove('new_hidden');  
+            }else{
+                console.log('correct otp')
+                document.querySelector('#verifyOTP').classList.add('new_hidden')
+                document.querySelector('#newPasswordForm').classList.remove('new_hidden')
+            }
+        }
+    });  
+    // ------------------------
+
+    // new password form rest 
+    document.querySelector('#newPasswordForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        document.querySelector('#newPasswordForm .c_error').textContent = ''
+        const passwordInput = document.querySelector('#newPasswordForm #password'); 
+        const c_passwordInput = document.querySelector('#newPasswordForm #c_password'); 
+        let isValid = true;
+         
+        const errorMessages = document.querySelectorAll('#newPasswordForm .error');
+        errorMessages.forEach(msg => msg.classList.add('new_hidden'));
+         
+        if (passwordInput.value.trim() === '') {
+            const passwordError = passwordInput.parentElement.nextElementSibling;
+            passwordError.textContent = 'Password is required';
+            passwordError.classList.remove('new_hidden');
+            isValid = false;
+        } 
+
+        if (c_passwordInput.value.trim() === '') {
+            const c_passwordError = c_passwordInput.parentElement.nextElementSibling;
+            c_passwordError.textContent = 'Confirm Password is required';
+            c_passwordError.classList.remove('new_hidden');
+            isValid = false;
+        } 
+
+        if( passwordInput.value.trim() !== c_passwordInput.value.trim()){
+            const c_error = document.querySelector('#newPasswordForm .c_error');
+            c_error.textContent = 'Password and Confirm Password do not match';
+            c_error.classList.remove('new_hidden');
+            isValid = false;
+        }
+         
+        if (isValid) {
+            console.log('Form submitted successfully'); 
+            let jwt = document.querySelector('#newPasswordForm #jwt').value; 
+            let passResponse = await passwordReset(jwt,passwordInput.value.trim())  
+            if(passResponse.success){
+                document.querySelector('.main_forget_password').classList.add('new_hidden')
+                document.querySelector('#forgetForm').classList.remove('new_hidden')
+                document.querySelector('#newPasswordForm').classList.add('new_hidden')
+                document.querySelector('.main_login_form').classList.remove('new_hidden')
+            }
+        }
+    });
+
+    // ------------
+
+    // resend otp
+    document.querySelector('.resend_otp').addEventListener('click',function(e){
+        e.preventDefault();
+        document.querySelector('#verifyOTP .c_error').textContent = 'OTP RESENT';
+        let email = document.querySelector('#verifyOTP #email').value.trim()
+        resendOTP(email)
+    })
+    // ------
+
+    // onclick signup / log in show hide forms
+    document.querySelector('.signup-link').addEventListener('click',function(){
+        document.querySelector('.main_login_form').classList.add('new_hidden')
+        document.querySelector('.main_signup_form').classList.remove('new_hidden')
+    })
+    document.querySelector('.signup_login').addEventListener('click',function(){
+        document.querySelector('.main_login_form').classList.remove('new_hidden')
+        document.querySelector('.main_signup_form').classList.add('new_hidden')
+    }) 
+    document.querySelectorAll('.signup_login_elite').forEach( s => {
+        s.addEventListener('click',function(){
+            document.querySelector('.main_login_form').classList.remove('new_hidden')
+            document.querySelector('.main_elite_signup_form').classList.add('new_hidden')
+            document.querySelector('.main_elite_upgrade_form').classList.add('new_hidden')
+        })
+    })
+    // --------------
+
+    // sigup form code
+    document.querySelector('.signup_first_btn').addEventListener('click', async function(){
+        const emailInput = document.querySelector('#signupForm #email'); 
+        let isValid = true;
+         
+        const errorMessages = document.querySelectorAll('#signupForm .error');
+        errorMessages.forEach(msg => msg.classList.add('new_hidden'));
+
+        
+         
+        if (emailInput.value.trim() === '') {
+            const emailError = emailInput.nextElementSibling;
+            emailError.textContent = 'Email is required';
+            emailError.classList.remove('new_hidden');
+            isValid = false;
+        } else if (!isValidEmail(emailInput.value)) {
+            const emailError = emailInput.nextElementSibling;
+            emailError.textContent = 'Please enter a valid email address';
+            emailError.classList.remove('new_hidden');
+            isValid = false;
+        } 
+
+        if(document.querySelector('#signupForm #i_agree').checked){
+            document.querySelector('.sign_up_first_step .c_error').textContent = ''
+        }else{
+            document.querySelector('.sign_up_first_step .c_error').textContent = 'Please agree to terms and conditions'
+            isValid = false
+            return
+        }
+
+
+        const emailExists = await checkEmailExists(emailInput.value.trim())
+        if(emailExists.exists){
+            document.querySelector('.sign_up_first_step .c_error').textContent = 'Email already exists' 
+            isValid = false
+        }else{
+            document.querySelector('.sign_up_first_step .c_error').textContent = ''
+        }
+         
+        if (isValid && document.querySelector('#signupForm #i_agree').checked) {
+            document.querySelector('.signup_second_step').classList.remove('new_hidden')
+            document.querySelector('.sign_up_first_step').classList.add('new_hidden')
+        }
+    })
+
+    document.getElementById('signupForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const emailInput = document.querySelector('#signupForm #email');
+        const passwordInput = document.querySelector('#signupForm #password');
+        const fName = document.querySelector('#signupForm #f_name');
+        const lName = document.querySelector('#signupForm #l_name');
+        const zipCode = document.querySelector('#signupForm #zip_code');
+        let isValid = true;
+         
+        const errorMessages = document.querySelectorAll('#signupForm .error');
+        errorMessages.forEach(msg => msg.classList.add('new_hidden'));
+         
+        if (fName.value.trim() === '') {
+            const fNameError = fName.nextElementSibling;
+            fNameError.textContent = 'First Name is required';
+            fNameError.classList.remove('new_hidden');
+            isValid = false;
+        }
+
+        if (lName.value.trim() === '') {
+            const lNameError = lName.nextElementSibling;
+            lNameError.textContent = 'Last Name is required';
+            lNameError.classList.remove('new_hidden');
+            isValid = false;
+        }
+
+        if (zipCode.value.trim() === '') {
+            const zipCodeError = zipCode.nextElementSibling;
+            zipCodeError.textContent = 'Zip Code is required';
+            zipCodeError.classList.remove('new_hidden');
+            isValid = false;
+        }
+        
+         
+        if (passwordInput.value.trim() === '') {
+            const passwordError = passwordInput.parentElement.nextElementSibling;
+            passwordError.textContent = 'Password is required';
+            passwordError.classList.remove('new_hidden');
+            isValid = false;
+        }
+         
+        if (isValid) {
+            registerUser(emailInput.value.trim(),passwordInput.value.trim(),fName.value.trim(),lName.value.trim(),zipCode.value.trim(),document.querySelector('.signup_second_step .c_error'))
+            console.log('Form submitted successfully');  
+        }
+    }); 
+    // ----------
+
+
+    // elite signup code
+    document.querySelector('.signup_elite_first_btn').addEventListener('click',async function(){
+        const emailInput = document.querySelector('#signupEliteForm #email'); 
+        let isValid = true;
+         
+        const errorMessages = document.querySelectorAll('#signupEliteForm .error');
+        errorMessages.forEach(msg => msg.classList.add('new_hidden'));
+         
+        if (emailInput.value.trim() === '') {
+            const emailError = emailInput.nextElementSibling;
+            emailError.textContent = 'Email is required';
+            emailError.classList.remove('new_hidden');
+            isValid = false;
+        } else if (!isValidEmail(emailInput.value)) {
+            const emailError = emailInput.nextElementSibling;
+            emailError.textContent = 'Please enter a valid email address';
+            emailError.classList.remove('new_hidden');
+            isValid = false;
+        } 
+
+        if(document.querySelector('#signupEliteForm #i_agree_elite').checked){
+            document.querySelector('.sign_up_first_step_elite .c_error').textContent = ''
+        }else{
+            document.querySelector('.sign_up_first_step_elite .c_error').textContent = 'Please agree to terms and conditions'
+            isValid = false
+            return
+        }
+         
+
+        const emailExists = await checkEmailExists(emailInput.value.trim())
+        if(emailExists.exists){
+            document.querySelector('.sign_up_first_step_elite .c_error').textContent = 'Email already exists' 
+            isValid = false
+        }else{
+            document.querySelector('.sign_up_first_step_elite .c_error').textContent = ''
+        }
+
+        if (isValid && document.querySelector('#signupEliteForm #i_agree_elite').checked) {
+            document.querySelector('.signup_second_step_elite').classList.remove('new_hidden')
+            document.querySelector('.sign_up_first_step_elite').classList.add('new_hidden')
+        }
+    })
+
+    document.querySelector('.signup_elite_second_btn').addEventListener('click', function() { 
+  
+        const passwordInput = document.querySelector('#signupEliteForm #password');
+        const fName = document.querySelector('#signupEliteForm #f_name');
+        const lName = document.querySelector('#signupEliteForm #l_name');
+        const zipCode = document.querySelector('#signupEliteForm #zip_code');
+        let isValid = true;
+         
+        const errorMessages = document.querySelectorAll('#signupEliteForm .error');
+        errorMessages.forEach(msg => msg.classList.add('new_hidden'));
+         
+        if (fName.value.trim() === '') {
+            const fNameError = fName.nextElementSibling;
+            fNameError.textContent = 'First Name is required';
+            fNameError.classList.remove('new_hidden');
+            isValid = false;
+        }
+
+        if (lName.value.trim() === '') {
+            const lNameError = lName.nextElementSibling;
+            lNameError.textContent = 'Last Name is required';
+            lNameError.classList.remove('new_hidden');
+            isValid = false;
+        }
+
+        if (zipCode.value.trim() === '') {
+            const zipCodeError = zipCode.nextElementSibling;
+            zipCodeError.textContent = 'Zip Code is required';
+            zipCodeError.classList.remove('new_hidden');
+            isValid = false;
+        }
+        
+         
+        if (passwordInput.value.trim() === '') {
+            const passwordError = passwordInput.parentElement.nextElementSibling;
+            passwordError.textContent = 'Password is required';
+            passwordError.classList.remove('new_hidden');
+            isValid = false;
+        }
+         
+        if (isValid) {
+            document.querySelector('.signup_second_step_elite').classList.add('new_hidden')
+            document.querySelector('.signup_third_step_elite').classList.remove('new_hidden')
+        }
+    }); 
+
+    document.querySelector('.signup_elite_third_btn').addEventListener('click',function(){
+        const dob = document.querySelector('#signupEliteForm #dob'); 
+        let isValid = true;
+         
+        const errorMessages = document.querySelectorAll('#signupEliteForm .error');
+        errorMessages.forEach(msg => msg.classList.add('new_hidden'));
+
+
+        const dateEntered = new Date(dob.value);
+        if (isNaN(dateEntered.getTime())) {
+            const dobError = dob.nextElementSibling; 
+            dobError.classList.remove('new_hidden');
+            isValid = false;
+        } 
+
+        const currentDate = new Date();
+        let age = currentDate.getFullYear() - dateEntered.getFullYear();
+   
+        const currentMonth = currentDate.getMonth();
+        const birthMonth = dateEntered.getMonth();
+        
+        if (birthMonth > currentMonth || 
+            (birthMonth === currentMonth && dateEntered.getDate() > currentDate.getDate())) {
+            age--;
+        }
+
+        if(age <=17){
+            const dobError = dob.nextElementSibling; 
+            dobError.textContent = 'You must be at least 18 years old'
+            dobError.classList.remove('new_hidden');
+            isValid = false;
+        }
+         
+        if (isValid) {
+            document.querySelector('.signup_fourth_step_elite').classList.remove('new_hidden')
+            document.querySelector('.signup_third_step_elite').classList.add('new_hidden')
+        }
+    })
+
+    document.querySelector('.signup_elite_thirdskip_btn').addEventListener('click',function(){ 
+        document.querySelector('.signup_fourth_step_elite').classList.remove('new_hidden')
+        document.querySelector('.signup_third_step_elite').classList.add('new_hidden')
+    })
+
+    document.getElementById('signupEliteForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const emailInput = document.querySelector('#signupEliteForm #email').value.trim();
+        const passwordInput = document.querySelector('#signupEliteForm #password').value.trim();
+        const fName = document.querySelector('#signupEliteForm #f_name').value.trim();
+        const lName = document.querySelector('#signupEliteForm #l_name').value.trim();
+        const zipCode = document.querySelector('#signupEliteForm #zip_code').value.trim();
+        const dob = document.querySelector('#signupEliteForm #dob').value.trim(); 
+        
+        registerUser(emailInput,passwordInput,fName,lName,zipCode,document.querySelector('.signup_fourth_step_elite .c_error'),true)
+    })
+
+
+    // elite upgrade form code
+    document.querySelector('.elite_upgrade_first_btn').addEventListener('click',async function(){ 
+        if (document.querySelector('#eliteUpgradeForm #i_agree_elite_upgrade').checked) {
+            document.querySelector('.upgrade_second_step_elite').classList.remove('new_hidden')
+            document.querySelector('.upgrade_first_step_elite').classList.add('new_hidden')
+        }
+    })
+
+    document.querySelector('.upgrade_elite_second_btn').addEventListener('click',function(){
+        const dob = document.querySelector('#eliteUpgradeForm #dob'); 
+        let isValid = true;
+         
+        const errorMessages = document.querySelectorAll('#eliteUpgradeForm .error');
+        errorMessages.forEach(msg => msg.classList.add('new_hidden'));
+
+
+        const dateEntered = new Date(dob.value);
+        if (isNaN(dateEntered.getTime())) {
+            const dobError = dob.nextElementSibling; 
+            dobError.classList.remove('new_hidden');
+            isValid = false;
+        } 
+
+        const currentDate = new Date();
+        let age = currentDate.getFullYear() - dateEntered.getFullYear();
+   
+        const currentMonth = currentDate.getMonth();
+        const birthMonth = dateEntered.getMonth();
+        
+        if (birthMonth > currentMonth || 
+            (birthMonth === currentMonth && dateEntered.getDate() > currentDate.getDate())) {
+            age--;
+        }
+
+        if(age <=17){
+            const dobError = dob.nextElementSibling; 
+            dobError.textContent = 'You must be at least 18 years old'
+            dobError.classList.remove('new_hidden');
+            isValid = false;
+        }
+         
+        if (isValid) {
+            document.querySelector('.upgrade_third_step_elite').classList.remove('new_hidden')
+            document.querySelector('.upgrade_second_step_elite').classList.add('new_hidden')
+        }
+    })
+
+    document.querySelector('.upgrade_elite_secondskip_btn').addEventListener('click',function(){ 
+        document.querySelector('.upgrade_second_step_elite').classList.add('new_hidden')
+        document.querySelector('.upgrade_third_step_elite').classList.remove('new_hidden')
+    })
+
+    document.getElementById('eliteUpgradeForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const elite_added = await addEliteProductToCart()
+        if(elite_added){
+            document.querySelector('.upgrade_third_step_elite .c_error').textContent = ''
+            window.location.reload();
+        }else{
+            document.querySelector('.upgrade_third_step_elite .c_error').textContent = 'Error adding elite membership to cart'
+        }
+    })
+    //---------
+
+    // helper functions
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+</script>
+
+<style> 
+
+    .new_hidden{
+        display: none;
+    }  
+    @keyframes scroll-left {
+        0% {
+            transform: translateX(10%);
+        } 
+        100% {
+            transform: translateX(-100%);
+        }
+    }   
+    .text_sub{
+        text-align: center;
+        color: #000;
+        font-size: 14px;
+          margin-bottom: 15px !important;
+    }
+    .new_forms.elite .text_sub{ 
+      color: #fff;
+    }
+    .new_custom_popup_main2 {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 500px; 
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);  
+        z-index: 1000;
+        button{
+            cursor: pointer;
+        }
+
+      
+        .footer_logos{
+            background-color: #B52E27;
+            padding: 20px;
+            border-radius: 0 0 8px 8px;
+            h3{
+                font-weight: 600;
+                text-transform: capitalize;
+                text-align: center;
+                color: #fff;
+                font-size: 14px;
+                line-height: 24px;
+            }
+        }
+        .new_forms {
+            background: #fff;
+            border-radius: 10px;
+        }
+        .close_popup {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            background: #c1c7d0;
+            color: #fff;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            &:focus-visible {
+            border: none;
+            outline: none;
+            }
+        } 
+        .new_form_container #loginForm,form#forgetForm, #signupForm,#verifyOTP,#newPasswordForm {
+            padding: 0 20px 20px;
+        }
+        #loginForm h2,form#forgetForm  h2, #signupForm h2,#verifyOTP h2,#newPasswordForm h2{
+            text-align: center;
+        }
+        .i_agree_main{
+            text-align: center;
+            label{
+                position: unset;
+                left: unset;
+                top: unset;
+                background-color: none;
+                display: inline-block;
+                vertical-align: middle;
+                margin-bottom: 15px;
+            }
+        }
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        label {
+            color: rgb(99, 115, 129);
+            font-size: 11px;
+            position: absolute;
+            background: #fff;
+            top: -8px;
+            z-index: 2;
+            left: 7px;
+        }
+        .c_error {
+            font-size: 11px;
+            color: red;
+            background: transparent;
+            position: relative;
+            top: -10px;
+        }
+        .error {
+            font-size: 11px;
+            color: red;
+            background: transparent;
+        }
+
+        .required:after {
+            content: " *";
+            color: #777;
+        }
+
+        input[type="date"],input[type="text"],input[type="email"],
+        input[type="password"],input[type="number"] {
+            width: 100%;
+            padding: 12px; 
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none !important;
+        }
+
+        .password-field {
+            position: relative;
+            svg{
+                width: 15px;
+                position: absolute;
+                z-index: 2;
+                right: 10px;
+                top: 16px;
+                cursor: pointer;
+            }
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #999;
+        }
+
+        .elite_btn{
+            width: 100%;
+            color: rgb(28, 53, 94);
+            background: linear-gradient(117.84deg, rgb(171, 121, 23) 8.15%, rgb(255, 223, 110) 50%, rgb(171, 121, 23) 91.85%);
+            border-radius: 25px;
+            padding: 8px;
+            font-size: 14px;
+            cursor: pointer; 
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .fill_btn{
+            width: 100%;
+            color: #fff;
+            background: rgb(225, 37, 28);
+            border-radius: 25px;
+            padding: 8px;
+            font-size: 14px;
+            cursor: pointer; 
+            margin-bottom: 15px;
+        }
+        .transparent_btn {
+            width: 100%;
+            color: rgb(225, 37, 28);
+            border: 1px solid rgb(225, 37, 28);
+            border-radius: 25px;
+            padding: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .transparent_btn:hover {
+            background-color: #ffeeee;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 5px;
+            font-size: 12px;
+            color: #000;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 15px;
+            font-size: 12px;
+            color: #000;
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+        } 
+        .signup-link,.signup_login,.resend_otp {
+            color: #f54242;
+            text-decoration: none;
+            font-weight: bold;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 12px;
+        }
+        .img_logo_popup {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0 30px;
+        }
+        .new_logos_scroll {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            white-space: nowrap;
+        } 
+        .new_logos_scroll ul {
+            list-style: none;
+            padding: 0;
+            display: inline-block;
+            width: auto;
+            height: 100%;
+            margin: 0;
+            text-align: center;
+            transform: translateX(10%);
+            animation: scroll-left 20s linear infinite;
+        }
+        .new_logos_scroll ul li {
+            display: inline-block;
+            vertical-align: middle;
+            padding: 0 10px;
+        }
+        .new_forms.elite {
+            background: #031546;
+            .footer_logos{
+                background: #1C355E;
+            }
+            .img_logo_popup{
+                max-width: 200px;
+                margin: 0 auto;
+            }
+            form#signupEliteForm {
+                .sign_up_first_step_elite,.signup_second_step_elite,.signup_third_step_elite{ 
+                    padding: 0 20px 20px;
+                }
+            }
+            #signupEliteForm h2,#eliteUpgradeForm h2{
+                color: #fff;
+                font-weight: 600;
+                font-size: 18px;
+                text-align: center;
+            }
+            .i_agree_main label{
+                background-color: transparent;
+                color: #fff;
+                a{
+                    text-decoration: underline;
+                    color: #fff;
+                }
+            }
+            .transparent_btn{
+                color: #fff;
+                border-color: #fff;
+                background-color: transparent;
+            }
+            .footer{
+                color: #fff;
+                .signup_login_elite{
+                    background: -webkit-linear-gradient(117.84deg, rgb(171, 121, 23) 8.15%, rgb(255, 223, 110) 50%, rgb(171, 121, 23) 91.85%) text;
+                    -webkit-text-fill-color: transparent;
+                    color: #fff;
+                    font-size: 12px;
+                  border:none;
+                }
+            }
+        }
+    }
+    .new_popup-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+        z-index: 1000; /* Ensure it is behind the popup */
+    }
+</style>
+ 

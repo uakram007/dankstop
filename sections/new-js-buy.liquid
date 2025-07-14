@@ -1,0 +1,104 @@
+<style>
+    .new-js-buy{
+        .product-item{
+            padding: 10px 10px 0;
+            max-width: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        select { 
+            border-radius: 9999px;
+            border: 1px solid #cbcbcb;
+            display: block;
+            width: 100%;
+            padding: 7px 32px 5px 12px;
+            line-height: 22px;
+            outline: none;
+            position: relative;
+            background-color: rgba(255, 255, 255, 0);
+            z-index: 2; 
+            appearance: none;
+            min-height: 36px;
+            margin-bottom:10px;
+        }
+        .btn{
+            width: 100%;
+        }
+    }
+</style>
+{%  assign hideitem = true %}
+{% if product.has_only_default_variant %}
+    {% if product.metafields.custom.member_price != blank and product.metafields.custom.elite_price != blank %}
+        {% if product.metafields.custom.member_price != 0.0 and product.metafields.custom.elite_price != 0.0 %}
+            {% assign hideitem = false %}
+            {% assign clubEliteVariant = product %}
+        {% endif %}
+    {%  elsif product.variants.first.metafields.custom.member_price != blank and product.variants.first.metafields.custom.elite_price != blank %}
+      {% if product.variants.first.metafields.custom.member_price != 0.0 and product.variants.first.metafields.custom.elite_price != 0.0 %}
+          {% assign hideitem = false %} 
+          {% assign clubEliteVariant = product.variants.first %}
+      {% endif %}
+    {% endif %}
+{% else %}
+    {% assign hideitem = true %}
+    {% for variant in product.variants %}
+        {% if variant.metafields.custom.member_price != blank and variant.metafields.custom.elite_price != blank %}
+            {% if variant.metafields.custom.member_price != 0.0 and variant.metafields.custom.elite_price != 0.0 %}
+                {% assign clubEliteVariant = variant %}
+                {% assign hideitem = false %}
+                {% break %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endif %} 
+
+{%- unless hideitem -%}
+
+
+    <div class="product-item hereItem">
+        <a href="{{ product.url }}" class="product-image product-grid-image {{c_clss}} {{cIndex}}iii" data-collections-related="/collections/{{collection.handle}}?view=related" data-product-link data-shop-currency="{{- shop.currency -}}">
+        {%- assign img_widths = '168,210,450,930' -%}
+        {%- include 'image-module', im_src: product.images[0], im_ratio: '3x4', im_dt_ws: img_widths, im_iep: pgi_im_iep,width:'207',height:'210',cIndex:cIndex -%}
+        </a>
+        <div class="product-bottom">
+        <a class="product-title" href="{{ product.url }}" title="{{ product.title | escape }}">{{- product.title -}}</a>
+        <div class="pgi-atc-container pgi-action">
+            {% form 'product', product, class: "pgi-atc-form" %}
+            <div class="row align-items-center justify-content-center text-center">
+                    
+            <div class="col col-actions padding-off " > 
+                {%- if product.has_only_default_variant -%}
+                <input type="hidden" name="id" value="{%- if product.has_only_default_variant -%} {{- product.first_available_variant.id -}} {%- else -%} {{- clubEliteVariant.id -}} {%- endif -%}" /> 
+                {% else %}
+                    <select name="id">
+                        {% for variant in product.variants %}
+                            {% if variant.available and variant.metafields.custom.member_price != blank and variant.metafields.custom.elite_price != blank %}
+                                <option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %}selected{% endif %}>{{ variant.title }}</option>
+                            {% endif %}
+                        {% endfor %}
+                {% endif %}
+                <input data-btn-addtocart="" type="submit" name="add" class="ai-button btn addtocart cartbutton" value="Add to Cart" style="visibility: visible;">
+
+                {% comment %} <a href="{{ product.url }}" class="btn ai-button-ofs sticky-add-to-cart" >Add to Cart</a> {% endcomment %}
+                {% comment %}
+                {% if product.selected_or_first_available_variant.available %}
+                
+                
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" /> 
+                <input data-btn-addtocart="" type="submit" name="add" class="ai-button btn addtocart cartbutton" value="Add to Cart" style="visibility: visible;">
+                {% else %} 
+                <input type="submit" name="add" class="btn ai-button-ofs sticky-add-to-cart" {% if settings.enable_multilang %}data-translate="products.product.unavailable"{%endif%} disabled value="{{ 'products.product.unavailable' | t }}">          
+                {% endif %}
+                {% endcomment %}
+                
+            </div>
+            
+            </div>
+            {% endform %}
+        </div>
+        </div>
+    </div>
+
+{% endunless %}

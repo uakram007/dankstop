@@ -1,0 +1,123 @@
+{% if customer and customer.tags contains 'elite_member' %}
+  <p>Details about your membership.</p>
+  <div class="cc-mm-membership-box">
+    <div class="cc-mm-account-box-inner">
+      <div class="membership-info">
+        <div class="membership-header">
+          <div class="membership-logo">
+            <img
+              src="{{ 'cc-elite-logo.png' | file_url }}"
+              class="img-responsive"
+              alt="Elite Membership Logo"
+            >
+          </div>
+          <div class="membership-details">
+            <h2>ELITE Membership</h2>
+            <p>UNBELIEVABLE Savings + Free Shipping & VIP Perks. <a href="/pages/membership">Learn more</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cc-mm-tab-inner-membership-inner">
+        <div class="cc-mm-tab-inner-membership-left">
+          <div class="membership-date">
+            <p>Member since <span class="membership_date">{{ customer.metafields.custom.elite_member_date.value | date: '%B %d %Y' }}</span></p>
+          </div>
+          {% liquid
+            assign member_year = customer.metafields.custom.elite_member_date.value | date: '%Y' 
+            assign expire_year = member_year | plus: 1
+            assign expire_date = customer.metafields.custom.elite_member_date.value | date: '%B %d'
+
+            assign membership_ends = expire_date | append: ' ' | append: expire_year
+            assign membership_expires_at = membership_ends | date: '%B %d %Y'
+          %}
+          {% assign dateStart = membership_expires_at | date: '%s' %}
+          {% assign nowTimestamp = 'now' | date: '%s' %}
+          
+          {% assign diffSeconds = dateStart | minus: nowTimestamp %}
+          {% assign diffDays = diffSeconds | divided_by: 3600 | divided_by: 24 %}
+          
+          <div class="auto-renewal">
+            <p>You can renew membership in <b>$30.00</b></p>
+          </div>
+        </div>
+        <div class="payment-method">
+          <p>Membership Expiry</p>
+          <div class="auto-renewal">
+            <p><span class="membership_expires">{{ membership_expires_at }}</span> (in <span class="membership_days">{{ diffDays }}</span> days)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if customer and customer.tags contains 'club_member' %}
+  <p style="font-size: 18px; margin-bottom: 16px;">You do not have an active membership. <b>Update to ELITE!</b></p>
+  <div class="elite-container-membership-level">
+    <div class="elite-container">
+      <img
+        src="{{ 'cc-elite-logo.png' | file_url }}"
+        class="img-responsive"
+        alt="Elite Membership Logo"
+      >
+      <p class="elite-upgrade" data-uw-rm-sr="">
+        Upgrade to an <span class="highlight">ELITE Membership</span> for only
+        <b>$30/yr</b>. Unlock
+        <strong>UNBELIEVABLE savings</strong> + Free shipping &amp; VIP perks on every order.
+      </p>
+      <div class="elite-buttons">
+        <a href="#" class="cc-elite-button SSO_popup_elite_upgrade" data-uw-rm-brl="PR" data-uw-original-href="/account">Upgrade to ELITE</a>
+        <a href="/pages/membership" class="cc-primary-button" data-uw-rm-brl="PR" data-uw-original-href="/account">Learn More</a>
+      </div>
+    </div>
+  </div>
+{% endif %}
+{% if customer and customer.tags contains "elite_member" %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("DOM Loaded");
+
+    const url = 'https://sso.cabanaclubusa.com/api/users/email';
+    const data = { email: '{{ customer.email }}' };
+
+    // Fetch data from the API
+    fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+    })
+    .then(response => {
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        return response.json();
+    })
+    .then(data => {
+        if (data.user) {
+            // Update all elements efficiently
+            updateElements(".membership_date", data.user.elite_member_start_date);
+            updateElements(".membership_expires", data.user.elite_member_expire_date);
+            updateElements(".membership_days", data.user.daysLeft);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+
+    // Function to update elements based on selector and value
+    function updateElements(selector, value) {
+        if (!value) return; // Exit if value is falsy
+        const elements = document.querySelectorAll(selector);
+        const formattedValue = typeof value === 'string' ? formatDate(value) : value;
+        elements.forEach(element => element.textContent = formattedValue);
+    }
+
+    // Function to format date strings
+    function formatDate(timestamp) {
+        const date = new Date(timestamp);
+        return new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        }).format(date);
+    }
+});
+</script>
+{% endif %}  

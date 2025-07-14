@@ -1,0 +1,329 @@
+/*============================================================================
+  (c) Copyright 2015 Shopify Inc. Author: Carson Shold (@cshold). All Rights Reserved.
+
+  Plugin Documentation - https://shopify.github.io/Timber/#ajax-cart
+
+  Ajaxify the add to cart experience and flip the button for inline confirmation,
+  show the cart in a modal, or a 3D drawer.
+
+  This file includes:
+    - Basic Shopify Ajax API calls
+    - Ajaxify plugin
+
+  This requires:
+    - jQuery 1.8+
+    - handlebars.min.js (for cart template)
+    - modernizer.min.js
+    - snippet/ajax-cart-template.liquid
+
+  JQUERY API (c) Copyright 2009-2015 Shopify Inc. Author: Caroline Schnapp. All Rights Reserved.
+  Includes slight modifications to addItemFromForm.
+==============================================================================*/
+if ((typeof Shopify) === "undefined") { Shopify = {}; }
+
+/*============================================================================
+  API Helper Functions
+==============================================================================*/
+function attributeToString(attribute) {
+  if ((typeof attribute) !== "string") {
+    attribute += "";
+    if (attribute === "undefined") {
+      attribute = "";
+    }
+  }
+  return jQuery.trim(attribute);
+}
+
+/*============================================================================
+  API Functions
+  - Shopify.format money is defined in option_selection.js.
+    If that file is not included, it is redefined here.
+==============================================================================*/
+if ( !Shopify.formatMoney ) {
+  Shopify.formatMoney = function(cents, format) {
+    var value = "",
+        placeholderRegex = /\{\{\s*(\w+)\s*\}\}/,
+        formatString = (format || this.money_format);
+
+    if (typeof cents == "string") {
+      cents = cents.replace(".","");
+    }
+
+    function defaultOption(opt, def) {
+      return (typeof opt == "undefined" ? def : opt);
+    }
+
+    function formatWithDelimiters(number, precision, thousands, decimal) {
+      precision = defaultOption(precision, 2);
+      thousands = defaultOption(thousands, ",");
+      decimal   = defaultOption(decimal, ".");
+
+      if (isNaN(number) || number == null) {
+        return 0;
+      }
+
+      number = (number/100.0).toFixed(precision);
+
+      var parts   = number.split("."),
+          dollars = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1" + thousands),
+          cents   = parts[1] ? (decimal + parts[1]) : "";
+
+      return dollars + cents;
+    }
+
+    switch(formatString.match(placeholderRegex)[1]) {
+      case "amount":
+        value = formatWithDelimiters(cents, 2);
+        break;
+      case "amount_no_decimals":
+        value = formatWithDelimiters(cents, 0);
+        break;
+      case "amount_with_comma_separator":
+        value = formatWithDelimiters(cents, 2, ".", ",");
+        break;
+      case "amount_no_decimals_with_comma_separator":
+        value = formatWithDelimiters(cents, 0, ".", ",");
+        break;
+    }
+
+    return formatString.replace(placeholderRegex, value);
+  };
+}
+
+Shopify.onProduct = function(product) {
+  // alert("Received everything we ever wanted to know about " + product.title);
+};
+
+Shopify.onCartUpdate = function(cart) {
+  // alert("There are now " + cart.item_count + " items in the cart.");
+};
+
+Shopify.updateCartNote = function(note, callback) {
+  var params = {
+    type: "POST",
+    url: "/cart/update.js",
+    data: "note=" + attributeToString(note),
+    dataType: "json",
+    success: function(cart) {
+      if ((typeof callback) === "function") {
+        callback(cart);
+      }
+      else {
+        Shopify.onCartUpdate(cart);
+      }
+    },
+    error: function(XMLHttpRequest, textStatus) {
+      Shopify.onError(XMLHttpRequest, textStatus);
+    }
+  };
+  jQuery.ajax(params);
+};
+
+Shopify.onError = function(XMLHttpRequest, textStatus) {
+  var data = eval("(" + XMLHttpRequest.responseText + ")");
+  if (!!data.message) {
+    alert(data.message + "(" + data.status  + "): " + data.description);
+  } else {
+    alert("Error : " + Shopify.fullMessagesFromErrors(data).join("; ") + ".");
+  }
+};
+
+/*============================================================================
+  POST to cart/add.js returns the JSON of the line item associated with the added item
+==============================================================================*/
+Shopify.addItem = function(variant_id, quantity, callback) {
+  var quantity = quantity || 1;
+  var params = {
+    type: "POST",
+    url: "/cart/add.js",
+    data: "quantity=" + quantity + "&id=" + variant_id,
+    dataType: "json",
+    success: function(line_item) {
+      if ((typeof callback) === "function") {
+        callback(line_item);
+      }
+      else {
+        Shopify.onItemAdded(line_item);
+      }
+    },
+    error: function(XMLHttpRequest, textStatus) {
+      Shopify.onError(XMLHttpRequest, textStatus);
+    }
+  };
+  jQuery.ajax(params);
+};
+
+/*============================================================================
+  POST JSON to cart/add.js returns the JSON of the line item associated with the added item
+==============================================================================*/
+Shopify.addItemJSON = function(product_json, callback) {
+  var quantity = quantity || 1;
+  var params = {
+    type: "POST",
+    url: "/cart/add.js",
+    data: product_json,
+    dataType: "json",
+    success: function(line_item) {
+      if ((typeof callback) === "function") {
+        callback(line_item);
+      }
+      else {
+        Shopify.onItemAdded(line_item);
+      }
+    },
+    error: function(XMLHttpRequest, textStatus) {
+      Shopify.onError(XMLHttpRequest, textStatus);
+    }
+  };
+  jQuery.ajax(params);
+};
+
+/*============================================================================
+  POST to cart/add.js returns the JSON of the line item
+    - Allow use of form element instead of id
+    - Allow custom error callback
+==============================================================================*/
+Shopify.addItemFromForm = function(form, callback, errorCallback) {
+  var params = {
+    type: "POST",
+    url: "/cart/add.js",
+    data: jQuery(form).serialize(),
+    dataType: "json",
+    success: function(line_item) {
+      if ((typeof callback) === "function") {
+        callback(line_item, form);
+      }
+      else {
+        Shopify.onItemAdded(line_item, form);
+      }
+    },
+    error: function(XMLHttpRequest, textStatus) {
+      if ((typeof errorCallback) === "function") {
+        errorCallback(XMLHttpRequest, textStatus);
+      }
+      else {
+        Shopify.onError(XMLHttpRequest, textStatus);
+      }
+    }
+  };
+  jQuery.ajax(params);
+};
+
+// Get from cart.js returns the cart in JSON
+Shopify.getCart = function(callback) {
+  jQuery.getJSON("/cart.js", function (cart, textStatus) {
+    if ((typeof callback) === "function") {
+      callback(cart);
+    }
+    else {
+      Shopify.onCartUpdate(cart);
+    }
+  });
+};
+
+// GET products/<product-handle>.js returns the product in JSON
+Shopify.getProduct = function(handle, callback) {
+  jQuery.getJSON("/products/" + handle + ".js", function (product, textStatus) {
+    if ((typeof callback) === "function") {
+      callback(product);
+    }
+    else {
+      Shopify.onProduct(product);
+    }
+  });
+};
+
+// POST to cart/change.js returns the cart in JSON
+Shopify.changeItem = function(line, quantity, callback) {
+  var params = {
+    type: "POST",
+    url: "/cart/change.js",
+    data:  "quantity=" + quantity + "&line=" + line,
+    dataType: "json",
+    success: function(cart) {
+      if ((typeof callback) === "function") {
+        callback(cart);
+      }
+      else {
+        Shopify.onCartUpdate(cart);
+      }
+    },
+    error: function(XMLHttpRequest, textStatus) {
+      Shopify.onError(XMLHttpRequest, textStatus);
+    }
+  };
+  jQuery.ajax(params);
+};
+
+// ---------------------------------------------------------
+// POST to cart/change.js returns the cart in JSON.
+// ---------------------------------------------------------
+Shopify.changeItemByVarintId = function(variant_id, quantity, callback) {
+  var params = {
+    type: "POST",
+    url: "/cart/change.js",
+    data:  "quantity=" + quantity + "&id=" + variant_id,
+    dataType: "json",
+    success: function(cart) { 
+      if ((typeof callback) === "function") {
+        callback(cart);
+      }
+      else {
+        Shopify.onCartUpdate(cart);
+      }
+    },
+    error: function(XMLHttpRequest, textStatus) {
+      Shopify.onError(XMLHttpRequest, textStatus);
+    }
+  };
+  jQuery.ajax(params);
+};
+
+
+/*
+ * Shopify - change item by line number
+ */
+Shopify.changeItemByLineNumber = function(line, quantity, callback) {
+  var params = {
+    type: "POST",
+    url: "/cart/change.js",
+    data:  "quantity=" + quantity + "&line=" + line,
+    dataType: "json",
+    success: function(cart) {
+      if ((typeof callback) === "function") {
+        callback(cart);
+      }
+      else {
+        Shopify.onCartUpdate(cart);
+      }
+    },
+    error: function(XMLHttpRequest, textStatus) {
+      Shopify.onError(XMLHttpRequest, textStatus);
+    }
+  };
+  jQuery.ajax(params);
+};
+
+/*
+ * Shopify - remove item by line number
+ */
+Shopify.removeItemByLineNumber = function(line, callback) {
+  var params = {
+    type: "POST",
+    url: "/cart/change.js",
+    data:  "quantity=0&line=" + line,
+    dataType: "json",
+    success: function(cart) {
+      if ((typeof callback) === "function") {
+        callback(cart);
+      }
+      else {
+        Shopify.onCartUpdate(cart);
+      }
+    },
+    error: function(XMLHttpRequest, textStatus) {
+      Shopify.onError(XMLHttpRequest, textStatus);
+    }
+  };
+  jQuery.ajax(params);
+};

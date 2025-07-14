@@ -1,0 +1,432 @@
+{%- include 'lazyload-placeholder' -%} 
+
+{%- comment -%}
+<!-- Admin Check ================================= -->
+{%- endcomment -%}
+{%- assign admin_emails = settings.admin__emails -%}
+{%- assign customer_is_admin = false -%}
+{%- if admin_emails contains customer.email -%}
+  {%- assign customer_is_admin = true -%}
+{%- endif -%}
+
+
+
+{%- comment -%}
+<!-- Set product variable basics -->
+{%- endcomment -%}
+{%- assign shop_url = shop.url -%}
+{%- assign main_product = product -%}
+{%- assign product_id = main_product.id -%}
+{%- assign product_handle = main_product.handle -%}
+{%- assign product_url = main_product.url -%}
+{%- assign product_options = main_product.options -%}
+{%- assign product_variants = main_product.variants -%}
+{%- assign product_collections = main_product.collections -%}
+{%- assign product_images = main_product.images -%}
+{%- assign product_featured_image = main_product.featured_image -%}
+{%- assign product_featured_image_src = product_featured_image.src -%}
+{%- assign product_featured_image_alt = product_featured_image.alt -%}
+{%- assign product_title = main_product.title -%}
+{%- assign product_title_escaped = product_title | escape -%}
+{%- assign product_vendor = main_product.vendor -%}
+{%- assign product_vendor_handle = product_vendor | handleize -%}
+{%- assign product_title_full = product_vendor | append: ' - ' | append: product_title -%}
+{%- assign product_type = main_product.type -%}
+{%- assign product_type_handle = product_type | handleize -%}
+{%- assign product_description = main_product.description -%}
+{%- assign product_description_no_html = product_description | strip_html -%}
+{%- assign product_description_escaped = product_description | escape -%}
+{%- assign product_price = main_product.price -%}
+{%- assign product_price_min = main_product.price_min -%}
+{%- assign product_price_max = main_product.price_max -%}
+{%- assign compare_at_price = main_product.compare_at_price -%}
+{%- assign compare_at_price_min = main_product.compare_at_price_min -%}
+{%- assign compare_at_price_max = main_product.compare_at_price_max -%}
+{%- assign product_price_varies = main_product.price_varies -%}
+{%- assign compare_at_price_varies = main_product.compare_at_price_varies -%}
+{%- assign selected_or_first_available_variant = main_product.selected_or_first_available_variant -%}
+{%- assign selected_or_first_available_variant_featured_image = selected_or_first_available_variant.featured_image -%}
+
+
+{%- comment -%}
+	Pluralize product type string to use with getting product type collection
+{%- endcomment -%}
+{%- capture product_type_string_plural -%}{%- include 'string-pluralizer' with product_type -%}{%- endcapture -%}
+{%- capture product_type_collection_handle -%}{{ product_type_string_plural | handle }}{%- endcapture -%}
+
+
+
+{%- comment -%}
+	Store product type and vendor collections
+{%- endcomment -%}
+{%- assign product_type_collection = collections[product_type_collection_handle] -%}
+{%- assign product_vendor_collection = collections[product_vendor_handle] -%}
+
+
+
+{%- comment -%}
+  Attachment Default tag initial value
+{%- endcomment -%}
+{%- assign attachment_default_included = 'nit' -%}
+
+
+
+{%- comment -%}
+  Do a run through product tags to find various properties 
+{%- endcomment -%}
+{%- assign product_height = false -%}
+{%- assign product_perc = false -%}
+{%- assign joint_size_or_gender = false -%}
+{%- assign joint_size = '' -%}
+{%- assign joint_gender = '' -%}
+{%- assign joint_angle = '' -%}
+{%- assign this_product_has_feature_terms = false -%}
+{%- assign some_product_has_features = false -%}
+{%- assign feature_term_keys = '' -%}
+{%- assign feature_translated_terms = '' -%}
+{%- assign product_bullet_point_count = 0 -%}
+{%- assign product_bullet_points = '' -%}
+{%- assign has_color_pref = false -%}
+{%- assign made_in_usa = false -%}
+{%- assign free_gift_tag_start = settings.free_gifts_tag_start -%}
+{%- assign free_gift_tag = false -%}
+{%- assign custom_label = false -%}
+{%- assign is_subscribable = false -%}
+{%- assign subscribable_tag = settings.subscribable_tag -%}
+{%- assign subscribable_collection = settings.subscribable_collection -%}
+{%- assign shipping_lead_time = false -%}
+{%- assign shipping_fulfilled_by = false -%}
+
+{%- for tag in main_product.tags -%}
+  {%- assign tag_type = tag | split: "_" | first | downcase -%}
+  {%- assign tag_value = tag | split: "_" | last -%}
+
+  {%- comment -%}
+    Joint Size and Gender - find out if product has joint size and gender 
+    for use with comparison tables and attachments
+  {%- endcomment -%}
+  {%- if tag contains 'height_' -%}
+    {%- assign product_height = true -%}
+    {%- capture product_height -%}{{ tag_value | replace: '"', ''}} {{ 'products.bullet_points.height_inches' | t }}{%- endcapture -%}
+    {%- continue -%}
+  {%- elsif tag_type contains 'joint ' -%}
+    {%- assign joint_size_or_gender = true -%}
+    {%- if tag contains 'joint size_' -%}
+      {%- if joint_size != '' -%}
+        {%- assign joint_size = joint_size | replace: 'mm', '' | strip | append: '/' | strip -%}
+      {%- endif -%}
+      {%- assign joint_size = joint_size | append: ' ' | append: tag_value | strip -%}
+      {%- continue -%}
+    {%- elsif tag contains 'joint gender_' -%}
+      {%- assign joint_gender = joint_gender | append: ' ' | append: tag_value | strip -%}
+      {%- continue -%}
+    {%- elsif tag contains 'joint angle' -%}
+      {%- assign joint_angle = joint_angle | append: ' ' | append: tag_value | strip -%}
+      {%- continue -%}
+    {%- endif -%}
+  {%- elsif tag contains 'perc_' -%}
+    {%- assign product_perc = tag_value -%}
+    {%- continue -%}
+  {%- endif -%}
+
+  {%- comment -%}
+    Attachment add-on default included product or bundle
+  {%- endcomment -%}
+  {%- if tag contains 'included_'  -%}
+    {%- assign attachment_default_included = tag_value -%}
+    {%- continue -%}
+  {%- endif -%}
+
+  {%- comment -%}
+    PGI Made In USA sticker
+  {%- endcomment -%}
+  {%- if tag == 'made in_usa'-%}
+    {%- assign made_in_usa = true -%}
+    {%- continue -%}
+  {%- endif -%}
+
+  {%- comment -%}
+    PGI Free Gift Progress
+  {%- endcomment -%}
+  {%- if tag contains free_gift_tag_start -%}
+    {%- assign free_gift_tag = tag -%}
+    {%- continue -%}
+  {%- endif -%}
+
+  {%- if tag == 'label' -%}
+    {%- assign custom_label = true -%}
+    {%- continue -%}
+  {%- endif -%}
+
+  {%- comment -%}
+    Determine if subscribable from the product's tag
+  {%- endcomment -%}
+  {%- if tag == subscribable_tag -%}
+    {%- assign is_subscribable = true -%}
+    {%- continue -%}
+  {%- endif -%}
+
+  {%- comment -%}
+    Determine if product has lead_time tag
+  {%- endcomment -%}
+  {%- assign lead_time_tag_name = "lead-time_" -%}
+  {%- if tag_type == "lead-time" || tag_type == "lead time" -%}
+    {%- assign shipping_lead_time = tag_value -%}
+    {%- continue -%}
+  {%- endif -%}
+
+  {%- comment -%}
+    Determine if product is fulfilled by someone else 
+    <div hidden class="hidden fulfilled-byy">{{ shipping_fulfilled_by }} VS {{ tag_type }}</div>
+  {%- endcomment -%}
+  {%- if tag_type == "fulfilled-by" or tag_type == "fulfilled by" -%}
+    {%- assign shipping_fulfilled_by = tag_value -%}
+    {%- continue -%}
+  {%- endif -%}
+
+{%- endfor -%}
+
+
+
+{%- comment -%}
+  Determine if product has lead_time 
+{%- endcomment -%}
+{%- if shipping_lead_time == false -%} 
+  {%- unless product.metafields.product.lead_time == blank -%}
+    {%- assign shipping_lead_time = product.metafields.product.lead_time -%}
+  {%- else -%}
+    {%- unless product_vendor_collection.metafields.vendor.lead_time == blank -%}
+      {%- assign shipping_lead_time = product_vendor_collection.metafields.vendor.lead_time -%}
+    {%- endunless -%}
+  {%- endunless -%}
+{%- endif -%}   
+
+
+{%- comment -%}
+  Determine if product is fulfilled by someone else 
+{%- endcomment -%}
+{%- if shipping_fulfilled_by == false -%} 
+  {%- unless product.metafields.product.fulfilled_by == blank -%}
+    {%- assign shipping_fulfilled_by = product.metafields.product.fulfilled_by -%}
+  {%- else -%}
+    {%- unless product_vendor_collection.metafields.vendor.fulfilled_by == blank -%}
+      {%- assign shipping_fulfilled_by = product_vendor_collection.metafields.vendor.fulfilled_by -%}
+    {%- endunless -%}
+  {%- endunless -%}
+{%- endif -%}   
+
+
+
+{%- comment -%}
+  Determine if subscribable from the product's collection, if not from tag
+{%- endcomment -%}
+{%- unless is_subscribable -%}
+  {%- for collection in product.collections -%}
+    {%- if collection.handle == subscribable_collection -%}
+      {%- assign is_subscribable = true -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endunless -%}
+
+
+
+
+
+{%- comment -%}
+  Joint gender opposite + index -- for use with product attachment addons
+{%- endcomment -%}
+{%- assign joint_gender_opposite = '' -%}
+{%- assign joint_gender_index = 'f' -%}
+{%- if joint_gender != '' -%}
+  {%- if joint_gender == 'male' -%}
+    {%- assign joint_gender_opposite = 'female' -%}
+    {%- assign joint_gender_index = 'm' -%}
+  {%- elsif joint_gender == 'female' -%}
+    {%- assign joint_gender_opposite = 'male' -%}
+    {%- assign joint_gender_index = 'f' -%}
+  {%- endif -%}
+{%- endif -%}
+
+
+
+{%- comment -%}
+  Product types with attachments -- also for use with product attachment addons
+{%- endcomment -%}
+{%- assign product_types_with_attachments = settings.product_types_with_attachments -%}
+
+
+
+
+
+{%- comment -%}
+{%- comment -%}
+  Product bullet points array
+{%- endcomment -%}
+
+{%- assign feature_translated_terms = '' -%}
+{%- assign feature_term_keys = '' -%}
+{%- assign product_bullet_points_array = main_product.metafields.global.bullet_points | split: ',' -%}
+{%- for feature_term_key in product_bullet_points_array -%}
+  {%- assign feature_term_key_underscore = feature_term_key | handle | replace: "-", "_" -%}
+  {%- capture feature_term_string -%}features.{{ feature_term_key_underscore }}.term{%- endcapture -%}
+  {%- assign feature_term = feature_term_string | t -%}
+  {%- unless feature_term contains "translation missing: " -%} 
+    {%- assign feature_term_key_with_comma = feature_term_key | append: ',' -%}
+    {%- assign product_bullet_points_array = product_bullet_points_array | join: ',' | split: feature_term_key_with_comma | join: '' | split: ',' -%}
+    {%- assign product_bullet_points_array = product_bullet_points_array | join: ',' | split: feature_term_key | join: '' | split: ',' -%}
+    {%- assign feature_term_keys = feature_term_keys | append: feature_term_key | append: ',' -%}
+    {%- assign feature_translated_terms = feature_translated_terms | append: feature_term | append: ',' -%}
+  {%- endunless -%}
+{%- endfor -%}
+{%- assign feature_term_keys_array = feature_term_keys | split: ',' -%}
+{%- assign feature_translated_terms_array = feature_translated_terms | split: ',' | uniq -%}
+{%- endcomment -%}
+
+
+
+
+
+
+
+{%- comment -%}
+  Feature Terms 
+{%- if feature_term_keys_array == blank or feature_translated_terms_array == blank -%}
+{%- endif -%}
+{%- endcomment -%}
+
+{%- assign feature_translated_terms = '' -%}
+{%- assign feature_term_keys_array = main_product.metafields.global.feature_terms | split: ',' -%}
+{%- assign feature_term_keys_string_stripped = '' -%}
+{%- for feature_term_key in feature_term_keys_array -%}
+  {%- assign feature_term_key_stripped = feature_term_key | strip -%}
+  {%- unless feature_term_key_stripped == blank or feature_term_key_stripped == '' -%} 
+    {%- assign feature_term_keys_string_stripped = feature_term_keys_string_stripped | append: feature_term_key_stripped -%}
+  {%- endunless -%}
+  {%- unless forloop.last -%} 
+    {%- assign feature_term_keys_string_stripped = feature_term_keys_string_stripped | append: ',' -%}
+  {%- endunless -%}
+  {%- assign feature_term_keys_string_stripped = feature_term_keys_string_stripped | replace: ',,', ',' -%}
+{%- endfor -%}
+{%- assign feature_term_keys_array = feature_term_keys_string_stripped | split: ',' -%}
+{%- for feature_term_key in feature_term_keys_array -%}
+  {%- assign feature_term_key_underscore = feature_term_key | strip | handle | replace: "-", "_" -%}
+  {%- capture feature_term_string -%}features.{{ feature_term_key_underscore }}.term{%- endcapture -%}
+  {%- assign feature_term = feature_term_string | t -%}
+  {%- unless feature_term contains "translation missing: " or feature_term contains "Translation missing: " -%} 
+    {%- assign feature_translated_terms = feature_translated_terms | append: feature_term | append: ',' -%}
+  {%- else -%}
+    {%- unless feature_term == "" -%} 
+      {%- assign feature_term_key_with_comma = feature_term_key | append: ',' -%}
+      {%- assign feature_term_keys_array = feature_term_keys_array | join: ',' | split: feature_term_key_with_comma | join: '' | split: ',' -%}
+      {%- assign feature_term_keys_array = feature_term_keys_array | join: ',' | split: feature_term_key | join: '' | split: ',' -%}
+      {%- if product_bullet_points_array == blank -%}
+        {%- assign product_bullet_points_array = feature_term_key -%}
+      {%- else -%}
+        {%- assign product_bullet_points_array = product_bullet_points_array | join: ',' | append: ',' | append: feature_term_key | split: ',' -%}
+      {%- endif -%}
+    {%- endunless -%}
+  {%- endunless -%}
+{%- endfor -%}
+{%- assign feature_term_keys_array = feature_term_keys_array | uniq -%}
+{%- assign feature_translated_terms_array = feature_translated_terms | split: ',' | uniq -%}
+
+
+{%- comment -%}
+  Output client-side-invisbile bundle ID proeprty to main product for use with addons and warranty
+{%- endcomment -%}
+{%- assign attachment_bundle_timestamp = 'now' | date: "%s" -%}
+{%- assign attachment_bundle_id = main_product.id | append: "-" | append: attachment_bundle_timestamp -%}
+
+
+
+{%- assign on_sale = false -%}
+{%- if product.compare_at_price_min > product.price_min -%}
+    {%- assign on_sale = true -%}
+{%- endif -%}
+{%- assign on_sale_hide = false -%}
+{%- unless selected_or_first_available_variant.compare_at_price > selected_or_first_available_variant.price -%}
+    {%- assign on_sale_hide = true -%}
+{%- endunless -%}
+
+{%- assign sold_out = true -%}
+{%- if product.available  -%}
+    {%- assign sold_out = false -%}
+{%- endif -%}
+
+
+
+{%- assign has_description_video = false -%}
+{%- if section.settings.video_product and product_description contains 'iframe' -%}
+  {%- assign has_description_video = true -%}
+{%- endif -%}
+
+
+
+{%- assign slick_initial_index = false -%}
+{%- for image in product.images -%}
+  {%- if image.src == selected_or_first_available_variant.image.src -%}
+    {%- assign slick_initial_index = forloop.index0 -%}
+  {%- endif -%} 
+  {%- if forloop.last and slick_initial_index == false -%}
+    {%- assign slick_initial_index = 0 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+
+
+{%- comment -%}
+  Product Warranty Eligibility
+{%- if settings.display_warranty_eligibility == true -%}
+{%- endif -%}
+{%- endcomment -%}
+{%- assign warranty_eligible = false -%}
+{%- assign warranty_ineligible_tag = settings.warranty__ineligible_tag -%}
+{%- assign warranty_text = settings.warranty__default_text -%}
+{%- comment -%}
+  First check if product has the tag that makes it ineligible for warranty
+src="{{ lazyload_placeholder }}"
+{%- endcomment -%}
+{%- unless product.tags contains warranty_ineligible_tag -%}
+  {%- comment -%}
+    Then check if product is of a brand that is eligible for warranty
+  {%- endcomment -%}
+  {%- assign warranty_eligible_brands = settings.warranty__elibigle_brands | split: ", " -%}
+  {%- for warranty_eligible_brand in warranty_eligible_brands -%}
+    {%- if product.vendor == warranty_eligible_brand -%}
+      {%- assign warranty_eligible = true -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- comment -%}
+    If it is of an eligible brand, then check if its of a disqualifying type
+  {%- endcomment -%}
+  {%- if warranty_eligible -%}
+  {%- assign warranty_ineligible_types = settings.warranty__ineligible_types | split: ", " -%}
+  {%- for warranty_ineligible_type in warranty_ineligible_types -%}
+    {%- if product.type == warranty_ineligible_type -%}
+      {%- assign warranty_eligible = false -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- endif -%}
+{%- endunless -%}
+{%- assign warranty__show_in_product_details = settings.warranty__enable_in_product_details -%}
+{%- assign warranty_metafield = main_product.metafields.warranty.default -%}
+{%- if warranty_metafield -%}
+  {%- assign warranty_eligible = true -%}
+  {%- assign warranty_text = warranty_metafield -%}
+{%- endif -%}
+
+
+
+
+
+{%- comment -%}
+<div class="debug hidden">{{ warranty_eligible }}</div>
+<div class="debug hidden">{{ warranty_text }}</div>
+<div class="debug hidden">{{ main_product.metafields.warranty | json }}</div>
+<div class="debug hidden">{{ main_product.metafields.warranty.default | json }}</div>
+<div class="debug hidden">{{ product | json }}</div>
+<div class="debug hidden">{{ product.selected_or_first_available_variant | json }}</div>
+{%- endcomment -%}
+
+

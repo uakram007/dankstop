@@ -1,0 +1,389 @@
+{%- if section.blocks.size > 0 -%}
+<div class="home-spotlight-block home-spotlight-slider" id="home-spotlight-slider-{{section.id}}">
+    <div class="{% if section.settings.layout == 'default' %}container{% elsif section.settings.layout == 'padd_50' %}container-padd60{% else %}container-fluid{% endif %}">
+        {% if section.settings.spotlight_block_title != blank %}
+        <div class="widget-title{% if section.settings.title_style == 'style_2' %} not-before{% endif %}{% unless section.settings.spotlight_block_des != blank %} no-des{% endunless %}">   
+            <h3 class="box-title">
+                <span class="title"> 
+                {% include 'multilang' with section.settings.spotlight_block_title %}
+                </span>
+            </h3>
+            {% if section.settings.spotlight_block_des != blank %}
+            <p>
+                {% include 'multilang' with section.settings.spotlight_block_des %}
+            </p>        
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <div class="row spotlight-{{ section.blocks.size }}-blocks"{% if section.blocks.size > 1 %} 
+            {%- comment -%}data-blogs-slider{%- endcomment -%}
+			{% endif %} data-rows="3">
+          
+            {% for block in section.blocks %}
+            
+            {% case section.blocks.size %}
+                {% when 1 %}
+                    {%- assign column_size = 'col-12 item' -%}
+                {% when 2 %}
+                    {%- assign column_size = 'col-12 col-md-6 item' -%}
+                {% when 3 %}
+                    {%- assign column_size = 'col-12 col-md-6 col-lg-4 item' -%}  
+                {% when 4 %}
+                    {%- assign column_size = 'col-12 col-md-6 col-lg-4 item' -%}        
+            {% endcase %}
+                
+            <div class="{{ column_size }} {{' '}} {{ block.settings.text_style }}">
+                <div class="spotlight-item custom-block-image ">
+                    <div class="img-box">
+                        <a href="{{ block.settings.link }}" {% if animate_on_hover == true %}class="animate-scale"{%- endif -%}>
+                            {% if block.settings.image != blank %}
+                            
+                            {%- assign img_url = block.settings.image | img_url: 'original', crop: 'center' -%}
+
+                            {%- comment -%}
+                            <img data-src="{{ img_url }}"
+                                src="https:{{ img_url }}" alt="{{ block.settings.image.alt | default: shop.name }}" itemprop="logo"
+                                class="lazyloaded" data-sizes="auto">
+                            {%- endcomment -%}
+
+                            {%- comment -%}
+                            <img data-src="{{ img_url }}"
+                                src="{{ lazyload_placeholder }}" alt="{{ block.settings.image.alt | default: shop.name }}" itemprop="logo"
+                                class="lazyload" data-sizes="auto">
+                            {%- endcomment -%}
+
+                            {%- assign img_widths = '279,370,558,740' -%}
+                            {%- include 'image-module', im_src: block.settings.image, im_dt_ws: img_widths, im_a: img_alt, im_iep: 'data-expand="-1"' -%}
+
+                            {% else %}
+
+                            <div class="not_img">
+                                370 x 440px
+                            </div>   
+                            {% endif %}
+                        </a>
+                        
+                        {% if block.settings.title != blank or block.settings.link_text != blank %}
+                        <div class="content spotlight-inner">
+                            {% if block.settings.title != blank  %}
+                            <h3 class="title">
+                                {% include 'multilang' with block.settings.title %} 
+                            </h3>
+                            {% endif %}
+
+                            {% if block.settings.link_text != blank  %}
+                            <a href="{{ block.settings.link }}" class="shop_link text-hover">
+                                {% include 'multilang' with block.settings.link_text %}
+                            </a>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                      
+                      
+                      {% if block.settings.heading != blank or block.settings.sub_heading != blank or block.settings.des != blank %}
+
+                      {% if block.settings.sub_heading != blank %}
+                      <h5 class="sub-heading"
+                          style="{% if block.settings.font_size_sub_heading != blank %}
+                                 font-size: {{ block.settings.font_size_sub_heading }};
+                                 {% endif %}">
+                        {% include 'multilang' with block.settings.sub_heading  %}
+                      </h5>
+                      {% endif %}
+
+                      {% if block.settings.heading != blank %}
+                      <h2 class="heading"
+                          style="{% if block.settings.font_size_heading != blank %}
+                                 font-size: {{ block.settings.font_size_heading }};
+                                 {% endif %}">
+                        <span class="line" style="background-color: {{ block.settings.color_content }};"></span>
+                        {% include 'multilang' with block.settings.heading  %}
+                      </h2>
+                      {% endif %}
+
+                      {% if block.settings.des != blank %}
+                      <p class="des"
+                         style="{% if block.settings.font_size_des != blank %}
+                                font-size: {{ block.settings.font_size_des }};
+                                {% endif %}">
+                        {% include 'multilang' with block.settings.des  %}
+                      </p>
+                      {% endif %}     
+
+                      {% endif %}
+                      
+                    </div>
+
+              
+{%- comment -%}
+            {% if block.settings.heading != blank or block.settings.sub_heading != blank or block.settings.des != blank %}
+            <div class="img-inner" style="color: {{ block.settings.color_content }}">
+              {% if block.settings.sub_heading != blank %}
+              <h5 class="sub-heading"
+                  style="{% if block.settings.font_size_sub_heading != blank %}
+                         font-size: {{ block.settings.font_size_sub_heading }};
+                         {% endif %}">
+                {% include 'multilang' with block.settings.sub_heading  %}
+              </h5>
+              {% endif %}
+
+              {% if block.settings.heading != blank %}
+              <h2 class="heading"
+                  style="{% if block.settings.font_size_heading != blank %}
+                         font-size: {{ block.settings.font_size_heading }};
+                         {% endif %}">
+                  <span class="line" style="background-color: {{ block.settings.color_content }};"></span>
+                  {% include 'multilang' with block.settings.heading  %}
+              </h2>
+              {% endif %}
+
+              {% if block.settings.des != blank %}
+              <p class="des"
+                 style="{% if block.settings.font_size_des != blank %}
+                        font-size: {{ block.settings.font_size_des }};
+                        {% endif %}">
+                {% include 'multilang' with block.settings.des  %}
+              </p>
+              {% endif %}     
+            </div>
+            {% endif %}
+{%- endcomment -%}
+                
+                
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{%- comment -%}
+<style>
+  {% assign margin_bottom =  section.settings.margin_bottom %}
+
+    {% if section.settings.display_padding %}
+    #home-spotlight-slider-{{ section.id }} {
+        padding: 50px 0 90px;
+    }
+
+    @media (max-width: 1199px) and (min-width: 768px) {
+        #home-spotlight-slider-{{ section.id }} {
+            padding: 40px 0 70px;
+        }
+    }
+
+    @media (max-width: 767px) {
+        #home-spotlight-slider-{{ section.id }} {
+            padding: 30px 0 50px;
+        }
+    }
+    {% endif %}
+  
+    #home-spotlight-slider-{{ section.id }} {
+        background-color: {{ section.settings.bg_color }};    
+    }
+
+    #home-spotlight-slider-{{ section.id }} .widget-title .box-title .title {
+        background-color: {{ section.settings.bg_color }};    
+    }
+
+    @media (max-width: 1199px) {
+        #home-spotlight-slider-{{ section.id }} {
+            margin-bottom: {{ section.settings.margin_bottom_mb }}px;
+        }
+    }
+    
+    @media (min-width: 1200px) {
+        #home-spotlight-slider-{{ section.id }} {
+        margin-bottom: {{ margin_bottom }}px;
+        }
+    }	
+</style>
+{%- endcomment -%}
+
+{%- endif -%}
+
+
+{% schema %}
+  {
+    "name": "Spotlight Slider",
+	"class": "home-spotlight-slider-sections",
+    "max_blocks": 4,
+    "settings": [      
+        {
+            "type": "select",
+            "id": "layout",
+            "label": "Layout:",
+            "options": [
+                {
+                    "value": "default",
+                    "label": "Default"
+                },
+                {
+                    "value": "padd_50",
+                    "label": "Boxed"
+                },
+                {
+                    "value": "full",
+                    "label": "Full Width"
+                }
+            ],
+            "default": "default"
+        },
+        {
+            "type": "checkbox",
+            "id": "display_padding",
+            "label": "Display Padding?",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "animate_on_hover",
+            "label": "Animate on hover?",
+            "default": false
+        },
+        {
+            "type" : "color",
+            "id" : "bg_color",
+            "label" : "Background Color",
+            "default" : "#f5f5f5"
+        },
+        {
+            "type": "text",
+            "id": "spotlight_block_title",
+            "label": "Title",
+            "default": "#Spotlight"
+        },
+        {
+            "type" : "textarea",
+            "id" : "spotlight_block_des",
+            "label" : "Description",
+            "default": "Phasellus lorem malesuada ligula pulvinar commodo maecenas"
+        },
+        {
+            "type": "select",
+            "id": "title_style",
+            "label": "Title Style:",
+
+            "options": [
+                {
+                    "value": "style_1",
+                    "label": "Style 1" 
+                },
+                { 
+                    "value": "style_2",
+                    "label": "Style 2" 
+                }          
+            ],
+            "default": "style_2"
+        },
+        {
+            "type": "range",
+            "id": "margin_bottom_mb",
+            "label": "Margin Bottom for Mobile",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "default": 0
+        },	
+        {
+            "type": "range",
+            "id": "margin_bottom",
+            "label": "Margin Bottom for PC",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "default": 0
+        }	
+    ],
+    "blocks": [
+        {
+            "type": "image",
+            "name": "Image",
+            "settings": [		  	
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type" : "text",
+                    "id" : "sub_heading",
+                    "label" : "Sub Heading",
+                    "default" : "New Arrivals"
+                },
+          {
+              "type": "select",
+              "id": "text_style",
+              "label": "Text style",
+              "options": [
+                  {
+                      "value": "top-and-bottom",
+                      "label": "Top and bottom"
+                  },
+                  {
+                      "value": "top_left",
+                      "label": "Top left"
+                  }
+              ],
+              "default": "top-and-bottom"
+          },
+                {
+                    "type" : "text",
+                    "id" : "font_size_sub_heading",
+                    "label" : "Sub Heading Font Size ",
+                    "default" : "13px"
+                },
+                {
+                    "type" : "text",
+                    "id" : "heading",
+                    "label" : "Heading",
+                    "default" : "Da Scarvéro"
+                },
+                {
+                    "type" : "text",
+                    "id" : "font_size_heading",
+                    "label" : "Heading Font Size ",
+                    "default" : "30px"
+                },          
+                {
+                    "type" : "text",
+                    "id" : "title",
+                    "label" : "Title",
+                    "default" : "Lorem De Dorus"
+                },
+                {
+                    "type" : "text",
+                    "id" : "link_text",
+                    "label" : "Shop Now Text",
+                    "default" : "Shop Now"
+                },
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "Link",
+                    "info": "Optional"
+                }
+            ]
+        }
+    ],
+    "presets": [
+      {
+        "name": "Spotlight Slider",
+        "category": "Advanced layout",
+        "blocks": [
+          {
+            "type": "image"
+          },
+          {
+            "type": "image"
+          },
+	      {
+            "type": "image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,52 @@
+{%- comment -%}
+{%- endcomment -%}  
+<header class="site-header header-supermarket" role="banner">
+  
+  <button class="hamburger-icon icon-nav" title="Menu Mobile Icon" data-menu-mb-toogle aria-label="Open main menu">
+    <span class="icon-line"></span>
+    <span class="visually-hidden">Open main menu</span>
+  </button>
+  
+  <div class="header-search svg-mb">
+    <button title="Search Icon" class="icon-search" data-search-mobile-toggle aria-label="Open search">
+      <svg aria-hidden="true" focusable="false" role="img"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#searchIcon"></use></svg>
+      <span class="visually-hidden">Open search</span>
+    </button>
+    <button title="close" class="close close-search" aria-label="Close search">
+      <svg aria-hidden="true" focusable="false" role="img"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#closeXIcon"></use></svg>
+      <span class="visually-hidden">Close search</span>
+    </button>
+    {%- include 'search-bar' -%}
+  </div>
+
+  <a class="header-logo logo-img" href="/" title="DankStop Home" aria-label="Home page link">
+    <img width="591" height="126" class="lazyloaded" src="{{ settings.logo | img_url: 'master' }}" 
+         data-src="{{ settings.logo | img_url: 'master' }}" data-sizes="auto" 
+         alt="{{ settings.logo.alt | default: shop.name }}" 
+         title="{{ settings.logo.alt | default: shop.name }}">
+    <span class="visually-hidden">DankStop Home</span>
+  </a>
+
+  <button title="User Icon" class="acc-mb svg-mb icon-user" data-user-mobile-toggle aria-label="Open customer sidebar menu">
+    <svg aria-hidden="true" focusable="false" role="img"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lnr-user"></use></svg>
+    <span class="visually-hidden">Open customer sidebar menu</span>
+  </button>
+  
+  <button title="Cart Icon" class="cart-icon svg-mb" data-cart-toggle aria-label="Open sidebar cart">       
+    <svg aria-hidden="true" focusable="false" role="img"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cartShopping"></use></svg>
+    <span class="visually-hidden">Open sidebar cart</span>
+    {%- assign cart_item_count = 0 -%}
+    {%- for line_item in cart.items -%}
+    {%- if line_item.product.handle != settings.warranty__product -%}
+    {%- assign cart_item_count = cart_item_count | plus: line_item.quantity -%}
+    {%- endif -%}
+    {%- endfor -%}
+    <span {% if cart_item_count > 0 %}class="cartCount"{% else %}class="cartCount hidden" hidden{% endif %} data-cart-count>
+      {%- comment -%}
+      {%- include 'cart-item-count' -%}
+      {%- endcomment -%}
+      {{- cart_item_count -}}
+    </span>
+  </button>
+
+</header>

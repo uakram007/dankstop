@@ -1,0 +1,839 @@
+{%- include 'lazyload-placeholder' -%} 
+
+{%- include 'bold-cart' -%}
+
+{%- include 'breadcrumb' -%}
+
+
+
+{%- comment -%}
+<!--=== PieceProtect Warranty Plan ========================== -->
+{%- endcomment -%}
+{%- assign warranty_program_handle = settings.warranty__product -%}
+{%- assign warranty_program_product = all_products[warranty_program_handle] -%}
+{%- assign warranty_program_title = warranty_program_product.title -%}
+
+
+
+{%- include 'free-gifts' -%}
+
+
+
+{%- comment -%}
+{%- endcomment -%}
+{%- include 'shipping-insurance' -%}
+<style>
+  .price-box_{
+    display: flex;
+    justify-content: space-between;
+  }
+  .price-box_club_member {
+    display: flex;
+    justify-content: space-between;
+  }
+  .price-box_club_member .sub_total {
+    color: #e1251c;
+  }
+  .price-box_club_member .sub_total s,
+  .price-box_club_member .sub_total span {
+    color: #000000;
+  }
+  .ai-cart-applied {
+    background: #B52E27;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    align-items: center;
+    font-weight: 800;
+    border-radius: 4px;
+    margin-top: 10px;
+  }
+  .ai-cart-applied.elite{
+    background: #3F6BA0;
+  }
+</style>
+
+<header class="page-header">
+  {% if cart.item_count > 0 %}
+  <a href="/collections/all" class="continue">
+    <span {% if settings.enable_multilang %}data-translate="cart.ajax_cart.continue_shopping"{% endif %}>
+      {{ 'cart.ajax_cart.continue_shopping' | t }}
+    </span>
+    <i class="fa fa-angle-right"></i>
+  </a>
+  {% endif %}
+  
+  <h1 {% if settings.enable_multilang %}data-translate="cart.general.title"{%endif%}>
+    {{ 'cart.general.title' | t }}
+  </h1>
+</header>
+
+{% assign elite_product = false %}
+{% for item in cart.items %}
+       {% if item.product_id == settings.elite_product.id %}
+         {% assign elite_product = true %}
+       {% break %}
+     {% endif %}
+{% endfor %}
+
+{% if cart.item_count > 0 %}
+<form class="cart-form wrapper-cart-template" action="/cart" method="post" novalidate>
+  <div class="left-col cart_items">
+    <div class="box-title"{% if settings.enable_multilang %} data-translate="cart.label.product"{%endif%}>
+      {{ 'cart.label.product' | t }} 
+    </div>
+    
+    <ul class="cart-list">
+      {% for item in cart.items %}
+
+        {% include 'bold-cart-item' with item %}
+        
+        {%- if item.properties != blank and item.properties._bundle_addon != blank -%}
+      
+          {%- assign bundle_id = item.properties._bundle_addon -%}
+
+          {%- if item.product.handle == settings.warranty__product -%}
+            {% assign product_being_warrantied_handle = '' %}
+            {% assign product_being_warrantied = '' %}
+            {% assign product_being_warrantied_variant = '' %}
+            {% assign product_being_warrantied_variant_title = '' %}
+            {% assign product_being_warrantied_full_title = '' %}
+            {% assign product_being_warrantied_url = '' %}
+            {% assign warranty_program_percentage = settings.warranty__percentage %}
+            {% assign warranty_program_page_url = 'https://dankstop.com/pages/' | append: settings.warranty__page_handle %}
+            {% assign warranty_program_cart_html = settings.warranty__cart_html %}
+            {% assign show_warranty_program_percentage = settings.warranty__show_cart_percentage %}
+        
+            
+{%- comment -%}
+{% for p in item.properties %}
+              {% if p.first == '_item_name' %}
+                {% assign product_being_warrantied_handle = p.last %}
+                {% assign product_being_warrantied = all_products[product_being_warrantied_handle] %}
+                {% assign product_being_warrantied_product_title = product_being_warrantied.title %}
+                {% assign product_being_warrantied_url = product_being_warrantied.url %}
+              {% endif %}
+              {% if p.first == '_item_id' %}
+                {% assign product_being_warrantied_variant_id = p.last | abs | times: 1 %}
+              {% endif %}
+            {% endfor %}
+{%- endcomment -%}
+{{ bold_item_properties }}
+
+            <li data-product-id="{{ item.variant.id }}" data-bundle-addon="{{ bundle_id }}" addon-1>
+              <div class="details" style="width:100%;"> 
+                <div class="cart-thumb">
+                  <a class="product-img" href="{{ item.url | within: collections.all }}">
+                    <img class="lazyload" src="{{ lazyload_placeholder }}" data-src="{{ item | img_url: '160x' }}"  alt="{{ item.title | escape }}" />
+                  </a>
+                </div>
+
+                <div class="cart-title">
+                  <a href="{{ warranty_program_page_url }}" class="product-name" target="_blank" rel="noopener">
+                    {% include 'multilang' with warranty_program_product.title %}
+                  </a>
+                  <div>
+                    {% if product_being_warrantied.variants.size > 1 %}
+                      {% for variant in product_being_warrantied.variants %}
+                        {% if variant.id == product_being_warrantied_variant_id %}
+                          {% assign product_being_warrantied_variant = variant %}
+                          {% assign product_being_warrantied_variant_title = product_being_warrantied_variant.title %}
+                          {% assign product_being_warrantied_url = product_being_warrantied_variant.url %}
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
+                    {% assign product_being_warrantied_full_title = product_being_warrantied_product_title | append: ' - ' | append: product_being_warrantied_variant_title %}
+                    {% capture product_being_warrantied_link %}<a href="{{ product_being_warrantied_url }}" title="{{product_being_warrantied_full_title}}" class="green" target="_blank" rel="noopener">{{ product_being_warrantied_full_title }}</a>{% endcapture %}
+                    <p>{{ 'warranty_program.cart_item_line_1_html' | t: warrantied_product_title_link: product_being_warrantied_link }}<br />{{ 'warranty_program.cart_item_line_2_html' | t }}</p>
+                    <p><a href="{{ warranty_program_page_url }}" class="green" target="_blank" rel="noopener">{{ 'warranty_program.cart_item_link_text' | t }} &nbsp; <i class="fa fa-angle-right"></i></a></p>
+                  {% assign membership = "" %}
+                    {% if customer.tags contains "club_member" %}
+                      {% assign membership = "club_member" %}
+                    {% endif %}
+                    {% if customer.tags contains "elite_member" %}
+                      {% assign membership = "elite_member" %}
+                    {% endif %}
+		            <div class="price-box price-box_{{ membership }}">
+		              <span>
+                    {% if customer and customer.tags contains 'elite_member' %}
+                      {% assign elite_price = item.variant.metafields.custom.elite_price.value %}
+                      {% if elite_price and elite_price != 0  %} {{ elite_price | times: 100  | money }} {% else %} {{ bold_item_price | money }} {% endif %}
+                    {% elsif customer and customer.tags contains 'club_member' %}
+                      {% if elite_product == true %}
+                          {% assign elite_price = item.variant.metafields.custom.elite_price.value %}
+                          {% if elite_price and elite_price != 0  %} {{ elite_price | times: 100  | money }} {% else %} {{ bold_item_line_price | money }} {% endif %}
+                       {%  else %}
+                          {% assign club_price = item.variant.metafields.custom.member_price.value %}
+                          {% if club_price and club_price != 0 %} {{ club_price | times: 100  | money }} {% else %} {{ bold_item_line_price | money }} {% endif %}
+                        {% endif %}
+                    {% else %}
+                      {% if elite_product == true %}
+                          {% assign elite_price = item.variant.metafields.custom.elite_price.value %}
+                          {% if elite_price and elite_price != 0  %} {{ elite_price | times: 100  | money }} {% else %} {{ bold_item_line_price | money }} {% endif %}
+                       {%  else %}
+                          {{ bold_item_price | money }}
+                        {% endif %} 
+                    {% endif %}
+                      </span>
+		            </div>
+		            
+		            <div class="quantity">
+		              <div class="group-action">
+		                <a class="remove {{ bold_remove_class }}" href="/cart/change?line={{ forloop.index }}&amp;quantity=0" data-id="{{ item.id }}">
+		                  {% include 'icon-close' %}
+		                  <span class="text text-hover" {% if settings.enable_multilang %}data-translate="cart.general.remove"{% endif %}>
+		                    {{ 'cart.general.remove' | t }}
+		                  </span>
+		                </a>
+		              </div>
+		            </div>
+
+                  </div>
+                </div>
+
+              </div>
+            </li>
+        
+          {%- else -%}
+      
+            <li data-product-id="{{ item.variant.id }}" data-bundle-addon="{{ bundle_id }}" addon-2>
+              <div class="details"> 
+                <div class="cart-thumb">
+                  <a class="product-img" href="{{ item.url | within: collections.all }}">
+                    <img class="lazyload" src="{{ lazyload_placeholder }}" data-src="{{ item | img_url: '160x' }}"  alt="{{ item.title | escape }}" />
+                  </a>
+                </div>
+
+                <div class="cart-details">
+                  <a href="{{ item.url }}" class="product-name">
+                    {% include 'multilang' with item.product.title %}
+                  </a>
+                  
+                  <div class="size">  
+                    {% if item.product.variants.size != 0 %}
+                    {% unless item.variant.title contains 'Default' %}
+                    <small>
+                      {{ item.variant.title }}
+                    </small>
+                    {% endunless %}
+                    {% endif %}
+                  </div>
+
+                  {% if item.properties.size > 0 %}
+                  <div class="properties">
+                    
+                    {%- comment -%}
+                    {% for p in item.properties %}
+                                        {% unless p.last == blank %}
+                                        {{ p.first }}:
+                                        {% if p.last contains '/uploads/' %}
+                                        <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                                        {% else %}
+                                        {{ p.last }}
+                                        {% endif %}
+                                        <br>
+                                        {% endunless %}
+                                        {% endfor %}
+                    {%- endcomment -%}
+                    {{ bold_item_properties }}
+                  </div>
+                  {% endif %}
+                  
+		            <div class="product-vendor">
+		              {{ item.vendor }}
+		            </div>
+		            
+		            <div class="price-box price-box_{{ membership }}">
+		              <span>
+		                {% if customer and customer.tags contains 'elite_member' %}
+                      {% assign elite_price = item.variant.metafields.custom.elite_price.value %}
+                      {% if elite_price and elite_price != 0  %} {{ elite_price | times: 100  | money }} {% else %} {{ bold_item_price | money }} {% endif %}
+                    {% elsif customer and customer.tags contains 'club_member' %}
+                      {% if elite_product == true %}
+                          {% assign elite_price = item.variant.metafields.custom.elite_price.value %}
+                          {% if elite_price and elite_price != 0  %} {{ elite_price | times: 100  | money }} {% else %} {{ bold_item_line_price | money }} {% endif %}
+                       {%  else %}
+                          {% assign club_price = item.variant.metafields.custom.member_price.value %}
+                          {% if club_price and club_price != 0 %} {{ club_price | times: 100  | money }} {% else %} {{ bold_item_line_price | money }} {% endif %}
+                        {% endif %}
+                    {% else %}
+                      {% if elite_product == true %}
+                          {% assign elite_price = item.variant.metafields.custom.elite_price.value %}
+                          {% if elite_price and elite_price != 0  %} {{ elite_price | times: 100  | money }} {% else %} {{ bold_item_line_price | money }} {% endif %}
+                       {%  else %}
+                          {{ bold_item_price | money }}
+                        {% endif %} 
+                    {% endif %}
+		              </span>
+		            </div>
+		            
+		            <div class="quantity">
+                  {% if item.product_id != settings.elite_product.id %}
+                  <label {% if settings.enable_multilang %}data-translate="cart.label.quantity"{%endif%}>
+                    {{ 'cart.label.quantity' | t }}: 
+                  </label>
+                  
+                  <div class="qty-group">
+                    <a href="#" data-minus-quantity class="minus button"></a>
+                    <input type="text" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}">
+                    <a href="#" data-plus-quantity class="plus button"></a>
+                  </div>
+                  <div class="group-action">
+                    <button class="update btn" type="submit" name="update">
+                      <span class="text" {% if settings.enable_multilang %}data-translate="cart.general.update"{% endif %}>
+                        {{ 'cart.general.update' | t }}
+                      </span>
+                    </button>
+
+                    <a class="remove {{ bold_remove_class }}" href="/cart/change?line={{ forloop.index }}&amp;quantity=0" data-id="{{ item.id }}">
+                      {% include 'icon-close' %}
+                      <span class="text text-hover" {% if settings.enable_multilang %}data-translate="cart.general.remove"{% endif %}>
+                        {{ 'cart.general.remove' | t }}
+                      </span>
+                    </a>
+                  </div>
+                {% else %}
+                  <input type="hidden" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}">
+                  <div class="group-action">  
+                      <a class="remove {{ bold_remove_class }}" href="/cart/change?line={{ forloop.index }}&amp;quantity=0" data-id="{{ item.id }}">
+                        {% include 'icon-close' %}
+                        <span class="text text-hover" {% if settings.enable_multilang %}data-translate="cart.general.remove"{% endif %}>
+                          {{ 'cart.general.remove' | t }}
+                        </span>
+                      </a>
+                  </div>
+                  {% endif %}
+		            </div>
+
+                </div>
+              </div>
+
+            </li>
+
+          {%- endif -%}
+      
+        {%- elsif item.properties != blank and item.properties._bundle_id != blank -%}
+
+            {%- assign free_gift_tag_start = settings.free_gifts_tag_start -%}
+            {%- assign free_gift_tag = false -%}
+            {%- for tag in item.product.tags -%}
+              {%- comment -%}
+                PGI Free Gift Progress
+              {%- endcomment -%}
+              {%- if tag contains free_gift_tag_start -%}
+                {%- assign free_gift_tag = tag -%}
+              {%- endif -%}
+            {%- endfor -%}
+        
+          {%- assign bundle_id = item.properties._bundle_id -%}
+          <li data-product-id="{{ item.variant.id }}" data-bundle-addon="{{ bundle_id }}" addon-3>
+
+            <script id="new_event_cart_{{item.product.id}}" class="new_event_cart" type="application/json" data-currency="{{ shop.currency }}" data-cart-total="{{ cart.total_price | money_without_currency }}"> 
+              {
+                "item_id": "{{ item.product.id }}",
+                "item_name": "{{ item.product.title |  escape}}",
+                "price": {{ item.product.price |  money_without_currency }},
+                "currency": "{{ shop.currency }}",
+                "item_brand": "{{ item.product.vendor |  escape }}",
+                "item_category": "{{ item.product.type | escape }}",
+                "item_variant": "{{ item.variant.title |  replace: 'Default Title', 'Single Variant' |  escape }}", 
+                "quantity": {{ item.quantity }}
+              }
+            </script>
+
+            <div class="details"> 
+              <div class="cart-thumb">
+                <a class="product-img" href="{{ item.url | within: collections.all }}">
+                  <img class="lazyload" src="{{ lazyload_placeholder }}" data-src="{{ item | img_url: '160x' }}"  alt="{{ item.title | escape }}" />
+                </a>
+              </div>
+
+              <div class="cart-details">
+                <a href="{{ item.url }}" class="product-name">
+                  {% include 'multilang' with item.product.title %}
+                </a>
+
+                <div class="size">  
+                  {% if item.product.variants.size != 0 %}
+                  {% unless item.variant.title contains 'Default' %}
+                  <small>
+                    {{ item.variant.title }}
+                  </small>
+                  {% endunless %}
+                  {% endif %}
+                </div>
+
+                {% if item.properties.size > 0 %}
+                <div class="properties">
+                  
+                  {%- comment -%}
+                  {% for p in item.properties %}
+                                    {% unless p.last == blank %}
+                                    {{ p.first }}:
+                                    {% if p.last contains '/uploads/' %}
+                                    <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                                    {% else %}
+                                    {{ p.last }}
+                                    {% endif %}
+                                    <br>
+                                    {% endunless %}
+                                    {% endfor %}
+                  {%- endcomment -%}
+                  {{ bold_item_properties }}
+                </div>
+                {% endif %}
+
+                <div class="product-vendor">
+                  {{ item.vendor }}
+                </div>
+
+                  {%- comment -%}
+                  Free Gift System
+                  {%- endcomment -%}
+                  {%- assign item_total_discount = 0 -%}
+                  {%- assign item_discount_titles = blank -%}
+                  {%- if item.discounts -%}
+                    {%- for discount in item.discounts -%}
+                      {%- if item_discount_titles == blank -%}
+                        {%- capture item_discount_titles -%}<div class="color-primary">{{ discount.title }}</div>{%- endcapture -%}
+                      {%- else -%}
+                        {%- capture item_discount_title -%}<div class="color-primary">{{ discount.title }}</div>{%- endcapture -%}
+                        {%- assign item_discount_titles = item_discount_titles | append: item_discount_title -%}
+                      {%- endif -%}
+                      {%- assign item_total_discount = item_total_discount | plus: discount.amount -%}
+                    {%- endfor -%}
+                  {%- endif -%}
+
+                  {%- if free_gift_tag -%}
+                  {%- include 'free-gift-progress', cart_display:true, item_total_discount:item_total_discount -%}
+                  {%- endif -%}
+
+                  {{- item_discount_titles -}}
+                
+                <div class="price-box price-box_{{ membership }}">
+                    <noscript>{{ item | json }}</noscript>
+                    {%- if item_total_discount > 0 -%}
+                    <span style="text-decoration: line-through;">
+                      {{ bold_item_price | money }}
+                    </span>
+                    <div class="color-primary">
+                      {{ bold_item_price | minus: item_total_discount | money }}
+                    </div>
+                    {%- else -%}
+                    <span>
+                     
+                    {% if customer and customer.tags contains 'elite_member' %}
+                      {% assign elite_price = item.variant.metafields.custom.elite_price.value %}
+                      {% if elite_price and elite_price != 0  %} {{ elite_price | times: 100  | money }} {% else %} {{ bold_item_price | money }} {% endif %}
+                    {% elsif customer and customer.tags contains 'club_member' %}
+                      {% if elite_product == true %}
+                          {% assign elite_price = item.variant.metafields.custom.elite_price.value %}
+                          {% if elite_price and elite_price != 0  %} {{ elite_price | times: 100  | money }} {% else %} {{ bold_item_line_price | money }} {% endif %}
+                       {%  else %}
+                          {% assign club_price = item.variant.metafields.custom.member_price.value %}
+                          {% if club_price and club_price != 0 %} {{ club_price | times: 100  | money }} {% else %} {{ bold_item_line_price | money }} {% endif %}
+                        {% endif %}
+                    {% else %}
+                      {% if elite_product == true %}
+                          {% assign elite_price = item.variant.metafields.custom.elite_price.value %}
+                          {% if elite_price and elite_price != 0  %} {{ elite_price | times: 100  | money }} {% else %} {{ bold_item_line_price | money }} {% endif %}
+                       {%  else %}
+                          {{ bold_item_price | money }}
+                        {% endif %} 
+                    {% endif %} 
+                    </span>
+                    <span class="sub_total test">
+                      <span>Subtotal: </span>
+                      {% if  customer.tags contains 'elite_member' or elite_product %}
+                          {% assign elite_price = item.variant.metafields.custom.elite_price.value | times: item.quantity %}
+                          {% if elite_price and elite_price != 0  %} <s>{{ bold_item_line_price | money }}</s>  {{ elite_price | times: 100  | money }} {% else %} {{ bold_item_line_price | money }} {% endif %}
+                        {% elsif customer and customer.tags contains 'club_member' %}
+                          {% assign club_price = item.variant.metafields.custom.member_price.value | times: item.quantity %}
+                          {% if club_price and club_price != 0 %} 
+                            <s>{{ bold_item_line_price | money }}</s>  {{ club_price | times: 100  | money }} 
+                            {% else %} 
+                            {{ bold_item_line_price | money }} 
+                            {% endif %}
+                        {% else %}
+                          {{ bold_item_line_price | money }}
+                        {% endif %} 
+                    </span>  
+                    {%- endif -%}
+                </div>
+
+                <div class="quantity">
+                  {% if item.product_id != settings.elite_product.id %}
+                  <label {% if settings.enable_multilang %}data-translate="cart.label.quantity"{%endif%}>
+                    {{ 'cart.label.quantity' | t }}: 
+                  </label>
+                  
+                  <div class="qty-group">
+                    <a href="#" data-minus-quantity class="minus button"></a>
+                    <input type="text" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}" data-old-value="{{ item.quantity }}" data-pid="{{item.product.id}}">
+                    <a href="#" data-plus-quantity class="plus button"></a>
+                  </div>
+                  <div class="group-action">
+                    <button class="update btn" type="submit" name="update">
+                      <span class="text" {% if settings.enable_multilang %}data-translate="cart.general.update"{% endif %}>
+                        {{ 'cart.general.update' | t }}
+                      </span>
+                    </button>
+
+                    <a class="remove {{ bold_remove_class }}" href="/cart/change?line={{ forloop.index }}&amp;quantity=0" data-id="{{ item.id }}" data-pid="{{item.product.id}}">
+                      {% include 'icon-close' %}
+                      <span class="text text-hover" {% if settings.enable_multilang %}data-translate="cart.general.remove"{% endif %}>
+                        {{ 'cart.general.remove' | t }}
+                      </span>
+                    </a>
+                  </div>
+                {% else %}
+                  <input type="hidden" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}">
+                  <div class="group-action">  
+                      <a class="remove {{ bold_remove_class }}" href="/cart/change?line={{ forloop.index }}&amp;quantity=0" data-id="{{ item.id }}" data-pid="{{item.product.id}}">
+                        {% include 'icon-close' %}
+                        <span class="text text-hover" {% if settings.enable_multilang %}data-translate="cart.general.remove"{% endif %}>
+                          {{ 'cart.general.remove' | t }}
+                        </span>
+                      </a>
+                  </div>
+                  {% endif %}
+
+                  
+                </div>
+
+              </div>
+            </div>
+
+          </li>
+
+        {%- elsif item.product.handle == "shipping-insurance" -%}
+      
+          <li class="shipins-line-item" data-product-id="{{ item.variant.id }}" addon-4>
+            <div class="details"> 
+              <div class="cart-thumb">
+                <a class="product-img" href="{{ item.url | within: collections.all }}">
+                  <img class="lazyload" src="{{ lazyload_placeholder }}" data-src="{{ item | img_url: '160x' }}"  alt="{{ item.title | escape }}" />
+                </a>
+              </div>
+
+              <div class="cart-details">
+                <a href="{{ item.url }}" class="product-name">
+                  {% include 'multilang' with item.product.title %}
+                </a>
+
+                {% if settings.shipping_insurance_cart_show_coverage %}
+                <div class="size">  
+                  {% if item.product.variants.size != 0 %}
+                  {% unless item.variant.title contains 'Default' %}
+                  <small>
+                    {{ 'cart.general.shipping_insurance.cart_item_text' | t }}{{ item.variant.title | abs | times: 100 | money }}
+                  </small>
+                  {% endunless %}
+                  {% endif %}
+                </div>
+                {% endif %}
+
+                <div class="price-box">
+                  <span>
+                    {{ bold_item_price | money }}
+                  </span>
+                </div>
+
+                <div class="quantity">
+                  <label>
+                  </label>
+
+                  <div class="group-action">
+                    <a class="remove {{ bold_remove_class }}" href="/cart/change?line={{ forloop.index }}&amp;quantity=0" data-id="{{ item.id }}">
+                      {% include 'icon-close' %}
+                      <span class="text text-hover" {% if settings.enable_multilang %}data-translate="cart.general.remove"{% endif %}>
+                        {{ 'cart.general.remove' | t }}
+                      </span>
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </li>
+
+        {%- else -%}
+      
+          <li data-product-id="{{ item.variant.id }}" addon-5>
+              <div class="details"> 
+                <div class="cart-thumb">
+                  <a class="product-img" href="{{ item.url | within: collections.all }}">
+                    <img class="lazyload" src="{{ lazyload_placeholder }}" data-src="{{ item | img_url: '160x' }}"  alt="{{ item.title | escape }}" />
+                  </a>
+                </div>
+
+                <div class="cart-details">
+                  <a href="{{ item.url }}" class="product-name">
+                    {% include 'multilang' with item.product.title %}
+                  </a>
+                  
+                  <div class="size">  
+                    {% if item.product.variants.size != 0 %}
+                    {% unless item.variant.title contains 'Default' %}
+                    <small>
+                      {{ item.variant.title }}
+                    </small>
+                    {% endunless %}
+                    {% endif %}
+                  </div>
+
+                  {{ bold_item_properties }}
+                  {{ bold_recurring_desc }}                  
+                  
+                  {% if item.properties.size > 0 %}
+                  <div class="properties">
+                    
+                    {%- comment -%}
+                    {% for p in item.properties %}
+                                        {% unless p.last == blank %}
+                                        {{ p.first }}:
+                                        {% if p.last contains '/uploads/' %}
+                                        <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                                        {% else %}
+                                        {{ p.last }}
+                                        {% endif %}
+                                        <br>
+                                        {% endunless %}
+                                        {% endfor %}
+                    {%- endcomment -%}
+                    {{ bold_item_properties }}
+                  </div>
+                  {% endif %}
+                  
+		            <div class="product-vendor">
+		              {{ item.vendor }}
+		            </div>
+		            
+		            <div class="price-box price-box_">
+                  <span>
+                    {% if customer and customer.tags contains 'elite_member' %}
+                      {% assign elite_price = item.variant.metafields.custom.elite_price.value %}
+                      {% if elite_price and elite_price != 0  %} {{ elite_price | times: 100  | money }} {% else %} {{ bold_item_price | money }} {% endif %}
+                    {% elsif customer and customer.tags contains 'club_member' %}
+                      {% if elite_product == true %}
+                          {% assign elite_price = item.variant.metafields.custom.elite_price.value %}
+                          {% if elite_price and elite_price != 0  %} {{ elite_price | times: 100  | money }} {% else %} {{ bold_item_line_price | money }} {% endif %}
+                       {%  else %}
+                          {% assign club_price = item.variant.metafields.custom.member_price.value %}
+                          {% if club_price and club_price != 0 %} {{ club_price | times: 100  | money }} {% else %} {{ bold_item_line_price | money }} {% endif %}
+                        {% endif %}
+                    {% else %}
+                      {% if elite_product == true %}
+                          {% assign elite_price = item.variant.metafields.custom.elite_price.value %}
+                          {% if elite_price and elite_price != 0  %} {{ elite_price | times: 100  | money }} {% else %} {{ bold_item_line_price | money }} {% endif %}
+                       {%  else %}
+                          {{ bold_item_price | money }}
+                        {% endif %} 
+                    {% endif %}
+                  </span>
+		              
+
+                  <span class="sub_total test">
+                      <span>Subtotal: </span>
+                      {% if  customer.tags contains 'elite_member' or elite_product %}
+                          {% assign elite_price = item.variant.metafields.custom.elite_price.value | times: item.quantity %}
+                          {% assign elite_price = elite_price | times: 100 %}
+                          {% if elite_price and elite_price != 0  %} {% unless bold_item_line_price == elite_price %}<s>{{ bold_item_line_price | money }}</s>{% endunless %}  {{ elite_price  | money }} {% else %} {{ bold_item_line_price | money }} {% endif %}
+                        {% elsif customer and customer.tags contains 'club_member' %}
+                          {% assign club_price = item.variant.metafields.custom.member_price.value | times: item.quantity %}
+                          {% assign club_price = club_price | times: 100 %}
+                          {% if club_price and club_price != 0 %} {% unless bold_item_line_price == club_price %}<s>{{ bold_item_line_price | money }}</s> {% endunless %} {{ club_price | money }} {% else %} {{ bold_item_line_price | money }} {% endif %}
+                        {% else %}
+                          {{ bold_item_line_price | money }}
+                        {% endif %} 
+                    </span>
+		            </div>
+		            
+		            <div class="quantity">
+                      
+		              <label {% if settings.enable_multilang %}data-translate="cart.label.quantity"{%endif%} {% if item.product.id == settings.elite_product.id %} style="display:none;" {% endif %}>
+		                {{ 'cart.label.quantity' | t }}: 
+		              </label>
+		              
+		              <div class="qty-group" {% if item.product.id == settings.elite_product.id %} style="display:none;" {% endif %}>
+		                <a href="#" data-minus-quantity class="minus button"></a>
+		                <input type="text" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}">
+		                <a href="#" data-plus-quantity class="plus button"></a>
+		              </div>
+		              
+		              <div class="group-action">
+                        {% unless item.product.id == settings.elite_product.id %}
+		                <button class="update btn" type="submit" name="update">
+		                  <span class="text" {% if settings.enable_multilang %}data-translate="cart.general.update"{% endif %}>
+		                    {{ 'cart.general.update' | t }}
+		                  </span>
+		                </button>
+		                {% endunless %}
+		                <a class="remove {{ bold_remove_class }}" href="/cart/change?line={{ forloop.index }}&amp;quantity=0" data-id="{{ item.id }}">
+		                  {% include 'icon-close' %}
+		                  <span class="text text-hover" {% if settings.enable_multilang %}data-translate="cart.general.remove"{% endif %}>
+		                    {{ 'cart.general.remove' | t }}
+		                  </span>
+		                </a>
+		              </div>
+		            </div>
+
+                </div>
+              </div>
+
+            </li>
+
+        {%- endif -%}
+      
+     {% endfor %}
+    </ul>
+    
+    {% if settings.img_trust != blank %}
+    <div class="secure-shopping-guarantee">
+      <div class="secure-text">
+        <span class="icon">
+          <svg aria-hidden="true" data-prefix="fas" data-icon="user-shield" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="svg-inline--fa fa-user-shield fa-w-20 fa-2x"><path fill="currentColor" d="M622.3 271.1l-115.2-45c-4.1-1.6-12.6-3.7-22.2 0l-115.2 45c-10.7 4.2-17.7 14-17.7 24.9 0 111.6 68.7 188.8 132.9 213.9 9.6 3.7 18 1.6 22.2 0C558.4 489.9 640 420.5 640 296c0-10.9-7-20.7-17.7-24.9zM496 462.4V273.3l95.5 37.3c-5.6 87.1-60.9 135.4-95.5 151.8zM224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm96 40c0-2.5.8-4.8 1.1-7.2-2.5-.1-4.9-.8-7.5-.8h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c6.8 0 13.3-1.5 19.2-4-54-42.9-99.2-116.7-99.2-212z" class=""></path></svg>
+        </span>
+        
+		{% include 'multilang' with settings.secure_text %}
+      </div>
+      <img class="lazyload" src="{{ lazyload_placeholder }}" data-src="{{ settings.img_trust | img_url: '800x'  }}">      
+    </div>
+    {% endif %}
+  </div>
+  
+  <div class="right-col">
+    <div class="box-title"{% if settings.enable_multilang %} data-translate="cart.label.order_summary"{%endif%}>
+      <h2 class="cc-member-cart-summary-h2">Cart Summary</h2>
+    </div>
+
+  {% unless elite_product %}
+     {% if customer and customer.tags contains 'club_member' %}
+        <div class="ai-cart-applied">
+          <span>Cabana Club Benefits Applied!</span>
+          <span style="color:#C14e47">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.0337 5.33257L10.2978 4.59689C10.1232 4.42225 9.98008 4.07715 9.98008 3.82965V2.78922C9.98008 2.29428 9.57575 1.88996 9.08094 1.8897H8.04006C7.79285 1.8897 7.44734 1.74633 7.27267 1.57183L6.53697 0.836145C6.1874 0.486584 5.61504 0.486584 5.26548 0.836145L4.52978 1.57235C4.35498 1.74699 4.00907 1.88996 3.76239 1.88996H2.72193C2.22765 1.88996 1.82279 2.29428 1.82279 2.78922V3.82968C1.82279 4.0762 1.67971 4.42239 1.50504 4.59692L0.76921 5.3326C0.419378 5.68216 0.419378 6.2545 0.76921 6.60462L1.50504 7.3403C1.67981 7.51493 1.82279 7.86099 1.82279 8.10754V9.148C1.82279 9.6424 2.22765 10.0473 2.72193 10.0473H3.76242C4.00963 10.0473 4.35514 10.1903 4.5298 10.3649L5.2655 11.1008C5.61507 11.4501 6.18743 11.4501 6.537 11.1008L7.2727 10.3649C7.44749 10.1902 7.79287 10.0473 8.04008 10.0473H9.08096C9.57578 10.0473 9.98011 9.6424 9.98011 9.148V8.10754C9.98011 7.85994 10.1233 7.51483 10.2979 7.3403L11.0337 6.60462C11.383 6.2545 11.383 5.68213 11.0337 5.33257ZM5.18753 7.99137L3.20381 6.00743L3.83957 5.37182L5.18769 6.71991L7.9628 3.94552L8.5984 4.58114L5.18753 7.99137Z" fill="white"/>
+            </svg>
+          </span>
+        </div>
+    {% endif %}
+  {% endunless %}
+            
+  {% if customer and customer.tags contains 'elite_member' or elite_product %}
+      <div class="ai-cart-applied elite">
+        <span>Elite Benefits Applied!</span>
+        <span>
+          <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M19.7936 9.18073L18.4296 7.81695C18.1058 7.49321 17.8405 6.85346 17.8405 6.39467V4.46593C17.8405 3.54844 17.091 2.79892 16.1737 2.79843H14.2442C13.7859 2.79843 13.1454 2.53266 12.8216 2.20917L11.4578 0.845379C10.8098 0.197374 9.74876 0.197374 9.10074 0.845379L7.73692 2.21014C7.41288 2.53388 6.77165 2.79892 6.31436 2.79892H4.38558C3.46929 2.79892 2.71877 3.54844 2.71877 4.46593V6.39471C2.71877 6.8517 2.45353 7.49346 2.12974 7.817L0.765679 9.18078C0.11717 9.82879 0.11717 10.8898 0.765679 11.5388L2.12974 12.9026C2.45373 13.2263 2.71877 13.8679 2.71877 14.3249V16.2537C2.71877 17.1702 3.46929 17.9207 4.38558 17.9207H6.31441C6.77268 17.9207 7.41318 18.1859 7.73697 18.5095L9.10079 19.8737C9.74881 20.5213 10.8098 20.5213 11.4579 19.8737L12.8217 18.5095C13.1457 18.1857 13.786 17.9207 14.2442 17.9207H16.1738C17.0911 17.9207 17.8406 17.1702 17.8406 16.2537V14.3249C17.8406 13.8659 18.1061 13.2261 18.4296 12.9026L19.7937 11.5388C20.4412 10.8898 20.4412 9.82874 19.7936 9.18073ZM8.95625 14.1096L5.27887 10.4318L6.45743 9.25349L8.95654 11.7525L14.101 6.60946L15.2792 7.78775L8.95625 14.1096Z" fill="white"></path>
+</svg>
+        </span>
+      </div>
+  {% endif %}
+    <div class="total">
+<!--      
+       <span class="label">
+        <span {% if settings.enable_multilang %}data-translate="cart.label.total"{% endif %}>
+          {{ 'cart.label.total' | t }}:
+        </span>
+      </span>
+      <span class="price">
+        {{ bold_cart_total_price  | money }}
+      </span>  
+--> 
+
+      {% assign total_savings = bold_cart_total_price | minus: cart.total_price %}
+      
+      {% render 'cc-member-cart-summary', savings: total_savings %}    
+      {%- include 'payment-plan', price_for_plan: cart.total_price -%}
+
+      {% if elite != true %}
+        {% render 'cc-cart-note' %}
+      {% endif %}
+      {% if section.settings.cart_notes %}
+          <label class="add-comments" for="cartSpecialInstructions">
+            <span class="note" {% if settings.enable_multilang %}data-translate="cart.general.label"{%endif%}>
+              {{ 'cart.general.label' | t }}
+            </span>
+            <span {% if settings.enable_multilang %}data-translate="cart.general.label_text"{%endif%}>
+              {{ 'cart.general.label_text' | t }}
+            </span>
+          </label>
+          
+          <textarea name="note" class="input-full" id="cartSpecialInstructions">
+            {{ cart.note }}
+          </textarea>
+    {% endif %}
+      
+    </div>
+    
+    <div class="btn-actions">
+      
+      {%- if settings.show_shipping_insurance == 'route' -%}
+        {%- include 'route-insurance' -%}
+      {%- endif -%}
+
+      {{ bold_ro_cart }}
+      <a class="btn btn-checkout" href="/checkout" {% if settings.enable_multilang %}data-translate="cart.general.button_checkout"{% endif %}>
+        {{ 'cart.general.button_checkout' | t }}
+      </a> 
+      
+      {% if show_paypal and additional_checkout_buttons and show_paypal %}
+      <div>{{ content_for_additional_checkout_buttons }}</div>
+      {% endif %}
+    </div>
+    
+    {% unless cart.item_count == 0 %}
+      {% if section.settings.display_shipping_estimate %}
+        {% include 'product-delivery-estimate' %}
+      {% else %}
+        {% include 'shipping-rates-calculator' %}
+      {% endif %}
+
+      {% if section.settings.display_norton %}
+        <span id="nortonPlacer" class="hidden"></span>
+      {% endif %}
+    
+    {% endunless %}
+  </div>
+</form>
+
+{% else %}
+<p class="alert alert-warning" {% if settings.enable_multilang %}data-translate="cart.general.empty"{%endif%}>
+  {{ 'cart.general.empty' | t }}
+</p>
+<p class="cart-empty" {% if settings.enable_multilang %}data-translate="cart.general.continue_browsing_html"{%endif%}>
+  {{ 'cart.general.continue_browsing_html' | t }}
+</p>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Cart Page",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_notes",
+        "label": "Allow customers to add notes to their order?",
+        "default": true,
+        "info": "Only enabled in the ajax cart if you use your cart.liquid markup. See docs below."
+      },
+      {
+        "type": "checkbox",
+        "id": "display_shipping_estimate",
+        "label": "Display Shipping Delivery Estimates?",
+        "default": true,
+        "info": "If disabled, the 'Get shipping estimates' contact form will be shown."
+      },
+      {
+        "type": "checkbox",
+        "id": "display_norton",
+        "label": "Display Norton Guarantee?",
+        "default": true
+      }
+    ]
+  }
+{% endschema %}
+

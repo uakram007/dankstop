@@ -1,0 +1,334 @@
+<style>
+  .promo-code {
+    display: inline-block;
+    padding: 0 7px;
+    background: {{ settings.site__promo_code_bg_color }};
+    color: {{ settings.site__promo_code_text_color }};
+    letter-spacing: 1px;
+  }
+  
+  .header-top {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+  
+  {%- comment -%}
+  .header-top{display:none;}
+  {%- endcomment -%}
+  
+  .header-top-countdown {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    align-items: center
+  }
+
+  .header-top-countdown .clock-item {
+    width: 64px;
+    height: 64px;
+    margin: 0 12.5px;
+    padding-top: 2px
+  }
+
+  .header-top-countdown .clock-item+.clock-item {
+    position: relative
+  }
+
+  .header-top-countdown .clock-item+.clock-item:before {
+    position: absolute;
+    content: ":";
+    left: -15px;
+    top: 50%;
+    -moz-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-weight: 500;
+    font-size: 18px
+  }
+
+  .header-top-countdown .clock-item span.num {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px
+  }
+
+  .header-top-countdown .clock-item span:not(.num) {
+    text-transform: capitalize
+  }
+
+  .header-top .top-message {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    text-align: center;
+    padding: 8px 25px;
+    position: relative
+  }
+
+  .header-top .top-message p a {
+    border-bottom: 1px solid rgba(255,255,255,0)
+  }
+
+  .header-top .close {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: top;
+    position: absolute;
+    top: 50%;
+    right: -3px;
+    -moz-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    margin-top: -.5px
+  }
+
+  .header-top .top-message {
+    font-size: 12px;
+    text-transform: none;
+    font-weight: normal;
+    letter-spacing: normal;
+    text-align: center;
+    padding: 11px 25px
+  }
+
+  .header-top .close {
+    margin-top: 1.5px
+  }
+
+  .header-top .header-top-countdown {
+    padding: 3px 10px 23px
+  }
+
+  .home-custom-sub-banner .sub-banner-countdown,.custom-block-banner .sub-banner-countdown {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    align-items: center
+  }
+
+  .header-top-countdown .clock-item,.home-custom-sub-banner .clock-item,.custom-block-banner .clock-item {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+    -webkit-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    border: 1px solid;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%
+  }
+
+  .header-top-countdown .clock-item span,.home-custom-sub-banner .clock-item span,.custom-block-banner .clock-item span {
+    display: block
+  }
+
+  .header-top-countdown .clock-item span:not(.num),.home-custom-sub-banner .clock-item span:not(.num),.custom-block-banner .clock-item span:not(.num) {
+    font-size: 12px
+  }
+
+  .header-top-countdown .clock-item span.num,.home-custom-sub-banner .clock-item span.num,.custom-block-banner .clock-item span.num {
+    letter-spacing: normal
+  }
+
+  .header-top-countdown .clock-item:first-of-type,.home-custom-sub-banner .clock-item:first-of-type,.custom-block-banner .clock-item:first-of-type {
+    margin-left: 0
+  }
+
+  .header-top-countdown .clock-item:last-of-type,.home-custom-sub-banner .clock-item:last-of-type,.custom-block-banner .clock-item:last-of-type {
+    margin-right: 0
+  }
+  
+  .close svg {
+    width: 17px;
+    height: 17px;
+  }
+  
+</style>
+
+{%- if settings.display_header_top -%}
+  {%- assign now_timestamp = "now" | date: "%s" -%}
+
+  {%- assign shopify_format_start_parts = settings.site__promo_timer_start | split: "/" -%}
+  {%- assign shopify_format_start = shopify_format_start_parts[1] 
+    | append: "/" 
+    | append: shopify_format_start_parts[0] 
+    | append: "/" 
+    | append: shopify_format_start_parts[2] 
+  -%}
+  {%- assign shopify_format_start_timestamp = shopify_format_start | date: "%s" -%}
+
+  {%- assign shopify_format_expiration_parts = settings.site__promo_timer_expiration | split: "/" -%}
+  {%- assign shopify_format_expiration = shopify_format_expiration_parts[1] 
+    | append: "/" 
+    | append: shopify_format_expiration_parts[0] 
+    | append: "/" 
+    | append: shopify_format_expiration_parts[2] 
+  -%}
+  {%- assign shopify_format_expiration_timestamp = shopify_format_expiration | date: "%s" -%}
+
+
+{%- comment -%}  
+<div hidden>{{ shopify_format_expiration }}</div>
+<div hidden>{{ shopify_format_expiration_timestamp }}</div>
+<div hidden>{{ now_timestamp }}</div>
+<div class="header-top staticload lazyload no-fade" data-expand="-1" data-bg="{{ settings.header_top_image | img_url: '2048x' }}" data-load-method="{{ settings.site__promo_bar_load_method }}" style="background-image:url(data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%201600%20132%22%3E%3C/svg%3E);">
+</div>
+<div class="header-top {% if settings.settings.site__promo_bar_load_method == "lazy_user_x" %}lazyload no-fade{% else %}staticload{% endif %}" data-expand="-1" {% if settings.settings.site__promo_bar_load_method == "lazy_user_x" %}data-bg="{{ settings.header_top_image | img_url: '2048x' }}"{% else %}style="background-image:url({{ settings.header_top_image | img_url: '2048x' }});"{% endif %}>
+</div>
+{%- endcomment -%}  
+
+
+{%- if shopify_format_expiration_timestamp > now_timestamp and now_timestamp > shopify_format_start_timestamp -%}
+<div class="header-top {% if settings.settings.site__promo_bar_load_method == "lazy_user_x" %}lazyload no-fade{% else %}staticload{% endif %}" data-expand="-1" {% if settings.settings.site__promo_bar_load_method == "lazy_user_x" %}data-bg="{{ settings.header_top_image | img_url: '2048x' }}"{% else %}style="background-image:url({{ settings.header_top_image | img_url: '2048x' }});"{% endif %}>
+  {%- if settings.top_message_text != blank or settings.site__promo_timer_expiration != blank -%}
+  <div class="container">
+    {%- if settings.top_message_text != blank -%}
+    <div class="top-message">
+      <p>
+        {{- settings.top_message_text | replace: '#PROMO_DISCOUNT#', settings.site__promo_discount -}}
+      </p>
+      <a href="#" title="close" class="close" data-close-header-top  aria-label="Close promotional top header">
+        <svg aria-hidden="true" focusable="false" role="img"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#closeXIcon"></use></svg>
+        <span class="visually-hidden">Close promotional top header</span>
+      </a>
+    </div>
+    {%- endif -%}  
+
+    {%- if settings.site__promo_timer_expiration != blank -%}
+    {%- comment -%}  
+    <div class="header-top-countdown" data-countdown data-countdown-value="{{ settings.site__promo_timer_expiration }}">
+      <div class="clock-item ci-days">
+        <span class="num">00</span>
+        <span>days</span>
+      </div>
+      <div class="clock-item ci-hours">
+        <span class="num">00</span>
+        <span>hours</span>
+      </div>
+      <div class="clock-item ci-mins">
+        <span class="num">00</span>
+        <span>mins</span>
+      </div>
+      <div class="clock-item ci-secs">
+        <span class="num">00</span>
+        <span>secs</span>
+      </div>
+    </div>
+    {%- endcomment -%}  
+
+    {%- comment -%}  
+    {
+    "type": "header",
+    "content": "Header Top"
+    },
+    {
+    "type": "checkbox",
+    "id": "display_header_top",
+    "label": "Display Header Top?",
+    "default": true
+    },
+    {
+    "type": "image_picker",
+    "id": "header_top_image",
+    "label": "Image"
+    },
+    {
+    "type": "textarea",
+    "id": "top_message_text",
+    "label": "Top Message Text",
+    "default": "Mid-Season Sale up to 70% Off. End Ins:"
+    },
+    {
+    "type" : "text",
+    "id" : "site__promo_timer_start",
+    "label" : "Promo Start Date and Time",
+    "default" : "03/13/2021 00:00:00",
+    "info": "FORMAT: 03/13/2021 00:00:01"
+    },
+    {
+    "type": "text",
+    "id": "site__promo_timer_expiration",
+    "label": "Promo Expiration Date and Time",
+    "info": "FORMAT: 03/17/2021 02:59:59"
+    },
+    {
+    "type": "color",
+    "id": "bg_header_top",
+    "label": "Background Color",
+    "default": "#e95144"
+    },
+    {
+    "type": "color",
+    "id": "text_header_top_color",
+    "label": "Text Color",
+    "default": "#fff"
+    },
+    {%- endcomment -%}  
+
+    <div class="header-top-countdown" id="promoBanner" data-timestamp-start="{{ shopify_format_start_timestamp }}" data-timestamp-now="{{ now_timestamp }}" data-timestamp-expiration="{{ shopify_format_expiration_timestamp }}" data-promo-start="{{ settings.site__promo_timer_start }}" data-promo-end="{{ settings.site__promo_timer_expiration }}">
+      <div class="clock-item ci-days">
+        <span class="num">00</span>
+        <span>days</span>
+      </div>
+      <div class="clock-item ci-hours">
+        <span class="num">00</span>
+        <span>hours</span>
+      </div>
+      <div class="clock-item ci-mins">
+        <span class="num">00</span>
+        <span>mins</span>
+      </div>
+      <div class="clock-item ci-secs">
+        <span class="num">00</span>
+        <span>secs</span>
+      </div>
+    </div>
+    {%- endif -%}
+  </div>
+  {%- endif -%}
+</div>
+{%- endif -%}
+
+{%- endif -%}

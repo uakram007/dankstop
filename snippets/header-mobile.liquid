@@ -1,0 +1,110 @@
+<div class="header-mb">          
+  <div class="header-mb-left header-mb-items">
+    <div class="hamburger-icon svg-mb">
+      <button class="icon-nav" title="Menu Mobile Icon" data-menu-mb-toogle aria-label="Open main menu">
+        <span class="icon-line"></span>
+        <span class="visually-hidden">Open main menu</span>
+      </button>
+    </div>
+    <div class="search-mb svg-mb">
+      <button title="Search Icon" class="icon-search" data-search-mobile-toggle aria-label="Open search">
+        <svg aria-hidden="true" focusable="false" role="img"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#searchIcon"></use></svg>
+        <span class="visually-hidden">Open search</span>
+      </button>
+      <button title="close" class="close close-search" aria-label="Close search">
+        <svg aria-hidden="true" focusable="false" role="img"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#closeXIcon"></use></svg>
+        <span class="visually-hidden">Close search</span>
+      </button>
+      {%- include 'search-bar' -%}
+    </div>                        
+  </div>
+  <div class="header-mb-middle header-mb-items">
+    
+    {%- assign logo_mobile = section.settings.logo -%}
+    {%- assign logo_mobile_url = logo_mobile | img_url: '121x' -%}
+    {%- assign logo_alt_escaped = section.settings.logo.alt | default: shop.name | escape -%}
+    
+    {%- if template.name == 'index' -%}
+    <h1 class="header-logo">
+      {%- if section.settings.brand_type == 'image' and section.settings.logo != bank -%}
+      <a class="logo-img" href="/" title="Logo" aria-label="Home page link">
+        {%- comment -%}
+        <img width="591" height="126" class="lazyloaded" src="{{ section.settings.logo | img_url: 'master' }}" 
+             data-src="{{ section.settings.logo | img_url: 'master' }}" data-sizes="auto" 
+             alt="{{ section.settings.logo.alt | default: shop.name }}" 
+             title="{{ section.settings.logo.alt | default: shop.name }}">
+        {%- endcomment -%}
+        <img width="121" height="26" class="lazyload" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20199%2043'%3E%3C/svg%3E" 
+             data-src="{{ logo_mobile_url }}" 
+             srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20199%2043'%3E%3C/svg%3E 121w"
+             data-srcset="{{ logo_mobile_url }} 121w, {{ logo_mobile | img_url: '242x' }} 242w"
+             sizes="auto" data-sizes="auto" 
+             alt="{{ logo_alt_escaped }}" 
+             title="{{ logo_alt_escaped }}">
+      </a>
+      {%- elsif section.settings.brand_text != '' -%}
+      <a class="logo-title" href="/">
+        {{ section.settings.brand_text }}
+      </a>
+      {%- else -%}
+      <a class="logo-title" href="/">
+        {{ shop.name }}
+      </a>
+      {%- endif -%}
+    </h1>
+    {%- else -%}
+    <div class="header-logo">
+      {%- if section.settings.brand_type == 'image' and section.settings.logo != bank -%}
+      <a class="logo-img" href="/" title="Logo" aria-label="Home page link">
+        {%- comment -%}
+        <img width="591" height="126" class="lazyloaded" src="{{ section.settings.logo | img_url: 'master' }}" 
+             data-src="{{ section.settings.logo | img_url: 'master' }}" data-sizes="auto" 
+             alt="{{ section.settings.logo.alt | default: shop.name }}" 
+             title="{{ section.settings.logo.alt | default: shop.name }}">
+        {%- endcomment -%}
+        <img width="121" height="26" class="lazyload" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20199%2043'%3E%3C/svg%3E" 
+             data-src="{{ logo_mobile_url }}" 
+             srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20199%2043'%3E%3C/svg%3E 121w"
+             data-srcset="{{ logo_mobile_url }} 121w, {{ logo_mobile | img_url: '242x' }} 242w"
+             sizes="auto" data-sizes="auto" 
+             alt="{{ logo_alt_escaped }}" 
+             title="{{ logo_alt_escaped }}">
+      </a>
+      {%- elsif section.settings.brand_text != '' -%}
+      <a class="logo-title" href="/">
+        {{ section.settings.brand_text }}
+      </a>
+      {%- else -%}
+      <a class="logo-title" href="/">
+        {{ shop.name }}
+      </a>
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+  </div>
+  <div class="header-mb-right header-mb-items">
+    <div class="acc-mb svg-mb">
+      <a href="{% if customer %} /account {% else %} # {% endif %}" title="User Icon" class="icon-user {% if customer == blank%}SSO_popup_login {% endif %}"  >
+        <svg aria-hidden="true" focusable="false" role="img"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lnr-user"></use></svg>
+      </a>
+    </div>
+    <div class="cart-icon svg-mb">
+      <a href="#" title="Cart Icon" data-cart-toggle aria-label="Open sidebar cart">       
+        <svg aria-hidden="true" focusable="false" role="img"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cartShopping"></use></svg>
+
+        {%- assign cart_item_count = 0 -%}
+        {%- for line_item in cart.items -%}
+          {%- if line_item.product.handle != settings.warranty__product -%}
+            {%- assign cart_item_count = cart_item_count | plus: line_item.quantity -%}
+          {%- endif -%}
+        {%- endfor -%}
+        <span {% if cart_item_count > 0 %}class="cartCount"{% else %}class="cartCount hidden" hidden{% endif %} data-cart-count>
+          {%- comment -%}
+          {%- include 'cart-item-count' -%}
+          {%- endcomment -%}
+          {{- cart_item_count -}}
+        </span>
+      </a>
+    </div>
+  </div>          
+</div>

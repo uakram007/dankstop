@@ -1,0 +1,39 @@
+{%- comment -%}
+  String Pluralizer Script by Andre
+  Takes in a singular noun and transfers it into its plural version based on some basic rules
+  - If word ends with "ch," then script will remove the last 2 letters "ch" and append "es"
+  - If word ends with "y," then script will remove the last letter "y" and append "ies"
+  - If word does not ends with "s," then script will append an "s"
+{%- endcomment -%}
+
+{%- if string-pluralizer == blank -%}
+<script type="text/javascript">
+  console.log('You\'ve used the "string-pluralizer" liquid script but did not include a string!');
+</script>
+{%- endif -%}
+
+{%- assign ch_check = '' -%}
+{%- assign y_or_s_check = '' -%}
+{%- assign string_to_pluralize = string-pluralizer -%}
+{%- assign string_to_pluralize_size = string_to_pluralize | size -%}
+{%- assign string_to_pluralize_size_minus_1 = string_to_pluralize_size | minus: 1 -%}
+{%- assign string_to_pluralize_size_minus_2 = string_to_pluralize_size | minus: 2 -%}
+{%- capture ch_check -%}{{ string_to_pluralize | slice: string_to_pluralize_size_minus_2, string_to_pluralize_size }}{%- endcapture -%}
+{%- capture y_or_s_check -%}{{ string_to_pluralize | slice: string_to_pluralize_size_minus_1, string_to_pluralize_size }}{%- endcapture -%}
+{%- capture second_to_last_vowel_check -%}{{ string_to_pluralize | slice: string_to_pluralize_size_minus_2 }}{%- endcapture -%}
+{%- assign vowels = 'a,e,i,o,u' -%}
+{%- if ch_check == 'ch' -%}
+  {%- capture plural_string -%}{{ string_to_pluralize }}es{%- endcapture -%}
+{%- elsif y_or_s_check == 'y' -%}
+  {%- if vowels contains second_to_last_vowel_check -%}
+    {%- capture plural_string -%}{{ string_to_pluralize }}s{%- endcapture -%}
+  {%- else -%}
+    {%- capture plural_string -%}{{ string_to_pluralize | slice: 0, string_to_pluralize_size_minus_1 }}ies{%- endcapture -%}
+  {%- endif -%}
+{%- elsif y_or_s_check != 's' -%}
+  {%- capture plural_string -%}{{ string_to_pluralize }}s{%- endcapture -%}
+{%- else -%}
+  {%- capture plural_string -%}{{ string_to_pluralize }}{%- endcapture -%}
+{%- endif -%}
+
+{{- plural_string -}}

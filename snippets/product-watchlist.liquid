@@ -1,0 +1,87 @@
+{%- comment -%}
+<!-- Watchlist / In Stock Notify -->
+<p class="h2">{{- 'products.watchlist.sold_out' | t -}}</p>
+{%- endcomment -%}
+{%- if settings.watchlist__enable -%}
+{%- unless product.available -%}
+<div id="inStockNotify" class="in-stock-notify th-box {%- if customer.metafields.watchlist.products contains product_handle -%}{{' '}}in-watchlist{%-endif-%}">
+  <div class="isn--inner grid">
+    <div class="isn--title grid-item">
+      <div class="not-in-watchlist-msg">
+        <p class="h3">
+          {{- 'products.watchlist.title' | t: product_type: product_type -}}
+        </p>
+        <p>{{- 'products.watchlist.sub_title' | t -}}</p>
+      </div>
+      <div class="in-watchlist-msg">
+        <p class="h3">
+          {{- 'products.watchlist.title_in_watchlist' | t: product_type: product_type -}}
+        </p>
+        <p>{{- 'products.watchlist.sub_title_in_watchlist' | t -}}</p>
+      </div>
+    </div>
+    {%- if customer or settings.watchlist__no_login_to_use -%}
+    <div class="isn--form grid-item" id="inStockNotifyForm">
+      {%- if customer.metafields.watchlist.email == blank -%}
+      <div class="isn--contact email-sec">
+        <p>
+          <label class="isn-email-label" for="isn-email">
+            <span>{{- 'products.watchlist.by_email' | t -}} &nbsp;</span>
+          </label>
+          <input type="email" name="email" id="isn-email" value="{% if customer.email %}{{ customer.email }}{% endif %}" placeholder="{{- 'products.watchlist.email_placeholder' | t -}}">
+        </p>
+      </div>
+      {%- endif -%}
+      {%- if customer.metafields.watchlist.email == blank and customer.metafields.watchlist.phone == blank -%}
+      <div class="or-sec grid-item">
+        <p>{{- 'products.watchlist.and_or' | t -}}</p>
+      </div>
+      {%- endif -%}
+      {%- if customer.metafields.watchlist.phone == blank -%}
+      <div class="isn--contact phone-sec">
+        <p>
+          <label class="isn-phone-label" for="isn-phone">
+            <span>{{- 'products.watchlist.via_text' | t -}} &nbsp;</span>
+          </label>
+          <input type="tel" pattern="^\d{10}$" name="phone" id="isn-phone" value="" placeholder="{{- 'products.watchlist.tel_placeholder' | t -}}">
+        </p>
+      </div>
+      {%- endif -%}
+      {%- if customer.metafields.watchlist.promo == blank or customer.metafields.watchlist.promo == false -%}
+      <div class="promo-sec grid-item large--one-whole">
+        <p><input type="checkbox" id="promo-signup" name="promo-signup"><label for="promo-signup">{{- 'products.watchlist.subscribe' | t -}}</label></p>
+      </div>
+      {%- endif -%}
+      {%- if customer.metafields.watchlist.email != blank or customer.metafields.watchlist.phone != blank -%}
+      <div class="settings-msg grid-item">
+        <p><small>{{- 'products.watchlist.settings_link_html' | t -}}</small></p>
+      </div>
+      {%- endif -%}
+      
+      {%- if customer.metafields.watchlist.products contains product_handle -%}
+      <span class="watchlist-toggle add-to-watchlist btn btn-danger in-watchlist" data-producthandle="{{ product_handle }}" data-variantid="{{ selected_or_first_available_variant.id }}">
+        <svg width="100%" height="100%"><use xlink:href="#watchlistEye" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg> 
+        <span class="btn-text">{{ 'products.watchlist.btn_remove' | t }}</span>
+      </span>
+      {%- else -%}
+      <span class="watchlist-toggle add-to-watchlist btn btn-default" data-producthandle="{{ product_handle }}" data-variantid="{{ selected_or_first_available_variant.id }}">
+        <svg width="100%" height="100%"><use xlink:href="#watchlistEye" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg> 
+        <span class="btn-text">{{ 'products.watchlist.btn_add' | t }}</span>
+      </span>
+      {%- endif -%}
+      
+    </div>
+    
+    {%- else -%}
+    
+    <p>{{- 'products.watchlist.login_to_use' | t -}}</p>
+    <div class="sign-in-button">
+      <a href="/account/login" class="btn btn-default" rel="nofollow">{{- 'layout.customer.log_in' | t -}}</a>
+    </div>
+    
+    {%- endif -%}
+    
+  </div>
+</div>
+{%- endunless -%}
+{%- endif -%}

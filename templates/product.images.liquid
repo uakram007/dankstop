@@ -1,0 +1,326 @@
+{%- layout none -%}
+
+{%- comment -%}
+  Product Head
+{%- include 'product-head' -%}
+{%- endcomment -%}
+
+{%- assign demo_video_yt_id = false -%}
+{%- assign demo_video_file_src = false -%}
+{%- if product.metafields.media -%}
+  {%- assign demo_video_yt_id = product.metafields.media.demoloop_yt_id | split: "," -%}
+  {%- assign demo_video_file_src = product.metafields.media.demoloop | split: "," -%}
+  {%- assign demo_video_file_poster = product.metafields.media.demoloop_poster | split: "," -%}
+{%- endif -%}
+
+
+
+{%- assign slick_initial_index = false -%}
+{%- for image in product.images -%}
+  {%- if image.src == product.selected_or_first_available_variant.image.src -%}
+    {%- assign slick_initial_index = forloop.index0 -%}
+  {%- endif -%} 
+  {%- if forloop.last and slick_initial_index == false -%}
+    {%- assign slick_initial_index = 0 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+
+{%- comment -%}
+class="product-photo-container slider-for"
+<div class="slider-for">
+{%- endcomment -%}
+
+  {%- assign img_widths = '600,810,960' -%}
+  {%- for image in product.images -%}
+  
+    {%- if forloop.index0 == slick_initial_index -%}  
+      {%- continue -%}
+    {%- endif -%}
+
+  <div data-zoom class="thumb filter-{{ image.alt | handle }}" {% if image.variants.size > 0 %}data-variants="{% for variant in image.variants %}{{ variant.title }} {% endfor %}"{% endif %} {% if forloop.index0 == slick_initial_index %}data-slick-initial-index="{{ slick_initial_index }}"{% endif %}>
+
+    {%- comment -%}
+    <a data-zoom class="fancybox" rel="gallery1" href="{{ image | img_url: 'original' }}" data-fancybox="images">
+      {%- endcomment -%}
+
+      {%- assign img_id = 'product-featured-image-' | append: image.id -%}
+      {%- if forloop.index0 == slick_initial_index -%}
+      {%- include 'image-module', im_lazy: false, im_src: image, im_id: img_id, im_dt_ws: img_widths -%}
+      {%- else -%}
+      {%- comment -%}
+      , im_iep: 'data-expand="auto"'
+      {%- endcomment -%}
+      {%- include 'image-module', im_src: image, im_id: img_id, im_dt_ws: img_widths -%}
+      {%- endif -%}
+
+      {%- comment -%}
+    </a>
+    {%- endcomment -%}
+
+  </div>
+  {%- endfor -%}
+
+  
+  {%- if demo_video_file_src or demo_video_yt_id -%}
+    {%- for video_reference in demo_video_file_src -%}
+
+      {%- if demo_video_file_poster[forloop.index0] -%}
+      {%- assign video_poster = demo_video_file_poster[forloop.index0] -%}
+      {%- else -%}
+      {%- assign video_poster = product.featured_image.src | img_url: 'original' -%}
+      {%- endif -%}
+
+  <div class="thumb">
+    {%- comment -%}
+    <video controls autoplay="autoplay" loop="true" id="demo_video_file" class="video-container" width="100%" height="auto" poster="{{ video_poster }}">
+      <source src="{{ video_reference }}">
+    </video>
+    {%- endcomment -%}
+    <video controls loop="true" id="demo_video_file" class="video-container" width="100%" height="auto" poster="{{ video_poster }}">
+      <source src="{{ video_reference }}">
+    </video>
+  </div>
+    {%- endfor -%}
+  {%- endif -%}
+  
+  
+{%- comment -%}
+</div>
+{%- endcomment -%}
+
+<script hidden class="hidden slick-ignore">
+
+  function initZoom(){
+    var t = $(".product-img-box [data-zoom]");
+    1200 <= $(window).width() ? t.zoom() : t.trigger("zoom.destroy");
+  }
+  //initZoom();
+  
+  function initProductPhotosSlider(){
+    var e = $(".slider-for"),
+        i = $(".slider-nav"),
+        a = i.data("vertical");
+
+    var slick_initial_index = ( ! e.find("[data-slick-initial-index]").attr("data-slick-initial-index")) ? 0 : parseInt(e.find("[data-slick-initial-index]").attr("data-slick-initial-index"));
+
+    if (
+      e.find("> .thumb").length > 1 && e.slick({
+        slide: ".thumb",
+        waitForAnimate: false,
+        initialSlide: slick_initial_index,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: !1,
+        fade: !0,
+        rows: 0
+//         , asNavFor: i
+        , dots: !0
+        , mobileFirst: !0
+        , responsive: [
+          {
+          breakpoint: 1200,
+          settings: {
+//             slidesToShow: 1,
+//             slidesToScroll: 1,
+            get dots() {
+              if (1 == a) return dots = !1
+                }
+          }
+        }, {
+          breakpoint: 992,
+          settings: {
+//             slidesToShow: 1,
+//             slidesToScroll: 1,
+            get dots() {
+              if (1 == a) return dots = !0
+                }
+          }
+        }, {
+          breakpoint: 768,
+          settings: {
+//             slidesToShow: 1,
+//             slidesToScroll: 1,
+            get dots() {
+              if (1 == a) return dots = !0
+                }
+          }
+        }, {
+          breakpoint: 280,
+          settings: {
+//             slidesToShow: 1,
+//             slidesToScroll: 1,
+            get dots() {
+              if (1 == a) return dots = !0
+                }
+          }
+        }]
+      })
+    ){
+      
+      e.find(".slick-slide").on("click", function(){
+        e.slick("slickNext");
+      });
+      
+      if ("variant_grouped" === window.color_swatch_style && window.use_color_swatch){
+        var o = t.closest("[data-more-view-product]").siblings(".product-shop").find(".swatch").find(".swatch-element.color").find(":radio:checked");
+        if (o.length) {
+          var n = o.data("filter");
+          void 0 !== n && (i.slick("slickUnfilter"), e.slick("slickUnfilter"), i.find(n).length && e.find(n).length && (i.slick("slickFilter", n).slick("refresh"), e.slick("slickFilter", n).slick("refresh")))
+        }
+      }
+      
+    }
+    
+
+    function changeSwatchImagesOnly(r) {
+      $(document).off("change.changeSwatch").on("change.changeSwatch", r, function() {
+        var t = $(this).data("filter"),
+            e = $(this).closest(".swatch").attr("data-option-index"),
+            i = $(this).val();
+        if ( $(this).closest("form").find(".single-option-selector").eq(e).val(i).trigger("change"), "variant_grouped" === window.color_swatch_style && window.use_color_swatch && void 0 !== t) {
+          var a, o = $(r).closest(".product-shop");
+          if (o.closest(".product-slider").length)(s = (a = o.closest(".product-slider").find("[data-moreview-product-slider]")).find(".slider-for")).slick("slickUnfilter"), s.find(t).length && s.slick("slickFilter", t).slick("refresh");
+          else if ((a = o.prev("[data-more-view-product]")).length) {
+            var s = a.find(".slider-for");
+            s.slick("slickUnfilter"), s.find(t).length && s.slick("slickFilter", t).slick("refresh")
+          }
+        }
+      })
+    }
+    changeSwatchImagesOnly("#add-to-cart-form .swatch :radio");
+
+    if (
+      
+      e.hasClass("slick-initialized") && i.hasClass("slick-initialized")
+      
+    ){
+      
+      e.slick('slickSetOption', 'asNavFor', i);
+      i.slick('slickSetOption', 'asNavFor', e);
+      
+      function changeSwatch(r) {
+        $(document).off("change.changeSwatch").on("change.changeSwatch", r, function() {
+          var t = $(this).data("filter"),
+              e = $(this).closest(".swatch").attr("data-option-index"),
+              i = $(this).val();
+          if ( $(this).closest("form").find(".single-option-selector").eq(e).val(i).trigger("change"), "variant_grouped" === window.color_swatch_style && window.use_color_swatch && void 0 !== t) {
+            var a, o = $(r).closest(".product-shop");
+            if (o.closest(".product-slider").length)(s = (a = o.closest(".product-slider").find("[data-moreview-product-slider]")).find(".slider-for")).slick("slickUnfilter"), s.find(t).length && s.slick("slickFilter", t).slick("refresh");
+            else if ((a = o.prev("[data-more-view-product]")).length) {
+              var n = a.find(".slider-nav"),
+                  s = a.find(".slider-for");
+              n.slick("slickUnfilter"), s.slick("slickUnfilter"), n.find(t).length && s.find(t).length && (n.slick("slickFilter", t).slick("refresh"), s.slick("slickFilter", t).slick("refresh"))
+            }
+          }
+        })
+      }
+      changeSwatch("#add-to-cart-form .swatch :radio");
+      
+    }
+
+  }
+
+
+//   initProductPhotosSlider();
+
+    
+    hsjs.tools.waitForJSObject(
+      "$slick", 
+      initProductPhotosSlider,
+      7300
+    );
+    
+
+
+  
+  
+
+  
+//   function originalEllaImageSliderInit(){
+//     var e = $(".slider-for"),
+//         i = $(".slider-nav"),
+//         a = i.data("vertical");
+
+//     var slick_initial_index = ( ! e.find("[data-slick-initial-index]").attr("data-slick-initial-index")) ? 0 : parseInt(e.find("[data-slick-initial-index]").attr("data-slick-initial-index"));
+
+//     if (
+      
+//       e.hasClass("slick-initialized") || i.hasClass("slick-initialized") 
+      
+//       || (e.find("> .thumb").length > 1 && e.slick({
+//         waitForAnimate: false,
+//         initialSlide: slick_initial_index,
+//         slidesToShow: 1,
+//         slidesToScroll: 1,
+//         arrows: !1,
+//         fade: !0,
+//         rows: 0,
+//         asNavFor: i
+//       })
+//           , i.find("> .item").length > 1 && i.slick({
+//         waitForAnimate: false,
+//         initialSlide: slick_initial_index,
+//         infinite: !0,
+//         slidesToShow: i.data("rows"),
+//         vertical: a,
+//         slidesToScroll: 1,
+//         asNavFor: e,
+//         focusOnSelect: !0,
+//         rows: 0,
+//         nextArrow: '<button type="button" class="slick-next"><svg aria-hidden="true" focusable="false" role="img"><use xlink:href="#faChevronRight" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></button>',
+//         prevArrow: '<button type="button" class="slick-prev"><svg aria-hidden="true" focusable="false" role="img"><use xlink:href="#faChevronLeft" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></button>',
+//         //                     nextArrow: '<button type="button" class="slick-next"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 17 33" xml:space="preserve"><g id="e4eb89a6-f885-43b8-9259-0d6b1516fab0"><g id="_x38_e584754-6657-46f1-a9d8-2cfd6623b552"><g><polygon points="14.9,14.5 0,0 0,3.7 11.1,14.5 13.2,16.5 11.1,18.5 0,29.3 0,33 14.9,18.5 17,16.5 "/></g></g></g></svg></button>',
+//         //                     prevArrow: '<button type="button" class="slick-prev"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 33"><g id="7f9a1925-e8c7-4614-8787-3c6095a9f6e1" data-name="Layer 2"><g id="c9b7920a-81fa-4bfe-ad13-4da717c6854b" data-name="Layer 1"><g id="c2d982ff-0cf6-4220-b365-47f30d708fea" data-name="e4eb89a6-f885-43b8-9259-0d6b1516fab0"><g id="f51d455e-6b9c-4c4e-96db-a5004582beda" data-name="8e584754-6657-46f1-a9d8-2cfd6623b552"><polygon points="0 16.5 2.1 18.5 17 33 17 29.3 5.9 18.5 3.8 16.5 5.9 14.5 17 3.7 17 0 2.1 14.5 0 16.5"/></g></g></g></g></svg></button>',
+//         responsive: [{
+//           breakpoint: 1200,
+//           settings: {
+//             get dots() {
+//               if (1 == a) return dots = !0
+//                 }
+//           }
+//         }, {
+//           breakpoint: 992,
+//           settings: {
+//             slidesToShow: 4,
+//             slidesToScroll: 1,
+//             get dots() {
+//               if (1 == a) return dots = !0
+//                 }
+//           }
+//         }, {
+//           breakpoint: 768,
+//           settings: {
+//             slidesToShow: 4,
+//             slidesToScroll: 1,
+//             get dots() {
+//               if (1 == a) return dots = !0
+//                 }
+//           }
+//         }, {
+//           breakpoint: 360,
+//           settings: {
+//             slidesToShow: 3,
+//             slidesToScroll: 1,
+//             get dots() {
+//               if (1 == a) return dots = !0
+//                 }
+//           }
+//         }]
+//       })
+//          ), 
+//       "variant_grouped" === window.color_swatch_style && window.use_color_swatch
+//     ){
+//       var o = t.closest("[data-more-view-product]").siblings(".product-shop").find(".swatch").find(".swatch-element.color").find(":radio:checked");
+//       if (o.length) {
+//         var n = o.data("filter");
+//         void 0 !== n && (i.slick("slickUnfilter"), e.slick("slickUnfilter"), i.find(n).length && e.find(n).length && (i.slick("slickFilter", n).slick("refresh"), e.slick("slickFilter", n).slick("refresh")))
+//       }
+//     }
+
+//   }
+  
+  
+  
+  
+</script>

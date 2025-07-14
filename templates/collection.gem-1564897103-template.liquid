@@ -1,0 +1,195 @@
+{% comment %}
+	GEMPAGE BUILDER (https://apps.shopify.com/gempage)
+
+	You SHOULD NOT modify source code in this page because
+	It is automatically generated from GEMPAGE BUILDER
+	Try to edit page with the live editor.
+{% endcomment %}
+<div class="collection-template collection-template-default container">
+
+  {%- include 'breadcrumb' -%}
+    
+  <div class="row">
+
+    {%- comment -%}
+    <div class="col-sidebar lazybit lazybit-load" data-lazy-url="{{ request.path }}?view=sidebar-filter"></div>
+    {%- section 'sidebar-filter' -%}
+    {%- endcomment -%}
+    {%- include 'sidebar-filter-lazy' -%}
+
+    
+    {%- comment -%}
+    {%- section 'collection-template-default' -%}
+    {%- endcomment -%}
+    
+    {%- if cart.attributes.pagination != blank and cart.attributes.pagination -%}
+    {%- assign product_per_page = cart.attributes.pagination -%}
+    {%- else -%}
+    {%- assign product_per_page = settings.collection_results_per_page -%}
+    {%- endif -%}
+
+    {%- paginate collection.products by product_per_page -%}
+
+    {%- case settings.collection_results_per_row -%}
+    {%- when '1' -%}
+        {%- assign grid_item_width = 'grid-item col-12' -%}
+        {%- assign rows = 'products-list' -%}
+
+      {%- when '2' -%}
+        {%- assign grid_item_width = 'grid-item col-6' -%}
+        {%- assign rows = 'products-grid' -%}
+
+      {%- when '3' -%}
+        {%- assign grid_item_width = 'grid-item col-6 col-md-4' -%}
+        {%- assign rows = 'products-grid' -%}
+
+      {%- when '4' -%}
+        {%- assign grid_item_width = 'grid-item col-6 col-md-4 col-lg-3' -%}
+        {%- assign rows = 'products-grid' -%}
+
+      {%- when '5' -%}
+        {%- assign grid_item_width = 'grid-item col-6 col-md-4 col-lg-3 col5' -%}
+        {%- assign rows = 'products-grid' -%}
+    {%- endcase -%}
+
+    <div class="col-12 col-xl-9 col-main" data-section-type="collection-template">
+      {%- include 'collection-header' -%}
+
+      {%- include 'toolbar' -%}
+
+
+      
+      {%- comment -%}
+      {%- if collection.sort_by == 'no-products' -%}  
+      <div class="product-collection {{ rows }} row lazybit lazybit-load" data-lazy-url="{{ request.path }}?view=products"></div>
+      <div class="product-collection {{ rows }} row"></div>
+      {%- else -%}
+      {%- endif -%}
+      {%- endcomment -%}
+
+
+      
+      {%- comment -%}
+      {%- if settings.sort_by_qty and collection.sort_by == blank -%}
+      <div hidden class="hidden andre">SORTING SHOULD WORK: {{ collection.sort_by }}</div>
+      {%- endif -%}
+      {%- endcomment -%}
+
+      <div class="product-collection {{ rows }} row lazybit lazybit-load" data-lazy-method="append" data-lazy-url="{{ request.path }}?view=products-lazy{% if collection.sort_by != blank %}&sort_by={{ collection.sort_by }}{% endif %}" data-lazy-remove=".skeleton.product-item">
+        {%- if collection.products_count > 0 -%}  
+
+          {%- if paginate.current_page == 1 -%}        
+        
+            {%- comment -%}
+            {%- endcomment -%}
+            {%- if settings.sort_by_qty and collection.sort_by == blank -%}  
+
+              {%- assign sortable_products = collection.products -%}
+              {%- include 'sort-by-qty', products_to_sort: sortable_products -%}
+              {%- for products_by_qty_index in products_by_qty_indexes -%}
+
+                {%- assign i = products_by_qty_index | split:'.' | last | abs -%}
+                {%- include 'product-skipper', product: sortable_products[i] -%}
+
+                {%- if forloop.index < 6 -%}  
+                {%- assign pgi_im_iep = 'data-expand="-1"' -%}
+                {%- include 'product-grid-item', product: sortable_products[i], pgi_im_iep: pgi_im_iep, grid_item_class: grid_item_width -%}
+                {%- endif -%}
+
+                {%- if forloop.index > 5 and forloop.index < 11 -%}  
+                {%- include 'product-grid-item.skeleton' -%}
+                {%- endif -%}
+
+                {%- if forloop.index == 11 -%}
+                  {%- break -%}
+                {%- endif -%}
+
+              {%- endfor -%}
+
+            {%- else -%}
+
+              {%- for product in collection.products -%}
+
+                {%- include 'product-skipper', product: product -%}
+
+                {%- if forloop.index < 6 -%}  
+                {%- assign pgi_im_iep = 'data-expand="-1"' -%}
+                {%- include 'product-grid-item', pgi_im_iep: pgi_im_iep, grid_item_class: grid_item_width -%}
+                {%- endif -%}
+
+                {%- if forloop.index > 5 and forloop.index < 11 -%}  
+                {%- include 'product-grid-item.skeleton' -%}
+                {%- endif -%}
+
+                {%- if forloop.index == 11 -%}
+                  {%- break -%}
+                {%- endif -%}
+
+              {%- endfor -%}
+
+            {%- endif -%}
+
+          {%- else -%}
+
+            {%- comment -%}
+            {%- endcomment -%}
+            {%- if settings.sort_by_qty and collection.sort_by == blank -%}  
+
+              {%- assign sortable_products = collection.products -%}
+              {%- include 'sort-by-qty', products_to_sort: sortable_products -%}
+              {%- for products_by_qty_index in products_by_qty_indexes -%}
+
+                {%- assign i = products_by_qty_index | split:'.' | last | abs -%}
+                {%- include 'product-skipper', product: sortable_products[i] -%}
+
+                {%- assign pgi_im_iep = blank -%}
+                {%- include 'product-grid-item', product: sortable_products[i], pgi_im_iep: pgi_im_iep, grid_item_class: grid_item_width -%}
+
+              {%- endfor -%}
+
+            {%- else -%}
+
+              {%- for product in collection.products -%}
+
+                {%- include 'product-skipper', product: product -%}
+
+                {%- assign pgi_im_iep = blank -%}
+                {%- include 'product-grid-item', pgi_im_iep: pgi_im_iep, grid_item_class: grid_item_width -%}
+
+              {%- endfor -%}
+
+            {%- endif -%}
+
+          {%- endif -%}
+
+        {%- else -%}
+        <p class="col-12 text-center">
+          {{- 'collections.general.no_matches' | t -}}
+        </p>
+        {%- endif -%}
+      </div>
+
+
+      {%- if paginate.pages > 1 -%}
+      <div class="padding">{%- include 'pagination-page' -%}</div>
+      {%- endif -%}
+
+    </div>
+    {%- endpaginate -%}   
+    
+
+  </div>
+  
+  {%- comment -%}
+  {%- section 'recently-viewed-products' -%}
+  {%- endcomment -%}
+  <div class="lazybit lazybit-load" data-lazy-url="{{ shop.url }}?view=recently-viewed-products"></div>
+  
+  {%- comment -%}
+  {%- section 'collection--articles' -%}
+  {%- endcomment -%}
+  <div class="lazybit lazybit-load" data-lazy-url="{{ request.path }}?view=related-articles"></div>
+      
+</div>
+{%- include 'collection--faq-json' -%} 
+{%- include 'schema-json-list', shopify_objects: collection.products -%}

@@ -1,0 +1,29 @@
+{%- layout none -%}
+
+{%- comment -%}
+  Product Head
+{%- endcomment -%}
+{%- include 'product-head' -%}
+
+
+
+{%- comment -%}
+<div class="product_bottom">
+{%- endcomment -%}
+  {%- include 'tab-horizontal' -%}
+
+  {%- comment -%}
+  {%- if settings.enable_ask_an_expert -%}
+  <div class="theme-ask" data-toggle="modal" data-target="#ask_an_expert">
+    <h5 class="ask-an-expert-text">
+      {{- settings.ask_an_expert -}}
+    </h5>
+    {%- include 'ask_an_expert' -%}
+  </div>
+  {%- endif -%}
+  {%- endcomment -%}
+
+  <div class="lazybit lazybit-load" data-lazy-url="{{ product.url }}?view=related-products"></div>
+{%- comment -%}
+</div>
+{%- endcomment -%}

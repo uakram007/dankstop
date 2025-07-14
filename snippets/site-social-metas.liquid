@@ -1,0 +1,106 @@
+{%- comment -%}
+
+  Facebook:
+  More info Open Graph meta tags
+    - https://developers.facebook.com/docs/opengraph/using-objects/
+
+  Use the Facebook Open Graph Debugger for validation (and cache clearing)
+    - http://developers.facebook.com/tools/debug
+
+  --------------------------------------------------------------
+
+  Twitter:
+  Your cards must be approved by Twitter to be activated
+    - https://dev.twitter.com/docs/cards/validation/validator
+
+  More information:
+   - https://dev.twitter.com/docs/cards/types/product-card
+   - https://dev.twitter.com/docs/cards/types/summary-card
+
+{%- endcomment -%}
+
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:site_name" content="{{ shop.name }}">
+{%- if page_description -%}
+  <meta property="og:description" content="{{ page_description | escape }}">
+{%- endif -%}
+
+{%- comment -%}
+{%- if settings.twittercard_handle != blank -%}
+<meta name="twitter:site" content="{{settings.twittercard_handle}}">
+{%- endif -%}
+{%- endcomment -%}
+<meta name="twitter:site" content="@DankStop">
+
+
+{%- if template contains 'product' -%}
+
+  <meta property="og:type" content="product">
+  <meta property="og:title" content="{{ product.title | strip_html | escape }}">
+  {%- for image in product.images limit:3 -%}
+  <meta property="og:image" content="http:{{ image.src | product_img_url: 'grande' }}">
+  <meta property="og:image:secure_url" content="https:{{ image.src | product_img_url: 'grande' }}">
+  {%- endfor -%}
+{%- comment -%}
+  <meta property="og:price:amount" content="{{ product.price | money_without_currency }}">
+{%- endcomment -%}
+  <meta property="og:price:amount" content="{{ product.selected_or_first_available_variant.price | money_without_currency }}">
+  <meta property="og:price:currency" content="{{ shop.currency }}">
+
+  <meta name="twitter:card" content="product">
+  <meta name="twitter:title" content="{{ product.title | escape }}">
+  <meta name="twitter:description" content="{{ product.description | strip_html | truncatewords: 140, '' | escape }}">
+  <meta name="twitter:image" content="https:{{ product.featured_image.src | img_url: 'medium' }}">
+  <meta name="twitter:image:width" content="240">
+  <meta name="twitter:image:height" content="240">
+  <meta name="twitter:label1" content="Price">
+{%- comment -%}
+  <meta name="twitter:data1" content="{% if product.price_varies %}From {% endif %}{{ product.price | money_with_currency | strip_html | escape }}">
+{%- endcomment -%}
+  <meta name="twitter:data1" content="{{ product.selected_or_first_available_variant.price | money_with_currency | strip_html | escape }}">
+  {%- if product.vendor != blank -%}
+  <meta name="twitter:label2" content="Brand">
+  <meta name="twitter:data2" content="{{ product.vendor | escape }}">
+  {%- else -%}
+  <meta name="twitter:label2" content="Availability">
+  <meta name="twitter:data2" content="In stock">
+  {%- endif -%}
+
+{%- elsif template contains 'article' -%}
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{ article.title | strip_html | escape }}">
+
+  {%- assign img_tag = '<img' -%}
+  {%- if article.content contains img_tag -%}
+    {%- assign src = article.content | split: 'src="' -%}
+    {%- assign src = src[1] | split: '"' | first | remove: 'https:' | remove: 'http:' -%}
+    {%- if src -%}
+  <meta property="og:image" content="http:{{ src }}">
+  <meta property="og:image:secure_url" content="https:{{ src }}">
+
+  <meta property="twitter:image" content="{{ src }}">
+    {%- endif -%}
+  {%- endif -%}
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ article.title | escape }}">
+  <meta name="twitter:description" content="{{ article.excerpt_or_content | strip_html | truncatewords: 140, '' | escape }}">
+
+{%- else -%}
+
+  {%- assign site_logo_url = 'android-chrome-256x256.png' | asset_img_url: 'master' -%}
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ page_title | escape }}">
+  <meta name="twitter:description" content="{{ page_description | escape }}">
+  <meta name="twitter:image" content="https:{{ site_logo_url }}">
+  <meta name="twitter:image:width" content="256">
+  <meta name="twitter:image:height" content="256">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ page_title | escape }}">
+  <meta property="og:image" content="http:{{ site_logo_url }}">
+  <meta property="og:image:secure_url" content="https:{{ site_logo_url }}">
+
+{%- endif -%}

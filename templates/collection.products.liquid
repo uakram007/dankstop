@@ -1,0 +1,50 @@
+{%- layout none -%}
+
+{%- include 'lazyload-placeholder' -%} 
+
+        {%- case settings.collection_results_per_row -%}
+        {%- when '1' -%}
+            {%- assign grid_item_width = 'grid-item col-12' -%}
+            {%- assign rows = 'products-list' -%}
+
+          {%- when '2' -%}
+            {%- assign grid_item_width = 'grid-item col-6' -%}
+            {%- assign rows = 'products-grid' -%}
+
+          {%- when '3' -%}
+            {%- assign grid_item_width = 'grid-item col-6 col-md-4' -%}
+            {%- assign rows = 'products-grid' -%}
+
+          {%- when '4' -%}
+            {%- assign grid_item_width = 'grid-item col-6 col-md-4 col-lg-3' -%}
+            {%- assign rows = 'products-grid' -%}
+
+          {%- when '5' -%}
+            {%- assign grid_item_width = 'grid-item col-6 col-md-4 col-lg-3 col5' -%}
+            {%- assign rows = 'products-grid' -%}
+        {%- endcase -%}
+
+{%- comment -%}
+{%- endcomment -%}
+{%- if sort_by_qty -%}  
+
+  {%- assign sortable_products = collection.products -%}
+  {%- include 'sort-by-qty', products_to_sort: sortable_products -%}
+  {%- for products_by_qty_index in products_by_qty_indexes -%}
+    {%- assign i = products_by_qty_index | split:'.' | last | abs -%}
+    {%- include 'product-skipper', product: sortable_products[i] -%}
+    <div class="grid-item {{ grid_item_width }} {% if settings.product_image_border%}grid-item-border {% endif %}">   
+      {%- include 'product-grid-item', product: sortable_products[i] -%}
+    </div>        
+  {%- endfor -%}
+
+{%- else -%}
+
+  {%- for product in collection.products -%}
+    {%- include 'product-skipper', product: product -%}
+  <div class="grid-item {{ grid_item_width }} {% if settings.product_image_border%}grid-item-border {% endif %}">   
+    {%- include 'product-grid-item' -%}
+  </div>
+  {%- endfor -%}
+
+{%- endif -%}

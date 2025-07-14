@@ -1,0 +1,886 @@
+/*============================================================================
+  #General Variables + #Colors
+==============================================================================*/
+
+$themeRed: #e95144;
+$colorPrimary: #39b54a;
+
+/* Highlife Color Pallette */
+$colorLightestGray: #f9f9f9;
+$colorLightGray: #f9f9f9;
+$colorGray: rgba(0,0,0,0.4);
+$colorMediumGray: #b2b2b2;
+$colorDarkGray: #353535;
+$colorDevilsGray: #666;
+$colorPaleRed: #dd5833;
+$colorPaleBurgundy: #ca7272;
+$colorOrange: #f9b273;
+$colorGreen: #39B54A;
+$colorNavy: #79a0a9;
+$colorDarkGold: #EEBC1D;
+$colorHeartPink: #f79090;
+$colorSalmon: #f05656;
+$colorDSOrange: #ff9900;
+$colorDSBlue: #33ccff;
+$colorBGGray: #eaebf0;
+$colorRGBAPoint1: rgba(0,0,0,0.1);
+.color-primary {color:$colorPrimary;}
+.color-devil-gray {color:$colorDevilsGray;}
+.color-pale-red {color:$colorPaleRed;}
+.color-pale-burgundy {color:$colorPaleBurgundy;}
+.color-orange {color:$colorOrange;}
+.color-green {color:$colorGreen;}
+.color-navy {color:$colorNavy;}
+.bg-color-devil-gray {background-color:$colorDevilsGray;}
+.bg-color-pale-red {background-color:$colorPaleRed;}
+.bg-color-pale-burgundy {background-color:$colorPaleBurgundy;}
+.bg-color-orange {background-color:$colorOrange;}
+.bg-color-green {background-color:$colorGreen;}
+.bg-color-navy {background-color:$colorNavy;}
+
+
+/* Default and add to cart buttons */
+/* Button 1 */
+   $background_1: {{ settings.btn_1_bg_color }};
+   $color_1 : {{ settings.btn_1_text_color }};
+   $border_1 : {{ settings.btn_1_border_color }};
+
+/* Button 2 */
+   $background_2: {{ settings.btn_2_bg_color }};
+   $color_2 : {{ settings.btn_2_text_color }};
+   $border_2 : {{ settings.btn_2_border_color }};
+/* Color Button ============  */
+@mixin button_1 {
+    background: $background_1;
+    color: $color_1;
+    border-color: $border_1;
+}
+@mixin button_2 {
+    background: $background_2;
+    color: $color_2;
+    border-color: $border_2;
+}
+/* Font size */
+$font_size: {{ settings.body_font_size }}px;	
+
+
+
+/*============================================================================
+  #Z-index Control
+==============================================================================*/
+$z_index_1: 1;
+$z_index_2: 3;
+$z_index_3: 7;
+$z_index_4: 13;
+$z_index_5: 37;
+$z_index_6: 73;
+$z_index_7: 137;
+
+
+
+/*============================================================================
+  #Sass Mixins
+==============================================================================*/
+
+@mixin prefix($property, $value) {
+  -webkit-#{$property}: #{$value};
+  -ms-#{$property}: #{$value};
+  #{$property}: #{$value};
+}
+
+@mixin prefix($property, $value...) {
+  -webkit-#{$property}: #{$value};
+  -ms-#{$property}: #{$value};
+  #{$property}: #{$value};
+}
+
+@mixin transition($transition: 0.1s all) {
+  @include prefix('transition', #{$transition});
+}
+
+
+/*============================================================================
+  #Breakpoint and Grid Variables
+==============================================================================*/
+$viewportIncrement: 1px;
+
+$small: 480px;
+$medium: 768px;
+$large: 769px;
+$desktop: 1200px;
+
+$postSmall: $small + $viewportIncrement;
+$preMedium: $medium - $viewportIncrement;
+$preLarge: $large - $viewportIncrement;
+
+/*================ The following are dependencies of csswizardry grid ================*/
+$breakpoints: (
+  'small' '(max-width: #{$small})',
+  'medium' '(min-width: #{$postSmall}) and (max-width: #{$medium})',
+  'medium-down' '(max-width: #{$medium})',
+  'large' '(min-width: #{$large})'
+);
+$breakpoint-has-widths: ('small', 'medium', 'medium-down', 'large');
+$breakpoint-has-push:  ('medium', 'medium-down', 'large');
+$breakpoint-has-pull:  ('medium', 'medium-down', 'large');
+
+/*============================================================================
+  Dependency-free breakpoint mixin
+  http://blog.grayghostvisuals.com/sass/sass-media-query-mixin/
+==============================================================================*/
+$min: min-width;
+$max: max-width;
+@mixin at-query ($constraint, $viewport1, $viewport2:null) {
+  @if $constraint == $min {
+    @media screen and ($min: $viewport1) {
+      @content;
+    }
+  } @else if $constraint == $max {
+    @media screen and ($max: $viewport1) {
+      @content;
+    }
+  } @else {
+    @media screen and ($min: $viewport1) and ($max: $viewport2) {
+      @content;
+    }
+  }
+}
+
+
+
+
+
+/*============================================================================
+  #Flex Mixins
+==============================================================================*/
+/* Flex */
+@mixin flexbox() {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+@mixin inline-flex {
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -moz-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+}
+
+@mixin justify-content($justify) {
+    -webkit-box-pack: $justify;
+    -moz-box-pack: $justify;
+    -ms-flex-pack: $justify;
+    -webkit-justify-content: $justify;
+    justify-content: $justify;
+}
+
+@mixin align-items($align) {
+    -webkit-align-items: $align;
+    -moz-align-items: $align;
+    -ms-align-items: $align;
+    align-items: $align;
+}
+
+@mixin flex-direction($direction) {
+    -webkit-flex-direction: $direction;
+    -moz-flex-direction: $direction;
+    -ms-flex-direction: $direction;
+    flex-direction: $direction;
+}
+
+@mixin flex-wrap($wrap) {
+    -webkit-flex-wrap: $wrap;
+    -moz-flex-wrap: $wrap;
+    -ms-flex-wrap: $wrap;
+    flex-wrap: $wrap;
+}
+
+@mixin flex-center-all-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  @include prefix(flex-direction, row);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  @include prefix(align-items, center);
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  @include prefix(justify-content, center);
+}
+
+@mixin flex-center-all-row-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  @include prefix(flex-direction, row);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  @include prefix(align-items, center);
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  @include prefix(justify-content, center);
+  @include prefix(flex-wrap, wrap);
+}
+
+@mixin flex-center-all-row-wrap-stretch {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  @include prefix(flex-direction, row);
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  @include prefix(align-items, stretch);
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  @include prefix(justify-content, center);
+  @include prefix(flex-wrap, wrap);
+}
+
+@mixin flex-center-all-row-space-around {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  @include prefix(flex-direction, row);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  @include prefix(align-items, center);
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  @include prefix(justify-content, space-around);
+}
+
+@mixin flex-center-all-row-space-around-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  @include prefix(flex-direction, row);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  @include prefix(align-items, center);
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  @include prefix(justify-content, space-around);
+  @include prefix(flex-wrap, wrap);
+}
+
+@mixin flex-center-all-row-space-between {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  @include prefix(flex-direction, row);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  @include prefix(align-items, center);
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  @include prefix(justify-content, space-between);
+}
+
+@mixin flex-row-center-top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  @include prefix(flex-direction, row);
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  @include prefix(align-items, flex-start);
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  @include prefix(justify-content, center);
+}
+
+@mixin flex-left-center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  @include prefix(flex-direction, row);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  @include prefix(align-items, center);
+  -webkit-box-pack: flex-start;
+  -ms-flex-pack: flex-start;
+  @include prefix(justify-content, flex-start);
+}
+
+@mixin flex-left-center-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  @include prefix(flex-direction, row);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  @include prefix(align-items, center);
+  -webkit-box-pack: flex-start;
+  -ms-flex-pack: flex-start;
+  @include prefix(justify-content, flex-start);
+  @include prefix(flex-wrap, wrap);
+}
+
+@mixin flex-top-left-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  @include prefix(flex-direction, row);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  @include prefix(align-items, flex-start);
+  -webkit-box-pack: flex-start;
+  -ms-flex-pack: flex-start;
+  @include prefix(justify-content, flex-start);
+  @include prefix(flex-wrap, wrap);
+}
+
+@mixin flex-center-all-row-reverse {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  @include prefix(flex-direction, row-reverse);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  @include prefix(align-items, center);
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  @include prefix(justify-content, center);
+}
+
+@mixin flex-center-all-column {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  @include prefix(flex-direction, column);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  @include prefix(align-items, center);
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  @include prefix(justify-content, center);
+}
+
+@mixin flex-left-center-column {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  @include prefix(flex-direction, column);
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  @include prefix(align-items, flex-start);
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  @include prefix(justify-content, center);
+}
+
+@mixin flex-center-horizontal-column-space-between {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+  @include prefix(flex-direction, column);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  @include prefix(align-items, center);
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  @include prefix(justify-content, space-between);
+}
+
+@mixin flex-inline-center-all-row-space-between {
+  display: -webkit-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  @include prefix(flex-direction, row);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  @include prefix(align-items, center);
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  @include prefix(justify-content, space-between);
+}
+
+@mixin flex-inline-center-horizontal-row-space-between {
+  display: -webkit-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  @include prefix(flex-direction, row);
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  @include prefix(align-items, flex-start);
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  @include prefix(justify-content, space-between);
+}
+
+@mixin flex-inline-center-horizontal-column-space-between {
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+  @include prefix(flex-direction, column);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  @include prefix(align-items, center);
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  @include prefix(justify-content, space-between);
+}
+
+
+
+
+
+/*============================================================================
+  # DankBlog Articles
+==============================================================================*/
+.main-content {
+  position: relative;
+}
+
+.dankblog_header {
+  padding-top: 30px;
+  padding-bottom: 30px;
+
+  @include at-query ($min, $desktop) {    
+/*     height: 70px; */
+    > * {
+      height: 100%;
+    }
+  }
+  
+  > .row {
+    @include justify-content(center);
+    position: relative;
+    @include at-query ($min, $desktop) {    
+      @include justify-content(space-between);
+    }
+  }
+  
+  #dankblog_logo, 
+  .dankblog_logo {
+    @include flexbox();
+    @include align-items(center);
+    
+/*     @media screen and (min-width: 769px) {
+      max-width: 200px;
+    }
+ */
+    a {
+      margin: 0 auto;
+    }
+
+    h1 {
+      position: relative;
+      font-size: 26px;
+      font-weight: lighter;
+      margin: 0px;
+
+      .title-dank {
+        font-weight: bold;
+        color: #39b54a;
+      }
+      .page-tag {
+        display: inline-block;
+        font-size: 12px;
+        line-height: 1;
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+      }
+    }
+  }
+
+  .blog-nav {
+    @include flexbox();
+    @include align-items(center);
+    @include justify-content(space-between);
+    margin: 0px;
+
+    li {
+      height: 100%;
+      margin: 0;
+      font-size: 17px;
+      cursor: pointer;
+      @include flexbox();
+      @include align-items(center);
+      @include justify-content(center);
+
+      a {
+        display: table-cell;
+        vertical-align: middle;
+      }
+      
+      &.active, &:hover {
+        &:after {
+          content: " ";
+          display: block;
+          position: absolute;
+          width: 100%;
+          bottom: -3px;
+          border-bottom: 5px solid #39b54a !important;
+        }
+      }
+
+    }
+
+  }
+
+  #article_search_icon {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    max-height: 100%;
+    cursor: pointer;
+    padding-top: 8px;
+    padding-bottom: 0;
+  }
+
+}
+
+  
+.list_of_articles,
+.articles-list {
+
+  .individual_article {
+    margin-top: 30px;
+    @include prefix(animation, fadein 1730ms);
+
+    * {
+      color: #353535;
+    }
+
+    img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    > .article_post_date, > h2 {
+      text-align: center;
+    }
+
+    .article_post_date {
+      font-size: 0.8em;
+      margin-top: 15px;
+      
+      p {
+        margin-bottom: 5px;
+      }
+    }
+
+    h2 {
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.1;
+      font-size: 1.1em;
+    }
+    
+    .article_excerpt {
+      font-size: 0.8em;
+    }
+    
+    .read_more_link {
+      text-transform: lowercase;
+      text-decoration: underline;
+      font-size: 14px;
+    }
+    
+    &.col-12 { 
+
+      > a {
+        width: 100%;
+        position: relative;
+        display: block;
+      }
+
+      img {
+        height: 300px;
+      }
+
+      > ul {
+        display: none;
+      }
+
+      h2 {
+        position: absolute;
+        z-index: 1;
+        max-width: calc(50% - 20px);
+        top: 10px;
+        left: 10px;
+        background: $colorPrimary; 
+        color: #fff;
+        padding: 7px 10px;
+        font-size: 2.5em;
+/*         line-height: 1.5; */
+      }
+
+      .article_post_date, .article_excerpt, .article_tags, .read_more_link {
+        display: none;
+      }
+    }
+
+  }
+
+}
+
+
+@include at-query ($max, $desktop) {    
+  .dankblog_header {
+    .blog-nav {
+      display: none;
+      z-index: 1;
+      background: #fff;
+      position: absolute;
+      width: auto;
+      padding: 13px 8px;
+      top: 90px;
+      left: 21%;
+      @include prefix(box-shadow, 0px 0px 5px rgba(0,0,0,0.3));
+      
+      li {
+        height: auto;
+        margin: 0 auto;
+        text-align: center;
+        border-bottom: 4px solid #fff;
+        margin-bottom: 5px;
+      }
+      ul {
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0 15px;
+
+        li {
+          margin-bottom: 5px;
+        }
+      }
+    }
+    #more_categories_mobile {
+      margin-right: 20px;
+      .icon-nav.icon-sm {
+        margin-right: 5px;
+        transform: scale(1.1);
+        .icon-line,
+        .icon-line:before, 
+        .icon-line:after {
+          background-color: #6c757d;
+        }
+      }
+      &:hover {
+        .icon-nav.icon-sm {
+          .icon-line,
+          .icon-line:before, 
+          .icon-line:after {
+            background-color: #fff;
+          }
+        }
+      }
+    }
+    button {
+      margin-top: 10px;
+    }
+  }
+}
+@include at-query (between, $small, $desktop) {
+  .dankblog_header {
+    .blog-nav {
+      left: 40%;
+    }
+  }
+}
+
+
+@include at-query ($min, $desktop) {    
+  .individual_article:first-child {
+    position: relative;
+  }
+
+  .dankblog_header {
+
+    .blog-nav {
+
+      li {
+        text-align: center;
+
+        a {
+          height: 70px;
+        }
+      }
+    }
+
+    #more_categories_mobile {
+      display: none;
+    }
+
+    #article_search_icon {
+/*       background: transparent; */
+      border: 0;
+    }
+    
+  }
+}
+
+
+#search_container {
+  display: none;
+}
+#blog_search_form {
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0 15px;
+  @include flexbox();
+  @include align-items(flex-start);
+
+  #type_search_field {
+    position: relative;
+    top: 27vh;
+    max-width: 700px;
+    margin: 0 auto;
+    width: 100%;
+    height: 50px;
+    border: 1px solid #000;
+    border-radius: 6px;
+  }
+
+  > div {
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-radius: 7px;
+    border: 1px solid #000;
+    max-width: 500px;
+    top: 150px;
+
+    input {
+      width: 100%;
+      height: 100%;
+      border-radius: 7px;
+    }
+
+    button {
+      position: absolute;
+      right: 0;
+      top: 12px;
+    }
+  }
+}
+
+
+#dankblog_articles {
+
+  .pagination-custom {
+    margin: 0px;
+    
+    li {
+      display: none;
+    }
+
+    li:last-child {
+      display: block;
+    }
+    
+    a#load_more_page:hover, a#load_more_page:focus {
+      transform: scale(1.1) !important;
+      background: none;
+      color: green;
+      border-color: #39b54a;
+    }
+    
+    a#load_more_page {
+      text-transform: uppercase;
+      border-bottom: 1px solid;
+      padding: 4px 0;
+      letter-spacing: 2px;
+      border: none;
+      border-bottom: 1px solid #39b54a;
+    }
+  }
+}
+
+
+
+
+
+@keyframes fadein {
+    from { opacity: 0.1; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0.1; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0.1; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0.1; }
+    to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from { opacity: 0.1; }
+    to   { opacity: 1; }
+}

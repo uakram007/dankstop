@@ -1,0 +1,357 @@
+
+  {%- comment -%}
+  <!-- Current Page Object ====================================== -->
+  {%- endcomment -%}
+  {%- if template.name == 'collection' -%}
+    {%- assign current_page_object = collection -%}
+  {%- elsif template.name == 'product' -%}
+    {%- assign current_page_object = product -%}
+  {%- elsif template.name == 'page' -%}
+    {%- assign current_page_object = page -%}
+    {{ 'pages.scss.css' | asset_url | stylesheet_tag }}
+  {%- elsif template.name == 'article' -%}
+  {%- comment -%}
+  <!-- Article head ====================================== -->
+  {%- endcomment -%}
+    {% comment %} <link rel="amphtml" href="{{ canonical_url }}?view=amp-html"> {% endcomment %}
+    {%- assign current_page_object = article -%}
+  {%- elsif template.name == 'blog' -%}
+    {%- assign current_page_object = blog -%}
+  {%- endif -%}
+
+  
+
+
+
+  {%- comment -%}
+  <!-- De-indexer =============================================== -->
+  {%- endcomment -%}
+  {%- comment -%}
+  {%- assign deIndex_this_page = false -%}
+  {%- unless current_tags == blank -%}
+    {%- assign deIndex_this_page = true -%}
+  {%- endunless -%}
+  {%- if current_page_object.metafields.global.noindex == "noindex,nofollow" or current_page_object.metafields.seo.hidden == '1' or current_page_object.metafields.seo.hidden == 1 -%}
+    {%- assign deIndex_this_page = true -%}
+  {%- elsif current_page_object.metafields.global.noindex == "doindex,follow" -%}
+    {%- assign deIndex_this_page = false -%}
+  {%- endif -%}
+  {%- if deIndex_this_page -%}
+    <meta name="robots" content="noindex,nofollow">
+  {%- endif -%}
+  {%- endcomment -%}
+
+
+
+
+
+  {%- comment -%}
+  <!-- Prefetching, preloading, prebrowsing ========================== -->
+  <!-- preloading styles.min may not be necessary as CPCSS does the work -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="preconnect" href="https://www.googleadservices.com" crossorigin>
+  <link rel="preconnect" href="https://googleads.g.doubleclick.net" crossorigin>
+  <link rel="preconnect" href="https://www.google.com" crossorigin>
+  <link rel="preconnect" href="https://portal.dankstop.com" crossorigin>
+  <link rel="preconnect" href="https://nsg.symantec.com" crossorigin>
+  <link rel="preconnect" href="https://v.shopify.com" crossorigin>
+  <link rel="preload" as="style" href="{{ 'theme.min.css' | asset_url }}">
+  {%- endcomment %}
+  <link rel="preconnect" href="https://cdn.shopify.com">
+  <link rel="preload" as="script" href="//cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js">
+  <link rel="preload" as="script" href="{{ 'init.min.js' | asset_url }}">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+  {%- if template.name == 'product' -%}
+  <link rel="preconnect" href="https://monorail-edge.shopifysvc.com" crossorigin>
+  <link rel="preconnect" href="https://godog.shopifycloud.com" crossorigin>
+  {%- endif -%}
+  <link rel="preconnect" href="https://imgs.signifyd.com" crossorigin>
+  <link rel="preconnect" href="https://connect.facebook.net" crossorigin>
+
+
+
+
+  
+  {%- comment -%}
+  <!-- Favicon =========================================================== -->
+  <!-- favicon.png and favicon-16x16.png are identical, so we're using the former to save on 1 call -->
+  {%- include 'site_favicon' -%}
+  {%- endcomment -%}
+  {%- if settings.favicon != blank -%}
+  <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+  {%- endif -%}
+  <link rel="manifest" href="{{ 'manifest.json' | asset_url | split: '?' | first }}">
+  <link rel="shortcut icon" href="{{ 'favicon.ico' | asset_url | split: '?' | first }}"/>
+  <link rel="icon" href="{{ 'favicon.png' | asset_url | split: '?' | first }}" type="image/png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ 'apple-touch-icon.png' | asset_url | split: '?' | first }}">
+  <link rel="icon" type="image/png" href="{{ 'favicon-32x32.png' | asset_url | split: '?' | first }}" sizes="32x32">
+  <link rel="icon" type="image/png" href="{{ 'favicon.png' | asset_url | split: '?' | first }}" sizes="16x16">
+  <link rel="mask-icon" href="{{ 'safari-pinned-tab.svg' | asset_url | split: '?' | first }}" color="#19bc5e">
+  <meta name="apple-mobile-web-app-title" content="{{ shop.name }}">
+  <meta name="application-name" content="{{ shop.name }}">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="msapplication-TileColor" content="#19bc5e">
+  <meta name="msapplication-TileImage" content="{{ 'mstile-150x150.png' | asset_url }}" />
+  <meta name="msapplication-square70x70logo" content="{{ 'mstile-150x150.png' | asset_url }}">
+  <meta name="msapplication-square150x150logo" content="{{ 'mstile-150x150.png' | asset_url }}">
+  <meta name="msapplication-wide310x150logo" content="{{ 'mstile-150x150.png' | asset_url }}">
+  <meta name="msapplication-square310x310logo" content="{{ 'mstile-150x150.png' | asset_url }}">
+  <meta name="msapplication-config" content="{{ 'browserconfig.xml' | asset_url }}">
+
+
+
+
+
+  {%- comment -%}
+  <!-- Critical Path CSS (CPSS) ====================================== -->
+  <!-- Site/Global CPSS -->
+  <!-- We include extra style tags, in case we forget or don't include them in the snippet -->
+  <!-- ...far better to hae extra style tags in the CSS, as it still validates, than breaking the whole site -->
+  {%- endcomment -%}
+  <style>{%- include 'cpcss_site' -%}
+
+  {%- comment -%}
+  <!-- Template-specific CPSS -->
+  {%- endcomment -%}
+  {%- assign cpcss_enabled_templates = "index, product, collection, blog, article, page" -%}
+  {%- if cpcss_enabled_templates contains template.name -%}
+    {%- assign cpcss_snippet_name = "cpcss_" | append: template.name -%}
+    {%- include cpcss_snippet_name -%}
+  {%- endif -%}
+
+  {%- comment -%}
+  <!-- Variable CPSS -->
+  {%- endcomment -%}
+  .suppermarket-product-tabs-sections,.home-new-arrivals-sections,.home-featured-products-sections{margin:{{ settings.home__sections_margin }}px 0}.header-top{background-color:{{ settings.bg_header_top }};color:{{ settings.text_header_top_color }};}.header-top a,.header-top .top-message p a:hover,.header-top .close:hover{color:{{ settings.text_header_top_color }};}.header-top .clock-item{border-color:{{ settings.text_header_top_color | color_modify: 'alpha', 0.8 }};}</style>
+
+
+
+
+
+  {%- comment -%}
+  <!-- Org + Website + Search Schema.org ================================================== -->
+  {%- include 'site-schema-json-ld'  -%}
+  {%- endcomment -%}
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","url":"https://dankstop.com","mainEntityOfPage":{"@type":"WebPage","@id":"https://dankstop.com/about-us/"},"name":"DankStop","alternateName":"DankStop Online Headshop","description":"Our dab rig selection is HUGE. We stock a variety of glass concentrate pipes, vapor rigs, and oil rigs by only the best brands in the industry.","brand":"DankStop","logo":{"@type":"ImageObject","name":"DankStop Round Logo","url":"https:{{ 'android-chrome-256x256.png' | asset_img_url: 'master' }}","width":256,"height":256},"legalName":"DS Distribution Inc","duns":"025262345","sameAs":["https://www.instagram.com/dankstop/","https://www.facebook.com/Dankstop/","https://www.youtube.com/user/Dankstop","https://twitter.com/dankstop","https://www.pinterest.com/DankStop/","https://www.crunchbase.com/organization/dankstop","https://plus.google.com/+DankStopOnlineHeadshop","https://dankstop.tumblr.com/","https://www.snapchat.com/add/dankstop","https://www.trustpilot.com/review/www.dankstop.com","https://www.leafly.com/brands/dankstop","https://www.bbb.org/us/nj/edison/profile/tobacco-store/dank-depot-llc-0221-90179276","https://www.indeed.com/cmp/Dankstop/reviews?fcountry=US&floc=Edison%2C+NJ","https://www.glassdoor.com/Reviews/DankStop-Reviews-E1659471.htm"],"contactPoint":[{"@type":"ContactPoint","email":"support@dankstop.com","telephone":"+1-844-326-5786","contactType":"customer service","contactOption":"TollFree","availableLanguage":["English"]},{"@type":"ContactPoint","email":"wholesale@dankstop.com","telephone":"+1-844-326-5786","contactType":"sales","contactOption":"TollFree","availableLanguage":["English"]}],"owns":[{"@type":"WebSite","name":"Highlife Wholesale","url":"https://highlife.com/","sameAs":["https://www.instagram.com/highlife.wholesale/","https://www.facebook.com/highlifewholesale/"]},{"@type":"Brand","name":"Nucleus Glass","url":"https://getnucleus.com/"},{"@type":"Brand","name":"Ronin Glass","url":"https://smokeronin.com/","sameAs":["https://www.instagram.com/smokeronin/","https://www.facebook.com/smokeronin/"]},{"@type":"Brand","name":"Sweet Tooth Grinders","url":"https://sweettoothgear.com/"},{"@type":"Brand","name":"LavaTech Dabbing","url":"https://getlavatech.com/","sameAs":["https://www.instagram.com/getlava/","https://www.facebook.com/LavaTech-1007671012773399/"]},{"@type":"WebSite","name":"SanaPure CBD","url":"https://sanapurecbd.com/","sameAs":["https://www.instagram.com/sanapurewellness/","https://www.facebook.com/sanapurecbd"]},{"@type":"WebSite","name":"DankStop Online Headshop","url":"https://dankstop.com/"}],"foundingDate":"2014-04-03","foundingLocation":{"@type":"Place","name":"DankStop HQ","address":{"@type":"PostalAddress","addressLocality":"Edison","addressRegion":"NJ","postalCode":"08837"}},"founders":[{"@type":"Person","name":"Feliks Khaykin","sameAs":["https://www.linkedin.com/in/fkhaykin","https://www.facebook.com/fkhaykin"]},{"@type":"Person","name":"Louis Coniglio","sameAs":["https://www.linkedin.com/in/louis-coniglio-44698510b/","https://www.facebook.com/louie.coniglio"]}],"members":[{"@type":"Person","name":"Feliks Khaykin","sameAs":["https://www.crunchbase.com/person/feliks-khaykin","https://felikskhaykin.com/","https://www.linkedin.com/in/fkhaykin","https://www.facebook.com/fkhaykin"]},{"@type":"Person","name":"Louis Coniglio","sameAs":["https://www.crunchbase.com/person/louis-coniglio","https://www.linkedin.com/in/louis-coniglio-44698510b/","https://www.facebook.com/louie.coniglio"]},{"@type":"Person","name":"Gabriel Aronovich","sameAs":["https://www.crunchbase.com/person/gabriel-aronovich","https://www.linkedin.com/in/gabrielaronovich/"]},{"@type":"Person","name":"Vadim Telyatnikov","sameAs":["https://www.crunchbase.com/person/vadim-telyatnikov-3a4d","https://www.linkedin.com/in/vadimtelyatnikov/"]},{"@type":"Person","name":"Joshua Solan","sameAs":["https://www.crunchbase.com/person/joshua-solan","https://www.linkedin.com/in/joshua-solan-74272/"]},{"@type":"Person","name":"Andre Bulatov","sameAs":["https://www.crunchbase.com/person/andre-bulatov","https://andrebulatov.com/"]}]},{"@context":"http://schema.org","@type":"WebSite","name":"DankStop","alternateName":"Online Headshop","url":"https://dankstop.com","author":{"@type":"Organization","name":"DankStop","logo":{"@type":"ImageObject","name":"DankStop Round Logo","url":"https:{{ 'android-chrome-256x256.png' | asset_img_url: 'master' }}","width":256,"height":256}},"potentialAction":{"@type":"SearchAction","name":"DankStop Site Search","target":"https://dankstop.com/search?q={search_query_string}","query-input":"required name=search_query_string"}}]</script>
+
+
+
+
+
+  {%- comment -%}
+  <!-- Social Metas ================================================== -->
+  {%- include 'site-social-metas'  -%}
+  {%- endcomment -%}
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:site_name" content="{{ shop.name }}">
+  {%- if page_description -%}
+  <meta property="og:description" content="{{ page_description | escape }}">
+  {%- endif -%}
+  <meta name="twitter:site" content="@DankStop">
+  {%- if template contains 'product' -%}
+  <meta property="og:type" content="product">
+  <meta property="og:title" content="{{ product.title | strip_html | escape }}">
+  {%- for image in product.images limit:3 -%}
+  <meta property="og:image" content="http:{{ image.src | product_img_url: 'grande' }}">
+  <meta property="og:image:secure_url" content="https:{{ image.src | product_img_url: 'grande' }}">
+  {%- endfor -%}
+  <meta property="og:price:amount" content="{{ product.selected_or_first_available_variant.price | money_without_currency }}">
+  <meta property="og:price:currency" content="{{ shop.currency }}">
+  <meta name="twitter:card" content="product">
+  <meta name="twitter:title" content="{{ product.title | escape }}">
+  <meta name="twitter:description" content="{{ product.description | strip_html | truncatewords: 140, '' | escape }}">
+  <meta name="twitter:image" content="https:{{ product.featured_image.src | img_url: 'medium' }}">
+  <meta name="twitter:image:width" content="240">
+  <meta name="twitter:image:height" content="240">
+  <meta name="twitter:label1" content="Price">
+  <meta name="twitter:data1" content="{{ product.selected_or_first_available_variant.price | money_with_currency | strip_html | escape }}">
+  {%- if product.vendor != blank -%}
+  <meta name="twitter:label2" content="Brand">
+  <meta name="twitter:data2" content="{{ product.vendor | escape }}">
+  {%- else -%}
+  <meta name="twitter:label2" content="Availability">
+  <meta name="twitter:data2" content="In stock">
+  {%- endif -%}
+  {%- elsif template contains 'article' -%}
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{ article.title | strip_html | escape }}">
+  {%- assign img_tag = '<img' -%}
+  {%- if article.content contains img_tag -%}
+  {%- assign src = article.content | split: 'src="' -%}
+  {%- assign src = src[1] | split: '"' | first | remove: 'https:' | remove: 'http:' -%}
+  {%- if src -%}
+  <meta property="og:image" content="http:{{ src }}">
+  <meta property="og:image:secure_url" content="https:{{ src }}">
+  <meta property="twitter:image" content="{{ src }}">
+  {%- endif -%}
+  {%- endif -%}
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ article.title | escape }}">
+  <meta name="twitter:description" content="{{ article.excerpt_or_content | strip_html | truncatewords: 140, '' | escape }}">
+  {%- else -%}
+  {%- assign site_logo_url = 'android-chrome-256x256.png' | asset_img_url: 'master' -%}
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ page_title | escape }}">
+  <meta name="twitter:description" content="{{ page_description | escape }}">
+  <meta name="twitter:image" content="https:{{ site_logo_url }}">
+  <meta name="twitter:image:width" content="256">
+  <meta name="twitter:image:height" content="256">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ page_title | escape }}">
+  <meta property="og:image" content="http:{{ site_logo_url }}">
+  <meta property="og:image:secure_url" content="https:{{ site_logo_url }}">
+  {%- endif -%}
+
+
+
+
+
+  {%- include 'lazyload-placeholder' -%} 
+
+
+
+
+{%- comment -%}
+
+	{%- unless template == 'collection.ads' %}
+	{% if template == 'list-collections' %}
+	<meta name="description" content="Browse our different categories of smoking accessories at our online smoke shop.  Shop bubblers, water pipes such as bongs and dab rigs, vaporizers for dry herbs, dab pens, and a huge selection of accessories for your next sesh.  Save big by shopping online at your favorite online headshop." />
+	{% elsif canonical_url contains '/collections/glass-hand-pipes/themed' %}
+		<meta name="description" content="Find the coolest and most unique themed glass pipes.  Smoke Cartel has the greatest selection of unique and novelty glass hand pipes, or spoon pipe for your smoking pleasure. Come buy the perfect hand pipe for you!" />
+	{% elsif canonical_url contains '/a/market' %}
+		{% assign parts = canonical_url | remove: 'https://www.smokecartel.com/a/market' | split: '/' %}
+		{% if parts.size >= 2 %}
+		<meta name="robots" content="noindex,nofollow" />
+		{% endif %}
+		<meta name="description" content="Join the largest marketplace for cannabis accessories and counterculture goods.  Sell your handblown glass pipes, water bongs, vaporizers & other smoking accessories on Smoke Cartel and tap into a steady source of sales." />
+	{% elsif canonical_url contains '/a/wholesale' %}
+		{% assign parts = canonical_url | remove: 'https://www.smokecartel.com/a/wholesale/' | split: '/' %}
+		{% if parts[0] == 'cart' %}
+			<meta name="robots" content="noindex,nofollow" />
+			<meta name="description" content="Ready to checkout?  Complete your order through our wholesale checkout." />
+		{% elsif canonical_url == 'https://www.smokecartel.com/a/wholesale' or parts.size == 0 %}
+			<meta name="description" content="Smoke Cartel Distribution supplies thousands of headshops, smoke shops, dispensaries, and vape shops with wholesale water pipes, hand pipes, vaporizers, supplies &amp; more! The premier glass pipe distributor of cannabis accessories." />
+		{% else %}
+			{% assign phandle = parts[0] %}
+			{% assign product = all_products[phandle] %}
+			{% if product and product.title != blank %}
+			<meta name="description" content="Stock the {{ product.title | escape }} for your store.  Smoke Cartel is an authorized distributor of {{ product.vendor }} products." />
+			{% endif %}
+			<meta name="robots" content="noindex,follow" />
+		{% endif %}
+	{% elsif canonical_url contains '/tools/returns' %}
+		{% assign parts = canonical_url | remove: 'https://www.smokecartel.com/tools/returns' | split: '/' %}
+		{% if parts.size >= 2 %}
+		<meta name="robots" content="noindex,nofollow" />
+		{% endif %}
+		<meta name="description" content="Easily return an item from your Smoke Cartel order for a store credit or refund.  Our self serve returns manager will help you process your return quickly and easily." />
+	{% elsif canonical_url contains '/community/affiliate' %}
+		<meta name="description" content="Smoke Cartel Affiliates can earn commissions (a percentage of revenue) on qualifying sales that result from featuring links to Smoke Cartel products and other Smoke Cartel content on their own blogs, websites, or social media followings." />
+	{% elsif page_description %}
+	<meta name="description" content="{% if collection %}{% if current_tags contains '10mm' or current_tags contains '14.5mm' or current_tags contains '18.8mm' %}Find {{ current_tags.first }}{% if current_tags contains '14.5mm' %} and 14mm{% elsif current_tags contains '18.8mm' %} and 19mm or 18mm{% endif %} {{ collection.title }}.  {% endif %}{% endif %}{{ page_description }}" />
+	{% elsif canonical_url contains '/a/frequently-asked-questions' %}
+		<meta name="description" content="Our customer's most commonly asked questions.  Get answers to your questions about our products, policies, service, or more about our online headshop." />
+	{% elsif canonical_url contains '/a/files/' %}
+		{% assign parts = canonical_url | remove: 'https://www.smokecartel.com/a/files/' | split: '/' %}
+		{% if parts.size > 1 %}
+			{% assign titleproduct = all_products[parts[0]] %}
+			<meta name="description" content="Read or download the user manual and owner guide for {{ titleproduct.title | escape }}.  Manufactured by {{ titleproduct.vendor | escape }}, and available at Smoke Cartel." />
+		{% endif %}
+	{% elsif canonical_url contains '/community/reviews' %}
+		{% assign parts = product.description | split: '</p>' %}
+		{% assign featured_blurb = parts | first | strip_html | strip | strip_newlines %}
+		<meta name="description" content="{%- if product.metafields.smokecartel.featured_review_content -%}{{ product.metafields.smokecartel.featured_review_content }}.{% endif %} Complete coverage, unboxing, and customer review of the {{ product.title }}:  {{ featured_blurb }}" />
+	{% elsif template contains 'cart' %}
+		<meta name="robots" content="noindex,follow" />
+	{% endif %}
+	{%- endunless -%}
+	
+	{%- if template == 'collection' and collection.handle == 'smoke-cartel' -%}
+	<meta name="robots" content="noindex,follow" />
+	{%- endif -%}
+	
+
+	<meta name="language" content="english">
+	
+	{% if canonical_url contains "/a/search/" or canonical_url contains "/a/reviews" or canonical_url contains "/a/headshops" or canonical_url contains "/a/vapeshops" or canonical_url contains "/a/stores" %}
+    <meta name="robots" content="noindex,follow" />
+	{% endif %}
+	
+	{% if template == 'index' %}
+	<meta name="google-site-verification" content="xBqqvFUhnmwhG3aDjWv9yaYIYcJ0CWs9WyuYNKKVVJc" />
+	<meta name="google-site-verification" content="_YbhpUb0Gh3yHq_6U-hJILwZ9_j2LKHqgiuR6xC7-SU" />
+	<meta name="google-site-verification" content="HunrBqKDnS-XeIZg6YxoDjiMbqNNuKTtOS7MxUnsBIw" />
+	{% endif %}
+	
+	{%- assign usednoindex = false -%}
+	{% if template == 'collection' and collection and collection.description.size <= 1 and page_description.size <= 1 %}
+	<meta name="robots" content="noindex" />{%- assign usednoindex = true -%}
+	{% elsif canonical_url contains '/collections/vendors' or canonical_url contains '/collections/types?q' %}
+	<meta name="robots" content="noindex" />{%- assign usednoindex = true -%}
+	{% elsif template == 'product' and product.type == 'Other' %}
+	<meta name="robots" content="noindex" />{%- assign usednoindex = true -%}
+	{% elsif template == 'product' and product.type == 'Insurance' or product.type == 'Extend Service Contract' %}
+	<meta name="robots" content="noindex" />{%- assign usednoindex = true -%}
+	{% comment %}
+	{% elsif template == 'product' and product.available == false and product.vendor == 'Smoke Cartel' and product.type != 'Vaporizer' and product.type != 'Vaporizer Accessory' and product.type != 'Replacement Part' and product.type != 'Grinder' and product.metafields.smokecartel.last_30days_views and product.metafields.smokecartel.last_30days_views < 50 and product.metafields.c_f.last_sold %}
+		{%- unless product.type contains 'CBD' -%}
+		{% assign current_timestamp = 'now' | date: "%s" %}
+		{% assign days_old = product.published_at | date: "%s" | minus: current_timestamp | times: -1 | divided_by: 86400 %}
+		{% assign last_sold = current_timestamp | minus: product.metafields.c_f.last_sold | divided_by: 86400 %}
+		{%- if days_old > 90 and last_sold > 30 -%}
+			{%- unless product.tags contains 'master_product' -%}
+			<meta name="robots" content="noindex" />{%- assign usednoindex = true -%}
+			{%- endunless -%}
+		{%- endif -%}
+		{%- endunless -%}
+	{% endcomment %}
+	{% elsif canonical_url contains '/collections/all' %}
+	<meta name="robots" content="noindex,follow" />{%- assign usednoindex = true -%}
+	{% elsif template == 'collection' and collection %}
+		{% if collection.handle contains 'if-you-bought-' or collection.handle contains 'free-gifts-for' or collection.handle contains 'free-gift-for' %}
+			<meta name="robots" content="noindex" />{%- assign usednoindex = true -%}
+		{% elsif current_tags.size > 0 %}
+			{% if current_tags.first == 'Thick Glass' and collection.handle == 'staff-picks' %}
+			{% elsif current_tags.first == 'Themed' and collection.handle == 'glass-hand-pipes' %}
+			{% elsif current_tags.first == 'Straight Tube' and collection.handle == 'bongs-and-water-pipes' %}
+			{% elsif current_tags.first == 'Bent Neck' and collection.handle == 'bongs-and-water-pipes' %}
+			{% elsif current_tags.first == 'Nectar Collector' and collection.handle == 'dab-rigs-and-oil-rigs' %}
+			{% elsif current_tags.first == 'Ice Catcher' and collection.handle == 'bongs-and-water-pipes' %}
+			{% elsif current_tags.first == 'Splash Guard' and collection.handle == 'bongs-and-water-pipes' %}
+			{% elsif current_tags.first == '10mm' or current_tags.first == '14.5mm' or current_tags.first == '18.8mm' %}
+				{% if collection.handle == 'on-sale' or collection.handle == 'staff-picks' or collection.handle == 'staff-picks-recyclers' or collection.handle == 'staff-picks-water-pipes-vapor-rigs' or collection.handle == 'staff-picks-vaporizers' or collection.handle == 'vapor-rigs-over-300' or collection.handle == 'glass-water-pipes-over-300' or collection.handle == 'cheap-dab-rigs' or collection.handle == 'gifts-under-25' or collection.handle == 'gifts-under-25' or collection.handle == 'gifts-under-50' or collection.handle == 'gifts-under-100' or collection.handle == 'clearance-hand-pipes' or collection.handle == 'newest-hand-pipes-fresh-out-the-kiln' or collection.handle == 'glassguard-eligible'  or collection.handle == 'sales-collection' or collection.handle == 'glass-water-pipes-for-dry-herbs-and-tobacco' or collection.handle == 'buy-with-points' %}
+				<meta name="robots" content="noindex" />{%- assign usednoindex = true -%}
+				{% endif %}
+			{% else %}
+			<meta name="robots" content="noindex" />{%- assign usednoindex = true -%}
+			{% endif %}
+		{% elsif current_tags.size > 1 %}
+			<meta name="robots" content="noindex" />{%- assign usednoindex = true -%}
+		{% elsif canonical_url contains '%3fsort_by' or canonical_url contains '%3faff' %}
+			<meta name="robots" content="noindex" />{%- assign usednoindex = true -%}
+		{% elsif collection.products.size <= 0 %}
+			<meta name="robots" content="noindex" />{%- assign usednoindex = true -%}
+		{% endif %}
+		{%- unless usednoindex -%}
+		{% if current_page > 1 %}
+		<meta name="robots" content="noindex,follow" />{%- assign usednoindex = true -%}
+		{% endif %}
+		{%- endunless -%}
+	{% elsif template == 'blog' and current_tags %}
+		<meta name="robots" content="noindex" />
+	{% elsif template == 'blog' %}
+		{% if blog.handle == 'encyclopedia' %}{% assign paginateamount = 100 %}{% else %}{% assign paginateamount = 12 %}{% endif %}
+		{% paginate blog.articles by paginateamount %}
+			{% if paginate.current_page > paginate.pages %}
+			<meta name="robots" content="noindex" />
+			{% endif %}
+		{% endpaginate %}
+	{% elsif template == '404' %}
+		<meta name="robots" content="noindex" />
+	{% endif %}
+	
+
+
+
+{%- endcomment -%}

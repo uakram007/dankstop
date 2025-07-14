@@ -1,0 +1,23 @@
+{%- layout none -%}
+<div class="modal fade halo_modal-custom" id="video_product" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a data-dismiss="modal" class="close close-modal" title="{{ 'cart.ajax_cart.close' | t }}" href="javascript:void(0)">
+          {%- comment -%}
+          {%- include 'icon-close' -%}
+          {%- endcomment -%}
+          <svg aria-hidden="true" focusable="false" role="img"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#closeXIcon"></use></svg>
+        </a>
+      </div>
+      <div class="modal-body">
+        <div class="videoWrapper">
+          {%- if product.description contains 'iframe' -%}
+          {%- assign src = product.description | split:'<iframe' | last | split:'</iframe>' | first -%}
+          <iframe {{src}}></iframe>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

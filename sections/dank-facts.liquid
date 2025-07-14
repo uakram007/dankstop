@@ -1,0 +1,63 @@
+{% schema %}
+{
+    "name": "Dank Facts",
+    "max_blocks": 255,
+    "settings": [		
+        {
+            "type" : "checkbox",
+            "id" : "display_dank_facts",
+            "label" : "Show Dank Facts",
+            "default" : true
+        }
+    ],
+    "blocks" : [
+        {
+            "type" : "text",
+            "name" : "Dank Fact",
+            "settings":[
+            	{
+                  "type" : "text",
+                  "id" : "fact_name",
+                  "label" :"Fact Name"
+            	},
+				{
+                  "type" : "textarea",
+                  "id" : "fact_text",
+                  "label" : "Fact Text"
+                },
+				{
+                  "type" : "color",
+                  "id" : "fact_color",
+                  "label" : "Fact Color"
+                },
+				{
+                  "type" : "product",
+                  "id" : "fact_related_product",
+                  "label" : "Related Product"
+                },
+				{
+                  "type" : "collection",
+                  "id" : "fact_related_collection",
+                  "label" : "Related Collection"
+                },
+				{
+                  "type" : "page",
+                  "id" : "fact_related_page",
+                  "label" : "Related Page"
+                },
+				{
+                  "type" : "url",
+                  "id" : "fact_related_url",
+                  "label" : "Related Link"
+                }				
+            ]
+        }
+    ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

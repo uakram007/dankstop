@@ -1,0 +1,1523 @@
+{%- comment -%}
+Product Head
+{%- endcomment -%}
+{%- include 'product-head' -%}
+
+  
+  
+<div class="product-template product-template-default container">
+<script id="new_event_{{product.id}}" type="application/json" class="view__item" > 
+  { 
+  "ecommerce": {
+    "currency": "{{ shop.currency }}",
+    "value": {{ product.selected_or_first_available_variant.price | money_without_currency | replace: ',', '.' }},
+    "items": [
+      {
+        "item_name": "{{ product.title | escape }}",
+        "item_id": "{{ product.id }}",
+        "price":{{ product.price | money_without_currency | replace: ',', '.' }},
+        "item_brand": "{{ product.vendor | escape }}",
+        "item_category": "{{ product.type | escape }}",
+        "item_variant": "{{ product.selected_or_first_available_variant.title |  replace: 'Default Title', 'Single Variant' |  escape }}",
+        "quantity": 1
+      }
+    ]
+  }
+}
+</script>
+
+
+  {%- if collection -%}
+  <div class="next_prev-groups">
+    {%- include 'breadcrumb' -%}
+    {%- include 'next-prev-product' -%} 	
+  </div>
+  {%- else -%}
+  {%- include 'breadcrumb' -%}
+  {%- endif -%}
+
+
+
+  {%- comment -%}
+  {%- endcomment -%}
+  <div class="product_top row{% if settings.show_tab == 'horizontal' or settings.show_tab == 'horizontal_center' %} horizontal-tabs{% else %} vertical-tabs has-sticky-product-img{% endif %}" data-section-type="product" data-enable-history-state="true" data-collections-related="/collections/{{collection.handle}}?view=related">    
+    <div class="col-md-6 product-photos" data-more-view-product>
+      <div {% if settings.show_tab == 'vertical' %} data-sticky-product-img{% endif %} class="product-img-box{% if settings.style_moreview == 'horizontal' %} horizontal-moreview{% elsif settings.style_moreview == 'left_vertical' %} left-vertical-moreview vertical-moreview{% else %} right-vertical-moreview vertical-moreview{% endif %}{% if settings.product_image_border%} grid-item-border{% endif %}">
+        
+        {%- assign first_image = product.images[slick_initial_index] -%}
+        {%- assign img_widths = '600,810,960' -%}
+        
+        {%- if product.images.size > 1 -%}
+        <div class="product-photo-container">
+          <div class="slider-for lazybit lazybit-load" data-lazy-method="append" data-lazy-url="{{product.url}}?view=images">
+            <div class="thumb filter-{{ first_image.alt | handle }}" {% if first_image.variants.size > 0 %}data-variants="{% for variant in first_image.variants %}{{ variant.title }} {% endfor %}"{% endif %} data-slick-initial-index>
+            {%- include 'image-module', im_lazy: false, im_src: first_image, im_id: img_id, im_dt_ws: img_widths -%}
+            </div>
+          </div>
+        </div>
+        {%- else -%}
+        <div class="product-photo-container">
+          {%- include 'image-module', im_lazy: false, im_src: first_image, im_id: img_id, im_dt_ws: img_widths -%}
+        </div>
+        {%- endif -%}
+
+        
+        {%- if made_in_usa or on_sale or product.available or custom_label or is_subscribable -%}
+        <div class="product-label-left">
+          
+          {%- if made_in_usa -%}
+            {%- assign made_in_usa_t_string = 'products.product.made_in_usa' | t -%}
+            {%- if made_in_usa_t_string == '🇺🇸' -%}
+            <strong class="label made-in-usa-label flag-only" title="Made In the USA! 🇺🇸"><svg title="Made in USA" aria-label="Made in USA" role="img"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#madeInUsa"></use></svg></strong>
+            {%- else -%}
+            <strong class="label made-in-usa-label" title="Made In the USA! 🇺🇸">
+              {{- made_in_usa_t_string -}}
+            </strong>
+            {%- endif -%}
+          {%- endif -%}
+          
+          {%- if sold_out -%}
+          <strong class="label sold-out-label">
+            {{- 'products.product.sold_out' | t -}}
+          </strong>
+          {%- else -%}
+
+          {%- if on_sale -%}
+          <strong class="label sale-label" {% if on_sale_hide %}style="display:none"{% endif %}>
+            {{- 'products.product.sale' | t -}}
+          </strong>
+          {%- endif -%}
+
+          {%- if is_subscribable -%}
+          <strong class="label subscribable-label">
+            {{- 'products.product.subscribable' | t -}}
+          </strong>
+          {%- endif -%}
+
+          {%- if product.selected_or_first_available_variant.available -%}
+          <strong class="label in-stock-label">
+            {{- 'products.product.in_stock' | t -}}
+          </strong>
+          {%- endif -%}
+
+          {%- endif -%}
+
+          {%- if custom_label -%}
+          <strong class="label custom-label">
+            {{- 'products.product.custom_label' | t -}}
+          </strong>
+          {%- endif -%}
+
+        </div>
+        {%- endif -%}
+
+        <svg class="product-label open-fancybox" title="Zoom In {{ product_title_escaped }} Photo" aria-label="Zoom In {{ product_title_escaped }} Photo" role="img"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#resizeIcon"></use></svg>
+
+        {%- if has_description_video -%}
+        <div class="video-open-popup"><a href="javascript:void(0)" data-toggle="modal" data-target="#video_product" title="Open {{ product_title_escaped }} Description Video Modal">
+            {{- '' -}}
+            <svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 504c137 0 248-111 248-248S393 8 256 8 8 119 8 256s111 248 248 248zM40 256c0-118.7 96.1-216 216-216 118.7 0 216 96.1 216 216 0 118.7-96.1 216-216 216-118.7 0-216-96.1-216-216zm331.7-18l-176-107c-15.8-8.8-35.7 2.5-35.7 21v208c0 18.4 19.8 29.8 35.7 21l176-101c16.4-9.1 16.4-32.8 0-42zM192 335.8V176.9c0-4.7 5.1-7.6 9.1-5.1l134.5 81.7c3.9 2.4 3.8 8.1-.1 10.3L201 341c-4 2.3-9-.6-9-5.2z" class=""></path></svg>
+            {{- '' -}}
+            <span class="visually-hidden">Open {{ product_title_escaped }} Description Video Modal</span></a></div>
+        {%- endif -%}
+
+        <div class="lazybit lazybit-load" data-lazy-url="{{product.url}}?view=thumbnails" data-lazy-screen="desktop"><div class="skeleton slider-nav slick-slider slick-vertical"><button type="button" class="slick-prev slick-arrow" title="Move slider carousel one image back" aria-label="Move slider carousel one image back"><span class="visually-hidden">Move slider carousel one image forward</span><svg aria-hidden="true" focusable="false" role="img"><use xlink:href="#faChevronLeft" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></button><div class="slick-list draggable"><div class="skelly-wrap"><div class="skelly-item item"><a href="#"><div class="imod ar--1x1 "><img width="70" height="88" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2500'%3E%3C/svg%3E" alt="Thumbnail placeholder"/></div></a></div></div><div class="skelly-wrap"><div class="skelly-item item"><a href="#"><div class="imod ar--1x1 "><img width="70" height="88" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2500'%3E%3C/svg%3E" alt="Thumbnail placeholder"/></div></a></div></div><div class="skelly-wrap"><div class="skelly-item item"><a href="#"><div class="imod ar--1x1 "><img width="70" height="88" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2500'%3E%3C/svg%3E" alt="Thumbnail placeholder"/></div></a></div></div><div class="skelly-wrap"><div class="skelly-item item"><a href="#"><div class="imod ar--1x1 "><img width="70" height="88" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2500'%3E%3C/svg%3E" alt="Thumbnail placeholder"/></div></a></div></div><div class="skelly-wrap"><div class="skelly-item item"><a href="#"><div class="imod ar--1x1 "><img width="70" height="88" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 2500'%3E%3C/svg%3E" alt="Thumbnail placeholder"/></div></a></div></div></div><button type="button" class="slick-next slick-arrow" title="Move slider carousel one image forward" aria-label="Move slider carousel one image forward"><span class="visually-hidden">Move slider carousel one image forward</span><svg aria-hidden="true" focusable="false" role="img"><use xlink:href="#faChevronRight" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg></button></div></div>
+      </div>
+    </div>
+
+    <div class="col-md-6 product-shop">
+      <div class="row">
+        <span class="link-to-vendor col-6">
+          <a href="/collections/{{ product_vendor_handle }}" title="See all {{ product_vendor | escape }}">See all {{ product_vendor }}</a>
+        </span>
+      </div>
+
+      <h1 class="product-title">{{- product.title -}}</h1>
+
+
+      
+      {%- if settings.display_product_reviews -%}
+      <div class="top-reviews-container smooth-scroll-btn" data-scroll-to="product-reviews-questions">
+        {%- include 'product-reviews', reviewed_item: main_product, reviews_location: 'product-details' -%}
+      </div>
+      {%- endif -%}
+
+
+      
+
+      
+      {% unless product.tags contains "on_auction" %}
+
+      
+
+      {% comment %}
+      <div class="prices">
+        {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+        <span class="compare-price">
+          {{ product.selected_or_first_available_variant.compare_at_price | money }}
+        </span>
+        <span class="price on-sale" itemprop="price">
+          {{ product.selected_or_first_available_variant.price | money }}
+        </span>
+        {%- else -%}
+        <span class="price" itemprop="price">
+          {{ product.selected_or_first_available_variant.price | money }}
+        </span>
+        {%- endif -%}
+      </div>
+    {% endcomment %}
+         <div class="prices">
+            {% render 'cc-product-pricing-table', product: product %}
+         </div>
+{%- if price_for_plan == blank -%}
+      {%- assign price_for_plan = product.selected_or_first_available_variant.price | replace: '$', '' | replace: ',', ''  | replace: ' USD', '' | strip | split: ' ' | first -%}
+      {%- endif -%}
+      {%- assign payment_plan__max_price = settings.payment_plan__max_price -%}
+      {%- if settings.product__payment_program == "viabill" -%}
+        {%- if settings.viabill__widget_delivery == "manual" -%}
+          {%- assign decimal_price = price_for_plan | money_without_currency | replace: ',', '' | abs -%}
+          {%- if decimal_price <= payment_plan__max_price -%}
+            {%- assign viabill_monthly_price = price_for_plan | divided_by: 4.00 | round: 2  | money_without_currency -%}
+            <div class="viabill-custom pay-plan-price color-subdued" data-product-price="{{ price_for_plan | money }}">
+              <span class="vb-badge">
+                You can even pay in 4 <i class="vb-color">interest-free</i> payments of <span class="vb-price-currency">$</span><span class="vb-price">{{ viabill_monthly_price }}</span>/month with
+                <svg class="vb-icon icon-vb-logo"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#vbLogo"></use></svg>
+                <svg class="vb-icon icon-arrow"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevronRight"></use></svg>
+              </span>
+            </div>
+          {%- endif -%}
+        {%- else -%}
+          {%- include 'viabill-pricetag' -%}
+        {%- endif -%}
+      {%- elsif settings.product__payment_program == "sezzle" -%}
+      <div class="szl-price-display pay-plan-price">
+        <div class="szl-inner">
+          <span class="szl-text"><b>OR</b> 4 payments of $</span>
+          <span class="szl-price">{{ product.selected_or_first_available_variant.price | divided_by: 4.00 | round: 2 | money_without_currency }}</span>
+          <span class="szl-text">with</span>
+          <span class="szl-logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="350" height="118" viewBox="0 0 350 118"><g fill="none"><path fill="#B2D971" d="M48.43 4.048c1.197 5.232 2.488 10.606 5.654 14.963 8.42 12.233 20.526 21.169 28.183 34.064 2.505 4.163 4.524 9.095 3.737 14.132-.93 4.473-3.896 8.043-6.66 11.41-1.182-5.364-3.327-10.49-6.485-14.883-7.23-10.217-16.655-18.331-25.033-27.443-3.92-4.199-6.861-9.829-6.526-15.883-.143-6.31 3.393-11.773 7.13-16.36z"></path><path fill="#75C856" d="M34.095 19.277c.704 6.019 2.823 11.896 6.426 16.651 8.595 11.56 20.123 20.488 27.512 33.091 2.17 3.933 4.13 8.441 3.544 13.117-.913 4.631-3.946 8.325-6.71 11.887-1.333-5.1-3.184-10.11-6.225-14.371-7.406-10.597-17.2-18.923-25.77-28.407-3.644-3.986-6.317-9.28-6.133-14.928-.26-6.576 3.276-12.409 7.356-17.04z"></path><path fill="#4BB63F" d="M19.308 34.885c1.131 5.241 2.497 10.589 5.63 14.946 8.529 12.347 20.794 21.38 28.434 34.479 2.53 4.322 4.558 9.519 3.284 14.663-1.223 3.986-3.795 7.3-6.417 10.376-1.324-5.497-3.51-10.792-6.836-15.273-7.297-9.934-16.504-18.004-24.765-26.992-3.879-4.163-6.803-9.714-6.4-15.724-.294-6.364 3.208-11.932 7.07-16.475z"></path><path d="M280.353 31.201h8.076c.067 17.724 0 35.448.033 53.172h-8.12c.01-17.724-.012-35.448.01-53.172M117.535 43.127c9.003-.447 18.029-.035 27.043-.2-.011 2.934-.011 5.857-.011 8.78-8.814-.036-17.616-.024-26.418-.012.011 2.687.033 5.374.056 8.06 7.294.071 14.6-.13 21.894.06 3.306.082 6.277 3.346 6.31 6.823.113 3.924.18 7.86-.055 11.772-.346 3.771-4.01 6.234-7.417 5.963-9.316.024-18.632-.011-27.948-.011.022-2.829.044-5.645.111-8.462 9.093.036 18.175-.047 27.267.06v-7.92c-6.925 0-13.862.153-20.788-.035-3.34.023-6.646-2.475-6.836-6.176-.29-4.242-.324-8.532.045-12.774.424-3.465 3.54-5.892 6.747-5.928zm34.348 6.953c.067-3.806 3.374-7.023 6.96-6.953 7.55-.389 15.124-.153 22.675-.13 3.62-.164 7.708 2.04 8.278 6.117.491 4.054.446 8.19.122 12.256-.167 3.842-3.619 6.658-7.137 6.623-7.697.224-15.404-.012-23.1.094v7.825c9.528.295 19.134-.636 28.618.53-.045 2.617-.067 5.245-.1 7.86-9.775.107-19.571.13-29.345.024-3.943.024-7.406-3.995-7.015-8.131.033-8.709-.056-17.418.044-26.115zm7.775 1.638c.011 2.675.022 5.362.045 8.037 7.44.012 14.879-.011 22.318.012.011-2.698.011-5.409.022-8.12-7.461.083-14.923 0-22.385.071zm73.155-8.767l-.067 4.548c-8.255 9.357-16.265 18.962-24.486 28.366 8.076.082 16.164.059 24.24.012.156 2.816.29 5.633.368 8.45-12.879.094-25.758.023-38.649.046v-4.63c8.11-9.405 16.387-18.656 24.564-28.001-8.177-.106-16.365-.035-24.542-.047a760.891 760.891 0 0 1-.01-8.744c12.856 0 25.724-.024 38.582 0zm3.82-.012c12.89.012 25.781 0 38.672.012.022 1.025.078 3.075.1 4.1-8.098 9.746-16.554 19.15-24.664 28.885 2.547 0 5.094-.012 7.64-.036 5.541.036 11.07 0 16.61-.035.224 2.828.403 5.657.414 8.497-12.924.023-25.848.011-38.772.011-.011-1.59-.011-3.193-.011-4.784 8.389-9.145 16.308-18.773 24.742-27.882-8.233-.048-16.476-.012-24.72-.012-.011-2.923-.022-5.834-.011-8.756m57.818 7.377c-.28-4.266 3.652-7.46 7.472-7.248 7.473-.247 14.969-.165 22.442-.059 3.54-.14 7.238 2.346 7.875 6.164.402 3.889.28 7.825.134 11.737-.045 3.724-3.106 6.918-6.613 7.047-7.875.295-15.761.036-23.648.095v7.884c9.462-.071 18.934.011 28.395-.047.034 2.828.056 5.644.067 8.473-9.606-.012-19.213.059-28.82-.012-3.64.153-7.394-3.064-7.293-7.047-.112-8.992-.1-17.995-.011-26.987zm7.64 1.379c.022 2.687.045 5.385.078 8.072 7.551-.023 15.114 0 22.665-.012.022-2.686.033-5.362.056-8.048-7.596-.036-15.203-.012-22.799-.012z" fill="#000"></path></g></svg>
+          </span>        
+          <span class="szl-know-more" data-openmodalid="szlModal">
+            Learn more
+          </span>
+        </div>    
+      </div> 
+      {%- endif -%}
+      <div class="shipping-estimate shipping-estimate-container row align-items-center">
+        <div class="col-2 col-md-1 truck-svg-container">
+          <svg width="60" height="40" viewBox="0 0 60 40"><path fill="currentColor" fill-rule="evenodd" transform="translate(-263.000000, -117.000000)" d="M289,151.5 C289,154.537566 286.537566,157 283.5,157 C280.462434,157 278,154.537566 278,151.5 C278,151.331455 278.007581,151.164681 278.022422,151 L271,151 L271,140 L273,140 L273,149 L278.59971,149 C279.510065,147.219162 281.362657,146 283.5,146 C285.637343,146 287.489935,147.219162 288.40029,148.999999 L301,149 L301,119 L271,119 L271,117 L303,117 L303,126 L316.723739,126 C317.85789,126 318.895087,126.639588 319.404327,127.652985 L320.786845,130.404226 C322.242105,133.300224 323,136.496398 323,139.737476 L323,148 C323,149.656854 321.656854,151 320,151 L316.977578,151 C316.992419,151.164681 317,151.331455 317,151.5 C317,154.537566 314.537566,157 311.5,157 C308.462434,157 306,154.537566 306,151.5 C306,151.331455 306.007581,151.164681 306.022422,151 L288.977578,151 C288.992419,151.164681 289,151.331455 289,151.5 Z M319.417229,134.516568 L319.417798,134.118058 C319.418189,133.844298 319.362374,133.573373 319.253808,133.32206 L317.177681,128.516129 L310.567164,128.516129 C310.014879,128.516129 309.567164,128.963844 309.567164,129.516129 L309.567164,134.330091 C309.567164,134.882376 310.014879,135.330091 310.567164,135.330091 L318.602544,135.330091 C319.052028,135.330091 319.416588,134.966052 319.417229,134.516568 Z M311.5,155 C313.432997,155 315,153.432997 315,151.5 C315,149.567003 313.432997,148 311.5,148 C309.567003,148 308,149.567003 308,151.5 C308,153.432997 309.567003,155 311.5,155 Z M283.5,155 C285.432997,155 287,153.432997 287,151.5 C287,149.567003 285.432997,148 283.5,148 C281.567003,148 280,149.567003 280,151.5 C280,153.432997 281.567003,155 283.5,155 Z M264,123 L280,123 C280.552285,123 281,123.447715 281,124 C281,124.552285 280.552285,125 280,125 L264,125 C263.447715,125 263,124.552285 263,124 C263,123.447715 263.447715,123 264,123 Z M267,128 L280,128 C280.552285,128 281,128.447715 281,129 C281,129.552285 280.552285,130 280,130 L267,130 C266.447715,130 266,129.552285 266,129 C266,128.447715 266.447715,128 267,128 Z M271,133 L280,133 C280.552285,133 281,133.447715 281,134 C281,134.552285 280.552285,135 280,135 L271,135 C270.447715,135 270,134.552285 270,134 C270,133.447715 270.447715,133 271,133 Z" data-darkreader-inline-fill="" style="--darkreader-inline-fill:currentColor;"></path></svg>
+        </div>
+        <div class="col-10 col-md-6 sde-title-container">
+          <h5 class="sde-title">
+            <span>Free Shipping &amp; Easy Returns</span>
+          </h5>
+        </div>
+      </div>      
+      
+      {%- comment -%}
+      Free Gift System
+      {%- endcomment -%}
+      {%- if free_gift_tag -%}
+      {%- include 'free-gift-progress' -%}
+      {%- endif -%}
+
+
+            
+      {%- if settings.enable_payment_button and selected_or_first_available_variant.available -%}
+      <form method="post" action="/cart" class="hidden" hidden><button type="submit" value="Checkout" name="checkout" id="toCheckout"></button></form>
+      {%- endif -%}
+      
+      {%- form 'product', product, id: "add-to-cart-form", novalidate: 'novalidate' -%}
+      {%- comment -%} 
+      <span hidden class="hidden">{{product.variants.size}}</span>
+      {%- endcomment -%} 
+      {%- if product.available -%} 
+      <div id="product-variants">
+        <select id="product-selectors" name="id" class="hidden" hidden>
+          {%- for variant in product.variants -%}
+          {%- if variant.available -%}
+          <option data-imge="{% if variant.image.size != blank %}{{ variant.image.src | product_img_url: 'compact' }}{% else  %}{{ product.featured_image.src | product_img_url: 'compact' }}{% endif %}" {% if variant == selected_or_first_available_variant %} selected="selected" {% endif %} value="{{ variant.id }}">
+            {{ variant.title }}
+          </option>
+          {%- else -%}
+          <option disabled="disabled">{{ variant.title }} - {{ 'products.product.sold_out' | t }}</option>
+          {%- endif -%}
+          {%- endfor -%}
+        </select>
+
+        {%- if product.variants.size > 1 -%} 
+
+        {%- if settings.use_color_swatch -%}
+        {%- for option in product.options -%}
+        {%- include 'swatch' with option, color_swatch: false -%}
+        {%- endfor -%}
+        {%- endif -%}
+
+        {%- else -%}
+        <!--                       The below commented-out line name="id" was breaking BOLD  -->
+        <!--                       <input type="hidden" name="id" value="{{ product.variants[0].id }}" /> -->
+        {%- endif -%}
+
+      </div>
+      {%- endif -%}
+
+
+
+      {%- comment -%}
+      Product Attachment Addons - Product Details Add-to-Cart Display
+      %- if section.settings.display_attachment_addons -%}
+      {%- include 'product-attachment-addons' -%}
+      {%- if product.available -%}
+      <div class="addons-lazy lazybit lazybit-load" data-lazy-url="{{product.url}}?view=attachment-addons"><div class="skeleton addon-options th-box"><div class="ao-header"><div class="ao-header-inner"><span class="h3">Suggested Addons</span><span class="skelly-item ao-value number-font">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></div><label class="show-all-addons-label" for="show-all-addons"><span class="show-addons">Show all addons</span></label></div><div class="ao-content"><div class="ao-line"><label class="skelly-item ao-label"><span class="ao-left"><div class="imod ar--1x1 "><img width="1600" height="2000" alt="Addon skeleton placeholder" title="Addon skeleton placeholder" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 2000'%3E%3C/svg%3E"></div></span><span class="ao-center"><span class="ao-title">&nbsp;</span><span class="ao-price"><span class="ao-included-free">&nbsp;</span></span></span><span class="ao-right"><span class="pretty p-curve p-pulse p-smooth p-svg"><span class="state p-success"><span>&nbsp;</span></span></span></span></label></div><div class="ao-line"><label class="skelly-item ao-label"><span class="ao-left"><div class="imod ar--1x1 "><img width="1600" height="2000" alt="Addon skeleton placeholder" title="Addon skeleton placeholder" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 2000'%3E%3C/svg%3E"></div></span><span class="ao-center"><span class="ao-title">&nbsp;</span><span class="ao-price"><span class="ao-included-free">&nbsp;</span></span></span><span class="ao-right"><span class="pretty p-curve p-pulse p-smooth p-svg"><span class="state p-success"><span>&nbsp;</span></span></span></span></label></div><div class="ao-line"><label class="skelly-item ao-label"><span class="ao-left"><div class="imod ar--1x1 "><img width="1600" height="2000" alt="Addon skeleton placeholder" title="Addon skeleton placeholder" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 2000'%3E%3C/svg%3E"></div></span><span class="ao-center"><span class="ao-title">&nbsp;</span><span class="ao-price"><span class="ao-included-free">&nbsp;</span></span></span><span class="ao-right"><span class="pretty p-curve p-pulse p-smooth p-svg"><span class="state p-success"><span>&nbsp;</span></span></span></span></label></div><div class="ao-line"><label class="skelly-item ao-label"><span class="ao-left"><div class="imod ar--1x1 "><img width="1600" height="2000" alt="Addon skeleton placeholder" title="Addon skeleton placeholder" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 2000'%3E%3C/svg%3E"></div></span><span class="ao-center"><span class="ao-title">&nbsp;</span><span class="ao-price"><span class="ao-included-free">&nbsp;</span></span></span><span class="ao-right"><span class="pretty p-curve p-pulse p-smooth p-svg"><span class="state p-success"><span>&nbsp;</span></span></span></span></label></div></div></div></div>
+      {%- endif -%}
+      {%- endcomment -%} 
+
+
+
+      {%- comment -%}
+      Bold Subscriptions widget
+      {%- endcomment -%}
+      <div class="ro_widget"></div>
+      {%- comment -%}
+      {%- if product.handle == "dankstop-monthly-smoker-essentials-pack" -%}
+      <div class="subscription-not-avail">
+        <h2>Subscriptions are currently unavailable</h2>
+        <h4>Subscriptions should be back shortly.  We apologize for the inconvenience.</h4>
+      </div>
+      {%- endif -%}
+      {%- endcomment -%}
+
+
+
+      <input type="hidden" id="productBundleId" name="properties[_bundle_id]" value="{{ attachment_bundle_id }}">
+
+
+
+      {%- if settings.display_subtotal and selected_or_first_available_variant.available -%} 
+      <div class="total-price">
+        <label>
+          {{ 'cart.general.subtotal' | t }}:
+        </label>
+        <span class="total-money">
+          {{ selected_or_first_available_variant.price | money }}
+        </span>
+      </div>
+      {%- endif -%}
+
+      {%- comment -%}
+      Product Watchlist
+      {%- endcomment -%}
+      {%- if settings.display_watchlist -%}
+      {%- include 'product-watchlist' -%}
+      {%- endif -%}
+
+
+      {% assign elite_product = false %}
+      {% for item in cart.items %}
+            {% if item.product_id == settings.elite_product.id %}
+              {% assign elite_product = true %}
+            {% break %}
+          {% endif %}
+      {% endfor %}
+      
+      {% if product.id == settings.elite_product.id and customer.tags contains 'elite_member' %} 
+      {% comment %} dont do anything if customer is elite and current product is elite {% endcomment %}
+      {% comment %} {% elsif elite_product == true %} {% endcomment %}
+        {% comment %} hide add to cart if elite product is in cart {% endcomment %}
+      {% else %}
+      <div class="groups-btn">
+        
+      {% if  product.id != 8751516614875 %}
+        <div class="row">
+          {%- if selected_or_first_available_variant.available -%}
+          {%- assign has_quantity_option = false -%}
+          {%- for option in product.options -%}
+          {%- if option == "Quantity" -%}
+          {%- assign has_quantity_option = true -%}
+          {%- break -%}
+          {%- endif -%}
+          {%- endfor -%}
+          <div class="col-3 quantity {% if has_quantity_option %}hidden{% endif %}">
+            <label for="quantity__atc">
+              {{ 'cart.label.quantity' | t }}: 
+            </label>
+            <div class="qty-group">
+              <a href="#" data-minus-qtt class="minus button" title="Increase quantity by one" aria-label="Increase quantity by one"><span class="visually-hidden">Increase quantity by one</span></a>
+              <input id="quantity__atc" data-qtt-id="quantity__{{ product.id }}" name="quantity" type="text" value="1" aria-label="Quantity input">
+              <a href="#" data-plus-qtt class="plus button" title="Decrease quantity by one" aria-label="Decrease quantity by one"><span class="visually-hidden">Decrease quantity by one</span></a>
+            </div>
+          </div>
+          {%- endif -%}        
+
+          <div class="col-9 atc-container cccccc">  
+              {%- if selected_or_first_available_variant.available -%}
+                <input data-btn-addToCart type="submit" name="add" class="btn addtocart {{ bold_add_to_cart_class }}" id="product-add-to-cart" value="{{ 'products.product.add_to_cart' | t }}">          
+              {%- else -%}  
+                <input type="submit" name="add" class="btn bbbb" id="product-add-to-cart" disabled value="{{ 'products.product.unavailable' | t }}">           
+              {%- endif -%} 
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-6">
+            {%- include 'wishlist-product' -%}
+          </div>
+
+          <div class="col-6">
+            {%- if settings.enable_payment_button and selected_or_first_available_variant.available -%}
+            {%- comment -%}
+            {{ form | payment_button }}
+            {%- endcomment -%}
+            <span id="buyNowBtn" class="btn col-6 shopify-payment-button">{{ 'products.product.buy_now' | t }}</span>
+            {%- endif -%}
+          </div>
+        </div>
+
+          {% endif %}
+        
+      </div>
+      {% endif %}
+
+
+
+      {%- endform -%}
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      {% else %}
+      <style>
+        .sticky_form[data-sticky-add-to-cart] {
+          display: none;
+        }
+
+        #wk-auction {
+          margin-bottom: 20px;
+        }
+
+        #wk-auction .pa-checkbox + label {
+          padding: 0;
+        }
+
+        input[type="checkbox"]+label.pa-bdr:before {
+          display: none;
+        }
+
+        #wk-auction .width-5.pa-left.margin-top-5 {
+          margin-top: 0;
+        }
+
+        #wk-auction .margin-top-15#start_bid {
+          margin-top: 0;
+          margin-bottom: 20px;
+        }
+
+        [type="checkbox"]:checked+label.pa-bdr:after, input[type="checkbox"]+label.pa-bdr:hover:after {
+          display: none;
+        }
+      </style>
+      
+      <div id="wk-auction" prod-id="{{ product.id }}" cust-id="{{ customer.id }}"></div>
+
+      {%- if settings.display_shipping_delivery_estimate and product.available -%}   
+      {%- include 'product-delivery-estimate' -%}
+      {%- endif -%}
+      
+      {% endunless %}
+      {% unless product.tags contains "wk_auction" %}
+      {% endunless %}
+
+
+      
+      
+      
+      
+      {%- comment -%}
+      Product Warranty - Product Details Add-to-Cart Display
+      {%- endcomment -%}
+      {%- if settings.display_warranty -%} 
+      {%- include 'product-warranty' -%}
+      {%- endif -%}
+      
+      
+      
+
+      {%- comment -%}
+        {%- include 'payment-plan', price_for_plan: product.selected_or_first_available_variant.price -%}
+      {%- endcomment -%}
+      
+
+      
+      
+      
+      
+      
+      
+      
+
+      {%- comment -%} 
+      {%- if settings.display_norton -%}   
+      <span id="nortonPlacer" class="hidden"></span>
+      {%- endif -%}
+      {%- endcomment -%} 
+
+
+      
+      {%- if settings.display_product_detail_share -%}        
+      {%- include 'share' with product -%}      
+      {%- endif -%}
+
+      
+      <hr class="product-details-hr">
+      
+      
+      {%- comment -%} 
+      {%- endcomment -%} 
+      {%- if settings.display_product_bullet_points -%}
+      <div class="row">
+        <div class="col-6">
+          <div class="product-details-title">
+            Product Details:
+          </div>
+          <div class="product-sku-title">Product SKU: <span id="variantSku" class="product-sku">{{ selected_or_first_available_variant.sku }}</span></div>
+        </div>
+        {%- unless product.vendor == "DankStop" -%}
+        <div class="spec-extra col-6">
+          <div class="authorized-retailer-container container-fluid">
+            <div class="authorized-retailer row no-gutters">
+              <div class="col-4">
+                <span class="fa-stack">
+                  <i class="fa fa-certificate  fa-stack-2x"></i>
+                  <i class="fa fa-certificate  fa-stack-1x"></i>
+                  <i class="fa fa-check fa-stack-1x"></i>
+                </span>
+              </div>
+              <div class="col-8">
+                <span class="auth-re-text">
+                  Authorized retailer of {{ product.vendor }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {%- endunless -%}
+      </div>
+      {%- include 'product-bullet-points' -%}
+      {%- endif -%}
+
+
+    </div>
+  </div> 
+
+  
+  {%- if settings.show_tab == 'horizontal' or settings.show_tab == 'horizontal_center' or settings.display_related_products or settings.enable_ask_an_expert -%}        
+  <div class="product_bottom row">
+    
+    {%- comment -%}
+    Product Attachment Addons - Product Details Add-to-Cart Display
+    %- if settings.display_attachment_addons -%}
+    {%- include 'product-attachment-addons' -%}
+    {%- if settings.display_attachment_addons and product.available -%}
+    <section class="product-section product-addons col-12">
+      <h3 class="prods-title"><span class="prods-title-inner">Suggested Addons</span></h3>
+      <div class="addons-lazy lazybit lazybit-load" data-lazy-url="{{product.url}}?view=sec-addons"><div class="skeleton addon-options th-box"><div class="ao-header"><div class="ao-header-inner"><span class="h3">Suggested Addons</span><span class="skelly-item ao-value number-font">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></div><label class="show-all-addons-label" for="show-all-addons"><span class="show-addons">Show all addons</span></label></div><div class="ao-content"><div class="ao-line"><label class="skelly-item ao-label"><span class="ao-left"><div class="imod ar--1x1 "><img width="1600" height="2000" alt="Addon skeleton placeholder" title="Addon skeleton placeholder" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 2000'%3E%3C/svg%3E"></div></span><span class="ao-center"><span class="ao-title">&nbsp;</span><span class="ao-price"><span class="ao-included-free">&nbsp;</span></span></span><span class="ao-right"><span class="pretty p-curve p-pulse p-smooth p-svg"><span class="state p-success"><span>&nbsp;</span></span></span></span></label></div><div class="ao-line"><label class="skelly-item ao-label"><span class="ao-left"><div class="imod ar--1x1 "><img width="1600" height="2000" alt="Addon skeleton placeholder" title="Addon skeleton placeholder" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 2000'%3E%3C/svg%3E"></div></span><span class="ao-center"><span class="ao-title">&nbsp;</span><span class="ao-price"><span class="ao-included-free">&nbsp;</span></span></span><span class="ao-right"><span class="pretty p-curve p-pulse p-smooth p-svg"><span class="state p-success"><span>&nbsp;</span></span></span></span></label></div><div class="ao-line"><label class="skelly-item ao-label"><span class="ao-left"><div class="imod ar--1x1 "><img width="1600" height="2000" alt="Addon skeleton placeholder" title="Addon skeleton placeholder" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 2000'%3E%3C/svg%3E"></div></span><span class="ao-center"><span class="ao-title">&nbsp;</span><span class="ao-price"><span class="ao-included-free">&nbsp;</span></span></span><span class="ao-right"><span class="pretty p-curve p-pulse p-smooth p-svg"><span class="state p-success"><span>&nbsp;</span></span></span></span></label></div><div class="ao-line"><label class="skelly-item ao-label"><span class="ao-left"><div class="imod ar--1x1 "><img width="1600" height="2000" alt="Addon skeleton placeholder" title="Addon skeleton placeholder" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 2000'%3E%3C/svg%3E"></div></span><span class="ao-center"><span class="ao-title">&nbsp;</span><span class="ao-price"><span class="ao-included-free">&nbsp;</span></span></span><span class="ao-right"><span class="pretty p-curve p-pulse p-smooth p-svg"><span class="state p-success"><span>&nbsp;</span></span></span></span></label></div></div></div></div>
+    </section>
+    {%- endif -%}
+    <section class="product-section product-addons lazybit lazybit-load col-12" data-lazy-url="{{product.url}}?view=sec-addons"></section>
+    {%- endcomment -%} 
+
+    {%- comment -%} 
+    Product Attachment Addons - Product Details Add-to-Cart Display    
+    {%- endcomment -%} 
+    {%- if settings.display_attachment_addons -%}
+    {%- include 'product-attachment-addons' -%}
+    {%- endif -%}
+
+    <style>
+      .addon-options {
+        width: 100%;
+      }
+    </style>
+    
+    {%- assign parent_featured_review = product.metafields.featured_review -%}
+    {%- if parent_featured_review.title -%}
+
+    {%- assign parent_featured_review_title = parent_featured_review.title -%}
+    {%- assign parent_featured_review_body = parent_featured_review.body -%}
+    {%- assign parent_featured_review_emoji = parent_featured_review.emoji -%}
+    {%- assign parent_featured_review_rating = parent_featured_review.rating -%}
+    {%- assign parent_featured_review_rating_width = parent_featured_review_rating | round: 2 | divided_by: 5 | times: 100 -%}
+    {%- assign parent_featured_reviewer_name = parent_featured_review.reviewer_name -%}
+    
+    <section class="product-section section-centered product-featured-review col-12">
+      <h3 class="prods-title"><span class="prods-title-inner">Featured Review</span></h3>
+      
+      <div class="row">
+        <div class="col-12">
+          <h3 class="prods-title">
+            {{ parent_featured_review_title }} {{ parent_featured_review_emoji }}
+            <div class="okeReviews">
+              <div class="okeReviews-starRating">
+                <span class="okeReviews-starRating-indicator" role="presentation">
+                  <span class="okeReviews-starRating-indicator-layer"></span>
+                  <span class="okeReviews-starRating-indicator-layer okeReviews-starRating-indicator-layer--foreground" style="width: {{ parent_featured_review_rating_width }}%"></span>
+                </span>
+              </div>
+            </div>
+          </h3>
+        </div>
+        {%- comment -%} 
+        <div class="col-12">
+          {{ parent_featured_review_emoji }}
+        </div>
+        {%- endcomment -%} 
+        {%- comment -%} 
+        <div class="col-12">
+          <div class="okeReviews">
+            <div class="okeReviews-starRating">
+              <span class="okeReviews-starRating-indicator" role="presentation">
+                <span class="okeReviews-starRating-indicator-layer"></span>
+                <span class="okeReviews-starRating-indicator-layer okeReviews-starRating-indicator-layer--foreground" style="width: {{ parent_featured_review_rating_width }}%"></span>
+              </span>
+            </div>
+          </div>
+        </div>
+        {%- endcomment -%} 
+        <div class="col-12">
+          <p class="h3">
+            {{ parent_featured_review_body }}
+          </p>
+          <span class="h5">
+            by {{ parent_featured_reviewer_name }}
+            <div class="okeReviews verified-buyer">
+              <div class="okeReviews-review-reviewer-profile-status okeReviews-review-reviewer-profile-status--verified">
+                Verified Buyer
+              </div>
+            </div>
+          </span>
+        </div>
+      </div>
+      
+      <style>
+        .product-section.section-centered {
+          text-align: center;
+        }
+        .product-section.section-centered .prods-title .prods-title-inner:after {
+          left: 0;
+        }
+        
+        .product-section .verified-buyer {
+          display: inline-block;
+        }
+      </style>
+
+    </section>
+    {%- endif -%}
+        
+
+    
+    
+    {%- if product.description -%}
+    <section class="product-section product-description col-12">
+      <h3 class="prods-title"><span class="prods-title-inner">Product Description</span></h3>
+      {%- assign product_description = product.description -%}
+
+      {%- comment -%}
+      <!-- Process iFrame tags -->
+      {%- endcomment -%}
+      {%- assign iframe_src_attr_replacement = 'class="lazyload" title="' | append: product_title_escaped | append: ' Description Video" data-src="' -%}
+      {%- assign tag_to_process_start = '<' | append: 'iframe ' -%}
+      {%- assign tag_attr_array = product_description | split: tag_to_process_start -%}
+      {%- assign tag_attr_count = tag_attr_array.size | minus: 1 -%}
+      {%- for i in (1..tag_attr_count) -%}
+        {%- assign content_split_at_tag = product_description | split: tag_to_process_start -%}
+        {%- assign content_end = content_split_at_tag[1] | replace_first: 'src="', iframe_src_attr_replacement -%}
+        {%- assign product_description = content_split_at_tag[0] | append: tag_to_process_start | append: content_end -%}
+      {%- endfor -%}
+      
+      {{- product_description -}}
+    </section>
+    {%- endif -%}
+    
+    
+    
+    <div class="masonry-section">
+      
+
+      {%- assign parent_product_handles = product.metafields.parent_product.handle -%}
+      {%- comment -%}
+      {%- assign parent_product_handles = 'nucleus-basics-8-full-color-beaker-bong' -%}
+      {%- endcomment -%}
+      {%- if parent_product_handles -%}
+      <style>
+        .parent-product-title,
+        .parent-product-vendor-title {
+          color: #232323;
+          display: block;
+          font-weight: 700;
+          margin-bottom: 15px;
+        }
+        .parent-product-title {
+          font-size: 23px;
+          line-height: 30px;
+          letter-spacing: .05em;
+        }
+        .parent-product-vendor-title {
+          font-size: 15px;
+          line-height: 14px;
+/*           letter-spacing: .05em; */
+        }
+        .parent-product-price {
+          color: #40b250;
+          font-size: 23px;
+          font-weight: 700;
+        }
+      </style>
+      <section class="product-section masonry-item product-features col-12 col-lg-6">
+        <div class="col-12">
+          <h3 class="prods-title"><span class="prods-title-inner">Parent Product</span></h3>
+          {%- assign parent_product_handles_array = parent_product_handles | split: "," -%}
+          {%- for parent_product_handle in parent_product_handles_array -%}
+          
+            {%- assign parent_product_handle = parent_product_handle | trim -%}
+            {%- assign parent_product = all_products[parent_product_handle] -%}
+
+            {%- comment -%}
+            <div hidden>{{ parent_product.featured_image }}</div>
+            <div hidden>{{ parent_product.featured_image | json }}</div>
+            {%- endcomment -%}
+          	{%- if parent_product.featured_image == blank -%}
+              {%- continue -%}
+            {%- endif -%}
+          
+            <a href="{{- parent_product.url -}}" class="row align-items-start ml-3" target="_blank" rel="noopener">
+              <div class="col-3">
+                {%- assign thumb_alt = 'Parent product "' | append: parent_product.title | append: '" thumbnail' | escape -%}
+                {%- comment -%}
+                {%- assign im_width = '50' -%}
+                {%- assign im_height = 5 | divided_by: 4 | times: im_width -%}
+                {%- include 'image-module', im_src: parent_product.featured_image, im_dt_ws: im_width, width: im_width, height: im_height, im_a: thumb_alt -%}
+                {%- endcomment -%}
+                {%- include 'image-module', im_src: parent_product.featured_image, im_a: thumb_alt -%}
+              </div>
+              <div class="col-9">
+                <h3 class="parent-product-title">
+                  {{- parent_product.title -}}
+                  <span class="parent-product-vendor-title">
+                    {{- parent_product.vendor -}}
+                  </span>
+                </h3>
+                <div class="parent-product-price">
+                  {%- if parent_product.selected_or_first_available_variant.compare_at_price > parent_product.selected_or_first_available_variant.price -%}
+                  <span class="parent-product-compare-price">
+                    {{ parent_product.selected_or_first_available_variant.compare_at_price | money }}
+                  </span>
+                  <span class="parent-product-price on-sale" itemprop="price">
+                    {{ parent_product.selected_or_first_available_variant.price | money }}
+                  </span>
+                  {%- else -%}
+                  <span class="parent-product-price" itemprop="price">
+                    {{ parent_product.selected_or_first_available_variant.price | money }}
+                  </span>
+                  {%- endif -%}
+                </div>
+              </div>
+            </a>
+          
+          {%- endfor -%}
+        </div>
+      </section>
+      {%- endif -%}
+
+      
+      {%- assign product_specs = product.metafields.specs | trim -%}
+      {%- comment -%}
+      <div class="hidden">{{ product_specs | json }}</div>
+      {%- endcomment -%}
+      {%- if product_specs.size > 0 -%}
+      <section class="product-section masonry-item product-specs col-12 col-lg-6">
+        <div class="col-12">
+        <h3 class="row prods-title"><span class="prods-title-inner">Product Specs</span></h3>
+
+          <div class="row ml-lg-3">
+            
+          {%- if product_specs -%}
+            <table class="specs-table">
+
+              {%- if product_specs['height'] or product_specs['Height'] -%}
+              <tr>
+                <td>Height</td>
+                {%- assign product_dimension_height = product_specs['height'] | replace: "_", " " -%}
+                {%- if product_specs['Height'] -%}
+                {%- assign product_dimension_height = product_specs['Height'] | replace: "_", " " -%}
+                {%- endif -%}
+                {%- unless product_dimension_height contains '"' -%}
+                {%- assign product_dimension_height = product_dimension_height | append: '"' -%}
+                {%- endunless -%}
+                <td>{{ product_dimension_height }}</td>
+              </tr>
+              {%- endif -%}
+              
+              {%- if product_specs['length'] or product_specs['Length'] -%}
+              <tr>
+                <td>Length</td>
+                {%- assign product_dimension_length = product_specs['length'] | replace: "_", " " -%}
+                {%- if product_specs['Length'] -%}
+                {%- assign product_dimension_length = product_specs['Length'] | replace: "_", " " -%}
+                {%- endif -%}
+                {%- unless product_dimension_length contains '"' -%}
+                {%- assign product_dimension_length = product_dimension_length | append: '"' -%}
+                {%- endunless -%}
+                <td>{{ product_dimension_length }}</td>
+              </tr>
+              {%- endif -%}
+              
+              {%- if product_specs['width'] or product_specs['Width'] -%}
+              <tr>
+                <td>Width</td>
+                {%- assign product_dimension_width = product_specs['width'] | replace: "_", " " -%}
+                {%- if product_specs['Width'] -%}
+                {%- assign product_dimension_width = product_specs['Width'] | replace: "_", " " -%}
+                {%- endif -%}
+                {%- unless product_dimension_width contains '"' -%}
+                {%- assign product_dimension_width = product_dimension_width | append: '"' -%}
+                {%- endunless -%}
+                <td>{{ product_dimension_width }}</td>
+              </tr>
+              {%- endif -%}
+
+              {%- for product_spec in product_specs -%}
+
+              {%- if product_spec[0] == 'height' or product_spec[0] == 'length' or product_spec[0] == 'width' or product_spec[0] == 'Height' or product_spec[0] == 'Length' or product_spec[0] == 'Width'  -%}
+              {%- continue -%}
+              {%- endif -%}
+              <tr>
+                <td>{{ product_spec[0] | replace: "_", " " }}</td>
+                <td>{{ product_spec[1] | replace: "_", " " }}</td>
+              </tr>
+
+              {%- comment -%} 
+              <tr>
+                <td>{{ product_spec[0] }}</td>
+                <td>{{ product_spec[1] }}</td>
+              </tr>
+              <tr>
+                <td>{{ product_spec[0] }}</td>
+                <td>{{ product_spec[1] }}</td>
+              </tr>
+              <tr>
+                <td>{{ product_spec[0] }}</td>
+                <td>{{ product_spec[1] }}</td>
+              </tr>
+              <tr>
+                <td>{{ product_spec[0] }}</td>
+                <td>{{ product_spec[1] }}</td>
+              </tr>
+              <tr>
+                <td>{{ product_spec[0] }}</td>
+                <td>{{ product_spec[1] }}</td>
+              </tr>
+              <tr>
+                <td>{{ product_spec[0] }}</td>
+                <td>{{ product_spec[1] }}</td>
+              </tr>
+              <tr>
+                <td>{{ product_spec[0] }}</td>
+                <td>{{ product_spec[1] }}</td>
+              </tr>
+              <tr>
+                <td>{{ product_spec[0] }}</td>
+                <td>{{ product_spec[1] }}</td>
+              </tr>
+              <tr>
+                <td>{{ product_spec[0] }}</td>
+                <td>{{ product_spec[1] }}</td>
+              </tr>
+              {%- endcomment -%} 
+
+              {%- endfor -%}
+            </table>
+          </div>
+          {%- endif -%}
+
+          {%- unless product.vendor == "DankStop" -%}
+          <div class="spec-extra authorized-retailer-2">
+            <div class="spec-extra-inner">
+              <div class="row">
+                <div class="col-auto no-gutter-right">
+                  <span class="fa-stack">
+                    <i class="fa fa-certificate  fa-stack-2x"></i>
+                    <i class="fa fa-certificate  fa-stack-1x"></i>
+                    <i class="fa fa-check fa-stack-1x"></i>
+                  </span>
+                </div>
+                <div class="col-auto no-gutter-left">
+                  <span class="auth-re-text">
+                    Authorized retailer of {{ product.vendor }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          {%- endunless -%}
+
+
+          {%- comment -%} 
+          <div class="debug hidden">{{ warranty_eligible }}</div>
+          <div class="debug hidden">{{ warranty_text }}</div>
+          <div class="debug hidden">{{ main_product.metafields.warranty | json }}</div>
+          <div class="debug hidden">{{ main_product.metafields.warranty.default | json }}</div>
+          {%- endcomment -%} 
+
+          {%- if warranty_eligible -%}
+          <div class="spec-extra link-to-wholesale-2">
+            <div class="spec-extra-inner">
+              {%- assign wholesale_host = "https://highlife.com" -%}
+              {%- assign wholesale_url = wholesale_host | append: product.url -%}
+              {%- if product.vendor == "DankStop" -%}
+              {%- assign wholesale_url = wholesale_url | replace: "dankstop", "highlife" -%}
+              {%- endif -%}
+              <a class="row" href="{{ wholesale_url }}" target="_blank" rel="noopener">
+                <div class="col-auto no-gutter-right">
+                  <span class="fa-stack">
+                    <i class="fa fa-certificate  fa-stack-2x"></i>
+                    <i class="fa fa-certificate  fa-stack-1x"></i>
+                    <i class="fa fa-check fa-stack-1x"></i>
+                  </span>
+                </div>
+                <div class="col-auto no-gutter-left">
+                  Looking for wholesale?{{ " " }}&nbsp;&#9654;
+                  {%- comment -%} 
+                  <svg aria-hidden="true" focusable="false" role="img"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#faChevronRight"></use></svg>
+                  {%- endcomment -%} 
+                </div>
+              </a>
+            </div>
+          </div>
+          {%- endif -%}
+
+        </div>
+      </section>
+      {%- endif -%}
+
+
+
+      {%- assign product_coa = product.metafields.product.coa -%}
+      {%- if product_coa -%}
+      <section class="product-section masonry-item product-coa col-12 col-lg-6">
+        <div class="col-12">
+          <h3 class="prods-title"><span class="prods-title-inner">CBD Lab Analysis</span></h3>
+          <embed src="https://drive.google.com/viewerng/viewer?embedded=true&url={{ product_coa }}" width="100%" height="375" title="{{ product_title_escaped }}'s CDB Lab Analysis" />
+          <a href="{{ product_coa }}" target="_blank" rel="noopener" title="Click to view {{ product_title_escaped }}'s CDB Lab Analysis">Click to open in a new window.</a>
+          {%- comment -%}
+          <a href="{{ product_coa }}" target="_blank" rel="noopener" title="Click to view {{ product_title_escaped }}'s CDB Lab Analysis">Click to open in a new window.</a>
+          {%- endcomment -%}
+        </div>
+      </section>
+      {%- endif -%}
+
+              
+
+      {%- assign user_manual_link = product.metafields.user_manual.default -%}
+      {%- if user_manual_link -%}
+      {%- else -%}
+      {%- assign user_manual_link = product.metafields['user-manual'].default -%}
+      {%- endif -%}
+      {%- if user_manual_link -%}
+      <section class="product-section masonry-item user-manual col-12 col-lg-6">
+        <div class="col-12">
+          <h3 class="prods-title"><span class="prods-title-inner">User Manual</span></h3>
+          <div class="spec-extra user-manual-link-container icon-info-line row align-items-center ml-3">
+            {% comment %} <div class="col-2 text-center no-gutter-left">
+              {%- assign gear_img = images['gear-icon.png'] -%}
+              {%- assign gear_alt = product.title | append: ' User Manual Icon' | escape -%}
+              {%- assign im_width = '40' -%}
+              {%- assign im_height = '40' -%}
+              {%- include 'image-module', im_src: gear_img, im_dt_ws: im_width, width: im_width, height: im_height, im_a: gear_alt -%}
+            </div> {% endcomment %}
+            <div class="col-10 no-gutter-left">
+              You can view this product's user manual <a href="{{ user_manual_link }}" target="_blank" rel="nooperner" >here</a>.
+            </div>
+          </div>
+        </div>
+      </section>
+      {%- endif -%}
+        
+
+      
+      {%- comment -%}
+        Product videos
+        {% include 'product-video' %}
+        <div class="play-button"></div> 
+        <div class="yt-video video-wrapper" data-embed="{{ promo_video_yt_id }}"></div>
+      {%- assign demo_video_yt_id = false -%}
+      {%- assign promo_video_yt_id = false -%}
+      {%- if product.metafields.videos -%}
+        {%- assign demo_video_yt_id = product.metafields.videos.video_demo -%}
+        {%- assign promo_video_yt_id = product.metafields.videos.video_promo -%}
+      {%- endif -%}
+      {%- endcomment -%}
+
+      {%- comment -%}
+      https://highlife.nyc3.digitaloceanspaces.com/media/
+      {%- endcomment -%}
+      {%- assign product_video_yt_id = false -%}
+      {%- assign product_video_file_src = false -%}
+      {%- assign demo_video_yt_id = false -%}
+      {%- assign demo_video_file_src = false -%}
+      {%- assign review_video_yt_id = false -%}
+      {%- assign review_video_file_src = false -%}
+      {%- if product.metafields.media -%}
+        {%- if product.metafields.media.product_video -%}
+          {%- assign product_video_file_src = product.metafields.media.product_video | split: "," -%}
+          {%- assign product_video_file_poster = product.metafields.media.product_video_poster | split: "," -%}
+        {%- endif -%}
+        {%- if product.metafields.media.product_video_yt_id -%}
+          {%- assign product_video_yt_id = product.metafields.media.product_video_yt_id | split: "," -%}
+        {%- endif -%}
+        {%- if product.metafields.media.demoloop -%}
+          {%- assign demo_video_file_src = product.metafields.media.demoloop | split: "," -%}
+          {%- assign demo_video_file_poster = product.metafields.media.demoloop_poster | split: "," -%}
+        {%- endif -%}
+        {%- if product.metafields.media.demoloop_yt_id -%}
+          {%- assign demo_video_yt_id = product.metafields.media.demoloop_yt_id | split: "," -%}
+        {%- endif -%}
+        {%- if product.metafields.media['review-video_yt_id'] -%}
+          {%- assign review_video_yt_id = product.metafields.media['review-video_yt_id'] | split: "," -%}
+        {%- endif -%}
+        {%- if product.metafields.media['review-video'] -%}
+          {%- assign review_video_file_src = product.metafields.media['review-video'] | split: "," -%}
+          {%- assign review_video_file_poster = product.metafields.media['review-video-poster'] | split: "," -%}
+        {%- endif -%}
+      {%- endif -%}
+      {%- if product_video_file_src or review_video_file_src or product_video_yt_id or review_video_yt_id -%}
+      {%- comment -%}
+      <div class="hidden">{{- product_video_file_src -}}</div>
+      {%- endcomment -%}
+      <section class="product-section masonry-item product-videos col-12 col-lg-6">
+        <div class="col-12">
+        <h3 class="prods-title"><span class="prods-title-inner">Product Videos</span></h3>
+
+        <div class="row">
+
+          {%- if product_video_yt_id -%}
+          {%- for video_reference in product_video_yt_id -%}
+          <div class="yt-container col-12 promo-video">
+            <div class="yt-video video-wrapper">
+              {%- assign url_concatenator = "?" -%}
+              {%- if video_reference contains "?" -%}
+              {%- assign url_concatenator = "&" -%}
+              {%- endif -%}
+              {%- assign video_reference_processed = video_reference -%}
+              {%- if video_reference contains "?t=" or video_reference contains "&t=" -%}
+              {%- assign video_reference_processed = video_reference | replace: "?t=", "?start=" -%}
+              {%- endif -%}
+              <iframe class="lazyload" data-vidref="{{video_reference}}" data-vidrefpro="{{video_reference_processed}}" frameborder="0" allowfullscreen="" data-src="https://www.youtube.com/embed/{{ video_reference_processed }}{{ url_concatenator }}wmode=transparent&amp;enablejsapi=1&amp;modestbranding=1&amp;showinfo=0&amp;controls=0&amp;rel=0&amp;loop=1&amp;theme=light&amp;fs=0&amp;origin=dankstop.com"></iframe>
+            </div>
+          </div>              
+          {%- endfor -%}
+          {%- endif -%}
+
+          {%- if product_video_file_src -%}
+          {%- for video_reference in product_video_file_src -%}
+
+            {%- if product_video_file_poster[forloop.index0] -%}
+            {%- assign video_poster = product_video_file_poster[forloop.index0] -%}
+            {%- else -%}
+            {%- assign video_poster = product.featured_image.src | img_url: 'original' -%}
+            {%- endif -%}
+
+            <video controls id="product_video_file" class="video-container" width="100%" height="auto" poster="{{ video_poster }}">
+              <source src="{{ video_reference }}" type="video/mp4">
+            </video>
+          {%- endfor -%}
+          {%- endif -%}
+
+          {%- if demo_video_yt_id -%}
+          {%- for video_reference in demo_video_yt_id -%}
+          <div class="yt-container col-12 promo-video">
+            <div class="yt-video video-wrapper">
+              <iframe class="lazyload" frameborder="0" allowfullscreen="" data-src="https://www.youtube.com/embed/{{ video_reference }}?wmode=transparent&amp;enablejsapi=1&amp;modestbranding=1&amp;showinfo=0&amp;controls=0&amp;rel=0&amp;loop=1&amp;theme=light&amp;fs=0&amp;origin=dankstop.com"></iframe>
+            </div>
+          </div>              
+          {%- endfor -%}
+          {%- endif -%}
+
+          {%- if demo_video_file_src -%}
+          {%- for video_reference in demo_video_file_src -%}
+
+            {%- if demo_video_file_poster[forloop.index0] -%}
+            {%- assign video_poster = demo_video_file_poster[forloop.index0] -%}
+            {%- else -%}
+            {%- assign video_poster = product.featured_image.src | img_url: 'original' -%}
+            {%- endif -%}
+
+            <video controls id="demo_video_file" class="video-container" width="100%" height="auto" poster="{{ video_poster }}">
+              <source src="{{ video_reference }}">
+            </video>
+          {%- endfor -%}
+          {%- endif -%}
+
+          {%- if review_video_yt_id -%}
+          {%- for video_reference in review_video_yt_id -%}
+          <div class="yt-container col-12 demo-video">
+            <div class="yt-video video-wrapper">
+              <iframe class="lazyload" frameborder="0" allowfullscreen="" data-src="https://www.youtube.com/embed/{{ video_reference }}?wmode=transparent&amp;enablejsapi=1&amp;modestbranding=1&amp;showinfo=0&amp;controls=0&amp;rel=0&amp;loop=1&amp;theme=light&amp;fs=0&amp;origin=dankstop.com"></iframe>
+            </div>
+          </div>              
+          {%- endfor -%}
+          {%- endif -%}
+
+          {%- if review_video_file_src -%}
+          {%- for video_reference in review_video_file_src -%}
+
+            {%- if review_video_file_poster[forloop.index0] -%}
+            {%- assign video_poster = review_video_file_poster[forloop.index0] -%}
+            {%- else -%}
+            {%- assign video_poster = product.featured_image.src | img_url: 'original' -%}
+            {%- endif -%}
+
+            <video id="review_video_file" class="video-container" width="100%" height="auto" poster="{{ video_poster }}">
+              <source src="{{ video_reference }}">
+            </video>
+          {%- endfor -%}
+          {%- endif -%}
+
+          {%- if product.description contains 'iframe' -%}
+          {%- assign product_description_video_src = product.description | split:'<iframe' | last | split:'</iframe>' | first | replace: ' src="', ' data-src="'-%}
+          <div class="yt-container col-12">
+            <div class="yt-video video-wrapper">
+              <iframe class="lazyload" {{ product_description_video_src }}></iframe>
+            </div>
+          </div>              
+          {%- endif -%}
+
+        </div>
+
+        </div>
+      </section>
+      {%- endif -%}
+
+
+
+      {%- assign manufacturer_warranty_text = main_product.metafields.warranty.default -%}
+      {%- if manufacturer_warranty_text or warranty_eligible -%}
+      <section class="product-section masonry-item product-certs col-12 col-lg-6">
+        <div class="col-12">
+        <h3 class="prods-title"><span class="prods-title-inner">Product Warranty &amp; Certifications</span></h3>
+        <div class="icon-info-line row align-items-center ml-3">
+          {% comment %} <div class="col-2 text-center no-gutter-left">
+            {%- assign cert_img = images['certificate-icon.png'] -%}
+            {%- assign cert_alt = product.title | append: ' Certificate Icon' | escape -%}
+            {%- assign im_width = '40' -%}
+            {%- assign im_height = '40' -%}
+            {%- include 'image-module', im_src: cert_img, im_dt_ws: im_width, width: im_width, height: im_height, im_a: cert_alt -%}
+            
+            <span class="fa-stack">
+              <i class="fa fa-certificate  fa-stack-2x"></i>
+              <i class="fa fa-certificate  fa-stack-1x"></i>
+              <i class="fa fa-check fa-stack-1x"></i>
+            </span> 
+          </div> {% endcomment %}
+          <div class="col-10 no-gutter-left">
+            {%- if manufacturer_warranty_text -%}
+            <div>{{ manufacturer_warranty_text }}</div>
+            <div style="text-decoration:underline;">Learn more.</div>
+            {%- elsif warranty_eligible -%}
+            {%- assign warranty_learn_more_url = settings.warranty__learn_more_url -%}
+            <div>{{ warranty_text }}</div>
+            <a href="{{ warranty_learn_more_url }}" target="_blank" rel="noopener" title="Learn more about the PieceProtect Warranty">Learn more.</a>
+            {%- endif -%}            
+          </div>
+        </div>
+        </div>
+      </section>
+      {%- endif -%}
+
+
+
+      {%- assign product_whats_in_box = product.metafields.product['in-the-box'] -%}
+      {%- if product_whats_in_box -%}
+        {%- assign product_whats_in_box_list = product_whats_in_box | split: "," -%}
+      <section class="product-section masonry-item product-in-box col-12 col-lg-6">
+        <div class="col-12">
+        <h3 class="prods-title"><span class="prods-title-inner">What's In the Box</span></h3>
+        <div class="row">
+        {%- assign in_the_box_img_src = false -%}
+        {%- for image in product.images -%}
+          {%- if image.alt contains "ITB" or image.alt contains "In The Box"  or image.alt contains "In the box" -%}
+          {%- assign in_the_box_img_src = image.src -%}
+          {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- unless in_the_box_img_src -%}
+          {%- assign in_the_box_img_src = product_featured_image_src -%}
+        {%- endunless -%}
+        {%- if in_the_box_img_src -%}
+          <div class="col-auto">
+            {%- comment -%}
+            <img src="{{ in_the_box_img_src | img_url: "medium" }}">
+            {%- endcomment -%}
+            <img width="192" height="240" class="lazyload" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20192%20240'%3E%3C/svg%3E" 
+                 data-src="{{ in_the_box_img_src | img_url: "master" }}" 
+                 srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20192%20240'%3E%3C/svg%3E 121w"
+                 data-srcset="{{ in_the_box_img_src | img_url: "master" }} 192w, {{ in_the_box_img_src | img_url: '325x' }} 325w"
+                 sizes="auto" data-sizes="auto" 
+                 alt="What comes with {{ product_title_full | escape }}" 
+                 title="What's in the box with {{ product_title_escaped }}">
+          </div>
+        {%- endif -%}
+          <div class="col-auto">
+            <div>This purchase includes: </div>
+            <ul class="in-the-box-list">
+              <li>{{ product.title }}</li>
+              {%- for in_the_box_item in product_whats_in_box_list -%}
+              <li>
+                {{ in_the_box_item }}
+              </li>
+              {%- endfor -%}
+              <li>Free USA Shipping</li>
+              <li>Discreet Packaging</li>
+              <li>Satisfaction Guarantee</li>
+            </ul>
+          </div>
+        </div>
+        </div>
+      </section>
+      {%- endif -%}
+
+
+      {%- if feature_term_keys_array[0] -%}
+      <section class="product-section masonry-item product-features col-12 col-lg-6">
+        <div class="col-12">
+        <h3 class="prods-title"><span class="prods-title-inner">Product Features</span></h3>
+        {%- include 'product-feature-terms' -%}
+        </div>
+      </section>
+      {%- endif -%}
+
+    
+    </div>
+    
+    
+
+
+
+    <section class="product-section product-reviews-questions col-12">
+      <h3 class="prods-title"><span class="prods-title-inner">Customer Reviews &amp; Questions</span></h3>
+      
+      {%- comment -%}
+      {%- endcomment -%}      
+      {%- if settings.reviews_vendor == "stamped" -%}
+        <div id="stamped-main-widget"   
+             data-product-id="{{ product.id }}"   
+             data-name="{{ product.title | escape }}"   
+             data-url="{{ shop.url }}{{ product.url }}"   
+             data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" 
+             data-description="{{ product.description | escape }}"   
+             data-product-sku="{{product.selected_or_first_available_variant.sku}}"
+             data-product-title="{{product.title}}" 
+             data-product-type="{{product.type}}"></div>
+      
+      {%- elsif settings.reviews_vendor == "okendo" -%}
+        <div class="reviews">
+          {{ shop.metafields.okendo.ReviewsWidgetStyleTag }}
+          {{ shop.metafields.okendo.StyleCustomizations }}
+          <style>
+            .okeReviews-reviewsWidget-header-poweredBy {
+              display: none !important;
+            }
+            .okeReviews.okeReviews--theme .okeReviews-badge--rating {
+              background-color: transparent;
+            }
+
+            {%- comment -%}
+            @media (min-width: 1200px){
+
+              .okeReviews .okeReviews-reviewsAggregate-side {
+                border-left: 0;
+                border-right: 0;
+              }
+              .okeReviews .okeReviews-reviewsAggregate-primary, .okeReviews .okeReviews-reviewsAggregate-side {
+                border-bottom: 0;
+                border-left: 0;
+                border-right: 0;
+              }
+
+              .okeReviews-badge.okeReviews-badge--large.okeReviews-badge--rating {
+                background-color: #fff;
+                color: #000;
+                font-size: 2em;
+              }
+
+              .okeReviews-reviewsAggregate-side-inner {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+                margin-right: -15px;
+                margin-left: -15px;
+              }
+
+              .okeReviews-reviewsAggregate-summary, .okeReviews-reviewsAggregate-ratingDistribution.js-or-rtgDis {
+                position: relative;
+                width: 100%;
+                min-height: 1px;
+                padding-right: 15px;
+                padding-left: 15px;
+              }
+
+              .okeReviews-reviewsAggregate-summary {
+                -webkit-box-flex: 0;
+                -ms-flex: 0 0 33.333333%;
+                flex: 0 0 33.333333%;
+                max-width: 33.333333%;
+              }
+
+              .okeReviews-reviewsAggregate-ratingDistribution.js-or-rtgDis {
+                -webkit-box-flex: 0;
+                -ms-flex: 0 0 33.333333%;
+                flex: 0 0 25%;
+                max-width: 25%;
+              }
+
+            }
+
+            .okeReviews .okeReviews-ratingDistribution-item .okeReviews-ratingDistribution-item-label, 
+            .okeReviews .okeReviews-ratingDistribution-item-label .okeReviews-ratingDistribution-item-label-inner {
+              background-repeat: no-repeat;
+              background-size: 90px 19px;
+              display: block;
+              width: 105px;
+              height: 19px;
+            }
+
+            .okeReviews .okeReviews-ratingDistribution-item .okeReviews-ratingDistribution-item-label {
+              background-image: url("data:image/svg+xml;charset=UTF-8, %3Csvg%20width%3D%2280%22%20height%3D%2214%22%20viewBox%3D%220%200%2080%2014%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22%23E5E5E5%22%20fill-rule%3D%22evenodd%22%3E%3Cpath%20d%3D%22M71.996%2011.368l-3.94%202.42c-.474.292-.756.096-.628-.443l1.074-4.53-3.507-3.022c-.422-.363-.324-.693.24-.74l4.602-.37%201.778-4.3c.21-.51.55-.512.762%200l1.78%204.3%204.602.37c.552.046.666.37.237.74l-3.507%203.02%201.075%204.532c.127.536-.147.74-.628.444l-3.94-2.422zM55.996%2011.368l-3.94%202.42c-.474.292-.756.096-.628-.443l1.074-4.53-3.507-3.022c-.422-.363-.324-.693.24-.74l4.602-.37%201.778-4.3c.21-.51.55-.512.762%200l1.78%204.3%204.602.37c.552.046.666.37.237.74l-3.507%203.02%201.075%204.532c.127.536-.147.74-.628.444l-3.94-2.422zM40.123%2011.368l-3.94%202.42c-.475.292-.756.096-.63-.443l1.076-4.53-3.508-3.022c-.422-.363-.324-.693.24-.74l4.602-.37%201.778-4.3c.21-.51.55-.512.762%200l1.778%204.3%204.603.37c.554.046.667.37.24.74l-3.508%203.02%201.075%204.532c.127.536-.147.74-.628.444l-3.94-2.422zM24.076%2011.368l-3.94%202.42c-.475.292-.757.096-.63-.443l1.076-4.53-3.507-3.022c-.422-.363-.324-.693.238-.74l4.603-.37%201.78-4.3c.21-.51.55-.512.76%200l1.78%204.3%204.602.37c.554.046.667.37.24.74l-3.508%203.02%201.074%204.532c.127.536-.146.74-.628.444l-3.94-2.422zM8.123%2011.368l-3.94%202.42c-.475.292-.756.096-.63-.443l1.076-4.53L1.12%205.792c-.422-.363-.324-.693.24-.74l4.602-.37%201.778-4.3c.21-.51.55-.512.762%200l1.778%204.3%204.603.37c.554.046.667.37.24.74l-3.508%203.02%201.075%204.532c.127.536-.147.74-.628.444l-3.94-2.422z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+            }
+
+            .okeReviews .okeReviews-ratingDistribution-item-label .okeReviews-ratingDistribution-item-label-inner {
+              background-image: url('data:image/svg+xml;charset=UTF-8, %3Csvg%20width%3D%2280%22%20height%3D%2214%22%20viewBox%3D%220%200%2080%2014%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22%2352C939%22%20fill-rule%3D%22evenodd%22%3E%3Cpath%20d%3D%22M71.996%2011.368l-3.94%202.42c-.474.292-.756.096-.628-.443l1.074-4.53-3.507-3.022c-.422-.363-.324-.693.24-.74l4.602-.37%201.778-4.3c.21-.51.55-.512.762%200l1.78%204.3%204.602.37c.552.046.666.37.237.74l-3.507%203.02%201.075%204.532c.127.536-.147.74-.628.444l-3.94-2.422zM55.996%2011.368l-3.94%202.42c-.474.292-.756.096-.628-.443l1.074-4.53-3.507-3.022c-.422-.363-.324-.693.24-.74l4.602-.37%201.778-4.3c.21-.51.55-.512.762%200l1.78%204.3%204.602.37c.552.046.666.37.237.74l-3.507%203.02%201.075%204.532c.127.536-.147.74-.628.444l-3.94-2.422zM40.123%2011.368l-3.94%202.42c-.475.292-.756.096-.63-.443l1.076-4.53-3.508-3.022c-.422-.363-.324-.693.24-.74l4.602-.37%201.778-4.3c.21-.51.55-.512.762%200l1.778%204.3%204.603.37c.554.046.667.37.24.74l-3.508%203.02%201.075%204.532c.127.536-.147.74-.628.444l-3.94-2.422zM24.076%2011.368l-3.94%202.42c-.475.292-.757.096-.63-.443l1.076-4.53-3.507-3.022c-.422-.363-.324-.693.238-.74l4.603-.37%201.78-4.3c.21-.51.55-.512.76%200l1.78%204.3%204.602.37c.554.046.667.37.24.74l-3.508%203.02%201.074%204.532c.127.536-.146.74-.628.444l-3.94-2.422zM8.123%2011.368l-3.94%202.42c-.475.292-.756.096-.63-.443l1.076-4.53L1.12%205.792c-.422-.363-.324-.693.24-.74l4.602-.37%201.778-4.3c.21-.51.55-.512.762%200l1.778%204.3%204.603.37c.554.046.667.37.24.74l-3.508%203.02%201.075%204.532c.127.536-.147.74-.628.444l-3.94-2.422z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+              font-size: 0;
+            }
+
+            .okeReviews .okeReviews-ratingDistribution-item:nth-child(2) .okeReviews-ratingDistribution-item-label-inner {
+              width: 80%;
+            }
+
+            .okeReviews .okeReviews-ratingDistribution-item:nth-child(3) .okeReviews-ratingDistribution-item-label-inner {
+              width: 60%;
+            }
+
+            .okeReviews .okeReviews-ratingDistribution-item:nth-child(4) .okeReviews-ratingDistribution-item-label-inner {
+              width: 40%;
+            }
+
+            .okeReviews .okeReviews-ratingDistribution-item:nth-child(5) .okeReviews-ratingDistribution-item-label-inner {
+              width: 20%;
+            }
+
+            .okeReviews .okeReviews-ratingDistribution-item-value-count {
+              left: auto;
+              top: auto;
+              transform: none;
+              color: #525252;
+            }
+            {%- endcomment -%}
+          </style>
+          <div data-oke-reviews-widget data-oke-reviews-product-id="shopify-{{ product.id }}">{{ product.metafields.okendo.ProductReviewsWidgetSnippet }}</div>
+          <div data-oke-reviews-product-listing-rating>{{ product.metafields.okendo.ProductListingSnippet }}</div>
+        </div>
+
+      {%- elsif settings.reviews_vendor == "yotpo" -%}
+        <div class="yotpo yotpo-main-widget" 
+             data-product-id="{{ product.id }}"
+             data-price="{{ variant.price | money_without_currency }}"
+             data-currency="{{ shop.currency }}" 
+             data-name="{{ product.title | escape }}" 
+             data-url="{{ shop.url }}{{ product.url }}" 
+             data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" 
+             data-description="{{ product.description | escape }}"> 
+        </div>
+
+      {%- endif -%}
+      
+    </section>
+    
+    
+    
+    <section class="product-section product-shipping-returns col-12">
+      <h3 class="prods-title"><span class="prods-title-inner">Shipping &amp; Returns</span></h3>
+      
+      {%- if settings.display_shipping_delivery_estimate and product.available -%}   
+      {%- include 'product-delivery-estimate' -%}
+      {%- endif -%}
+
+
+
+      {%- assign shipping_returns_content = settings.shipping_returns_content -%}
+      {{- shipping_returns_content -}}
+    </section>
+    
+    
+    
+    <section class="product-section related-products col-12 lazybit lazybit-load" data-lazy-url="{{ product.url }}?view=sec-related-products">
+      {%- comment -%}
+      <h3 class="prods-title"><span class="prods-title-inner">Related Products</span></h3>
+      {%- if settings.display_related_products -%} 
+      {%- comment -%}
+      {%- include 'related-products' -%}
+      {%- endcomment -%}
+      <div class="lazybit lazybit-load" data-lazy-url="{{ product.url }}?view=related-products"></div>
+      {%- endif -%}
+      {%- endcomment -%}
+    </section>
+
+    
+    
+    
+  
+    {%- comment -%}
+    <section class="product-section featured-articles col-12">
+      <h3 class="prods-title"><span class="prods-title-inner">Featured In</span></h3>
+      <div class="lazybit lazybit-load" data-lazy-url="{{ product.url }}?view=related-articles"></div>
+    </section>
+    {%- endcomment -%}
+    <div class="lazybit lazybit-load" data-lazy-url="{{ product.url }}?view=featured-articles"></div>
+
+    
+    
+    {%- comment -%}
+    <section class="product-section related-articles col-12">
+      <h3 class="prods-title"><span class="prods-title-inner">Related Articles</span></h3>
+      <div class="lazybit lazybit-load" data-lazy-url="{{ product.url }}?view=related-articles"></div>
+    </section>
+    {%- endcomment -%}
+    <div class="lazybit lazybit-load" data-lazy-url="{{ product.url }}?view=related-articles"></div>
+
+    
+    
+
+    {%- if product_vendor_collection and product_vendor_collection.products_count != blank and product_vendor_collection.products_count > 1 -%}
+    {%- comment -%}
+    <div class="hidden">product_vendor_collection: {{ product_vendor_collection | json }}</div>
+    <div class="hidden">product_vendor_collection.products_count: {{ product_vendor_collection.products_count }}</div>
+    {%- unless product_vendor_collection == empty or product_vendor_collection == null or product_vendor_collection contains 'EmptyDrop' -%}
+    {%- endunless -%}
+    {%- endcomment -%}
+    <section class="product-section product-from-vendor col-12">
+      <h3 class="prods-title"><span class="prods-title-inner">More From {{ product_vendor }}</span></h3>
+      {%- if settings.display_related_products -%} 
+      {%- comment -%}
+      {%- include 'related-from-vendor' -%}
+      {%- endcomment -%}
+      <div class="lazybit lazybit-load" data-lazy-url="{{ product.url }}?view=related-from-vendor"></div>
+      {%- endif -%}
+    </section>
+    {%- endif -%}
+    
+    
+    <section class="product-section product-recently-viewed col-12 hidden">
+      <h3 class="prods-title"><span class="prods-title-inner">Recently Viewed</span></h3>
+      {%- comment -%}
+      {%- section 'recently-viewed-products' -%}
+      {%- endcomment -%}
+      <div class="lazybit lazybit-load" data-lazy-url="{{ shop.url }}?view=recently-viewed-products"></div>
+    </section>
+    
+    
+    
+    {%- if product.collections.size > 1 -%}
+    <section class="product-section product-related-collection col-12">
+      <h3 class="prods-title"><span class="prods-title-inner">Related Collections</span></h3>
+      <div class="products-grid row {{ class }} scroll-carousel text-center text-bold" data-row="{{ rows }}">
+        {%- assign img_widths = '600,810,960' -%}
+        {% for product_collection in product.collections %}
+        
+        {%- if product_collection.image == blank -%}
+          {%- continue -%}
+        {%- endif -%}
+
+        {%- comment -%}
+        <a href="{{ product_collection.url }}" target="_blank" rel="noopener" class="related-collection grid-item col-6 col-md-4 col-lg-2">
+          {%- include 'image-module', im_src: product_collection.image, im_id: img_id, im_dt_ws: img_widths -%}
+          {{- product_collection.title -}}
+        </a>
+        {%- endcomment -%}
+        <a href="{{ product_collection.url }}" class="related-collection grid-item col-6 col-md-4 col-lg-2">
+          {%- include 'image-module', im_src: product_collection.image, im_id: img_id, im_dt_ws: img_widths -%}
+          {{- product_collection.title -}}
+        </a>
+
+        {% endfor %}
+      </div>
+    </section>
+    {%- endif -%}
+    
+    
+    
+    <section class="product-section dankstop-best col-12">
+      <div class="dankstop-best-inner">
+        {%- assign logo_mobile = settings.logo -%}
+        {%- assign logo_mobile_url = logo_mobile | img_url: 'master' -%}
+        {%- assign logo_alt_escaped = logo_mobile.alt | default: shop.name | escape -%}
+        <div class="imod">
+          <img width="182" height="40" class="lazyload" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20182%2040'%3E%3C/svg%3E" 
+               data-src="{{ logo_mobile_url }}" 
+               srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20182%2040'%3E%3C/svg%3E 121w"
+               data-srcset="{{ logo_mobile_url }} 182w, {{ logo_mobile | img_url: '210x' }} 210w"
+               sizes="auto" data-sizes="auto" 
+               alt="{{ logo_alt_escaped }}" 
+               title="{{ logo_alt_escaped }}">
+        </div>
+        <p class="black-on-white">The Best Brands. The Best Prices. Guaranteed.</p>
+        <p>Our team of "cannaisseurs" personally tests and hand-curates every product featured in our store -- so, no matter what your preference, we the right right bong, pipe, dab rig, and accessories to fit your lifestyle!  We're proud of our products, our service, and our prices.  If you find a competitor selling one of our products for less, let us know -- we'll beat their price by 5%, guaranteed.</p>
+      </div>
+    </section>
+    
+  </div>
+  {%- endif -%}
+
+  
+  
+  {%- if has_description_video -%}
+  <div class="lazybit lazybit-load" data-lazy-url="{{product.url}}?view=video_des"></div>
+  {%- endif -%}
+
+  
+  
+  {%- if settings.display_sticky -%}
+  <div class="lazybit lazybit-load" data-lazy-url="{{product.url}}?view=sticky_foot" data-sticky-add-to-cart></div>
+  {%- endif -%}
+
+
+  
+</div>
+
+
+
+<script>
+  window.hsjs = window.hsjs || {};
+  hsjs.product = {{ product | json }};
+  hsjs.product_page_settings = {
+    display_subtotal: {{ settings.display_subtotal }},
+    display_availability: {{ settings.display_subtotal }},
+    display_product_sku: {{ settings.display_subtotal }}
+  };
+</script>  
+
+
+
+<div class="lazybit lazybit-load" data-lazy-url="{{ shop.url }}?view=recently-viewed-products"></div>
+
+
+
+{%- include 'product-schema-json-ld'  -%}

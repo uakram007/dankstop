@@ -1,0 +1,532 @@
+{% include 'breadcrumb' %}
+
+<div class="wholesale-content">
+
+  <div class="ws-header section">
+    <div class="grid">
+      <div class="grid-item">
+        <span class="svg-span">{% include 'theme-icons', this_icon: 'wholesale-logo' %}</span>
+      </div>
+      <div class="grid-item">
+        <h1>{{ 'wholesale.title' | t }}</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+  
+    <div class="ws-greeting section">
+      <div class="grid">
+        <div class="grid-item ws-greeting-text">
+          <h2>
+            <div>{{ 'wholesale.greeting_1' | t }}</div>
+            <div>{{ 'wholesale.greeting_2' | t }}</div>
+          </h2>
+        </div>
+        <div class="grid-item medium--one-half large--one-half">
+          <p>{{ 'wholesale.paragraph_1' | t }}</p>
+        </div>
+        <div class="grid-item medium--one-half large--one-half">
+          <p>{{ 'wholesale.paragraph_2' | t }}</p>
+        </div>
+        <div class="grid-item ws-account-check">
+          {% assign wholesale_customer = false %}
+          {% if customer %}
+
+            {% for tag in customer.tags %}
+              {% assign the_tag = tag | strip | downcase %}
+              {% if the_tag == settings.wholesale_approval_tag %}
+                {% assign wholesale_customer = true %}
+              {% endif %}
+            {% endfor %}
+
+            {% if wholesale_customer %}
+
+              {% if settings.wholesale_require_registration_approval %}
+
+                {% assign customer_registration_tag = 'wholesale-applicant' %}
+
+                {% for tag in customer.tags %}
+                  {% assign the_tag = tag | strip | downcase %}
+                  {% if the_tag == settings.wholesale_approval_tag %}
+                    {% assign account_approved = true %}
+                  {% endif %}
+                {% endfor %}
+
+                {% if account_approved %}
+                  <p>{{ 'wholesale.wholesale_customer_approved_1' | t }}</p>
+                  <p>{{ 'wholesale.wholesale_customer_approved_2' | t }}</p>
+                {% else %}
+                  <p>{{ 'wholesale.registered_not_approved' | t }}</p>
+                {% endif %}
+
+              {% else %}
+
+                {% assign customer_registration_tag = 'wholesalizzle-clientizzle,wholesale-applicant' %}
+
+                <p>{{ 'wholesale.wholesale_customer_approved_1' | t }}</p>
+                <p>{{ 'wholesale.wholesale_customer_approved_2' | t }}</p>
+              {% endif %}
+
+            {% else %}
+              <p>{{ 'wholesale.retail_customer' | t }}</p>
+              <a href="#wholesale-form-container" class="btn pageScrollBtn">{{ 'wholesale.retail_customer_btn' | t }}</a>
+            {% endif %}
+          {% else %}
+            <p>{{ 'wholesale.not_registered' | t }}</p>
+            <a href="#wholesale-form-container" class="btn pageScrollBtn">{{ 'wholesale.not_registered_btn' | t }}</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="ws-categories section">
+      <div class="grid">
+        <div class="grid-item ws-cat-header">
+          <h2>{{ 'wholesale.categories_title' | t }}</h2>
+          <span>{{ 'wholesale.categories_subtitle' | t }}</span>
+        </div>
+        <div class="grid-item ws-category">
+          <a href="/wholesale-dab-rigs-and-concentrate-pipes">
+            <h3>{{ 'wholesale.category_title_1' | t }}</h3>
+            <img src="{{ 'wholesale-collection-1.png' | asset_url }}" alt="{{ 'wholesale.category_title_1' | t }}" title="{{ 'wholesale.category_title_1' | t }}" width="1000" height="250" />
+          </a>
+        </div>
+        <div class="grid-item ws-category">
+          <a href="/wholesale-dab-rigs-and-concentrate-pipes">
+            <h3>{{ 'wholesale.category_title_2' | t }}</h3>
+            <img src="{{ 'wholesale-collection-2.png' | asset_url }}" alt="{{ 'wholesale.category_title_2' | t }}" title="{{ 'wholesale.category_title_2' | t }}" width="1000" height="250" />
+          </a>
+        </div>
+        <div class="grid-item ws-category">
+          <a href="/wholesale-dab-rigs-and-concentrate-pipes">
+            <h3>{{ 'wholesale.category_title_3' | t }}</h3>
+            <img src="{{ 'wholesale-collection-3.png' | asset_url }}" alt="{{ 'wholesale.category_title_3' | t }}" title="{{ 'wholesale.category_title_3' | t }}" width="1000" height="250" />
+          </a>
+        </div>
+        <div class="grid-item ws-category">
+          <a href="/wholesale-dab-rigs-and-concentrate-pipes">
+            <h3>{{ 'wholesale.category_title_4' | t }}</h3>
+            <img src="{{ 'wholesale-collection-4.png' | asset_url }}" alt="{{ 'wholesale.category_title_4' | t }}" title="{{ 'wholesale.category_title_4' | t }}" width="1000" height="250" />
+          </a>
+        </div>
+        <div class="grid-item ws-category">
+          <a href="/wholesale-dab-rigs-and-concentrate-pipes">
+            <h3>{{ 'wholesale.category_title_5' | t }}</h3>
+            <img src="{{ 'wholesale-collection-5.png' | asset_url }}" alt="{{ 'wholesale.category_title_5' | t }}" title="{{ 'wholesale.category_title_5' | t }}" width="1000" height="250" />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    {% if wholesale_customer == false %}
+    <div class="ws-registration">
+      <div class="ws-reg-header section">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>
+              <span class="svg-span">{% include 'theme-icons', this_icon: 'wholesale-registration-icon' %}</span>
+              {{ 'wholesale.registration_title' | t }}</h2>
+          </div>
+          <div class="grid-item">
+            <p>{{ 'wholesale.registration_paragraph' | t }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="ws-reg-form">
+        <div id="wholesale-form-container">
+          <form method="post" action="formSubmitAction();" id="wholesale-registration-form" accept-charset="UTF-8">
+
+            {% if form.posted_successfully? %}
+            <p class="note form-success">
+              {{ 'contact.form.post_success' | t }}
+            </p>
+            {% endif %}
+
+            {% include 'form-errors-custom' %}
+
+            <input type="hidden" name="utf8" value="✓">
+
+            {% if customer %}
+            <input type="hidden" value="customer" name="form_type">
+            <input id="update-me" type="hidden" name="contact[tags]" value="{{ customer_registration_tag }}" />    
+            {% else %}
+            <input type="hidden" value="create_customer" name="form_type">
+            <input id="update-me" type="hidden" name="customer[tags]" value="{{ customer_registration_tag }}" />
+            {% endif %}
+
+            <fieldset>
+              <legend>{{ 'wholesale.reg_form.title' | t }}</legend>
+              <div id="all-form-fields">
+              <div class="form-row subject-row disabled-field">
+                <div class="form-left"><label for="form-subject"><i class="fa fa-pencil-square-o"></i><span>{{ 'wholesale.reg_form.subject' | t }}</span></label></div>
+                <div class="form-right"><input type="text" name="form-subject" id="form-subject" placeholder="{{ 'wholesale.reg_form.subject_placeholder' | t }}" value="{{ 'wholesale.reg_form.subject_placeholder' | t }}" disabled="disabled" /></div>
+              </div>
+              <div class="form-row">
+                <div class="form-left required-field"><label for="contact-first-name"><i class="fa fa-user"></i><span>{{ 'wholesale.reg_form.contact' | t }}</span></label></div>
+                <div class="form-right">
+                  <div class="input-line">
+                    <div class="line-left first-name-line"><input type="text" name="customer[first_name]" id="contact-first-name" class="address-input" placeholder="{{ 'wholesale.reg_form.contact_first_placeholder' | t }}" /></div>
+                    <div class="line-right last-name-line"><input type="text" name="customer[last_name]" id="contact-last-name" class="address-input" placeholder="{{ 'wholesale.reg_form.contact_last_placeholder' | t }}" /></div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-left required-field"><label for="contact_phone"><i class="fa fa-phone"></i><span>{{ 'wholesale.reg_form.phone' | t }}</span></label></div>
+                <div class="form-right"><input type="tel" name="customer[note][Phone #:]" id="contact_phone" placeholder="{{ 'wholesale.reg_form.phone_placeholder' | t }}" pattern=".{10,}" required="" /></div>
+              </div>
+              <div class="form-row">
+                <div class="form-left required-field"><label for="contact_email"><i class="fa fa-envelope"></i><span>{{ 'wholesale.reg_form.email' | t }}</span></label></div>
+                <div class="form-right">
+                  {% if customer %}
+                  <input type="email" name="customer[email]" id="contact_email" placeholder="{{ customer.email }}" value="{{ customer.email }}" required="" autocorrect="off" autocapitalize="off" />
+                  {% else %}
+                  <input type="email" name="customer[email]" id="contact_email" placeholder="{{ 'wholesale.reg_form.email_placeholder' | t }}" required="" autocorrect="off" autocapitalize="off" />
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-row password-row">
+                <div class="form-left"><label for="account-password"><i class="fa fa-key"></i><span>{{ 'wholesale.reg_form.account_password' | t }}</span></label></div>
+                <div class="form-right"><input type="password" name="customer[password]" id="account-password" placeholder="{{ 'wholesale.reg_form.account_password_placeholder' | t }}" /></div>
+              </div>
+              <div class="form-row">
+                <div class="form-left"><label for="business_name"><i class="fa fa-building-o"></i><span>{{ 'wholesale.reg_form.business_name' | t }}</span></label></div>
+                <div class="form-right"><input type="text" name="customer[note][Business Name:]" id="business_name" placeholder="{{ 'wholesale.reg_form.business_name_placeholder' | t }}" /></div>
+              </div>
+              <div class="form-row tax-id-row">
+                <div class="form-left required-field"><label for="company_tax_id"><i class="fa fa-gavel"></i><span>{{ 'wholesale.reg_form.tax' | t }}</span></label></div>
+                <div class="form-right"><input type="text" name="customer[note][Tax ID:]" id="company_tax_id" placeholder="{{ 'wholesale.reg_form.tax_placeholder' | t }}" pattern=".{9,}" required="" /></div>
+              </div>
+              <div class="form-row" style="display: none;">
+                <div class="form-left"><label for="company_address"><i class="fa fa-map-marker"></i><span>Store Address:</span></label></div>
+                <div class="form-right"><input type="text" name="customer[note][Company Address:]" id="company_address" placeholder="enter your store address" /></div>
+              </div>
+              <div class="form-row store-address-row">
+                <div class="form-left"><label for="address-line1"><i class="fa fa-map-marker"></i><span>{{ 'wholesale.reg_form.address' | t }}</span></label></div>
+                <div class="form-right">
+                  <div class="input-line"><input type="text" name="address-line1" id="address-line1" class="address-input" placeholder="{{ 'wholesale.reg_form.address_1_placeholder' | t }}" /></div>
+                  <div class="input-line"><input type="text" name="address-line2" id="address-line2" class="address-input" placeholder="{{ 'wholesale.reg_form.address_2_placeholder' | t }}" /></div>
+                  <div class="input-line">
+                    <div class="line-left city-line"><input type="text" name="address-city" id="address-city" class="address-input" placeholder="{{ 'wholesale.reg_form.address_city_placeholder' | t }}" /></div>
+                    <div class="line-right state-line"><input type="text" name="address-state" id="address-state" class="address-input" placeholder="{{ 'wholesale.reg_form.address_state_placeholder' | t }}" /></div>
+                  </div>
+                  <div class="input-line">
+                    <div class="line-left zip-line"><input type="text" name="address-zip" id="address-zip" class="address-input" placeholder="{{ 'wholesale.reg_form.address_zip_placeholder' | t }}" /></div>
+                    <div class="line-right country-line">
+                      <select name="address-country" id="address-country" class="address-input">
+                        <option value="Select Country" disabled>{{ 'wholesale.reg_form.country_select' | t }}</option>
+                        <option value="United States" selected>United States</option>
+                        <option value="Afghanistan">Afghanistan</option>
+                        <option value="Albania">Albania</option>
+                        <option value="Algeria">Algeria</option>
+                        <option value="American Samoa">American Samoa</option>
+                        <option value="Andorra">Andorra</option>
+                        <option value="Angola">Angola</option>
+                        <option value="Anguilla">Anguilla</option>
+                        <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+                        <option value="Argentina">Argentina</option>
+                        <option value="Armenia">Armenia</option>
+                        <option value="Aruba">Aruba</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Austria">Austria</option>
+                        <option value="Azerbaijan">Azerbaijan</option>
+                        <option value="The Bahamas">The Bahamas</option>
+                        <option value="Bahrain">Bahrain</option>
+                        <option value="Bangladesh">Bangladesh</option>
+                        <option value="Barbados">Barbados</option>
+                        <option value="Belarus">Belarus</option>
+                        <option value="Belgium">Belgium</option>
+                        <option value="Belize">Belize</option>
+                        <option value="Benin">Benin</option>
+                        <option value="Bermuda">Bermuda</option>
+                        <option value="Bhutan">Bhutan</option>
+                        <option value="Bolivia">Bolivia</option>
+                        <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                        <option value="Botswana">Botswana</option>
+                        <option value="Brazil">Brazil</option>
+                        <option value="Brunei">Brunei</option>
+                        <option value="Bulgaria">Bulgaria</option>
+                        <option value="Burkina Faso">Burkina Faso</option>
+                        <option value="Burundi">Burundi</option>
+                        <option value="Cambodia">Cambodia</option>
+                        <option value="Cameroon">Cameroon</option>
+                        <option value="Canada">Canada</option>
+                        <option value="Cape Verde">Cape Verde</option>
+                        <option value="Cayman Islands">Cayman Islands</option>
+                        <option value="Central African Republic">Central African Republic</option>
+                        <option value="Chad">Chad</option>
+                        <option value="Chile">Chile</option>
+                        <option value="People's Republic of China">People's Republic of China</option>
+                        <option value="Republic of China">Republic of China</option>
+                        <option value="Christmas Island">Christmas Island</option>
+                        <option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
+                        <option value="Colombia">Colombia</option>
+                        <option value="Comoros">Comoros</option>
+                        <option value="Congo">Congo</option>
+                        <option value="Cook Islands">Cook Islands</option>
+                        <option value="Costa Rica">Costa Rica</option>
+                        <option value="Cote d'Ivoire">Cote d'Ivoire</option>
+                        <option value="Croatia">Croatia</option>
+                        <option value="Cuba">Cuba</option>
+                        <option value="Cyprus">Cyprus</option>
+                        <option value="Czech Republic">Czech Republic</option>
+                        <option value="Denmark">Denmark</option>
+                        <option value="Djibouti">Djibouti</option>
+                        <option value="Dominica">Dominica</option>
+                        <option value="Dominican Republic">Dominican Republic</option>
+                        <option value="Ecuador">Ecuador</option>
+                        <option value="Egypt">Egypt</option>
+                        <option value="El Salvador">El Salvador</option>
+                        <option value="Equatorial Guinea">Equatorial Guinea</option>
+                        <option value="Eritrea">Eritrea</option>
+                        <option value="Estonia">Estonia</option>
+                        <option value="Ethiopia">Ethiopia</option>
+                        <option value="Falkland Islands">Falkland Islands</option>
+                        <option value="Faroe Islands">Faroe Islands</option>
+                        <option value="Fiji">Fiji</option>
+                        <option value="Finland">Finland</option>
+                        <option value="France">France</option>
+                        <option value="French Polynesia">French Polynesia</option>
+                        <option value="Gabon">Gabon</option>
+                        <option value="The Gambia">The Gambia</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Ghana">Ghana</option>
+                        <option value="Gibraltar">Gibraltar</option>
+                        <option value="Greece">Greece</option>
+                        <option value="Greenland">Greenland</option>
+                        <option value="Grenada">Grenada</option>
+                        <option value="Guadeloupe">Guadeloupe</option>
+                        <option value="Guam">Guam</option>
+                        <option value="Guatemala">Guatemala</option>
+                        <option value="Guernsey">Guernsey</option>
+                        <option value="Guinea">Guinea</option>
+                        <option value="Guinea-Bissau">Guinea-Bissau</option>
+                        <option value="Guyana">Guyana</option>
+                        <option value="Haiti">Haiti</option>
+                        <option value="Honduras">Honduras</option>
+                        <option value="Hong Kong">Hong Kong</option>
+                        <option value="Hungary">Hungary</option>
+                        <option value="Iceland">Iceland</option>
+                        <option value="India">India</option>
+                        <option value="Indonesia">Indonesia</option>
+                        <option value="Iran">Iran</option>
+                        <option value="Iraq">Iraq</option>
+                        <option value="Ireland">Ireland</option>
+                        <option value="Israel">Israel</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Jamaica">Jamaica</option>
+                        <option value="Japan">Japan</option>
+                        <option value="Jersey">Jersey</option>
+                        <option value="Jordan">Jordan</option>
+                        <option value="Kazakhstan">Kazakhstan</option>
+                        <option value="Kenya">Kenya</option>
+                        <option value="Kiribati">Kiribati</option>
+                        <option value="North Korea">North Korea</option>
+                        <option value="South Korea">South Korea</option>
+                        <option value="Kosovo">Kosovo</option>
+                        <option value="Kuwait">Kuwait</option>
+                        <option value="Kyrgyzstan">Kyrgyzstan</option>
+                        <option value="Laos">Laos</option>
+                        <option value="Latvia">Latvia</option>
+                        <option value="Lebanon">Lebanon</option>
+                        <option value="Lesotho">Lesotho</option>
+                        <option value="Liberia">Liberia</option>
+                        <option value="Libya">Libya</option>
+                        <option value="Liechtenstein">Liechtenstein</option>
+                        <option value="Lithuania">Lithuania</option>
+                        <option value="Luxembourg">Luxembourg</option>
+                        <option value="Macau">Macau</option>
+                        <option value="Macedonia">Macedonia</option>
+                        <option value="Madagascar">Madagascar</option>
+                        <option value="Malawi">Malawi</option>
+                        <option value="Malaysia">Malaysia</option>
+                        <option value="Maldives">Maldives</option>
+                        <option value="Mali">Mali</option>
+                        <option value="Malta">Malta</option>
+                        <option value="Marshall Islands">Marshall Islands</option>
+                        <option value="Martinique">Martinique</option>
+                        <option value="Mauritania">Mauritania</option>
+                        <option value="Mauritius">Mauritius</option>
+                        <option value="Mayotte">Mayotte</option>
+                        <option value="Mexico">Mexico</option>
+                        <option value="Micronesia">Micronesia</option>
+                        <option value="Moldova">Moldova</option>
+                        <option value="Monaco">Monaco</option>
+                        <option value="Mongolia">Mongolia</option>
+                        <option value="Montenegro">Montenegro</option>
+                        <option value="Montserrat">Montserrat</option>
+                        <option value="Morocco">Morocco</option>
+                        <option value="Mozambique">Mozambique</option>
+                        <option value="Myanmar">Myanmar</option>
+                        <option value="Nagorno-Karabakh">Nagorno-Karabakh</option>
+                        <option value="Namibia">Namibia</option>
+                        <option value="Nauru">Nauru</option>
+                        <option value="Nepal">Nepal</option>
+                        <option value="Netherlands">Netherlands</option>
+                        <option value="Netherlands Antilles">Netherlands Antilles</option>
+                        <option value="New Caledonia">New Caledonia</option>
+                        <option value="New Zealand">New Zealand</option>
+                        <option value="Nicaragua">Nicaragua</option>
+                        <option value="Niger">Niger</option>
+                        <option value="Nigeria">Nigeria</option>
+                        <option value="Niue">Niue</option>
+                        <option value="Norfolk Island">Norfolk Island</option>
+                        <option value="Turkish Republic of Northern Cyprus">Turkish Republic of Northern Cyprus</option>
+                        <option value="Northern Mariana">Northern Mariana</option>
+                        <option value="Norway">Norway</option>
+                        <option value="Oman">Oman</option>
+                        <option value="Pakistan">Pakistan</option>
+                        <option value="Palau">Palau</option>
+                        <option value="Palestine">Palestine</option>
+                        <option value="Panama">Panama</option>
+                        <option value="Papua New Guinea">Papua New Guinea</option>
+                        <option value="Paraguay">Paraguay</option>
+                        <option value="Peru">Peru</option>
+                        <option value="Philippines">Philippines</option>
+                        <option value="Pitcairn Islands">Pitcairn Islands</option>
+                        <option value="Poland">Poland</option>
+                        <option value="Portugal">Portugal</option>
+                        <option value="Puerto Rico">Puerto Rico</option>
+                        <option value="Qatar">Qatar</option>
+                        <option value="Romania">Romania</option>
+                        <option value="Russia">Russia</option>
+                        <option value="Rwanda">Rwanda</option>
+                        <option value="Saint Barthelemy">Saint Barthelemy</option>
+                        <option value="Saint Helena">Saint Helena</option>
+                        <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                        <option value="Saint Lucia">Saint Lucia</option>
+                        <option value="Saint Martin">Saint Martin</option>
+                        <option value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</option>
+                        <option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option>
+                        <option value="Samoa">Samoa</option>
+                        <option value="San Marino">San Marino</option>
+                        <option value="Sao Tome and Principe">Sao Tome and Principe</option>
+                        <option value="Saudi Arabia">Saudi Arabia</option>
+                        <option value="Senegal">Senegal</option>
+                        <option value="Serbia">Serbia</option>
+                        <option value="Seychelles">Seychelles</option>
+                        <option value="Sierra Leone">Sierra Leone</option>
+                        <option value="Singapore">Singapore</option>
+                        <option value="Slovakia">Slovakia</option>
+                        <option value="Slovenia">Slovenia</option>
+                        <option value="Solomon Islands">Solomon Islands</option>
+                        <option value="Somalia">Somalia</option>
+                        <option value="Somaliland">Somaliland</option>
+                        <option value="South Africa">South Africa</option>
+                        <option value="South Ossetia">South Ossetia</option>
+                        <option value="Spain">Spain</option>
+                        <option value="Sri Lanka">Sri Lanka</option>
+                        <option value="Sudan">Sudan</option>
+                        <option value="Suriname">Suriname</option>
+                        <option value="Svalbard">Svalbard</option>
+                        <option value="Swaziland">Swaziland</option>
+                        <option value="Sweden">Sweden</option>
+                        <option value="Switzerland">Switzerland</option>
+                        <option value="Syria">Syria</option>
+                        <option value="Taiwan">Taiwan</option>
+                        <option value="Tajikistan">Tajikistan</option>
+                        <option value="Tanzania">Tanzania</option>
+                        <option value="Thailand">Thailand</option>
+                        <option value="Timor-Leste">Timor-Leste</option>
+                        <option value="Togo">Togo</option>
+                        <option value="Tokelau">Tokelau</option>
+                        <option value="Tonga">Tonga</option>
+                        <option value="Transnistria Pridnestrovie">Transnistria Pridnestrovie</option>
+                        <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+                        <option value="Tristan da Cunha">Tristan da Cunha</option>
+                        <option value="Tunisia">Tunisia</option>
+                        <option value="Turkey">Turkey</option>
+                        <option value="Turkmenistan">Turkmenistan</option>
+                        <option value="Turks and Caicos Islands">Turks and Caicos Islands</option>
+                        <option value="Tuvalu">Tuvalu</option>
+                        <option value="Uganda">Uganda</option>
+                        <option value="Ukraine">Ukraine</option>
+                        <option value="United Arab Emirates">United Arab Emirates</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="Uruguay">Uruguay</option>
+                        <option value="Uzbekistan">Uzbekistan</option>
+                        <option value="Vanuatu">Vanuatu</option>
+                        <option value="Vatican City">Vatican City</option>
+                        <option value="Venezuela">Venezuela</option>
+                        <option value="Vietnam">Vietnam</option>
+                        <option value="British Virgin Islands">British Virgin Islands</option>
+                        <option value="Isle of Man">Isle of Man</option>
+                        <option value="US Virgin Islands">US Virgin Islands</option>
+                        <option value="Wallis and Futuna">Wallis and Futuna</option>
+                        <option value="Western Sahara">Western Sahara</option>
+                        <option value="Yemen">Yemen</option>
+                        <option value="Zambia">Zambia</option>
+                        <option value="Zimbabwe">Zimbabwe</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row source-row">
+                <div class="form-left"><label for="contact_source"><i class="fa fa-question-circle"></i><span>{{ 'wholesale.reg_form.source' | t }}</span></label></div>
+                <div class="form-right">
+                  <select id="contact_source" name="customer[note][Referral Source:]" class="form-dropdown">
+                    <option value="Select a source" selected disabled>{{ 'wholesale.reg_form.source_select' | t }}</option>
+                    <option value="Customer referral">{{ 'wholesale.reg_form.source_1' | t }}</option>
+                    <option value="Social network">{{ 'wholesale.reg_form.source_2' | t }}</option>
+                    <option value="Online ad">{{ 'wholesale.reg_form.source_3' | t }}</option>
+                    <option value="Blog post">{{ 'wholesale.reg_form.source_4' | t }}</option>
+                    <option value="Magazine ad">{{ 'wholesale.reg_form.source_5' | t }}</option>
+                    <option value="Other">{{ 'wholesale.reg_form.source_6' | t }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row notes-row">
+                <div class="form-left"><label for="contact_note"><i class="fa fa-comment"></i><span>{{ 'wholesale.reg_form.notes' | t }}</span></label></div>
+                <div class="form-right"><textarea name="customer[note][Notes:]" id="contact_note" rows="4" cols="50" placeholder="{{ 'wholesale.reg_form.notes_placeholder' | t }}"></textarea></div>
+              </div>
+              </div><!-- end #all-form-fields -->
+              <div class="form-row response">
+                <div id="form-response"></div>
+              </div>
+              <div class="form-row submission"><button type="submit" class="btn Large">{{ 'wholesale.reg_form.submit' | t }}</button></div>
+            </fieldset>
+          </form>
+        </div>
+        <!-- END .wholesale-form-container -->    
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+  
+</div>
+
+<!--   <script src="//malsup.github.com/jquery.form.js"></script> -->
+
+<!-- SmartyStreets -->
+<!-- <script src="//d79i1fxsrar4t.cloudfront.net/jquery.liveaddress/3.2/jquery.liveaddress.min.js"></script> -->
+<!-- END SmartyStreets -->
+
+  {%- comment -%}
+  <!-- Font Awesome ======================================= -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+  <script>
+    function load_css_onload(stylesheet_url){
+      var cb = function() {
+        var l = document.createElement('link'); l.rel = 'stylesheet';
+        l.href = stylesheet_url;
+        var h = document.getElementsByTagName('head')[0];
+        // Prepend styles before head
+        //h.parentNode.insertBefore(l, h);
+        // Append styles to head
+        h.appendChild(l);
+      };
+      var raf = requestAnimationFrame || webkitRequestAnimationFrame ||
+          mozRequestAnimationFrame || msRequestAnimationFrame;
+      if (raf) raf(cb);
+      else window.addEventListener('load', cb);
+    }
+    load_css_onload('https://use.fontawesome.com/releases/v5.3.1/css/all.css');
+    
+  </script>
+  {%- endcomment -%}
+

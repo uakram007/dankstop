@@ -1,0 +1,132 @@
+{{ 'blog.scss.css' | asset_url | stylesheet_tag }}
+
+<div class="search-page collection-template" data-search-page>
+  <div class="container">    
+    {% if search.performed %}
+
+    {% comment %}
+    Avoid accessing search.results before the opening paginate tag.
+    If you do, the pagination of results will be broken.
+    {% endcomment %}
+
+    {% paginate search.results by 25 %}
+
+    {% comment %}
+    We don't have any results to show. Feel free to show off featured products
+    or suggested searches here.
+    {% endcomment %}
+
+    {% if search.results_count == 0 %}
+    <header class="page-header">
+      <h2>
+        {% include 'multilang' with settings.search_1 %}
+        <strong> &nbsp;"{{ search.terms }}"&nbsp; </strong>
+        {% include 'multilang' with settings.search_2 %}
+      </h2>
+    </header>
+
+    {% else %}
+    
+    <header class="page-header">
+      <h2>
+        {% include 'multilang' with settings.search_3 %}
+        <strong> &nbsp;"{{ search.terms }}"&nbsp; </strong>
+        {% include 'multilang' with settings.search_4 %}
+      </h2>
+    </header>
+
+    {% comment %}
+    Each result template, based on the grid_layout variable above
+    {% endcomment %}
+    
+    <div class="block-row col-main">
+
+
+        <ul id="dankblog_all_articles" class="row articles-list list_of_articles">
+        {% for article in search.results %}
+        
+          {%- assign item_grid_class = "col-sm-12 col-md-6 col-lg-4" -%}
+          {%- comment -%}
+          {%- if forloop.first -%}
+            {%- assign item_grid_class = "col-12" -%}
+          {%- endif -%}    
+          {%- endcomment -%}
+          <li class="individual_article {{ item_grid_class }}">
+
+            <a href="{{ article.url }}">
+              {%- assign article_image = article.image -%}
+              {%- assign article_image_src = article_image.src -%}
+              {%- assign article_image_src = article_image | img_url: 'original' -%}
+              {%- assign article_image_alt = article.title -%}
+              {%- assign article_img_srcset = '320,768,1080' -%}
+              {%- assign article_img_ss_sizes = '320,768,1080' -%}
+              {%- comment -%}    
+              {%- include 'image-module' url:article_image_src, srcset:article_img_srcset, ss_sizes:article_img_ss_sizes, width:100, ratio:'16x9', size:'medium', im_a:article_image_alt -%}
+              {%- endcomment -%}    
+              {%- include 'shimod', img: article_image, size: 'original' -%}
+
+              <p class="article_post_date">{{ article.published_at | date: "%b %d, %Y" }}</p>
+
+              <h2>{{ article.title }}</h2>
+
+              <p class="article_excerpt">
+                {% if article.excerpt.size > 0 %}
+                {{ article.excerpt }}
+                {% else %}
+                <span>{{ article.content | strip_html | truncate: 90 }}</span>
+                {% endif %}
+              </p>
+
+              {%- comment -%}
+              <p class="article-tags">
+                {% for tag in article.tags %}
+                {%- if forloop.first -%}
+                <span>{{ tag }}</span>
+                {%- else -%}
+                {{- ', ' -}}<span>{{ tag }}</span>
+                {%- endif -%}    
+                {% endfor %}
+              </p>
+              {%- endcomment -%}
+
+              {%- comment -%}
+              {% if blog.comments_enabled? %}
+              <a class="comment-count-link" href="{{ article.url }}#comments">
+                {{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+              </a>
+              {% endif %}
+              {%- endcomment -%}
+
+              <span class="read_more_link">{{ 'blogs.article.read_more' | t }}</span>
+
+            </a>
+
+          </li>
+        {% endfor %}
+        </ul>
+
+
+    </div>
+    {% endif %}
+
+    {% if paginate.pages > 1 %}
+    <div class="padding">
+      {% include 'pagination-page' %}
+    </div>
+    {% endif %}
+    {% endpaginate %}
+
+    {% else %}
+
+    {% comment %}
+    If search.performed is false, someone either accessed the page without
+    the q parameter, or it was blank.
+    Be sure to show a search form here, along with anything else you want to showcase.
+    {% endcomment %}
+
+    <header class="page-header">
+      <h2 {% if settings.enable_multilang %}data-translate="general.search.title"{%endif%}>{{ 'general.search.title' | t }}</h2>
+    </header>
+    {% endif %}
+  </div>
+</div>

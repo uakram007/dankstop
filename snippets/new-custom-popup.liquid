@@ -1,0 +1,201 @@
+<style>
+.new_custom_popup_main {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 500px;
+  background: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1000;
+  .close_popup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    background: #c1c7d0;
+    color: #fff;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    &:focus-visible {
+      border: none;
+      outline: none;
+    }
+  }
+  .img_logo_popup {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    img {
+      max-width: 200px;
+    }
+  }
+  .form_popup {
+    text-align: center;
+    padding: 0 10px;
+    max-width: 370px;
+    margin: auto;
+    h2 {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    p {
+      text-align: center;
+      margin: 10px 0;
+      font-size: 14px;
+      color: #333;
+      display:inline;
+      strong{
+        font-family: Myriad Set Pro,Helvetica Neue,Helvetica,Arial,sans-serif;
+      }
+    }
+    .input_email_popup {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #c1c7d0;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .consent_popup {
+      font-size: 12px;
+      color: #555; 
+      margin: 15px 0px;
+    }
+  }
+  .btn_main_popup {
+    text-align: center;
+    margin-top: 10px;
+    button {
+      display: inline-block;
+      padding: 10px 20px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1.2;
+      text-decoration: none;
+      text-align: center;
+      width: 100%;
+      border: 2px solid #e1251c;
+      background: transparent;
+      color: #e1251c;
+      border-radius: 50px;
+      font-weight: 700;
+      font-family: Myriad Set Pro,Helvetica Neue,Helvetica,Arial,sans-serif;
+    }
+  }
+  .already_popup {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+}
+.new_popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+    z-index: 1000; /* Ensure it is behind the popup */
+  }
+</style>
+
+<div id="new_popup-overlay" class="new_popup-overlay" onclick="closePopup()"></div>
+
+<div id="new_popup-modal" class="new_custom_popup_main">
+  <button class="close_popup" onclick="closePopup()">&times;</button>
+  <div class="img_logo_popup">
+    <img
+      src="https://dankstop.com/cdn/shop/files/LogoB-green_copy_199x_ffbb68b7-61b6-4745-a9f0-1bb632bbad19_199x.png?v=1699497784"
+      alt="Logo"
+    />
+  </div>
+
+  <form onsubmit="return false;" class="form_popup">
+    <h2>
+      Join for FREE & Unlock<br />
+      Instant Savings
+    </h2>
+    <p>
+      Access <strong>UNBEATABLE</strong> Member Prices at the
+      <strong>Lowest Price Guaranteed</strong>
+    </p>
+    <!-- Email Input -->
+    <input
+      class="input_email_popup"
+      type="email"
+      name="email"
+      placeholder="Email"
+      required
+      style=""
+    />
+
+    <!-- Checkbox -->
+    <label class="consent_popup">
+      <input type="checkbox" required style="margin-right: 3px;width: 15px;height: 15px;position: relative;top: 3px;"/> 
+      By joining Cabana Club you agree to <a href="https://dankstop.com/pages/membership-terms-and-conditions">Cabana Club and Cabana Elite Terms and Conditions</a> and our <a href="https://dankstop.com/pages/privacy-policy-1" style=" padding-left: 5px; ">Privacy Policy</a>.  
+    </label>
+
+    <!-- Centered Button -->
+    <div class="btn_main_popup">
+      <button>Join Cabana Club for Free</button>
+    </div>
+  </form>
+  <p class="already_popup">
+    Already a Member?
+    <a
+      href="#"
+      class="{% if customer == blank%}SSO_popup_login {% endif %}"
+      style="color: #e1251c; text-decoration: underline"
+      >Log In</a
+    >
+      <a class="SSO_popup_register ss_pop"></a>
+  </p>
+</div>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const popup = document.getElementById('new_popup-modal');
+        const overlay = document.getElementById('new_popup-overlay');
+ 
+        if (!localStorage.getItem('popupClosed')) { 
+            setTimeout(() => {
+            popup.style.display = 'block';
+            overlay.style.display = 'block';
+            }, 3000);
+        }
+ 
+        window.closePopup = function () {
+            popup.style.display = 'none';
+            overlay.style.display = 'none'; 
+            localStorage.setItem('popupClosed', 'true');
+        };
+
+        const popupForm = document.querySelector('.form_popup');
+        popupForm.addEventListener('submit', handlePopupSubmit);
+    });
+
+
+    // Function to get the email and update the URL
+    function handlePopupSubmit(event) { 
+      event.preventDefault();
+      const emailInput = document.querySelector('.input_email_popup');
+      const userEmail = emailInput.value.trim();
+      
+     document.querySelector('.ss_pop').click()
+    }
+
+</script>

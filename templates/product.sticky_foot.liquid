@@ -1,0 +1,63 @@
+{%- layout none -%}
+{%- include 'sticky-add-to-cart' -%}
+
+<script type="text/javascript">
+  (function() {
+    var n = $("[data-sticky-add-to-cart]"),
+        s = n.find(".pr-active"),
+        r = n.find(".pr-swatch");
+    if (n.length) {
+      var $ref_element = $("#add-to-cart-form .groups-btn").length ? $("#add-to-cart-form .groups-btn") : $("#wk-auction");
+      var e = $ref_element.offset().top;
+      $(window).off("scroll.sticky_product_foot").on("scroll.sticky_product_foot", function(){
+        var t = $(this).scrollTop();
+        e < t ? $("body").addClass("show_sticky") : $("body").removeClass("show_sticky")
+      }), s.off("click.showListVariant").on("click.showListVariant", function(t) {
+        t.preventDefault(), n.toggleClass("open-sticky")
+      }), $(document).off("click.hideVariantsOption").on("click.hideVariantsOption", function(t) {
+        s.is(t.target) || 0 !== s.has(t.target).length || n.removeClass("open-sticky")
+      }), r.off("click.activeVar").on("click.activeVar", function(t) {
+        var e = $(this),
+            i = e.text(),
+            a = e.data("value"),
+            o = e.data("img");
+        return r.removeClass("active"), e.addClass("active"), n.toggleClass("open-sticky"), n.find(".action input[type=hidden]").val(a), s.attr("data-value", a).text(i), $('#add-to-cart-form [data-value-sticky="' + a + '"]').each(function() {
+          var t = $(this).data("value");
+          $('[data-value="' + t + '"]').closest(".swatch").find("#" + t).click()
+        }), e.hasClass("sold-out") ? n.find(".sticky-add-to-cart").val(window.inventory_text.sold_out).addClass("disabled").attr("disabled", "disabled") : n.find(".sticky-add-to-cart").removeClass("disabled").removeAttr("disabled").val(window.inventory_text.add_to_cart), $(".pr-img img").attr({
+          src: o
+        }), !1
+      }), $(document).off("click.btnStickyAddToCart").on("click.btnStickyAddToCart", "[data-sticky-btn-addToCart]", function(t) {
+        return t.preventDefault(), $("#add-to-cart-form [data-btn-addToCart]").length ? $("#add-to-cart-form [data-btn-addToCart]").click() : $("#add-to-cart-form [data-grouped-addToCart]").length && $("#add-to-cart-form [data-grouped-addToCart]").click(), !1
+      }),
+        function() {
+        var t = $("#product-selectors option:selected").val(),
+            e = n.find('.pr-swatch[data-value="' + t + '"]'),
+            i = e.text();
+        s.text(i), e.addClass("active");
+        var a = e.data("img");
+        $(".pr-img img").attr({
+          src: a
+        }), $(".swatch .swatch-element").each(function(t) {
+          var e = $(this).find("input:radio").attr("id");
+          $('.swatch input.text[data-value="' + e + '"]').appendTo($(this))
+        }), $(".selector-wrapper").change(function() {
+          var e = $("#product-selectors").val();
+          if ($(".sticky_form .pr-selectors li").each(function(t) {
+            $(this).find("a").data("value") == e ? $(this).find("a").addClass("active") : $(this).find("a").removeClass("active")
+          }), $("#product-selectors").off("change.optionSelectors").on("change.optionSelectors", function() {
+            var t = "";
+            $("#product-selectors option:selected").each(function() {
+              t += $(this).data("imge")
+            }), $(".pr-img img").attr({
+              src: t
+            })
+          }).trigger("change"), r.hasClass("active")) {
+            var t = $(".sticky_form .pr-swatch.active").text();
+            $(".sticky_form .action input[type=hidden]").val(e), s.text(t), s.attr("data-value", e)
+          }
+        })
+      }()
+    }
+  })();
+</script>

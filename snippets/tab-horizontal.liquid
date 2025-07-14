@@ -1,0 +1,278 @@
+<div class="tabs__product-page horizontal-tabs{% if section.settings.show_tab == 'horizontal_center' %} horizontal-tabs-center{% endif %}">
+    <ul class="list-tabs">
+        {% if section.settings.display_product_detail_description %}
+        <li class="tab-title">
+            <a href="#" data-tapTop data-target="#collapse-tab1" class="tab-links active">
+                {% include 'multilang' with section.settings.product_description_title %}
+            </a>
+        </li>
+        {% endif %}
+        
+        {% if section.settings.display_product_feature_terms %}
+        {%- if feature_term_keys_array != blank -%}
+        <li class="tab-title">
+            <a href="#" data-tapTop data-target="#collapse-tab5" class="tab-links">
+                {% include 'multilang' with section.settings.product_feature_terms_title %}
+            </a>
+        </li>
+        {%- endif -%}
+        {% endif %}
+        
+        {% if section.settings.display_product_specs %}
+        {%- if product.metafields.specs != blank -%}
+        <li class="tab-title">
+            <a href="#" data-tapTop data-target="#collapse-tab6" class="tab-links">
+                {% include 'multilang' with section.settings.product_specs_title %}
+            </a>
+        </li>
+        {%- endif -%}
+        {% endif %}
+        
+        {% if section.settings.display_product_reviews %}
+        <li class="tab-title main-reviews-container">
+            <a href="#" data-tapTop data-target="#collapse-tab2" class="tab-links">
+                {% include 'multilang' with section.settings.product_review_title %}
+            </a>
+        </li>
+        {% endif %}
+        
+        {% if section.settings.display_shipping_returns %}
+        <li class="tab-title">
+            <a href="#" data-tapTop data-target="#collapse-tab3" class="tab-links">
+                {% include 'multilang' with section.settings.shipping_returns_title %}
+            </a>
+        </li>
+        {% endif %}
+        
+        {% if section.settings.display_custom_tab and product.description contains '[custom tab]' %}
+        <li class="tab-title">
+            <a href="#" data-tapTop data-target="#collapse-tab4" class="tab-links">
+                {% include 'multilang' with section.settings.custom_tab_title %}
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+    
+    <div class="wrapper-tab-content">
+        {% if section.settings.display_product_detail_description %}
+        
+        {% assign des = product.description %}
+        {% if des contains '[countdown]' or product.description contains '[custom tab]' %}            
+        {% assign des = product.description | split:'[/countdown]</p>' | last %}
+        {% assign des = des | split:'[custom tab]' | first | split:'<iframe' | first %}
+        {% endif %}
+
+      
+      
+      
+          {%- comment -%}
+          <!-- Process iFrame tags -->
+          {%- endcomment -%}
+          {%- assign iframe_src_attr_replacement = 'class="lazyload" title="' | append: product_title_escaped | append: ' Description Video" data-src="' -%}
+          {%- assign tag_to_process_start = '<iframe ' -%}
+          {%- assign tag_attr_array = des | split: tag_to_process_start -%}
+          {%- assign tag_attr_count = tag_attr_array.size | minus: 1 -%}
+          {%- for i in (1..tag_attr_count) -%}
+            {%- assign content_split_at_tag = des | split: tag_to_process_start -%}
+            {%- assign content_end = content_split_at_tag[1] | replace_first: 'src="', iframe_src_attr_replacement -%}
+            {%- assign des = content_split_at_tag[0] | append: tag_to_process_start | append: content_end -%}
+          {%- endfor -%}
+      
+      
+      
+      
+      
+      
+        <div class="tab-title">
+            <a href="#" data-tapTop data-target="#collapse-tab1" class="tab-links active">
+                {% include 'multilang' with section.settings.product_description_title %}
+                <span class="icon-dropdown">
+                <i class="fa fa-angle-down"></i>
+                </span>
+            </a>
+        </div>
+        
+        <div class="tab-content active" data-TabContent id="collapse-tab1">
+            {% if settings.enable_multilang and des contains '[lang2]' %}
+            <div class="lang1">
+                {{ des | split: '[lang2]' | first }}
+            </div>
+            <div class="lang2">
+                {{ des | split: '[lang2]' | last }}
+            </div>
+            {% else %}
+            <div>
+          
+            {%- comment -%}
+              Product videos
+              {% include 'product-video' %}
+              <div class="play-button"></div> 
+              <div class="yt-video video-wrapper" data-embed="{{ promo_video_yt_id }}"></div>
+            {%- endcomment -%}
+            {%- assign demo_video_yt_id = false -%}
+            {%- assign promo_video_yt_id = false -%}
+            {%- if product.metafields.videos -%}
+              {%- assign demo_video_yt_id = product.metafields.videos.video_demo -%}
+              {%- assign promo_video_yt_id = product.metafields.videos.video_promo -%}
+            {%- endif -%}
+            {%- if promo_video_yt_id -%}
+<div class="yt-container col-8 col-sm-8 col-lg-6">
+  <div class="yt-video video-wrapper">
+    <iframe class="lazyload" frameborder="0" allowfullscreen="" data-src="https://www.youtube.com/embed/{{ promo_video_yt_id }}?wmode=transparent&amp;enablejsapi=1&amp;modestbranding=1&amp;showinfo=0&amp;controls=0&amp;rel=0&amp;loop=1&amp;theme=light&amp;fs=0&amp;origin=dankstop.com"></iframe>
+  </div>
+</div>              
+            {%- endif -%}
+
+                {{ des | split: '[lang2]' | first }}
+            </div>
+            {% endif %}
+        
+            {% include 'product-detail-gallery_lookbook' %}
+        </div>
+        {% endif %}
+      
+      
+        {% if section.settings.display_product_feature_terms %}
+          {%- if feature_term_keys_array != blank -%}
+          <div class="tab-title">
+              <a href="#" data-tapTop data-target="#collapse-tab5" class="tab-links">
+                  {% include 'multilang' with section.settings.product_feature_terms_title %}
+                  <span class="icon-dropdown">
+                  <i class="fa fa-angle-down"></i>
+                  </span>
+              </a>
+          </div>
+
+          <div class="tab-content features-tab" data-TabContent id="collapse-tab5">
+            <div class="row">
+              <div class="col-lg-4 col-md-4 col-sm-12">
+
+                <img width="370" height="463" class="lazyload"
+                     src="{{ lazyload_placeholder }}"
+                     data-src="{{ product.featured_image | img_url: '370x' }}"
+                     title="{{ product.title | escape }}" 
+                     alt="{{ product.title | escape }}">
+                
+              </div>
+              <div class="col-lg-8 col-md-8 col-sm-12">
+              {% include 'product-feature-terms' %}
+              </div>
+            </div>
+          </div>
+          {%- endif -%}
+        {% endif %}
+      
+
+        {% if section.settings.display_product_specs %}
+          {%- if product.metafields.specs != blank -%}
+          <div class="tab-title">
+              <a href="#" data-tapTop data-target="#collapse-tab5" class="tab-links">
+                  {% include 'multilang' with section.settings.product_specs_title %}
+                  <span class="icon-dropdown">
+                  <i class="fa fa-angle-down"></i>
+                  </span>
+              </a>
+          </div>
+
+          <div class="tab-content specs-tab" data-TabContent id="collapse-tab6">
+            <div class="row">
+              <ul class="col">
+                {%- for spec in product.metafields.specs -%}
+                {%- assign spec_key = spec | first | replace: '_', ' ' -%}
+                {%- assign spec_value = spec | last -%}
+                <li><b>{{ spec_key }}</b>: {{ spec_value }}</li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          </div>
+          {%- endif -%}
+        {% endif %}
+        
+
+        {% if section.settings.display_product_reviews %}
+        <div class="tab-title main-reviews-container">
+            <a href="#" data-tapTop data-target="#collapse-tab2" class="tab-links">
+                {% include 'multilang' with section.settings.product_review_title %}
+                <span class="icon-dropdown">
+                <i class="fa fa-angle-down"></i>
+                </span>
+            </a>
+        </div>
+        
+        <div class="tab-content" data-TabContent id="collapse-tab2">
+            <div id="shopify-product-reviews" data-id="{{product.id}}">
+                {{ product.metafields.spr.reviews }}
+            </div>
+          	<div class="yotpo yotpo-main-widget" 
+ 				data-product-id="{{ product.id }}"
+ 				data-price="{{ variant.price | money_without_currency }}"
+				data-currency="{{ shop.currency }}" 
+				data-name="{{ product.title | escape }}" 
+				data-url="{{ shop.url }}{{ product.url }}" 
+				data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" 
+				data-description="{{ product.description | escape }}"> 
+			</div>
+        </div>
+        {% endif %}
+        
+        {% if section.settings.display_shipping_returns %}
+        <div class="tab-title">
+            <a href="#" data-tapTop data-target="#collapse-tab3" class="tab-links">
+                {% include 'multilang' with section.settings.shipping_returns_title %}
+                <span class="icon-dropdown">
+                <i class="fa fa-angle-down"></i>
+                </span>
+            </a>
+        </div>
+        
+        <div class="tab-content" data-TabContent id="collapse-tab3">
+            {% assign content = section.settings.shipping_returns_content %}
+            
+            {% if content != blank %}
+            {% if settings.enable_multilang and content contains '[lang2]' %}
+            <div class="lang1">
+                {{ content | split: '[lang2]' | first }}
+            </div>
+            <div class="lang2">
+                {{ content | split: '[lang2]' | last }}
+            </div>
+            {% else %}
+            <div>
+                {{ content | split: '[lang2]' | first }}
+            </div>
+            {% endif %}
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        {% if section.settings.display_custom_tab and product.description contains '[custom tab]' %}
+        <div class="tab-title">
+            <a href="#" data-tapTop data-target="#collapse-tab4" class="tab-links">
+                {% include 'multilang' with section.settings.custom_tab_title %}
+                <span class="icon-dropdown">
+                <i class="fa fa-angle-down"></i>
+                </span>
+            </a>
+        </div>
+        
+        <div class="tab-content" data-TabContent id="collapse-tab4">
+            {% if product.description contains '[custom tab]' %}
+            {% assign des = product.description | split:'[custom tab]' | last | split: '[/custom tab]' | first %}
+            
+            {% if settings.enable_multilang and des contains '[lang2]' %}
+            <div class="lang1">
+                {{ des | split: '[lang2]' | first }}
+            </div>
+            <div class="lang2">
+                {{ des | split: '[lang2]' | last }}
+            </div>
+            {% else %}
+            <div>
+                {{ des | split: '[lang2]' | first }}
+            </div>
+            {% endif %}
+            {% endif %}
+        </div>
+        {% endif %}    
+    </div>
+</div>

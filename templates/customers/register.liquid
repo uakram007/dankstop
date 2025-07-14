@@ -1,0 +1,137 @@
+{% comment %}
+  This template will be automatically generated for you if the file doesn't exist,
+  but where's the fun in having no control? Define your layout below.
+
+  The 'layout settings.customer_layout' line is inserted at the top of every customer account template.
+  Your theme's settings determine to use the 'default' or 'theme' customer templates.
+  More info:
+    - http://www.tetchi.ca/shopify-theme-from-scratch-part-11/
+{% endcomment %}
+
+{%- include 'customers-head' -%}
+
+{% layout settings.customer_layout %}
+<div class="custom-acc-page">
+  <div class="container">
+
+    {% include 'breadcrumb' %}
+
+    <div class="wrapper-login-customer">
+
+      <header class="page-header">
+        <h1 {% if settings.enable_multilang %} data-translate="customer.register.title"{% endif %}>
+          {{ 'customer.register.title' | t }}
+        </h1>
+      </header>
+
+      <div class="wrapper-content">
+
+        <div class="col-left">
+          {% if settings.enable_multilang %}
+          <div class="des lang1 wrapper-title">
+            <div class="box-title">
+              {{ settings.register_text_desc_1 | split: '|' | first }}
+            </div>
+          </div>
+          <div class="des lang2 wrapper-title">
+            <div class="box-title">
+            {{ settings.register_text_desc_1 | split: '|' | last }}
+            </div>
+          </div>
+          {% else %}
+          <div class="des wrapper-title">
+            <div class="box-title">
+              {{ settings.register_text_desc_1 | split: '|' | first }}
+            </div>
+          </div>
+          {% endif %}
+
+          <div class="social-login-cont">
+          </div>
+        </div>
+        
+        <div class="custom-or-abs">
+          <span class="or_text">
+            {{ 'cart.label.or' | t }}
+          </span>
+        </div>
+        
+        <div class="col-right">
+          {% if settings.enable_multilang %}
+          <div class="des lang1 wrapper-title">
+            <div class="box-title">
+              {{ settings.register_text_desc_2 | split: '|' | first }}
+            </div>
+          </div>
+          <div class="des lang2 wrapper-title">
+            <div class="box-title">
+            {{ settings.register_text_desc_2 | split: '|' | last }}
+            </div>
+          </div>
+          {% else %}
+          <div class="des wrapper-title">
+            <div class="box-title">
+              {{ settings.register_text_desc_2 | split: '|' | first }}
+            </div>
+          </div>
+          {% endif %}
+
+          <div class="create-an-account">
+
+            {% comment %}
+            This form must use 'create_customer'
+            {% endcomment %}
+
+            {% form 'create_customer' %}
+
+            {% include 'form-errors-custom' %}
+
+            <div class="form-group">
+              <label for="first_name">
+                <span {% if settings.enable_multilang %}data-translate="customer.register.first_name"{%endif%}>
+                  {{ 'customer.register.first_name' | t }}
+                </span>
+              </label>
+              <input type="text" value="" name="customer[first_name]" id="first_name" {% if form.errors contains "first_name" %}class="error"{% endif %} >
+            </div>
+
+            <div class="form-group">
+              <label for="last_name">
+                <span {% if settings.enable_multilang %}data-translate="customer.register.last_name"{%endif%}>
+                  {{ 'customer.register.last_name' | t }}
+                </span>
+              </label>      
+              <input type="text" value="" name="customer[last_name]" id="last_name" {% if form.errors contains "last_name" %}class="error"{% endif %} >
+            </div>
+
+            <div class="form-group">
+              <label for="email">
+                <span {% if settings.enable_multilang %}data-translate="customer.register.email"{%endif%}>
+                  {{ 'customer.register.email' | t }}
+                </span>
+                <em>*</em>
+              </label>      
+              <input type="email" value="" name="customer[email]" id="email" {% if form.errors contains "email" %}class="error"{% endif %}  >
+            </div>
+
+            <div class="form-group">
+              <label for="password">
+                <span {% if settings.enable_multilang %}data-translate="customer.register.password"{%endif%}>
+                  {{ 'customer.register.password' | t }}
+                </span>
+                <em>*</em>
+              </label>      
+              <input type="password" value="" name="customer[password]" id="create_password" {% if form.errors contains "password" %}class="error"{% endif %}>
+            </div>
+
+            <div class="action-btn">
+              <input type="submit" {% if settings.enable_multilang %}data-translate="customer.register.submit"{%endif%} value="{{ 'customer.register.submit' | t }}" class="btn btn-padd42">
+            </div>
+            {% endform %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

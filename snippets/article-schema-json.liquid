@@ -1,0 +1,44 @@
+{%- comment -%}
+<!-- Article JSON Schema =============== -->
+{%- endcomment -%}
+{%- comment -%}
+    "author": {
+      "@type": "Organization",
+      "name": "{{ shop.name }}"
+    },
+{%- endcomment -%}
+{%- assign page_description = article.excerpt_or_content | strip_html | truncatewords: 30 -%}
+{% assign article_abc = page_description | json %}
+{%- assign date_created_ISO = article.created_at | date: '%Y-%m-%d' -%}
+{%- assign date_published_ISO = article.published_at | date: '%Y-%m-%d' -%}
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "{{ page_title }}{% if current_tags %}{% assign current_tags_joined = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags_joined }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &#124; {{ shop.name }}{% endunless %}",
+    "mainEntityOfPage": "{{ canonical_url }}",
+    "datePublished": "{{ date_created_ISO }}",
+    "dateModified": "{{ date_published_ISO }}",
+    "description": {{ article_abc | json }},
+    "author": {
+      "@type": "Person",
+      "name": "{{ article.author }}"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "{{ shop.name }}",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "{{ 'android-chrome-192x192.png' | asset_url }}",
+        "width": "192",
+        "height": "192"
+      }
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": "{{ article.image | img_url: 'master' }}",
+      "height": "{{ article.image.height' }}",
+      "width": "{{ article.image.width' }}"
+    }
+  }
+</script>

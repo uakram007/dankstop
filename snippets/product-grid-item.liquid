@@ -1,0 +1,426 @@
+{%- include 'lazyload-placeholder' -%} 
+{%- assign lazyload_pgi = settings.enable_lazy_load -%}
+
+{%- assign on_sale = false -%}
+{%- if product.compare_at_price_min > product.price_min -%}
+  {%- assign on_sale = true -%}
+{%- endif -%}
+
+{%- assign sold_out = true -%}
+{%- if product.available  -%}
+  {%- assign sold_out = false -%}
+{%- endif -%}
+
+
+{%- assign custom_label = false -%}
+{%- assign made_in_usa = false -%}
+{%- assign free_gift_tag_start = settings.free_gifts_tag_start -%}
+{%- assign free_gift_tag = false -%}
+{%- assign is_subscribable = false -%}
+{%- assign subscribable_tag = settings.subscribable_tag -%}
+{%- assign subscribable_collection = settings.subscribable_collection -%}
+
+{%- for tag in product.tags -%}
+
+  {%- if tag == 'label' -%}
+    {%- assign custom_label = true -%}
+    {%- continue -%}
+  {%- endif -%}
+
+  {%- comment -%}
+    PGI Made In USA sticker
+  {%- endcomment -%}
+  {%- if tag contains 'made in_USA' or tag contains 'made in_usa' -%}
+    {%- assign made_in_usa = true -%}
+    {%- continue -%}
+  {%- endif -%}
+
+  {%- comment -%}
+    PGI Free Gift Progress
+  {%- endcomment -%}
+  {%- if tag contains free_gift_tag_start -%}
+    {%- assign free_gift_tag = tag -%}
+    {%- continue -%}
+  {%- endif -%}
+
+  {%- comment -%}
+    Determine if subscribable from the product's tag
+  {%- endcomment -%}
+  {%- if tag == subscribable_tag -%}
+    {%- assign is_subscribable = true -%}
+    {%- continue -%}
+  {%- endif -%}
+
+{%- endfor -%}
+
+{%- comment -%}
+  Determine if subscribable from the product's collection, if not from tag
+{%- endcomment -%}
+{%- unless is_subscribable -%}
+  {%- for collection in product.collections -%}
+    {%- if collection.handle == subscribable_collection -%}
+      {%- assign is_subscribable = true -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endunless -%}
+
+
+
+
+
+
+
+{%  assign hideitem2 = true %}
+{% if product.has_only_default_variant %} 
+    {% if product.metafields.custom.member_price != blank and product.metafields.custom.elite_price != blank %}
+        {% if product.metafields.custom.member_price != 0.0 and product.metafields.custom.elite_price != 0.0 %}
+            {% assign hideitem2 = false %}
+            {% assign clubEliteVariant = product %}
+        {% endif %}
+    {%  elsif product.variants.first.metafields.custom.member_price != blank and product.variants.first.metafields.custom.elite_price != blank %}
+      {% if product.variants.first.metafields.custom.member_price != 0.0 and product.variants.first.metafields.custom.elite_price != 0.0 %}
+          {% assign hideitem2 = false %}
+          {% assign clubEliteVariant = product.variants.first %}
+      {% endif %}
+    {% endif %}
+{% else %}
+    {% assign hideitem2 = true %}
+    {% for variant in product.variants %}
+        {% if variant.metafields.custom.member_price != blank and variant.metafields.custom.elite_price != blank %}
+            {% if variant.metafields.custom.member_price != 0.0 and variant.metafields.custom.elite_price != 0.0 and variant.available %}
+                {% assign clubEliteVariant = variant %}
+                {% assign hideitem2 = false %}
+                {% break %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endif %} 
+
+
+{% if hideitem2 == false and product.id != 8751516614875 %}
+
+  {% unless sold_out %}
+   
+  <div class="product-item hereItem {{ grid_item_class }}{% if sold_out %} sold-out{% endif %}{% if on_sale %} on-sale{% endif %}" data-product-id="product-{{ product.id }}" data-pid="{{- product.id -}}" >
+    {{- "" -}}
+     <script id="new_event_{{product.id}}" type="application/json" class="view_item_list_event" data-colletion_id="{{- collection.id -}}" data-collection-name="{{- collection.title | escape -}}" data-variant-id="{{- clubEliteVariant.id -}}">
+				{
+				"item_id": "{{ product.id }}",
+				"item_name": "{{ product.title |  escape}}",
+				"price":{{ product.price |  money_without_currency }}, 
+				"item_brand": "{{ product.vendor |  escape }}",
+				"item_category": "{{ product.type | escape }}",
+				"item_variant": "{{ product.selected_or_first_available_variant.title |  replace: "Default Title", product.title   | escape }}",
+				"quantity": 1
+				}
+			</script>
+
+    <a href="{{ product.url }}" class="product-image product-grid-image {{c_clss}} {{cIndex}}iii" data-collections-related="/collections/{{collection.handle}}?view=related" data-product-link data-shop-currency="{{- shop.currency -}}">
+      {%- assign img_widths = '168,210,450,930' -%}
+      {%- include 'image-module', im_src: product.images[0], im_ratio: '3x4', im_dt_ws: img_widths, im_iep: pgi_im_iep,width:'207',height:'210',cIndex:cIndex -%}
+
+      {%- if made_in_usa -%}
+      {%- assign made_in_usa_t_string = 'products.product.made_in_usa' | t -%}
+      <div class="product-label-left">
+        {%- if made_in_usa_t_string == '🇺🇸' -%}
+        <strong class="label made-in-usa-label flag-only" title="Made In the USA! 🇺🇸"><svg aria-hidden="true" role="img"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#madeInUsa"></use></svg></strong>
+        {%- else -%}
+        <strong class="label made-in-usa-label" title="Made In the USA! 🇺🇸">
+          {{- made_in_usa_t_string -}}
+        </strong>
+        {%- endif -%}
+      </div>
+      {%- endif -%}
+
+      {%- if on_sale or sold_out or custom_label or is_subscribable -%}
+      <div class="product-label">  
+
+        {%- if sold_out -%}
+        
+        <strong class="label sold-out-label">
+          {{- 'products.product.sold_out' | t -}}
+        </strong>
+
+        {%- else -%}
+
+        {% comment %} {%- if on_sale -%}
+        comment 
+          <strong class="label sale-label">
+            {{- 'products.product.sale' | t -}}
+          </strong>
+          <div hidden>
+            {{ product.compare_at_price_min }} VS {{ product.compare_at_price_max }} VS {{ product.compare_at_price_varies }} VS {{ product.price_varies }}
+          </div>
+  endcomment
+
+
+        <strong class="corner-sale-label">
+          {%- assign price_diff = product.compare_at_price_max | minus: product.price_min -%}
+          {%- assign total_discount = price_diff | money_without_currency | split: '.' | first -%}
+          comment
+          {%- assign sale_discount_percent = settings.site__promo_discount | replace: "%" | abs -%}
+          {%- assign sale_discount_percent_decimal = sale_discount_percent | divided_by: 100.00 -%}
+          {%- assign sale_discount_amount = product.price_min | times: sale_discount_percent_decimal -%}
+          {%- assign total_discount = price_diff | plus: sale_discount_amount | money_without_currency -%}
+          endcomment 
+          {%- assign discount_varies_text = "" -%}
+          {%- unless product.price_varies == product.compare_at_price_varies -%}
+            {%- assign discount_varies_text = "UP TO" -%}
+          {%- endunless -%}
+          <div class="corner-label"></div>
+          {{- '' -}}<div class="corner-label-text">SAVE {{ discount_varies_text }} ${{ total_discount -}}!</div>
+        </strong>
+        {%- endif -%} {% endcomment %}
+
+        {%- if is_subscribable -%}
+        <strong class="label subscribable-label">
+          {{- 'products.product.subscribable' | t -}}
+        </strong>
+        {%- endif -%}
+
+        {%- if product.tags contains "on_auction" -%}
+        <strong hidden class="label subscribable-label">
+          On auction!
+        {%- comment -%}
+          {{- 'products.product.subscribable' | t -}}
+        {%- endcomment -%}
+        </strong>
+        {%- endif -%}
+        
+        {%- endif -%}
+
+        {%- comment -%}
+        {%- if custom_label -%}
+        <strong class="label custom-label">
+          {{- 'products.product.custom_label' | t -}}
+        </strong>
+        {%- endif -%}
+        {%- endcomment -%}
+        
+      </div>
+      {%- endif -%}
+
+    </a>
+
+    
+    {%- comment -%}
+      Use for productGrid
+      TODO fix styles so product-details  class can be used
+    {%- endcomment -%}
+    <div class="product-bottom">
+      {% comment %}
+        {{- "" -}}
+
+      <span class="product-vendor">{{ product.vendor }}</span>
+      {{- "" -}}
+      {% endcomment %}
+      
+
+      
+      <a class="product-title" href="{{ product.url }}" title="{{ product.title | escape }}">{{- product.title -}}</a>
+
+
+      {%- comment -%}
+      Product Reviews / Stars
+      {%- endcomment -%}
+      {%- include 'product-reviews', reviewed_item: product -%}
+
+
+
+      {%- comment -%}
+        If NOT on auction
+      {%- endcomment -%}   
+      {%- unless product.tags contains "wk_auction" -%}
+      {%- endunless -%}
+      {%- unless product.tags contains "on_auction" -%}
+  
+      {% render 'cc-pricing-card-table',product:clubEliteVariant %}
+  {%- comment -%}
+      {%- if on_sale -%}
+      
+      <div class="price-box price-sale"><span class="old-price">{{ product.compare_at_price_min | money }}</span><span class="special-price">{%- if product.price_varies -%}{%- include 'varies_from' -%}{%- endif -%}{{ product.price_min | money }}</span></div>
+      
+      {%- else -%}
+      
+      <div class="price-box price-regular">{%- if product.price_varies -%}{%- include 'varies_from' -%}{%- endif -%}{{ product.price_min | money }}</div>
+      
+      {%- endif -%}
+
+      
+      Payment plan - ViaBill or Sezzle
+      {%- endcomment -%}
+      {%- comment -%}
+      {%- unless template.name == 'product' -%}
+      {%- include 'product-grid-item-payment-plan' -%}
+      {%- endunless -%}
+      {%- endcomment -%}
+      
+
+      {%- comment -%}
+      Product warranty eligibility
+      {%- endcomment -%}
+      {%- comment -%}
+      {%- unless template.name == 'product' -%}
+      {%- include 'product-warranty-eligibility' -%}
+      {%- endunless -%}
+      {%- endcomment -%}
+      
+
+
+      
+      {%- comment -%}
+      Free Gift System
+      {%- endcomment -%}
+      {%- if free_gift_tag -%}
+      {%- include 'free-gift-progress' -%}
+      {%- endif -%}
+
+      
+      
+      {%- comment -%}
+        If On auction
+      {%- endcomment -%}   
+      {%- else -%}
+      <style>
+        .wk-category-auction {
+          margin-top: 10px;
+        }
+
+        .wk-category-auction:before {
+          display: block;
+          content: "LIVE AUCTION";
+          text-align: left;
+          margin-bottom: 7px;
+          font-weight: bold;
+          font-size: 15px;
+          font-style: italic;
+          line-height: 1;
+        }
+
+        [class^=wk-auction-] {
+          text-align: left;
+        }
+        
+        .wk-category-auction .width-auto,  
+        .wk-category-auction .no-margin,  
+        .wk-category-auction table {
+          border: none;
+          margin: 0 !important;
+        }
+
+        .wk-category-auction .no-pad:nth-of-type(odd) span {
+          display: block;
+        }
+
+        .wk-category-auction .no-pad:nth-of-type(2) {
+          visibility: hidden;
+          padding: 0 5px;
+        }
+
+        .wk-category-auction .no-pad {
+          display: inline-block;
+          padding: 0px;
+          vertical-align: text-top;
+          position: relative;
+          /* width: 17%; */
+        }
+
+        .wk-category-auction .no-pad:nth-of-type(odd) span:first-of-type {
+          font-size: 25px;
+  /*         line-height: 25px; */
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 700;
+          display: block;
+          margin-bottom: 3px;
+          margin: 0;
+        }
+
+        .wk-category-auction .no-pad:nth-of-type(even) {
+          top: 1px;
+        }
+
+        .wk-category-auction .no-pad:nth-of-type(odd) span:last-of-type {
+          display: inline-block;
+          margin: 0px;
+          padding: 0;
+          border-radius: 0px;
+          text-align: center;
+          font-weight: 400;
+          font-size: 0px;
+          line-height: 10px;
+        }
+
+        .wk-category-auction .no-pad:nth-of-type(3), 
+        .wk-category-auction .no-pad:nth-of-type(5), 
+        .wk-category-auction .no-pad:nth-of-type(7) {
+          width: 40px;
+          width: 2.25vw;
+          /* width: 20%; */
+          /*     background: red; */
+        }
+
+        .wk-category-auction .no-pad:nth-of-type(odd) span:last-of-type:after {
+          font-size: 10px;
+        }
+
+        .wk-category-auction .no-pad:nth-of-type(1) span:last-of-type:after {
+          content: "Days";
+        }
+        .wk-category-auction .no-pad:nth-of-type(3) span:last-of-type:after {
+          content: "Hours";
+        }
+        .wk-category-auction .no-pad:nth-of-type(5) span:last-of-type:after {
+          content: "Minutes";
+        }
+        .wk-category-auction .no-pad:nth-of-type(7) span:last-of-type:after {
+          content: "Seconds";
+        }
+        .wk-category-auction .pa-label-color {
+          font-weight: bold;
+        }
+      </style>
+      <div class="wk-category-auction" data-prod="{{ product.id }}" cust-id="{{ customer.id }}"></div>
+      {%- endunless -%}
+      
+      
+      
+      
+      {%- comment -%} 
+      {% if template == 'index' or template == 'index.no-layout' or template == 'collection.json-suppermarket' %}
+      {% endif %}
+      {%- endcomment -%} 
+      <div class="pgi-atc-container pgi-action">
+        {% form 'product', product, class: "pgi-atc-form" %}
+        <div class="row align-items-center justify-content-center text-center">
+                  
+          <div class="col col-actions padding-off " > 
+            <input type="hidden" name="id" value="{%- if product.has_only_default_variant -%} {{- product.first_available_variant.id -}} {%- else -%} {{- clubEliteVariant.id -}} {%- endif -%}" /> 
+            <input data-btn-addtocart="" type="submit" name="add" class="ai-button btn addtocart cartbutton" value="Add to Cart" style="visibility: visible;">
+
+            {% comment %} <a href="{{ product.url }}" class="btn ai-button-ofs sticky-add-to-cart" >Add to Cart</a> {% endcomment %}
+            {% comment %}
+              {% if product.selected_or_first_available_variant.available %}
+            
+              
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" /> 
+            <input data-btn-addtocart="" type="submit" name="add" class="ai-button btn addtocart cartbutton" value="Add to Cart" style="visibility: visible;">
+            {% else %} 
+            <input type="submit" name="add" class="btn ai-button-ofs sticky-add-to-cart" {% if settings.enable_multilang %}data-translate="products.product.unavailable"{%endif%} disabled value="{{ 'products.product.unavailable' | t }}">          
+            {% endif %}
+            {% endcomment %}
+            
+          </div>
+          
+        </div>
+        {% endform %}
+      </div>
+
+      
+      
+    </div>
+  </div>
+
+      {% endunless %}
+
+{% endif %}

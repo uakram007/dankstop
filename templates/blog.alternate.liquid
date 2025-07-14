@@ -1,0 +1,449 @@
+{{ 'blog.scss.css' | asset_url | stylesheet_tag }}
+{%- comment -%}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+{%- endcomment -%}
+
+<div class="dankblog_header container">
+  <div class="row">
+    <div id="dankblog_logo" class="col-xl-auto col-12">
+      <a href="/blogs/blog" title="DankStop Blog">
+        <h1>
+          <span class="title-dank">DANK</span>
+          {{- 'BLOG' -}}
+          {%- assign extra_title = '' -%}
+          {%- if current_tags -%}
+          {%- assign current_tags_joined = current_tags | join: ', ' -%}
+          {%- capture extra_title -%} &ndash; {{ 'general.meta.tags' | t: tags: current_tags_joined }}{%- endcapture -%}
+          {%- endif -%}
+          {%- if current_page != 1 -%}
+          {%- capture extra_title -%} &ndash; {{ 'general.meta.page' | t: page: current_page }}{%- endcapture -%}
+          {%- endif -%}
+          {%- if extra_title != blank -%}
+          <span class="page-tag">
+            {{- extra_title -}}
+          </span>
+          {%- endif -%}
+        </h1>
+      </a>
+    </div>
+    <button id="more_categories_mobile" class="btn btn-outline-secondary col-auto">
+      <span class="icon-nav icon-sm"><span class="icon-line"></span></span>
+      Categories
+    </button>
+    <ul class="blog-nav col" id="secondary_ul">
+      <li data-search-query="trending" class="col-lg-2 large--one-sixth"><span>Trending</span></li>
+      <li data-search-query="news" class="col-lg-2 large--one-sixth"><span>News</span></li>
+      <li data-search-query="culture" class="col-lg-2 large--one-sixth"><span>Culture</span></li>
+      <li data-search-query="guides" class="col-lg-2 large--one-sixth"><span>Guides</span></li>
+      <li data-search-query="industry" class="col-lg-2 large--one-sixth"><span>Industry</span></li>
+      <li data-search-query="knowledge" id="border_color_06" class="col-lg-2 large--one-sixth"><span>Knowledge</span></li>
+    </ul>
+    <button id="article_search_icon" class="btn btn-outline-secondary col-auto">
+      <svg width="25px" height="25px"><use xlink:href="#searchIcon" xmlns:xlink="http://www.w3.org/1999/xlink"></use></svg>
+    </button>
+  </div>
+</div>
+
+
+<div id="search_container">
+  <form id="blog_search_form" class="search" action="/search?view=blog">
+    <input type="hidden" name="type" value="article">
+    {%- comment -%}
+    onfocus="this.value=''" 
+    {%- endcomment -%}
+    <input id="type_search_field" type="search" name="q" value="{{ search.terms | escape }}" placeholder="search DankBlog" class="input-group-field" aria-label="{{ 'general.search.placeholder' | t }}">
+  </form>
+</div>
+
+
+<hr style="margin: 0px; border-top: 1px solid #000;"/>
+
+{% paginate blog.articles by 12 %}
+
+{%- comment -%} {% include 'breadcrumb' %} {%- endcomment -%}
+
+
+
+{% if blog.handle == 'blog' %}
+  
+<div id="dankblog_articles" class="container">
+
+  {% if keyAndValue[1] == blank %}
+
+  <ul id="dankblog_all_articles" class="row articles-list list_of_articles">
+
+    {% for article in blog.articles %}
+
+    {% if article.tags %}
+
+    {%- assign item_grid_class = "col-sm-12 col-md-6 col-lg-4" -%}
+    {%- comment -%}
+    {%- if forloop.first -%}
+      {%- assign item_grid_class = "col-12" -%}
+    {%- endif -%}
+    {%- endcomment -%}
+    <li class="individual_article {{ item_grid_class }}">
+
+      <a href="{{ article.url }}">
+        {%- assign article_image = article.image -%}
+        {%- assign article_image_src = article_image.src -%}
+        {%- assign article_image_src = article_image | img_url: 'original' -%}
+        {%- assign article_image_alt = article.title -%}
+        {%- assign article_img_srcset = '320,768,1080' -%}
+        {%- assign article_img_ss_sizes = '320,768,1080' -%}
+        {%- comment -%}    
+        {%- include 'image-module' url:article_image_src, srcset:article_img_srcset, ss_sizes:article_img_ss_sizes, width:100, ratio:'16x9', size:'medium', im_a:article_image_alt -%}
+        {%- endcomment -%}    
+        {%- include 'shimod', img: article_image, size: 'original' -%}
+
+        <p class="article_post_date">{{ article.published_at | date: "%b %d, %Y" }}</p>
+
+        <h2>{{ article.title }}</h2>
+
+        <p class="article_excerpt">
+          {% if article.excerpt.size > 0 %}
+          {{ article.excerpt }}
+          {% else %}
+          <span>{{ article.content | strip_html | truncate: 90 }}</span>
+          {% endif %}
+        </p>
+
+        {%- comment -%}
+        <p class="article-tags">
+          {% for tag in article.tags %}
+          {%- if forloop.first -%}
+          <span>{{ tag }}</span>
+          {%- else -%}
+          {{- ', ' -}}<span>{{ tag }}</span>
+          {%- endif -%}    
+          {% endfor %}
+        </p>
+        {%- endcomment -%}
+
+        {%- comment -%}
+        {% if blog.comments_enabled? %}
+        <a class="comment-count-link" href="{{ article.url }}#comments">
+          {{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+        </a>
+        {% endif %}
+        {%- endcomment -%}
+
+        <span class="read_more_link">{{ 'blogs.article.read_more' | t }}</span>
+
+      </a>
+
+    </li>
+
+    {% endif %}
+
+    {% endfor %}
+
+  </ul>
+
+  {% endif %}
+
+
+  {% if paginate.pages > 1 %}
+  <br>
+  <div class="text-center">
+    {% include 'blog-pagination' %}
+  </div>
+  {% endif %}
+
+</div>
+
+{% elsif blog.handle == 'wiki' %}
+
+<div class="grid-item">
+  <div class="wiki-container">
+    <div class="wiki-header">
+      <span class="h1">Dank Wiki</span>
+      <p>Not sure how to choose the right water pipe for you? Want to learn how to properly clean your glass piece? Our knowledge base is a list of helpful articles that can answer all types of questions you might have. Whether you are interested in product maintenance, finding the right product for your smoking needs, or gaining a general understanding of how some of our products work, these articles will teach you what you want to know.</p>
+      <!--         <img src="//cdn.shopify.com/s/files/1/1085/8818/files/dankstop-online-headshop-wiki.png?1438897358609130966" alt="DankStop Online Headshop Wiki"/> -->
+      <img src="//cdn.shopify.com/s/files/1/1085/8818/files/wiki-header-asset-optimized.png?98614126644255818" alt="DankStop Online Headshop Wiki"/>
+    </div>
+
+    <div class="wiki-item-grid">
+      <div class="row">
+        {% for article in blog.articles %}
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <div class="wiki-item">
+            {% capture dateTime %}{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S-05:00' }}{% endcapture %}
+            <a href="{{ article.url }}">
+              <div class="wiki-inner">
+                <div class="wiki-left">
+                  <div class="article-img">
+                    {% assign wiki_article_image = article.image.src | img_url %}
+                    {% assign w_a_alt = article.title | escape %}
+                    {% assign w_a_width = '67' %}
+                    {% assign w_a_size = 'medium' %}
+                    {% assign w_a_srcset = '79,96,113' %}
+                    {% assign w_a_ss_sizes = '79,96,113' %}
+                    {% include 'image-module' url:wiki_article_image, width:w_a_width, srcset:w_a_srcset, ss_sizes:w_a_ss_sizes, size:w_a_size, im_a:w_a_alt %}
+                  </div>
+                </div>
+                <div class="wiki-right">
+                  <h2>{{ article.title }}</h2>
+                  <p>
+                    {% if article.metafields.article.description > 0 %}
+                    {{ article.metafields.article.description }}
+                    {% else %}
+                    {% if article.excerpt.size > 0 %}
+                    {{ article.excerpt }}
+                    {% else %}
+                    {{ article.content | strip_html | truncatewords: 32 }}
+                    {% endif %}
+                    {% endif %}
+                  </p>
+                  <span class="text-light">
+                    {% capture date %}<strong><time pubdate datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'month_day_year' }}</time></strong>{% endcapture %}
+                    {% capture author %}<strong>{{ article.author }}</strong>{% endcapture %}
+                    {{ 'blogs.article.author_on_date_html' | t: author: author, date: date }}
+                  </span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div><!-- /.grid-uniform -->
+
+      {% if paginate.pages > 1 %}
+      <hr>
+      <div class="text-center">
+        {% include 'pagination-custom' %}
+      </div>
+      {% endif %}
+
+    </div><!-- /.wiki-item-grid -->
+  </div><!-- /.wiki-container -->
+</div><!-- /.grid-item -->  
+
+{% else %}
+
+<div class="grid-item">
+  <div class="grid">
+    <div class="grid-item one-whole">
+
+      {% if current_tags %}
+      <h1>{{ blog.title | link_to: blog.url }} &mdash; {{ current_tags.first }}</h1>
+      {% else %}
+      <h1>{{ blog.title }}</h1>
+      {% endif %}
+
+      {% for article in blog.articles %}
+
+      <h2><a href="{{ article.url }}">{{ article.title }}</a></h2>
+      <p class="text-light">
+        {% capture date %}<strong><time pubdate datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'month_day_year' }}</time></strong>{% endcapture %}
+        {% capture author %}<strong>{{ article.author }}</strong>{% endcapture %}
+        {{ 'blogs.article.author_on_date_html' | t: author: author, date: date }}
+      </p>
+
+      <div class="rte">
+        {% if article.image %}
+        {% assign article_image_alt = article.title | escape %}
+        <p>
+          {{ article | img_url: '1024x1024' | img_tag: article_image_alt, 'article__image' | link_to: article.url }}
+        </p>
+        {% endif %}
+        {% if article.excerpt.size > 0 %}
+        {{ article.excerpt }}
+        {% else %}
+        <p>{{ article.content | strip_html | truncatewords: 100 }}</p>
+        {% endif %}
+      </div>
+
+      <ul>
+        {% if blog.comments_enabled? %}
+        <li>
+          <a href="{{ article.url }}#comments">
+            {{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+          </a>
+        </li>
+        {% endif %}
+
+        {% include 'tags-article' %}
+      </ul>
+
+      <p><a href="{{ article.url }}">{{ 'blogs.article.read_more' | t }} →</a></p>
+
+      {% endfor %}
+
+      {% if paginate.pages > 1 %}
+      <br>
+      <div class="text-center">
+        {% include 'pagination-custom' %}
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+
+
+<script type="text/javascript">
+
+  var $articlesContainer = $("#dankblog_all_articles");
+  var $searchContainer = $("#search_container");
+  var $searchBtn = $("#article_search_icon");
+  var $searchField = $("#type_search_field");
+  var $searchForm = $("#blog_search_form");
+  var $paginationList = $("#paginationList");
+  var $mobileNavBtn = $("#more_categories_mobile");
+  var $blogNav = $("#secondary_ul");
+  
+  var domain = window.location.origin;
+  var link = domain + "/search?view=blog&page=1&type=article&q=";
+
+  /*
+   * Ajax Show/Hide Loading
+   */
+  function showLoading() {
+    $(".loading-spinner").show();
+  }
+  function hideLoading() {
+    $(".loading-spinner").hide();
+  }
+
+  
+  function blog_pagination(category_search_query){
+
+    if ( ! category_search_query || category_search_query === undefined ){
+      var search_query_string = "";
+    }
+    else {
+      var search_query_string = "&q=" + category_search_query + "&type=article&cache=false";
+    }
+    
+    var $paginationList = $("#paginationList");
+    var $articlesContainer = $("#dankblog_all_articles");
+    var nextPageIndex = 2;
+    
+    function attachPaginationCLick(){
+      $paginationList.off("click").one("click", function(e) {
+        e.preventDefault();  
+
+        showLoading();
+
+        $.ajax({
+          url: window.location.origin + "/search?view=blog&page=" + nextPageIndex + search_query_string, 
+          type: "GET",
+          success: function(data){
+            var $categoryArticles = $(data).find(".individual_article");
+
+            if ($categoryArticles.length > 0) {
+              $articlesContainer.append($categoryArticles);
+              attachPaginationCLick();
+              $paginationList.show();
+            }
+            else {
+              var no_results_html = "<div class=\"individual_article col-12 text-center\"><p>There are no more results for this topic.</p></div>";
+              $articlesContainer.append(no_results_html);
+              $paginationList.hide();
+            }
+
+            hideLoading();
+
+            nextPageIndex++;
+          }
+        });
+      });
+    }
+
+    $paginationList.show();
+    attachPaginationCLick();
+    
+  }
+  
+  
+  function load_article_results(category_search_query){
+    showLoading();
+    var search_query_link = window.location.origin + "/search?view=blog&page=1&q=" + category_search_query + "&type=article&cache=false";
+
+    $articlesContainer.load(search_query_link + " .search-page .articles-list > *", function(ajaxResp) {
+      
+      hideLoading();
+
+      blog_pagination(category_search_query);
+
+    });
+  }
+
+
+  $(document).on("click", "[data-search-query]", function() {
+	var $thisItem = $(this);
+    $("[data-search-query]").removeClass("active");
+    $thisItem.addClass("active");
+    var category_search_query = $thisItem.attr("data-search-query");
+    load_article_results(category_search_query);
+  });
+
+
+  // Displays/Open the SEARCH FIELD SECTION
+  function hideSearchContainer(event){
+    if (event.target !== $searchBtn[0] && event.target !== $searchField[0]) {
+      $searchContainer.hide();
+      $(window).off("click", hideSearchContainer);
+    }
+    else {
+    }
+  };
+  $searchBtn.on("click", function(event) {
+    console.log("hello");
+    $searchContainer.show();
+
+    $searchField.focus();
+    
+    event.stopPropagation();
+    
+    //To close the SEARCH FIELD SECTION
+    $(window).on("click", hideSearchContainer);
+  });
+  
+  // This prevents form from reloading page
+  $searchForm.submit(function(e) {
+    e.preventDefault();
+
+    // Gets the value of the input search field
+    var category_search_query = encodeURIComponent($('#type_search_field').val().replace(/[^0-9a-z ]/gi, ""));
+    console.log(category_search_query);
+
+    // load article results
+    load_article_results(category_search_query);
+    
+    // hide search container
+    $searchContainer.hide();
+    $searchField.blur();
+    
+    //clears the input field after submit
+    $searchField.val(''); 
+  });
+
+
+
+  //Paginate/Load More Posts function
+  function hideNavMenu(event){
+    if (event.target !== $blogNav[0] && event.target !== $mobileNavBtn[0]) {
+      $blogNav.hide();
+      $(window).off("click", hideNavMenu);
+    }
+  };
+  $mobileNavBtn.on("click", function(event) {
+    $blogNav.show();
+    event.stopPropagation();    
+    $(window).on("click", hideNavMenu);
+  });
+
+  
+  $(document).ready(function() {  
+    // Enable initial pagination
+    blog_pagination();
+  });
+
+</script>
+
+{% endpaginate %}

@@ -1,0 +1,33 @@
+<!-- BEGIN: Klaviyo -->
+<script type="text/javascript">
+  var _learnq = _learnq || [];
+
+  _learnq.push(['account', 'E8gYFp']);
+
+  (function () {
+    var b = document.createElement('script'); b.type = 'text/javascript'; b.async = true;
+    b.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'a.klaviyo.com/media/js/analytics/analytics.js';
+    var a = document.getElementsByTagName('script')[0]; a.parentNode.insertBefore(b, a);
+  })();
+</script>
+<!-- END: Klaviyo -->
+
+<!-- BEGIN: yotpo -->
+<script type="text/javascript">(function e(){var e=document.createElement("script");e.type="text/javascript",e.async=true,e.src="//staticw2.yotpo.com/slO4cjcGIOnMsb78Mu313loqvxAp3HCWDc7KauBH/widget.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})();</script><script>yotpoTrackConversionData = {orderId: "{{order_name|handleize}}", orderAmount: "{{subtotal_price|money_without_currency}}", orderCurrency: "{{shop.currency }}"}</script><noscript><img src="//api.yotpo.com/conversion_tracking.gif?app_key=slO4cjcGIOnMsb78Mu313loqvxAp3HCWDc7KauBH&order_id={{order_name|handleize}}&order_amount={{subtotal_price|money_without_currency}}&order_currency={{ shop.currency }}" width="1" height="1"></noscript>
+<!-- END: yotpo -->
+
+<!-- BEGIN: NSG_GUARANTEE -->
+<span id="_GUARANTEE_GuaranteeSpan"></span>
+<script type="text/javascript" src="//nsg.symantec.com/Web/Seal/gjs.aspx?SN=960652208"></script>
+<script type="text/javascript">
+var subTotal = ({{ subtotal_price }} / 100).toFixed(2);
+if (window._GUARANTEE && _GUARANTEE.Loaded) {
+_GUARANTEE.Hash = "K%2B9EollA163nwr%2FWWNOur5k0iuJ3oEv0MowkI51QQWWmTrHm1HGfnCPgkjippiSGetep%2FTY0dzay1rWC9kFiAw%3D%3D";
+_GUARANTEE.Guarantee.order = "{{ order_number }}";
+_GUARANTEE.Guarantee.subtotal = subTotal;
+_GUARANTEE.Guarantee.currency = "{{ shop.currency }}";
+_GUARANTEE.Guarantee.email = "{{ customer.email }}";
+_GUARANTEE.WriteGuarantee("JavaScript", "_GUARANTEE_GuaranteeSpan");
+}
+</script>
+<!-- END: NSG_GUARANTEE -->

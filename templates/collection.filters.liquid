@@ -1,0 +1,179 @@
+{%- layout none -%}
+{%- comment -%}
+  The code below relies on the advanced-tag-loop snippet.
+  The snippet is already included in snippets/breadrumbs.liquid
+  because it is needed there too, but if you remove
+  breadcrumbs you need to include this:
+
+  {% include 'advanced-tag-loop' %}
+{%- endcomment -%}
+{%- comment -%}
+{% assign collection_handle = collection.handle %}
+{% capture remove_filters_settings_string %}{{ collection_handle }}_filters_to_remove{% endcapture %}
+{% assign cats_to_remove = settings[remove_filters_settings_string] %}
+{%- paginate collection.products by 50 %}
+{%- endpaginate -%}
+{%- endcomment -%}
+{% include 'advanced-tag-loop' %}
+{%- assign cats_to_remove = collection.metafields.collection_page.filters_to_remove -%}
+{%- assign cats_to_remove_array = cats_to_remove | split: ', ' -%}
+{%- assign cat_array_string = cat_array | join: ', ' | prepend: 'X-X, ' -%}
+{%- assign cats_to_remove_check = cats_to_remove | strip -%}
+{%- unless cats_to_remove_check == blank -%}
+  {%- for cat_to_remove in cats_to_remove_array -%}
+    {%- capture cat_to_remove_string -%}, {{ cat_to_remove }}{%- endcapture -%}
+    {%- if forloop.first -%}
+      {%- assign cat_array_string_filtered = cat_array_string | replace: cat_to_remove_string, ', X-X' -%}
+    {%- else -%}
+      {%- assign cat_array_string_filtered = cat_array_string_filtered | replace: cat_to_remove_string, ', X-X' -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign cat_array = cat_array_string_filtered | replace: 'X-X, ', '' | replace: 'X-X', '' | split: ', ' -%}
+{%- endunless -%}
+  
+{%- comment -%}
+<div class="sidebar-inner">
+{%- endcomment -%}
+
+  {%- comment -%}
+  <button id="closeFiltersBtn" class="modal-close-btn filters-close-btn" aria-label="close">
+    {%- include 'site--svgs' with 'closeBtnX', use_existing:true -%}
+  </button>
+  {%- endcomment -%}
+  
+  {%- if collection.all_tags.size > 0 -%}
+  <h2 class="sidebar-header">{{ 'collections.sidebar.filters' | t }}</h2>
+  {%- comment -%}
+  {%- include 'collection--views' -%}
+  {%- endcomment -%}
+  {%- comment -%}
+  Sold out / Out of stock Availability 
+  {%- endcomment -%}
+  {%- comment -%}
+  <div class="sidebar-section">
+    <input class="ss--state hidden" checked id="f-state--sos" type="checkbox"/>
+    <label class="ss--btn" for="f-state--sos" title="{{ 'collections.sidebar.availability_title' | t }}">
+      <h3>{{ 'collections.sidebar.availability_title' | t | downcase }}</h3>
+    </label>
+    <div class="sold-out-switch ss--inner">
+      <label for="soldOutSwitch" class="sos--label">
+        <input type="checkbox" id="soldOutSwitch" name="soldOutSwitch" class="sos--input"/>
+        <span class="sos--text">{{ 'collections.sidebar.availability_switch_text' | t }}</span>
+      </label>
+    </div>
+  </div>
+  {%- endcomment %}
+
+  {%- comment %}
+  Loop through tag categories
+  {%- endcomment %}
+
+  {%- capture span_wrapper_open -%}"><span>{%- endcapture -%}
+  {%- capture span_wrapper_close -%}</span></a>{%- endcapture -%}
+
+  {%- for cat_item in cat_array -%}
+  {%- if cat_item == 'color' -%}
+  <div class="sidebar-section">
+    <input class="ss--state hidden" checked id="f-state--{{ cat_item | handle }}" type="checkbox"/>
+    <label class="ss--btn" for="f-state--{{ cat_item | handle }}" title="{{ cat_item }}">
+      <h3 class="sidebar-title">{{ cat_item }}</h3>
+    </label>
+    <ul class="ss--inner advanced-filters color-filters grid-uniform">
+      {%- for tag in collection.all_tags -%}
+      {%- assign cat = tag | split: '_' | first -%}   
+      {%- assign color = tag | split: '_' | last | downcase -%}   
+      {%- capture color_class -%}{{ cat }}-{{ color | handle | replace: '-', '_' }}{%- endcapture -%}
+      {%- capture color_class_string -%}class="swatch-bg {{ color_class }}" data-color="{{ color }}" title="{%- endcapture -%}
+      {%- if cat != tag and cat_item == cat -%}
+      {%- capture tag_processed %}'{{ cat }}_{{ color }}'{%- endcapture -%}
+      {%- if current_tags contains tag -%}
+      <li class="a-filter active-filter grid-item one-fifth col-3" data-handle="{{ tag | handle }}" data-group="{{ cat_item }}">
+        {{- tag | remove_first: cat_item | remove_first: '_' | link_to_remove_tag: tag | replace: 'title="Narrow selection to products matching tag color_', color_class_string | replace: "?view=sidebar", "" -}}
+      </li>
+      {%- else -%}
+      <li class="a-filter grid-item one-fifth col-3" data-handle="{{ tag | handle }}" data-group="{{ cat_item }}">
+        {{- tag | remove_first: cat_item | remove_first: '_' | link_to_add_tag: tag | replace: 'title="Narrow selection to products matching tag color_', color_class_string | replace: "?view=sidebar", "" -}}
+      </li>
+      {%- endif -%}
+      {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+  {%- elsif cat_item == 'brand' or cat_item == 'type' -%}
+  <div class="sidebar-section">
+    <input class="ss--state hidden" checked id="f-state--{{ cat_item | handle }}" type="checkbox"/>
+    <label class="ss--btn" for="f-state--{{ cat_item | handle }}" title="{{ cat_item }}">
+      <h3 class="sidebar-title">{{ cat_item }}</h3>
+    </label>
+    <ul class="ss--inner advanced-filters">
+      {%- comment -%}
+      Loop through collection tags
+      {%- endcomment -%}
+      {%- assign filters_count = 0 -%}
+      {%- assign show_more_filters_link_added = false -%}
+      {%- for tag in collection.all_tags -%}
+      {%- assign cat = tag | split: '_' | first -%}   
+      {%- assign value = tag | split: '_' | last -%}   
+      {%- if cat != tag and cat_item == cat -%}
+      {%- comment -%}
+      Strip out tag category prefix and add/remove link for tag filtering
+      {%- endcomment -%}
+      {%- assign filters_count = filters_count | plus: 1 -%}
+      {%- capture tag_processed -%}'{{ cat }}_{{ value }}'{%- endcapture -%}
+      {%- if current_tags contains tag -%}
+      <li class="a-filter active-filter" data-handle="{{ tag | handle }}" data-group="{{ cat_item }}">
+        {{- tag | remove_first: cat_item | remove_first: '_' | link_to_remove_tag: tag | replace: '">', span_wrapper_open  | replace: '</a>', span_wrapper_close | replace: "?view=sidebar", "" -}}
+      </li>
+      {%- else -%}
+      <li class="a-filter{% if filters_count > 5 %} past-fifth hidden-filter{% endif %}" data-handle="{{ tag | handle }}" data-group="{{ cat_item }}">
+        {{- tag | remove_first: cat_item | remove_first: '_' | link_to_add_tag: tag | replace: '">', span_wrapper_open  | replace: '</a>', span_wrapper_close | replace: "?view=sidebar", "" -}}
+      </li>
+      {%- endif -%}
+      {%- endif -%}
+      {%- endfor -%}
+      {%- if filters_count > 5 and show_more_filters_link_added == false -%}
+      <li class="more-filters">
+        <a class="more-f" href="#">{{ 'collections.sidebar.show_more' | t | append: " " | append: cat_item | append: "s" }}</a>
+        <a class="less-f hidden-filter" href="#">{{ 'collections.sidebar.show_less' | t | append: " " | append: cat_item | append: "s" }}</a>
+      </li>
+      {%- assign show_more_filters_link_added = true -%}
+      {%- endif -%}
+    </ul>
+  </div>
+  {%- else -%}
+  <div class="sidebar-section">
+    <input class="ss--state hidden" id="f-state--{{ cat_item | handle }}" type="checkbox"/>
+    <label class="ss--btn" for="f-state--{{ cat_item | handle }}" title="{{ cat_item }}">
+      <h3 class="sidebar-title">{{ cat_item }}</h3>
+    </label>
+    <ul class="ss--inner advanced-filters">
+      {%- comment -%}
+      Loop through collection tags
+      {%- endcomment -%}
+      {%- for tag in collection.all_tags -%}
+      {%- assign cat = tag | split: '_' | first -%}   
+      {%- assign value = tag | split: '_' | last -%}   
+      {%- if cat != tag and cat_item == cat -%}
+      {%- comment -%}
+      Strip out tag category prefix and add/remove link for tag filtering
+      {%- endcomment -%}
+      {%- capture tag_processed -%}'{{ cat }}_{{ value }}'{%- endcapture -%}
+      {%- if current_tags contains tag -%}
+      <li class="a-filter active-filter" data-handle="{{ tag | handle }}" data-group="{{ cat_item }}">
+        {{- tag | remove_first: cat_item | remove_first: '_' | link_to_remove_tag: tag | replace: '">', span_wrapper_open  | replace: '</a>', span_wrapper_close | replace: "?view=sidebar", "" -}}
+      </li>
+      {%- else -%}
+      <li class="a-filter" data-handle="{{ tag | handle }}" data-group="{{ cat_item }}">
+        {{- tag | remove_first: cat_item | remove_first: '_' | link_to_add_tag: tag | replace: '">', span_wrapper_open  | replace: '</a>', span_wrapper_close | replace: "?view=sidebar", "" -}}
+      </li>
+      {%- endif -%}
+      {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+  {%- endif -%}
+  {%- endfor -%}
+  {%- endif -%}
+{%- comment -%}
+</div>
+{%- endcomment -%}

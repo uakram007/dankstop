@@ -1,0 +1,30 @@
+<section class="newsletter">
+  <div class="block-content">
+    {%- comment -%}
+    {% include 'newsletter-form' %}
+     action="{{ settings.homepage_mailing_list_form_action }}"
+    {%- endcomment -%}
+    <form class="klaviyo_styling klaviyo_gdpr_embed_{{ settings.homepage_mailing_list_form_list_id }} input-group" accept-charset="UTF-8" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form"  data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
+      {%- comment -%}
+      <input type="hidden" name="form_type" value="customer">
+      <input type="hidden" name="utf8" value="✓">
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <input class="input-group-field" type="email" name="contact[email]" id="k_id_email" aria-label="Email Address" placeholder="enter your email address" required="required">
+      <input class="btn" type="submit" value="Submit">
+      {%- endcomment -%}
+
+      <input type="hidden" name="g" value="{{ settings.homepage_mailing_list_form_list_id }}">
+      <input type="hidden" name="$fields" value="$consent">
+      <input type="hidden" name="$list_fields" value="$consent">
+
+      <input class="input-group-field" type="email" name="email" id="k_id_email" aria-label="Email Address" placeholder="enter your email address" required="required">
+      <input class="btn" type="submit" value="Submit">
+      
+      <div class="klaviyo_messages">
+        <div class="success_message" style="display:none;"></div>
+        <div class="error_message" style="display:none;"></div>
+      </div>
+
+    </form>
+  </div>
+</section>

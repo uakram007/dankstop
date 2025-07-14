@@ -1,0 +1,815 @@
+{% comment %}
+	GEMPAGE BUILDER (https://apps.shopify.com/gempage)
+
+	You SHOULD NOT modify source code in this page because
+	It is automatically generated from GEMPAGE BUILDER
+	Try to edit page with the live editor.
+{% endcomment %}
+
+    
+    
+(function( jQuery ){
+  var $hero = jQuery('#m-1611691836576');
+  var $module = jQuery('#m-1611691836576').children('.module');
+
+  var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+  var $heroLink = $hero.children('.hero-link');
+  if (mode == 'dev' && $heroLink.length > 0) {
+    $hero.children('.hero-link').hide();
+  }
+  if (mode == 'production' && $heroLink.length > 0) {
+    $module.off('click.openLink').on('click.openLink', function (e) {
+      var $target = jQuery(e.target);
+      if ($target.length > 0) {
+        var linkTarget = typeof $target.attr('href') !== "undefined" ? $target.attr('href') : "";
+        if (linkTarget == "") {
+          var link = typeof $heroLink.attr('href') !== "undefined" ? $heroLink.attr('href') : "";
+          var newTab = typeof $heroLink.attr('target') !== "undefined" ? $heroLink.attr('target') : "";
+          if (link != "") {
+            if (newTab == "") {
+              window.location.href = link;
+            } else {
+              window.open(link, newTab);
+            }
+          }
+        }
+      };
+    })
+  }
+
+  var height = jQuery.trim($module.attr("data-height"));
+  if (height == undefined || height == "") {
+    $hero.css("height", "auto!important");
+  } else {
+    $hero.css("height", "inherit");
+  }
+
+
+  var effect = $module.attr('data-effect');
+  var transition = $module.attr('data-transition');
+
+  if (effect == 'effect-zoom') {
+    $module.parent().addClass(effect);
+
+    setTimeout(function () {
+      var backgroundImage = $module.parent().css('background-image');
+      var backgroundSize = $module.parent().css('background-size');
+      var backgroundPosition = $module.parent().css('background-position');
+      $module.siblings('.gf_hero-bg-wrap').css({
+        'background-image': 'inherit',
+        'background-size': 'inherit',
+        'background-position': 'inherit',
+        '-webkit-transition': 'transform ' + transition + 's ease-in-out',
+        '-moz-transition': 'transform ' + transition + 's ease-in-out',
+        '-ms-transition': 'transform ' + transition + 's ease-in-out',
+        '-o-transition': 'transform ' + transition + 's ease-in-out',
+        'transition': 'transform ' + transition + 's ease-in-out'
+      })
+      $module.siblings('.gf_hero-bg-wrap').children('.gf_hero-bg').css({
+        'background-image': 'inherit',
+        'background-size': 'inherit',
+        'background-position': 'inherit',
+        '-webkit-transition': 'transform ' + transition + 's ease-in-out',
+        '-moz-transition': 'transform ' + transition + 's ease-in-out',
+        '-ms-transition': 'transform ' + transition + 's ease-in-out',
+        '-o-transition': 'transform ' + transition + 's ease-in-out',
+        'transition': 'transform ' + transition + 's ease-in-out'
+      });
+    }, 300);
+  } else{
+    $module.parent().removeClass("effect-zoom");
+  }
+
+  if ($module.attr('data-fixedMode') == '1') {
+    function changeImage() {
+      var backgroundImage = $module.parent().css('background-image');
+      if (backgroundImage) {
+        backgroundImage = backgroundImage.replace('url(', '').replace(')', '').replace(/\"/gi, "");
+        $module.find('.gf_hero-fixed').attr('src', backgroundImage);
+        $module.parent().addClass('gf_hero-fixed-mode');
+      }
+    }
+    changeImage();
+    let windowWidth = jQuery(window).width();
+    let timeoutResize = 0;
+    jQuery(window).resize(function () {
+      if (jQuery(window).width() == windowWidth) {
+        return;
+      }
+      windowWidth = jQuery(window).width();
+
+      if (timeoutResize) {
+        clearTimeout(timeoutResize);
+        timeoutResize = 0;
+      }
+
+      timeoutResize = window.setTimeout(function () {
+        changeImage();
+      }, 16);
+    });
+  } else {
+    $module.parent().removeClass('gf_hero-fixed-mode');
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611693521696').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1611693521696-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611693594162').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611693521696-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611693551357').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611693619061').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611694165490').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1611694165490-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611694165561').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611694165490-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611694165499').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611694165556').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611694587343').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1611694587343-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611694587320').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611694587343-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611694587399').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611694587370').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611694732394').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1611694732394-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611694732308').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611694732394-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611694732326').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611694732346').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611695820380').children('.module');
+  $module.gfV3Product();
+})( window.GemQuery || jQuery );
+    
+(function(jQuery) {
+  var $module = jQuery('#m-1611695820380-0').children('.module');
+  var effect = $module.attr('data-effect');
+  var magnify = $module.attr('data-zoom-level');
+  var displayType = $module.attr('data-displaytype');
+  $module.gfV3ProductImage({
+    'effect': effect,
+    'displayType': displayType,
+    'magnify': magnify
+  })
+})(window.GemQuery || jQuery);
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611695820340').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611695820380-3').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611695820327').children('.module');
+  $module.gfV3ProductCartButton({ onItemAdded: function(data) {}});
+})( window.GemQuery || jQuery );
+    
+(function( jQuery ){
+  var $module = jQuery('#m-1611695820351').children('.module');
+  var $product = $module.closest('[data-label="Product"]');
+  var productCurrentId = "";
+  if ($product.length > 0) {
+    productCurrentId = $product.attr("id");
+  }
+  var changeVariantFunction = function (variant) {
+    if(variant&&variant.id){
+      var productHandle = $module.attr("data-phandle");
+      var newHandle = "/products/"+productHandle+"?variant="+variant.id;
+      $module.find('a').attr("href",newHandle);
+    }
+  }
+  if (window.GEMSTORE) {
+    window.GEMSTORE.subscribe("product-" + productCurrentId + "-variant", changeVariantFunction);
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+(function( jQuery ){
+  var $hero = jQuery('#m-1611696130163');
+  var $module = jQuery('#m-1611696130163').children('.module');
+
+  var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+  var $heroLink = $hero.children('.hero-link');
+  if (mode == 'dev' && $heroLink.length > 0) {
+    $hero.children('.hero-link').hide();
+  }
+  if (mode == 'production' && $heroLink.length > 0) {
+    $module.off('click.openLink').on('click.openLink', function (e) {
+      var $target = jQuery(e.target);
+      if ($target.length > 0) {
+        var linkTarget = typeof $target.attr('href') !== "undefined" ? $target.attr('href') : "";
+        if (linkTarget == "") {
+          var link = typeof $heroLink.attr('href') !== "undefined" ? $heroLink.attr('href') : "";
+          var newTab = typeof $heroLink.attr('target') !== "undefined" ? $heroLink.attr('target') : "";
+          if (link != "") {
+            if (newTab == "") {
+              window.location.href = link;
+            } else {
+              window.open(link, newTab);
+            }
+          }
+        }
+      };
+    })
+  }
+
+  var height = jQuery.trim($module.attr("data-height"));
+  if (height == undefined || height == "") {
+    $hero.css("height", "auto!important");
+  } else {
+    $hero.css("height", "inherit");
+  }
+
+
+  var effect = $module.attr('data-effect');
+  var transition = $module.attr('data-transition');
+
+  if (effect == 'effect-zoom') {
+    $module.parent().addClass(effect);
+
+    setTimeout(function () {
+      var backgroundImage = $module.parent().css('background-image');
+      var backgroundSize = $module.parent().css('background-size');
+      var backgroundPosition = $module.parent().css('background-position');
+      $module.siblings('.gf_hero-bg-wrap').css({
+        'background-image': 'inherit',
+        'background-size': 'inherit',
+        'background-position': 'inherit',
+        '-webkit-transition': 'transform ' + transition + 's ease-in-out',
+        '-moz-transition': 'transform ' + transition + 's ease-in-out',
+        '-ms-transition': 'transform ' + transition + 's ease-in-out',
+        '-o-transition': 'transform ' + transition + 's ease-in-out',
+        'transition': 'transform ' + transition + 's ease-in-out'
+      })
+      $module.siblings('.gf_hero-bg-wrap').children('.gf_hero-bg').css({
+        'background-image': 'inherit',
+        'background-size': 'inherit',
+        'background-position': 'inherit',
+        '-webkit-transition': 'transform ' + transition + 's ease-in-out',
+        '-moz-transition': 'transform ' + transition + 's ease-in-out',
+        '-ms-transition': 'transform ' + transition + 's ease-in-out',
+        '-o-transition': 'transform ' + transition + 's ease-in-out',
+        'transition': 'transform ' + transition + 's ease-in-out'
+      });
+    }, 300);
+  } else{
+    $module.parent().removeClass("effect-zoom");
+  }
+
+  if ($module.attr('data-fixedMode') == '1') {
+    function changeImage() {
+      var backgroundImage = $module.parent().css('background-image');
+      if (backgroundImage) {
+        backgroundImage = backgroundImage.replace('url(', '').replace(')', '').replace(/\"/gi, "");
+        $module.find('.gf_hero-fixed').attr('src', backgroundImage);
+        $module.parent().addClass('gf_hero-fixed-mode');
+      }
+    }
+    changeImage();
+    let windowWidth = jQuery(window).width();
+    let timeoutResize = 0;
+    jQuery(window).resize(function () {
+      if (jQuery(window).width() == windowWidth) {
+        return;
+      }
+      windowWidth = jQuery(window).width();
+
+      if (timeoutResize) {
+        clearTimeout(timeoutResize);
+        timeoutResize = 0;
+      }
+
+      timeoutResize = window.setTimeout(function () {
+        changeImage();
+      }, 16);
+    });
+  } else {
+    $module.parent().removeClass('gf_hero-fixed-mode');
+  }
+})( window.GemQuery || jQuery );
+    
+    
+(function( jQuery ){
+  var $hero = jQuery('#m-1611696343699');
+  var $module = jQuery('#m-1611696343699').children('.module');
+
+  var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+  var $heroLink = $hero.children('.hero-link');
+  if (mode == 'dev' && $heroLink.length > 0) {
+    $hero.children('.hero-link').hide();
+  }
+  if (mode == 'production' && $heroLink.length > 0) {
+    $module.off('click.openLink').on('click.openLink', function (e) {
+      var $target = jQuery(e.target);
+      if ($target.length > 0) {
+        var linkTarget = typeof $target.attr('href') !== "undefined" ? $target.attr('href') : "";
+        if (linkTarget == "") {
+          var link = typeof $heroLink.attr('href') !== "undefined" ? $heroLink.attr('href') : "";
+          var newTab = typeof $heroLink.attr('target') !== "undefined" ? $heroLink.attr('target') : "";
+          if (link != "") {
+            if (newTab == "") {
+              window.location.href = link;
+            } else {
+              window.open(link, newTab);
+            }
+          }
+        }
+      };
+    })
+  }
+
+  var height = jQuery.trim($module.attr("data-height"));
+  if (height == undefined || height == "") {
+    $hero.css("height", "auto!important");
+  } else {
+    $hero.css("height", "inherit");
+  }
+
+
+  var effect = $module.attr('data-effect');
+  var transition = $module.attr('data-transition');
+
+  if (effect == 'effect-zoom') {
+    $module.parent().addClass(effect);
+
+    setTimeout(function () {
+      var backgroundImage = $module.parent().css('background-image');
+      var backgroundSize = $module.parent().css('background-size');
+      var backgroundPosition = $module.parent().css('background-position');
+      $module.siblings('.gf_hero-bg-wrap').css({
+        'background-image': 'inherit',
+        'background-size': 'inherit',
+        'background-position': 'inherit',
+        '-webkit-transition': 'transform ' + transition + 's ease-in-out',
+        '-moz-transition': 'transform ' + transition + 's ease-in-out',
+        '-ms-transition': 'transform ' + transition + 's ease-in-out',
+        '-o-transition': 'transform ' + transition + 's ease-in-out',
+        'transition': 'transform ' + transition + 's ease-in-out'
+      })
+      $module.siblings('.gf_hero-bg-wrap').children('.gf_hero-bg').css({
+        'background-image': 'inherit',
+        'background-size': 'inherit',
+        'background-position': 'inherit',
+        '-webkit-transition': 'transform ' + transition + 's ease-in-out',
+        '-moz-transition': 'transform ' + transition + 's ease-in-out',
+        '-ms-transition': 'transform ' + transition + 's ease-in-out',
+        '-o-transition': 'transform ' + transition + 's ease-in-out',
+        'transition': 'transform ' + transition + 's ease-in-out'
+      });
+    }, 300);
+  } else{
+    $module.parent().removeClass("effect-zoom");
+  }
+
+  if ($module.attr('data-fixedMode') == '1') {
+    function changeImage() {
+      var backgroundImage = $module.parent().css('background-image');
+      if (backgroundImage) {
+        backgroundImage = backgroundImage.replace('url(', '').replace(')', '').replace(/\"/gi, "");
+        $module.find('.gf_hero-fixed').attr('src', backgroundImage);
+        $module.parent().addClass('gf_hero-fixed-mode');
+      }
+    }
+    changeImage();
+    let windowWidth = jQuery(window).width();
+    let timeoutResize = 0;
+    jQuery(window).resize(function () {
+      if (jQuery(window).width() == windowWidth) {
+        return;
+      }
+      windowWidth = jQuery(window).width();
+
+      if (timeoutResize) {
+        clearTimeout(timeoutResize);
+        timeoutResize = 0;
+      }
+
+      timeoutResize = window.setTimeout(function () {
+        changeImage();
+      }, 16);
+    });
+  } else {
+    $module.parent().removeClass('gf_hero-fixed-mode');
+  }
+})( window.GemQuery || jQuery );
+    
+    
+(function( jQuery ){
+  var $hero = jQuery('#m-1611696371748');
+  var $module = jQuery('#m-1611696371748').children('.module');
+
+  var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+  var $heroLink = $hero.children('.hero-link');
+  if (mode == 'dev' && $heroLink.length > 0) {
+    $hero.children('.hero-link').hide();
+  }
+  if (mode == 'production' && $heroLink.length > 0) {
+    $module.off('click.openLink').on('click.openLink', function (e) {
+      var $target = jQuery(e.target);
+      if ($target.length > 0) {
+        var linkTarget = typeof $target.attr('href') !== "undefined" ? $target.attr('href') : "";
+        if (linkTarget == "") {
+          var link = typeof $heroLink.attr('href') !== "undefined" ? $heroLink.attr('href') : "";
+          var newTab = typeof $heroLink.attr('target') !== "undefined" ? $heroLink.attr('target') : "";
+          if (link != "") {
+            if (newTab == "") {
+              window.location.href = link;
+            } else {
+              window.open(link, newTab);
+            }
+          }
+        }
+      };
+    })
+  }
+
+  var height = jQuery.trim($module.attr("data-height"));
+  if (height == undefined || height == "") {
+    $hero.css("height", "auto!important");
+  } else {
+    $hero.css("height", "inherit");
+  }
+
+
+  var effect = $module.attr('data-effect');
+  var transition = $module.attr('data-transition');
+
+  if (effect == 'effect-zoom') {
+    $module.parent().addClass(effect);
+
+    setTimeout(function () {
+      var backgroundImage = $module.parent().css('background-image');
+      var backgroundSize = $module.parent().css('background-size');
+      var backgroundPosition = $module.parent().css('background-position');
+      $module.siblings('.gf_hero-bg-wrap').css({
+        'background-image': 'inherit',
+        'background-size': 'inherit',
+        'background-position': 'inherit',
+        '-webkit-transition': 'transform ' + transition + 's ease-in-out',
+        '-moz-transition': 'transform ' + transition + 's ease-in-out',
+        '-ms-transition': 'transform ' + transition + 's ease-in-out',
+        '-o-transition': 'transform ' + transition + 's ease-in-out',
+        'transition': 'transform ' + transition + 's ease-in-out'
+      })
+      $module.siblings('.gf_hero-bg-wrap').children('.gf_hero-bg').css({
+        'background-image': 'inherit',
+        'background-size': 'inherit',
+        'background-position': 'inherit',
+        '-webkit-transition': 'transform ' + transition + 's ease-in-out',
+        '-moz-transition': 'transform ' + transition + 's ease-in-out',
+        '-ms-transition': 'transform ' + transition + 's ease-in-out',
+        '-o-transition': 'transform ' + transition + 's ease-in-out',
+        'transition': 'transform ' + transition + 's ease-in-out'
+      });
+    }, 300);
+  } else{
+    $module.parent().removeClass("effect-zoom");
+  }
+
+  if ($module.attr('data-fixedMode') == '1') {
+    function changeImage() {
+      var backgroundImage = $module.parent().css('background-image');
+      if (backgroundImage) {
+        backgroundImage = backgroundImage.replace('url(', '').replace(')', '').replace(/\"/gi, "");
+        $module.find('.gf_hero-fixed').attr('src', backgroundImage);
+        $module.parent().addClass('gf_hero-fixed-mode');
+      }
+    }
+    changeImage();
+    let windowWidth = jQuery(window).width();
+    let timeoutResize = 0;
+    jQuery(window).resize(function () {
+      if (jQuery(window).width() == windowWidth) {
+        return;
+      }
+      windowWidth = jQuery(window).width();
+
+      if (timeoutResize) {
+        clearTimeout(timeoutResize);
+        timeoutResize = 0;
+      }
+
+      timeoutResize = window.setTimeout(function () {
+        changeImage();
+      }, 16);
+    });
+  } else {
+    $module.parent().removeClass('gf_hero-fixed-mode');
+  }
+})( window.GemQuery || jQuery );
+    
+    
+(function( jQuery ){
+  var $hero = jQuery('#m-1611696406765');
+  var $module = jQuery('#m-1611696406765').children('.module');
+
+  var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+  var $heroLink = $hero.children('.hero-link');
+  if (mode == 'dev' && $heroLink.length > 0) {
+    $hero.children('.hero-link').hide();
+  }
+  if (mode == 'production' && $heroLink.length > 0) {
+    $module.off('click.openLink').on('click.openLink', function (e) {
+      var $target = jQuery(e.target);
+      if ($target.length > 0) {
+        var linkTarget = typeof $target.attr('href') !== "undefined" ? $target.attr('href') : "";
+        if (linkTarget == "") {
+          var link = typeof $heroLink.attr('href') !== "undefined" ? $heroLink.attr('href') : "";
+          var newTab = typeof $heroLink.attr('target') !== "undefined" ? $heroLink.attr('target') : "";
+          if (link != "") {
+            if (newTab == "") {
+              window.location.href = link;
+            } else {
+              window.open(link, newTab);
+            }
+          }
+        }
+      };
+    })
+  }
+
+  var height = jQuery.trim($module.attr("data-height"));
+  if (height == undefined || height == "") {
+    $hero.css("height", "auto!important");
+  } else {
+    $hero.css("height", "inherit");
+  }
+
+
+  var effect = $module.attr('data-effect');
+  var transition = $module.attr('data-transition');
+
+  if (effect == 'effect-zoom') {
+    $module.parent().addClass(effect);
+
+    setTimeout(function () {
+      var backgroundImage = $module.parent().css('background-image');
+      var backgroundSize = $module.parent().css('background-size');
+      var backgroundPosition = $module.parent().css('background-position');
+      $module.siblings('.gf_hero-bg-wrap').css({
+        'background-image': 'inherit',
+        'background-size': 'inherit',
+        'background-position': 'inherit',
+        '-webkit-transition': 'transform ' + transition + 's ease-in-out',
+        '-moz-transition': 'transform ' + transition + 's ease-in-out',
+        '-ms-transition': 'transform ' + transition + 's ease-in-out',
+        '-o-transition': 'transform ' + transition + 's ease-in-out',
+        'transition': 'transform ' + transition + 's ease-in-out'
+      })
+      $module.siblings('.gf_hero-bg-wrap').children('.gf_hero-bg').css({
+        'background-image': 'inherit',
+        'background-size': 'inherit',
+        'background-position': 'inherit',
+        '-webkit-transition': 'transform ' + transition + 's ease-in-out',
+        '-moz-transition': 'transform ' + transition + 's ease-in-out',
+        '-ms-transition': 'transform ' + transition + 's ease-in-out',
+        '-o-transition': 'transform ' + transition + 's ease-in-out',
+        'transition': 'transform ' + transition + 's ease-in-out'
+      });
+    }, 300);
+  } else{
+    $module.parent().removeClass("effect-zoom");
+  }
+
+  if ($module.attr('data-fixedMode') == '1') {
+    function changeImage() {
+      var backgroundImage = $module.parent().css('background-image');
+      if (backgroundImage) {
+        backgroundImage = backgroundImage.replace('url(', '').replace(')', '').replace(/\"/gi, "");
+        $module.find('.gf_hero-fixed').attr('src', backgroundImage);
+        $module.parent().addClass('gf_hero-fixed-mode');
+      }
+    }
+    changeImage();
+    let windowWidth = jQuery(window).width();
+    let timeoutResize = 0;
+    jQuery(window).resize(function () {
+      if (jQuery(window).width() == windowWidth) {
+        return;
+      }
+      windowWidth = jQuery(window).width();
+
+      if (timeoutResize) {
+        clearTimeout(timeoutResize);
+        timeoutResize = 0;
+      }
+
+      timeoutResize = window.setTimeout(function () {
+        changeImage();
+      }, 16);
+    });
+  } else {
+    $module.parent().removeClass('gf_hero-fixed-mode');
+  }
+})( window.GemQuery || jQuery );
+    
+    
+    
+    
+    

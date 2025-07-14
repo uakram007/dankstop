@@ -1,0 +1,543 @@
+{% assign elite = false %}
+{% assign elite_product = settings.elite_product.selected_or_first_available_variant %}
+{% for item in cart.items %}
+  {% if item.id == settings.elite_product.selected_or_first_available_variant.id %}
+    {% assign elite = true %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+{% assign base_price_active = true %}
+{% assign club_price_active = false %}
+{% assign elite_price_active = false %}
+
+{% if customer and customer.tags contains 'elite_member' %}
+  {% assign elite_price_active = true %}
+  {% assign base_price_active = false %}
+{% endif %}
+
+{% if customer and customer.tags contains 'club_member' %}
+  {% assign club_price_active = true %}
+  {% assign base_price_active = false %}
+{% endif %}
+
+{% assign elite_product = settings.elite_product.id | times: 1 %}
+{% assign cart_has_no_elite_item = true %}
+{% for item in cart.items %}
+  {% if item.product_id == elite_product %}
+    {% assign cart_has_no_elite_item = false %}
+  {% endif %}
+{% endfor %}
+
+<style>
+  #shopping-cart .btn.block {
+    border: none;
+    background: #e1241d;
+    border-radius: 30px;
+  }
+
+
+          {% if customer and customer.tags contains 'club_member' && elite == false %}
+          button#AddToCart {
+          background: #e1241d;
+          border: none;
+          }
+          #shopping-cart .grid__item.large--one-third .btn.block:after {
+          content: 'without ELITE savings';
+          display: block;
+          font-size: 10px;
+          }
+          #shopping-cart .grid__item.large--one-third .btn.block{
+          background: #e1241d;
+          border-radius: 30px;
+          border: none;
+          }
+          {% endif %}
+
+          {% if customer and customer.tags contains 'elite_member' %}
+        button#AddToCart {
+        background: #1c355f;
+        border: none;
+        }
+        {% endif %}
+
+        {% unless customer %}
+  #shopping-cart button.btn.block:after {
+    content: 'without savings';
+    display: block;
+    border: none;
+    background: none;
+    box-shadow: none;
+    position: static;
+    font-size: 9px;
+    margin-top: 5px;
+  }
+  {% endunless %}
+
+
+
+        .cc-mm-instant-saving-free-product-card-img {
+      border-radius: 16.508px;
+      height: 226px;
+      object-fit: cover;
+      }
+
+      .price-table h3 {
+      color: var(--Color-Neutral-Neutral-0, #FFF);
+      text-align: center;
+      font-size: var(--Type-text-s, 16px);
+      font-style: normal;
+      font-weight: 700;
+      line-height: 20.635px;
+      margin:0px;
+      }
+
+      .cc-mm-instant-saving-free-product-card-emoji {
+      position: absolute;
+      bottom: -21px;
+      right: -21px;
+      }
+      .price-table {
+      display: table;
+      width: 100%;
+      border-spacing: 0;
+
+      border-collapse: separate;
+      }
+      .price-table td strong {
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      color: var(--Color-Neutral-Neutral-700, #818898);
+      text-align: center;
+      font-size: var(--Type-text-small, 14px);
+      font-style: normal;
+      font-weight: 700;
+      line-height: 27.441px;
+      border-bottom: 1.032px solid var(--Color-Neutral-Neutral-500, #C1C7D0);
+      padding:8px;
+      gap: 5px;
+      }
+
+      .cc-pricing-table-wrap .elite-cell svg path{
+      fill:#1C355E;
+      }
+
+      .price-table td {
+      padding:0;
+      }
+      .price-table .market-cell {
+        border:1px solid #d6dee4;
+      background-color: #fff;
+      color: #000;
+      text-align: left;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+      padding:0px;
+      }
+
+      .market-cell.active {
+      border-radius: 10px;
+      transform: scale(1.1);
+      border:2px solid #818898;
+      }
+
+      .member-cell.active {
+      border-radius: 10px;
+      transform: scale(1.1);
+      border: 2px solid #E1251C !important;
+      }
+      .member-cell.active strong{
+      border:3px solid #FFD600 !important;
+      border-radius: 7px 7px 0 0;
+      }
+      .member-cell.active .price{
+      border:3px solid #E1251C !important;
+      border-radius: 0px 0px 7px 7px;
+      }
+
+      .price-table .price_new {
+      color: var(--Color-Neutral-Neutral-700, #000); 
+      text-align: center;
+
+      font-size: var(--Type-text-base, 16px);
+      font-style: normal;
+      font-weight: 700;
+      line-height: 32.929px; /* 205.808% */
+      padding: 8px;
+      display: block !important;
+      }
+
+  .price-table .elite-cell {
+  border:none
+  }
+    .price-table .elite-cell .price_new {
+    background: #1C355E;
+    color: #fff;
+    border:3px solid #1C355E !important;
+    }
+
+    .price-table td:last-of-type strong {
+    border-radius: 0px 10px 0px 0px;
+    }
+    .price-table td:last-of-type .price_new {
+    border-radius: 0px 0 10px 0px;
+    }
+
+
+    .price-table .elite-cell strong {
+    color: var(--Color-Elite-Blue-500, #1C355E) !important;
+    text-transform: uppercase;
+    border:3px solid #FFD600 !important;
+    background:#FFD600;
+    }
+
+    .price-table .member-cell .price_new {
+    background: var(--Color-Pricing-Member, #E1251C);
+    color: var(--Color-Neutral-Neutral-0, #FFF);
+    border-top:3px solid #E1251C;
+    border-bottom:3px solid #E1251C;
+    border-left:3px solid #E1251C;
+    border-right:1px solid #C1C7D0;
+    }
+    .price-table .member-cell strong {
+    background:#FFD600;
+    color: var(--Color-Pricing-Member, #E1251C) !important;
+    border-top:3px solid #FFD600;
+    border-bottom:3px solid #FFD600;
+    border-left:3px solid #FFD600;
+    border-right:1px solid #C1C7D0;
+    }
+
+
+
+    .elite-cell.active {
+    border-radius: 10px;
+    transform: scale(1.1);
+    border: 2px solid #1C355E !important;
+    }
+    .elite-cell.active strong{
+    border:3px solid #FFD600 !important;
+    border-radius: 7px 7px 0 0 !important;
+    }
+    .elite-cell.active .price_new{
+    border:3px solid #1C355E !important;
+    border-radius: 0px 0px 7px 7px !important;
+    }
+
+    .cc-pricing-table-market-cell-inner img {
+    border-radius: 9px;
+    background: var(--Color-Pricing-Member, #E1251C);
+    height: 100%;
+    object-fit: contain;
+    padding: 40px 16px;
+    }
+    .cc-pricing-table-market-cell-inner {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 20px;
+    align-items: center;
+    border-top: 1px solid var(--Color-Neutral-Neutral-700, #818898);
+    border-right: 1px solid var(--Color-Neutral-Neutral-700, #818898);
+    border-left: 1px solid var(--Color-Neutral-Neutral-700, #818898);
+    border-bottom: 7px solid var(--Color-Pricing-Member, #E1251C);
+    background: var(--Color-Neutral-Neutral-0, #FFF);
+    padding: 12px;
+    border-radius: 8px;
+    }
+    .cc-pricing-table-market-cell-inner-text a {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color: var(--Color-Canna-Cabana-Red-500, #E1251C);
+
+    font-size: var(--Type-text-s, 14px);
+    font-style: normal;
+    font-weight: 600;
+    line-height: 146.023%; /* 23.364px */
+    text-decoration:none;
+    }
+    .cc-pricing-table-market-cell-inner-text p {
+    margin: 6px 0 12px;
+    color: var(--Color-Neutral-Neutral-900, #2D2E34);
+
+    font-size: var(--Type-text-s, 14px);
+    font-style: normal;
+    font-weight: 500;
+    line-height: 146.023%;
+    letter-spacing: -0.16px;
+    }
+    .cc-pricing-table-market-cell-inner-text b {
+    color: var(--Color-Pricing-Member, #E1251C);
+
+    }
+    .cc-pricing-table-market-cell-inner-text h6{
+    color: var(--Color-Neutral-Neutral-900, #2D2E34);
+
+    font-size: var(--Type-text-s, 14px);
+    font-style: normal;
+    font-weight: 700;
+    line-height: 146.023%; /* 23.364px */
+    margin:0;
+    }
+
+    .cc-pricing-table-banner-wrap {
+    margin-top: 30px;
+    }
+
+    .cc-pricing-table-banner-wrap > div.active {
+    display:block;
+    }
+    .cc-pricing-table-banner-wrap > div {
+    display:none;
+    }
+
+    .cc-pricing-table-member-cell-inner-row1 {
+    gap: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--Color-Elite-Blue-900, #031546);
+    border-radius: 10px 10px 0 0;
+    padding: 16px 12px;
+    }
+
+    .cc-pricing-table-member-cell-inner-row1 > img {
+    max-width: 90px;
+    }
+    .cc-pricing-table-member-cell-inner-row1 h3 {
+    margin: 0;
+    color: #fff;
+    font-size: 16px;
+    }
+    .cc-pricing-table-member-cell-inner-row1 svg {
+    flex-shrink:0;
+    }
+    .cc-pricing-table-member-cell-inner-row1 h3 {
+    margin: 0;
+    color: #fff;
+    }
+    .cc-pricing-table-member-cell-inner-row1 h3 span{
+    display:block;
+    font-weight:400;
+    }
+
+    .cc-pricing-table-member-cell-inner-row2 label {
+    color:#1C355E;
+    font-size:16px;
+    }
+    .cc-pricing-table-member-cell-inner-row2 {
+    background: var( --Golden-Surface, linear-gradient(118deg, #ab7917 8.15%, #ffdf6e 50%, #ab7917 91.85%) );
+    padding: 12px 16px;
+    border-radius: 0 0 10px 10px;
+    }
+    .cc-pricing-table-member-cell-inner-row3 ul {
+    padding:20px;
+    margin:0;
+    }
+    .cc-pricing-table-member-cell-inner-row3 ul li{
+    color: #1C355E;
+    font-size: 16px;
+    }
+    .cutprice{
+    /* text-decoration: line-through; */
+    }
+
+
+@media only screen and (max-width: 768px) { 
+    .cc-pricing-table-market-cell-inner-text .cc-primary-button {
+        line-height: 8px !important;
+        border-color: #e1251c;
+    }
+    .cc-pricing-table-market-cell-inner-text .cc-secondary-button{
+      padding: 8px 16px !important;
+      line-height: 4px !important;
+    }
+  }
+     
+ 
+   
+</style>
+
+
+  <div class="cc-pricing-table-wrap {{ product.title  }}" data-elite="{{ id }}" data-currency="{{ shop.money_format }}">
+    
+    <!-- Default to the first variant --> 
+    {% if product.variants.size == 1 %}
+      {% if product.variants.first.metafields.custom.member_price == blank %}
+        {% assign product_to_check = product %}
+      {% else %}
+        {% assign product_to_check = product.variants.first %}
+      {% endif %}
+      
+    {% else %}
+      {% for variant in product.variants %}
+        {% if variant.metafields.custom.member_price != blank and variant.metafields.custom.elite_price != blank %}
+            {% if variant.metafields.custom.member_price != 0.0 and variant.metafields.custom.elite_price != 0.0 and variant.available %}
+                {% assign product_to_check = variant %} 
+                {% break %}
+            {% endif %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    <select name="id" id="cc-pricing-variants-select" style="display:none">
+      {% for variant in product.variants %}
+        <option
+          value="{{ variant.id }}"
+          data-option1="{{ variant.option1 }}"
+          data-option2="{{ variant.option2 }}"
+          data-option3="{{ variant.option3 }}"
+          data-price="{{ variant.price |  money_without_currency }}"
+          data-member-price="{{ variant.metafields.custom.member_price | default: 0 }}"
+          data-elite-price="{{ variant.metafields.custom.elite_price | default: 0 }}"
+          data-available = "{{ variant.available }}"
+          {% if variant == product_to_check %}
+            selected
+          {% endif %}
+        >
+          {{ variant.title }}
+        </option>
+      {% endfor %}
+    </select>
+
+    <table class="price-table">
+      <tbody>
+        <!-- Market Price -->
+        <tr>
+          <td class="market-cell {% if base_price_active %} active {% endif %} {{ product_to_check.title }}">
+            <strong>Market</strong>
+            <span class="price_new {% unless base_price_active %} cutprice {% endunless %}">
+              {{ product_to_check.price | money }}
+            </span>
+          </td>
+
+          <!-- Member Price -->
+          {% if product_to_check.metafields.custom.member_price != blank
+            and product_to_check.metafields.custom.member_price > 0
+          %}
+            <td class="member-cell {% if club_price_active %} active {% endif %}" >
+              <strong>
+                {%  unless club_price_active or elite_price_active == true %}
+                <svg width="11" height="14" viewBox="0 0 11 14" fill="none" xmlns="http://www.w3.org/2000/svg" style=" padding: 0; width: 12px; height: 15px; ">
+                <path d="M9.33918 5.50353H8.93156V3.93131C8.93156 2.19715 7.46905 0.786865 5.67066 0.786865C3.87227 0.786865 2.40975 2.19715 2.40975 3.93131V5.50353H2.00214C1.32822 5.50353 0.779297 6.03233 0.779297 6.6827V12.1855C0.779297 12.8359 1.32822 13.3646 2.00214 13.3646H9.33918C10.0131 13.3646 10.562 12.8359 10.562 12.1855V6.6827C10.562 6.03233 10.0131 5.50353 9.33918 5.50353ZM3.49672 3.93131C3.49672 2.7752 4.47173 1.83501 5.67066 1.83501C6.86958 1.83501 7.84459 2.7752 7.84459 3.93131V5.50353H3.49672V3.93131ZM6.21414 9.55044V10.7443C6.21414 11.0336 5.9712 11.2684 5.67066 11.2684C5.37011 11.2684 5.12717 11.0336 5.12717 10.7443V9.55044C4.8038 9.36858 4.58369 9.03422 4.58369 8.64798C4.58369 8.06993 5.07119 7.59983 5.67066 7.59983C6.27012 7.59983 6.75763 8.06993 6.75763 8.64798C6.75763 9.03422 6.53751 9.36858 6.21414 9.55044Z" fill="#E1251C"/>
+                </svg>
+                {% endunless %}
+                Member
+              </strong>
+              <span class="price_new {% if elite_price_active %} cutprice {% endif %}" {% if club_price_active %} style=" border-radius: 0 0 10px 10px; " {% endif %}>
+                {{ product_to_check.metafields.custom.member_price | default: 0 | times: 100 | money }}
+              </span>
+            </td>
+          {% endif %}
+          <!-- Elite Price -->
+          {% if product_to_check.metafields.custom.elite_price != blank
+            and product_to_check.metafields.custom.elite_price > 0
+          %}
+            <td class="elite-cell {% if elite_price_active %}active{% endif %}" >
+              <strong>
+                {%  unless elite_price_active %}
+                <svg width="11" height="14" viewBox="0 0 11 14" fill="none" xmlns="http://www.w3.org/2000/svg" style=" padding: 0; width: 12px; height: 15px; ">
+                <path d="M9.33918 5.50353H8.93156V3.93131C8.93156 2.19715 7.46905 0.786865 5.67066 0.786865C3.87227 0.786865 2.40975 2.19715 2.40975 3.93131V5.50353H2.00214C1.32822 5.50353 0.779297 6.03233 0.779297 6.6827V12.1855C0.779297 12.8359 1.32822 13.3646 2.00214 13.3646H9.33918C10.0131 13.3646 10.562 12.8359 10.562 12.1855V6.6827C10.562 6.03233 10.0131 5.50353 9.33918 5.50353ZM3.49672 3.93131C3.49672 2.7752 4.47173 1.83501 5.67066 1.83501C6.86958 1.83501 7.84459 2.7752 7.84459 3.93131V5.50353H3.49672V3.93131ZM6.21414 9.55044V10.7443C6.21414 11.0336 5.9712 11.2684 5.67066 11.2684C5.37011 11.2684 5.12717 11.0336 5.12717 10.7443V9.55044C4.8038 9.36858 4.58369 9.03422 4.58369 8.64798C4.58369 8.06993 5.07119 7.59983 5.67066 7.59983C6.27012 7.59983 6.75763 8.06993 6.75763 8.64798C6.75763 9.03422 6.53751 9.36858 6.21414 9.55044Z" fill="#1C355E"/>
+                </svg>
+                {% endunless %}
+              Elite</strong>
+              <span class="price_new" {% if elite_price_active %}style=" border-radius: 0 0 10px 10px; "{% endif %}>
+                {{ product_to_check.metafields.custom.elite_price | default: 0 | times: 100 | money }}
+              </span>
+            </td>
+          {% endif %}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+{% if product.available %}
+  {% if base_price_active %}
+    <div class="cc-pricing-table-banner-wrap">
+      <div class="cc-pricing-table-market-cell active">
+        <div class="cc-pricing-table-market-cell-inner">
+          <img src="{{ 'cc-logo.png' | file_url }}" class="img-responsive">
+          <div class="cc-pricing-table-market-cell-inner-text">
+            <h6>Join Cabana Club & Unlock <b>UNBEATABLE</b> Member Prices</h6>
+            {% assign member_price = product.metafields.custom.member_price | times: 100 %}
+            {% assign savings = product.price | minus: member_price %}
+            <p>
+              Save
+              <b class="cc-red"
+                ><span class="saving-ai" style="display: inline;">{{ savings | money }}</span></b
+              >
+              on this item instantly
+            </p>
+            <div class="cc-mm-instant-saving-buttons" style=" justify-content: left; ">
+            
+              <a href="#" class="cc-primary-button SSO_popup_register" style=" color: #fff; text-align: center; justify-content: center; ">Join Now</a>
+            
+            
+               <a href="#" class=" cc-secondary-button SSO_popup_login" style="text-align: center; justify-content: center; ">Sign In</a>
+            
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if club_price_active %}
+    <div class="cc-pricing-table-member-cell active">
+      <div class="cc-pricing-table-member-cell-inner">
+        <div class="cc-pricing-table-member-cell-inner-row1">
+          <img src="{{ 'cc-elite-logo.png' | file_url }}" class="img-responsive">
+          {% assign elite_price = product.metafields.custom.elite_price | times: 100 %}
+          {% assign savings = product.metafields.custom.member_price | times: 100 | minus: elite_price %}
+          <h3>
+            Save an Extra <span class="saving-ai" style="display: inline;">{{ savings | money }}</span>
+            <span><b>+ Free Shipping & VIP Perks </b>on this item</span>
+          </h3>
+
+          <svg xmlns="http://www.w3.org/2000/svg" width="34" height="41" viewBox="0 0 34 41" fill="none">
+            <path d="M10.0001 14.9989L18.1079 2.97522L30.5001 9.99891" stroke="#D5A03A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5.99967 38.9992C21.0036 35.4992 27.4997 23.9992 17.9996 3.99925" stroke="#D5A443" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        {% assign elite = false %}
+        {% for item in cart.items %}
+          {% if item.product_id == settings.elite_product.id %}
+            {% assign elite = true %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+        {% unless elite %}
+          <div class="cc-pricing-table-member-cell-inner-row2">
+            <label for="accept_policy" class="SSO_popup_elite_upgrade">
+              <input
+                type="checkbox"
+                value="{{ settings.elite_product.first_available_variant.id }}"
+                id="accept_policy_elite"
+              >
+              <span>
+                <b>Upgrade to an ELITE Membership for only</b> <b>$30/yr</b> to Unlock UNBELIEVABLE Savings &
+                free shipping on every order.
+              </span>
+            </label>
+            {% comment %} <div class="cc-mm-instant-saving-buttons" style=" justify-content: left; ">
+            
+                <a href="#" class="cc-primary-button SSO_popup_register" style="color: #fff;text-align: center;justify-content: center;background: #1C355E;" data-uw-rm-brl="PR" data-uw-original-href="https://www.smokecartel.com/products/cheech-chong-pedro-bong#">Join Now</a>
+              
+              
+                <a href="#" class=" cc-secondary-button SSO_popup_login" style="text-align: center;justify-content: center;border-color: #1C355E;color: #1C355E;" data-uw-rm-brl="PR" data-uw-original-href="https://www.smokecartel.com/products/cheech-chong-pedro-bong#">Sign In</a>
+              
+            </div> {% endcomment %}
+          </div>
+          <div class="cc-pricing-table-member-cell-inner-row3">
+            <ul>
+              <li>
+                You acknowledge that you have read and understand our Privacy Policy and our Supplemental Privacy Policy
+                and that your personal information will be governed in accordance with those documents, and
+              </li>
+              <li>You agree that you have read and consent to our Terms of Use.</li>
+            </ul>
+          </div>
+        {% endunless %}
+      </div>
+    </div>
+  {% endif %}
+{% endif %}
+
+ 

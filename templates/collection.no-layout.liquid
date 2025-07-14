@@ -1,0 +1,201 @@
+{%- layout none -%}
+{%- include 'no-layout-head' -%}
+
+
+{%- include 'lazyload-placeholder' -%} 
+
+
+{%- comment -%}
+  Mobile Collection Nav
+{%- endcomment -%}
+{%- include 'mobile-collection-nav' -%}
+
+
+
+<div class="collection-template collection-template-default">
+  <div class="container">
+  	{%- include 'breadcrumb' -%}
+    
+    <div class="halo-collection-content">
+      <div class="row">
+    
+        <div class="col-12">
+          {%- include 'collection-header' -%}
+        </div>
+
+        {%- comment -%}
+        <div class="col-sidebar lazybit lazybit-load" data-lazy-url="{{ request.path }}?view=sidebar-filter"></div>
+        {%- section 'sidebar-filter' -%}
+        {%- endcomment -%}
+        {%- include 'sidebar-filter-lazy' -%}
+
+        
+        {%- comment -%}
+        {%- section 'collection-template-default' -%}
+        {%- endcomment -%}
+        
+        {%- if cart.attributes.pagination != blank and cart.attributes.pagination -%}
+        {%- assign product_per_page = cart.attributes.pagination -%}
+        {%- else -%}
+        {%- assign product_per_page = settings.collection_results_per_page -%}
+        {%- endif -%}
+
+        {%- paginate collection.products by product_per_page -%}
+
+        {%- case settings.collection_results_per_row -%}
+        {%- when '1' -%}
+            {%- assign grid_item_width = 'grid-item col-12' -%}
+            {%- assign rows = 'products-list' -%}
+
+          {%- when '2' -%}
+            {%- assign grid_item_width = 'grid-item col-6' -%}
+            {%- assign rows = 'products-grid' -%}
+
+          {%- when '3' -%}
+            {%- assign grid_item_width = 'grid-item col-6 col-md-4' -%}
+            {%- assign rows = 'products-grid' -%}
+
+          {%- when '4' -%}
+            {%- assign grid_item_width = 'grid-item col-6 col-md-4 col-lg-3' -%}
+            {%- assign rows = 'products-grid' -%}
+
+          {%- when '5' -%}
+            {%- assign grid_item_width = 'grid-item col-6 col-md-4 col-lg-3 col5' -%}
+            {%- assign rows = 'products-grid' -%}
+        {%- endcase -%}
+
+        <div class="col-12 col-xl-9 col-main" data-section-type="collection-template">
+          {%- comment -%}
+          {%- include 'collection-header' -%}
+          {%- endcomment -%}
+
+          {%- include 'toolbar' -%}
+
+
+          {%- comment -%}
+          {%- if collection.sort_by == 'no-products' -%}  
+          <div class="product-collection row {{ rows }} lazybit lazybit-load" data-lazy-url="{{ request.path }}?view=products"></div>
+          <div class="product-collection row {{ rows }}"></div>
+          {%- else -%}
+          {%- endif -%}
+          {%- endcomment -%}
+
+
+          <div class="product-collection {{ rows }} row lazybit lazybit-load" data-lazy-method="append" data-lazy-url="{{ request.path }}?view=products-lazy" data-lazy-remove=".skeleton.product-item">
+            {%- if collection.products_count > 0 -%}  
+
+              {%- if paginate.current_page == 1 -%}
+
+                {%- comment -%}
+                {%- endcomment -%}
+                {%- if sort_by_qty -%}  
+
+                  {%- assign sortable_products = collection.products -%}
+                  {%- include 'sort-by-qty', products_to_sort: sortable_products -%}
+                  {%- for products_by_qty_index in products_by_qty_indexes -%}
+
+                    {%- assign i = products_by_qty_index | split:'.' | last | abs -%}
+                    {%- include 'product-skipper', product: sortable_products[i] -%}
+
+                    {%- if forloop.index < 6 -%}  
+                    {%- assign pgi_im_iep = 'data-expand="-1"' -%}
+                    {%- include 'product-grid-item', product: sortable_products[i], pgi_im_iep: pgi_im_iep, grid_item_class: grid_item_width,c_clss:'usman' -%}
+                    {%- endif -%}
+
+                    {%- if forloop.index > 5 and forloop.index < 11 -%}  
+                    {%- include 'product-grid-item.skeleton' -%}
+                    {%- endif -%}
+
+                    {%- if forloop.index == 11 -%}
+                      {%- break -%}
+                    {%- endif -%}
+
+                  {%- endfor -%}
+
+                {%- else -%}
+
+                  {%- for product in collection.products -%}
+
+                    {%- include 'product-skipper', product: product -%}
+
+                    {%- if forloop.index < 6 -%}  
+                    {%- assign pgi_im_iep = 'data-expand="-1"' -%}
+                    {%- include 'product-grid-item', pgi_im_iep: pgi_im_iep, grid_item_class: grid_item_width,c_clss:'usman1' -%}
+                    {%- endif -%}
+
+                    {%- if forloop.index > 5 and forloop.index < 11 -%}  
+                    {%- include 'product-grid-item.skeleton' -%}
+                    {%- endif -%}
+
+                    {%- if forloop.index == 11 -%}
+                      {%- break -%}
+                    {%- endif -%}
+
+                  {%- endfor -%}
+
+                {%- endif -%}
+
+              {%- else -%}
+
+                {%- comment -%}
+                {%- endcomment -%}
+                {%- if sort_by_qty -%}  
+
+                  {%- assign sortable_products = collection.products -%}
+                  {%- include 'sort-by-qty', products_to_sort: sortable_products -%}
+                  {%- for products_by_qty_index in products_by_qty_indexes -%}
+
+                    {%- assign i = products_by_qty_index | split:'.' | last | abs -%}
+                    {%- include 'product-skipper', product: sortable_products[i] -%}
+
+                    {%- assign pgi_im_iep = blank -%}
+                    {%- include 'product-grid-item', product: sortable_products[i], pgi_im_iep: pgi_im_iep, grid_item_class: grid_item_width,c_clss:'usman2' -%}
+
+                  {%- endfor -%}
+
+                {%- else -%}
+
+                  {%- for product in collection.products -%}
+
+                    {%- include 'product-skipper', product: product -%}
+
+                    {%- assign pgi_im_iep = blank -%}
+                    {%- include 'product-grid-item', pgi_im_iep: pgi_im_iep, grid_item_class: grid_item_width,c_clss:'usman3' -%}
+
+                  {%- endfor -%}
+
+                {%- endif -%}
+
+              {%- endif -%}
+
+            {%- else -%}
+            <p class="col-12 text-center">
+              {{- 'collections.general.no_matches' | t -}}
+            </p>
+            {%- endif -%}
+          </div>
+
+
+          {%- if paginate.pages > 1 -%}
+          <div class="padding">{%- include 'pagination-page' -%}</div>
+          {%- endif -%}
+
+        </div>
+        {%- endpaginate -%}   
+        
+
+      </div>
+      
+      {%- comment -%}
+      {%- section 'recently-viewed-products' -%}
+      {%- endcomment -%}
+      <div class="lazybit lazybit-load" data-lazy-url="{{ shop.url }}?view=recently-viewed-products"></div>
+      
+      {%- comment -%}
+      {%- section 'collection--articles' -%}
+      {%- endcomment -%}
+      <div class="lazybit lazybit-load" data-lazy-url="{{ request.path }}?view=related-articles"></div>
+      
+    </div>   
+  </div>
+</div>

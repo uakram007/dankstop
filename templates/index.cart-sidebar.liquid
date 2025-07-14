@@ -1,0 +1,503 @@
+{%- layout none -%}
+{%- comment -%}
+<div id="dropdown-cart"> 
+{%- endcomment -%}
+  <div class="cart-title">
+    <a href="javascript:void(0)" title="{{ 'cart.general.close_cart' | t }}" class="close-cart close">
+      {% include 'icon-close' %}
+      <span {% if settings.enable_multilang %}data-translate="cart.general.close_cart"{% endif %}>
+        {{ 'cart.general.close_cart' | t }}
+      </span>
+    </a>
+    
+    <h5 {% if settings.enable_multilang %}data-translate="cart.general.shopping_cart"{% endif %}>
+      {{ 'cart.general.shopping_cart' | t }}:
+    </h5>
+  </div>
+  
+  <div class="no-items">
+    <p class="cart_empty" {% if settings.enable_multilang %}data-translate="cart.general.empty"{% endif %} >
+      {{ 'cart.general.empty' | t }}
+    </p>
+    <div class="text-continue">
+      <a class="btn btn-continue" href="/collections/all" {% if settings.enable_multilang %}data-translate="cart.ajax_cart.continue_shopping"{% endif %}>
+        {{ 'cart.ajax_cart.continue_shopping' | t }}
+      </a>
+    </div>
+  </div>
+
+  <div class="has-items">
+    <ol class="mini-products-list hereAjax">  
+      {% for item in cart.items %}
+      
+      {%- if item.properties != blank and item.properties._bundle_addon != blank -%}
+      
+      	{%- assign bundle_id = item.properties._bundle_addon -%}
+      
+        {%- if item.product.handle == settings.warranty__product -%}
+          {%- assign warrantied_product = all_products[item.properties._item_name] -%}
+          {%- assign warrantied_variant_id = item.properties._item_id | abs -%}
+          {%- assign warrantied_product_id = warrantied_product.id -%}
+          {%- assign warrantied_product_url = warrantied_product.url -%}
+          {%- assign warrantied_product_title = warrantied_product.title -%}
+          {%- for warrantied_variant in warrantied_product.variants -%}
+            {%- if warrantied_variant.id == warrantied_variant_id -%}
+            {%- assign warrantied_product_title = warrantied_product_title | append: " - " | append: warrantied_variant.title -%}
+            {%- continue -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          <li class="item" data-bundle-addon="{{ bundle_id }}" id="cart-item-{{item.id | append: "-" | append: forloop.index }}">
+            <a href="{{item.url}}" class="product-image">
+              <img class="lazyload" src="{{ lazyload_placeholder }}" data-src="{{ item.image | product_img_url: '160x' }}" alt="{{item.title}}">
+            </a>
+
+            <div class="product-details">
+              <a href="javascript:void(0)" title="{{ 'cart.general.remove' | t }}" class="btn-remove">
+                {% include 'icon-close' %}
+              </a>
+
+              <a class="product-name" href="{{item.url}}">
+                {% include 'multilang' with item.product.title %}
+              </a>
+
+              <div class="option">
+                For <small><a href="{{ warrantied_product_url }}" title="{{ warrantied_product_title }}" target="_blank" rel="noopener">{{ warrantied_product_title }}</a></small>
+              </div>
+
+              <div class="cart-collateral">
+                <span class="price">
+                  {{ item.quantity | times: item.price | money}}
+                </span>
+              </div>
+            </div>
+          </li>
+      
+        {%- else -%}
+     
+          <li class="item" data-bundle-addon="{{ bundle_id }}" id="cart-item-{{item.id}}">
+            <a href="{{item.url}}" class="product-image">
+              <img class="lazyload" src="{{ lazyload_placeholder }}" data-src="{{ item.image | product_img_url: '160x' }}" alt="{{item.title}}">
+            </a>
+
+            <div class="product-details">
+              <a href="javascript:void(0)" title="{{ 'cart.general.remove' | t }}" class="btn-remove">
+                {% include 'icon-close' %}
+              </a>
+
+              <a class="product-name" href="{{item.url}}">
+                {% include 'multilang' with item.product.title %}
+              </a>
+
+              <div class="option">
+                {% if item.product.variants.size != 0 %}
+                {% unless item.variant.title contains 'Default' %}
+                <small>{{ item.variant.title }}</small>
+                {% endunless %}
+                {% endif %}
+              </div>
+
+              <div class="cart-collateral">
+                <span class="qtt">
+                  {{item.quantity}} X
+                </span>
+                <span class="price">
+                  {{item.price | money}}
+                </span>
+              </div>
+            </div>
+          </li>
+
+        {%- endif -%}
+      
+      {%- elsif item.properties != blank and item.properties._bundle_id != blank -%}
+     
+      	{%- assign bundle_id = item.properties._bundle_id -%}
+        <li class="item" data-bundle-addon="{{ bundle_id }}" id="cart-item-{{item.id}}">
+          <a href="{{item.url}}" class="product-image">
+            <img class="lazyload" src="{{ lazyload_placeholder }}" data-src="{{ item.image | product_img_url: '160x' }}" alt="{{item.title}}">
+          </a>
+
+          <div class="product-details">
+            <a href="javascript:void(0)" title="{{ 'cart.general.remove' | t }}" class="btn-remove">
+              {% include 'icon-close' %}
+            </a>
+
+            <a class="product-name" href="{{item.url}}">
+              {% include 'multilang' with item.product.title %}
+            </a>
+
+            <div class="option">
+              {% if item.product.variants.size != 0 %}
+              {% unless item.variant.title contains 'Default' %}
+              <small>{{ item.variant.title }}</small>
+              {% endunless %}
+              {% endif %}
+            </div>
+
+            <div class="cart-collateral">
+              <span class="qtt">
+                {{item.quantity}} X
+              </span>
+              <span class="price">
+                {{item.price | money}}
+              </span>
+            </div>
+          </div>
+        </li>
+
+      {%- else -%}
+
+        <li class="item" id="cart-item-{{item.id}}" data-product-id="{{item.id}}">
+          <a href="{{item.url}}" class="product-image">
+            <img class="lazyload" src="{{ lazyload_placeholder }}" data-src="{{ item.image | product_img_url: '160x' }}" alt="{{item.title}}">
+          </a>
+
+          <div class="product-details">
+            <a href="javascript:void(0)" title="{{ 'cart.general.remove' | t }}" class="btn-remove">
+              {% include 'icon-close' %}
+            </a>
+
+            <a class="product-name" href="{{item.url}}">
+              {% include 'multilang' with item.product.title %}
+            </a>
+
+            <div class="option">
+              {% if item.product.variants.size != 0 %}
+              {% unless item.variant.title contains 'Default' %}
+              <small>{{ item.variant.title }}</small>
+              {% endunless %}
+              {% endif %}
+            </div>
+
+            <div class="cart-collateral">
+              <span class="qtt">
+                {{item.quantity}} X
+              </span>
+              <span class="price">
+                {% if item.id == settings.elite_product.selected_or_first_available_variant.id %}
+                  {{ item.price | money  | replace: '$', '<span class="dollar">$</span>' | replace: '.', '<span class="cents">.' | append: '</span>' }}
+                {% else %}
+                  {% if customer and customer.tags contains 'elite_member' %}
+                    {{ item.variant.metafields.custom.elite_price | default: 0 | times: 100 | money | replace: '$', '<span class="dollar">$</span>' | replace: '.', '<span class="cents">.' | append: '</span>' }}
+                  {% elsif customer and customer.tags contains 'club_member'%}
+                    {{ item.variant.metafields.custom.member_price | default: 0 | times: 100 | money | replace: '$', '<span class="dollar">$</span>' | replace: '.', '<span class="cents">.' | append: '</span>' }}
+                  {% else %}
+                    {{ item.price  | money | replace: '$', '<span class="dollar">$</span>' | replace: '.', '<span class="cents">.' | append: '</span>' }}
+                  {% endif %}
+                {% endif %}
+              </span>
+            </div>
+          </div>
+        </li>
+
+      {%- endif -%}
+      
+      {% endfor %}
+    </ol>
+    {% assign elite_product = settings.elite_product %}
+
+    {% for celite in cart.items %}
+      {% if celite.product.id == settings.elite_product.id %}
+        {% assign elite = true %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+
+    <div class="summary {{ elite_product.id }}">                
+      <div class="total">
+        <span class="label">
+          <span {% if settings.enable_multilang %}data-translate="cart.label.total"{% endif %}>
+            {{ 'cart.label.total' | t }}:
+          </span>
+        </span>
+        <span class="price " style="display:inline-block;">
+          
+          {% unless customer %}
+              {{cart.total_price | money}}
+            {% endunless %}
+
+            {% if customer and customer.tags contains 'club_member' %}
+              {%  liquid  
+                  assign total_price = 0
+                  for item in cart.items
+                      if elite == true
+                        assign item_price = item.variant.metafields.custom.elite_price | default: 0 | times: 100  | times: item.quantity
+                      else
+                        assign item_price = item.variant.metafields.custom.member_price | default: 0 | times: 100  | times: item.quantity
+                      endif
+                       
+                      assign total_price = total_price | plus: item_price
+                  endfor
+                  
+              %}
+              {{ total_price |  money }}
+            {% endif %}
+
+            {% if customer and customer.tags contains 'elite_member' %}
+              {%  liquid  
+                  assign total_price = 0
+                  for item in cart.items
+                      assign item_price = item.variant.metafields.custom.elite_price | default: 0 | times: 100  | times: item.quantity 
+                      assign total_price = total_price | plus: item_price
+                  endfor
+                   
+              %}
+              {{ total_price |  money }}
+            {% endif %}
+        </span> 
+      </div>
+      
+        {%- comment -%}
+          Payment plan - ViaBill or Sezzle
+        {%- endcomment -%}
+        <span style="display:none">{{ cart.total_price }}</span>
+        {%- include 'payment-plan', price_for_plan: cart.total_price -%}
+
+    </div>
+
+    <div class="actions">
+      
+      {{ bold_ro_cart }}
+      
+      <button class="btn btn-checkout" onclick="window.location='/checkout'" {% if settings.enable_multilang %}data-translate="cart.general.checkout"{% endif %}>
+        {{ 'cart.general.checkout' | t }}
+      </button>
+      <a class="btn btn-view-cart" href="/cart" {% if settings.enable_multilang %}data-translate="cart.general.view_cart"{% endif %}>
+        {{ 'cart.general.view_cart' | t }}
+      </a>      
+    </div>
+  </div>
+
+  {% include 'product-delivery-estimate' %}  
+
+{%- comment -%}
+</div>
+{%- endcomment -%}
+<script>
+  $("#dropdown-cart .close-cart").length && $(document).off("click.closeSidebarCart", "#dropdown-cart .close-cart").on("click.closeSidebarCart", "#dropdown-cart .close-cart", function(e) {
+    e.preventDefault(), e.stopPropagation(), $("html").removeClass("cart-show")
+  });
+  
+{%- comment -%}
+{%- endcomment -%}
+  
+  if (typeof(hsjs.Shopify) === "undefined") { hsjs.Shopify = window.Shopify || {}; }
+  /*
+   * Shopify - remove item by line number
+   */
+  if ( ! hsjs.Shopify.removeItemByLineNumber ) {
+    hsjs.Shopify.removeItemByLineNumber = function(line, callback) {
+      var params = {
+        type: "POST",
+        url: "/cart/change.js",
+        data:  "quantity=0&line=" + line,
+        dataType: "json",
+        success: function(cart) {
+          if ((typeof callback) === "function") {
+            callback(cart);
+          }
+          else {
+            hsjs.Shopify.onCartUpdate(cart);
+          }
+        },
+        error: function(XMLHttpRequest, textStatus) {
+          hsjs.Shopify.onError(XMLHttpRequest, textStatus);
+        }
+      };
+      jQuery.ajax(params);
+    };
+  };
+  
+  
+  var $dropdown_cart = $("#dropdown-cart");
+  var $dropdown_cart_list = $dropdown_cart.find(".mini-products-list");
+  var ella_dropdown_cart = {
+    closeTranslate: function(t, e) {
+      $(t).length && $(document).off("click.closeCustomer", t).on("click.closeCustomer", t, function(t) {
+        t.preventDefault(), t.stopPropagation(), $("html").removeClass(e)
+      })
+    },
+    dropdownCart: function() {
+      this.closeDropdownCartTranslate(), this.initDropdownCartMobile(), this.initDropdownCartDesktop(), this.checkItemsInDropdownCart(), this.removeItemDropdownCart()
+    },
+    appendDropdownCartForMobile: function() {
+      var t = $(".wrapper-top-cart");
+      window.innerWidth < 1200 ? $dropdown_cart.appendTo(l) : $dropdown_cart.appendTo(t)
+    },
+    closeDropdownCartTranslate: function() {
+      ella_dropdown_cart.closeTranslate("#dropdown-cart .close-cart", "cart-show")
+    },
+    initDropdownCartMobile: function() {
+      $(".header-mb, [data-cart-header-parallax], [data-cart-header-02], [data-cart-header-04], [data-cart-header-supermarket]").find("[data-cart-toggle]").off("click.initDropdownCartMobile").on("click.initDropdownCartMobile", function(t) {
+        t.preventDefault(), t.stopPropagation(), $("html").toggleClass("cart-show")
+      })
+    },
+    initDropdownCartDesktop: function() {
+      $(".site-header").hasClass("header-default") && (ella_dropdown_cart.appendDropdownCartForMobile(), ella_dropdown_cart.initDropdownCartForHeaderDefault())
+    },
+    addEventShowOptions: function() {
+      var t = "[data-show-options]";
+      $(document).off("click.showOptions", t).on("click.showOptions", t, function(t) {
+        t.preventDefault(), t.stopPropagation(), $("html").toggleClass("options-show")
+      }), ella_dropdown_cart.closeTranslate(".lang-currency-groups .close-option", "options-show")
+    },
+    initDropdownCartForHeaderDefault: function() {
+      var e = $(".wrapper-top-cart"),
+          t = e.find("[data-cart-toggle]");
+      t.length && t.is(":visible") ? "click" == window.dropdowncart_type ? t.off("click.toogleDropdownCart").on("click.toogleDropdownCart", function(t) {
+        t.preventDefault(), t.stopPropagation(), e.toggleClass("is-open"), $dropdown_cart.slideToggle()
+      }) : (t.hover(function() {
+        var t = $("#dropdown-customer");
+        t.is(":visible") && t.hide(), e.hasClass("is-open") || (e.addClass("is-open"), $dropdown_cart.slideDown())
+      }), e.mouseleave(function() {
+        e.hasClass("is-open") && (e.removeClass("is-open"), $dropdown_cart.slideUp())
+      })) : $dropdown_cart.css("display", "")
+    },
+    checkItemsInDropdownCart: function() {
+      var t = $dropdown_cart.find(".no-items"),
+          e = $dropdown_cart.find(".has-items");
+      $dropdown_cart_list.children().length ? (e.show(), t.hide()) : (e.hide(), t.show())
+    },
+    removeItemDropdownCart: function(t) {
+      $dropdown_cart.find(".btn-remove").off("click.removeCartItem").on("click.removeCartItem", function(t) {
+        t.preventDefault(), t.stopPropagation();
+
+        var $clicked_remove_btn = $(this);
+        var parent_line_item_index = $clicked_remove_btn.parents(".item").index() + 1;
+        var line_item_index = $clicked_remove_btn.parents(".item").index() + 1;
+
+        function ellaUpdateDropdownCart(cart){
+          hsjs.ajax.hideLoading();
+          ella_dropdown_cart.doUpdateDropdownCart(cart);
+        }
+
+        function removeMainItem(parent_line_item_index){
+          hsjs.Shopify.removeItemByLineNumber(parent_line_item_index, function(t) {
+            ellaUpdateDropdownCart(t);
+          });
+        }
+
+
+        function bundleRemover($clicked_remove_btn){
+          var $bundle_parent_el = $clicked_remove_btn.closest("[data-product-id]");
+          var bundle_parent_id = $bundle_parent_el.attr("data-bundle-id");
+          var bundle_parent_item_index = $bundle_parent_el.index() + 1;
+
+          if (bundle_parent_id != undefined && bundle_parent_id != "") {
+            hsjs.ajax.showLoading()
+            var bundle_id = bundle_parent_id;
+            var $cart_list = $clicked_remove_btn.closest(".mini-products-list");
+            var $bundle_items = $cart_list.find("[data-bundle-addon='" + bundle_id + "']");
+
+            if ($bundle_items.length > 0) {
+              hsjs.Shopify.productQueue = [];
+
+              $bundle_items.each(function(i,e) {
+
+                var $bundle_line_item = $(this);
+                var bundle_line_item_index = $bundle_line_item.index() + 1;
+
+                hsjs.Shopify.productQueue.unshift( bundle_line_item_index );
+
+                if(i == ($bundle_items.length-1)) {
+                  hsjs.Shopify.processProductQueue = function() {
+                    // If we still have requests in the queue, let's process the next one.
+                    if (hsjs.Shopify.productQueue.length) {
+                      var queueRequest = hsjs.Shopify.productQueue.shift();
+                      hsjs.Shopify.removeItemByLineNumber(queueRequest, function(t) {
+                        hsjs.Shopify.processProductQueue();
+                      });
+                    }
+                    else {
+                      removeMainItem(parent_line_item_index);
+                    }
+                  };
+                  hsjs.Shopify.processProductQueue();
+                }
+              });
+
+            }
+            else {
+              removeMainItem(parent_line_item_index);
+            }
+          }
+          else {
+            removeMainItem(parent_line_item_index);
+          }
+        }
+        bundleRemover($clicked_remove_btn);
+
+      })
+    },
+    updateDropdownCart: function() {
+      Shopify.getCart(function(t) {
+        ella_dropdown_cart.doUpdateDropdownCart(t)
+      })
+    },
+    doUpdateDropdownCart: function(t) {
+      var item_count = function(t){
+        var returned_count = 0;
+        for (var e = 0; e < t.items.length; e++) {
+          if (t.items[e].handle !== "pieceprotect"){
+            returned_count = returned_count + t.items[e].quantity;
+          }
+        }
+        return returned_count;
+      };
+      if ($("[data-cart-count]").text(item_count(t)), $dropdown_cart.find(".summary .price").html(Shopify.formatMoney(t.total_price, window.money_format)), $dropdown_cart_list.html("")) {
+        if (t.item_count > 0){
+          $("[data-cart-count]").removeClass("hidden").attr("hidden", false);
+
+          for (var e = 0; e < t.items.length; e++) {
+            var line_item = t.items[e];
+            if (line_item.properties && line_item.properties._bundle_addon){
+              var bundle_id = line_item.properties._bundle_addon;
+              if (line_item.handle == "pieceprotect"){
+                var warranty_price = line_item.price * line_item.quantity;
+                var i = '<li class="item" id="cart-item-{ID}" data-bundle-addon="{BUNDLE_ID}"><a href="{URL}" title="{TITLE}" class="product-image"><img src="{IMAGE}" alt="{TITLE}"></a><div class="product-details"><a href="javascript:void(0)" title="Remove This Item" class="btn-remove"><svg aria-hidden="true" data-prefix="fal" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-times fa-w-10 fa-2x"><path fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z" class=""></path></svg></a><a class="product-name" href="{URL}">{TITLE}</a><div class="option"><small>{VARIANT}</small></div><div class="cart-collateral"><span class="price">{PRICE}</span></div></div></li>';
+                i = (i = (i = (i = (i = (i = (i = i.replace(/\{ID\}/g, line_item.id)).replace(/\{URL\}/g, line_item.url))
+//                                     .replace(/\{TITLE\}/g, ella_dropdown_cart.translateText(line_item.product_title)))
+                               .replace(/\{TITLE\}/g, line_item.product_title))
+                          .replace(/\{VARIANT\}/g, line_item.variant_title || ""))).replace(/\{IMAGE\}/g, Shopify.resizeImage(line_item.image, "160x"))).replace(/\{PRICE\}/g, Shopify.formatMoney(warranty_price, window.money_format)).replace(/\{BUNDLE_ID\}/g, bundle_id), $dropdown_cart_list.append(i)
+              }
+              else {
+                var i = '<li class="item" id="cart-item-{ID}" data-bundle-addon="{BUNDLE_ID}" data-product-id="{ID}"><a href="{URL}" title="{TITLE}" class="product-image"><img src="{IMAGE}" alt="{TITLE}"></a><div class="product-details"><a href="javascript:void(0)" title="Remove This Item" class="btn-remove"><svg aria-hidden="true" data-prefix="fal" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-times fa-w-10 fa-2x"><path fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z" class=""></path></svg></a><a class="product-name" href="{URL}">{TITLE}</a><div class="option"><small>{VARIANT}</small></div><div class="cart-collateral"><span class="qtt">{QUANTITY} X </span><span class="price">{PRICE}</span></div></div></li>';
+                i = (i = (i = (i = (i = (i = (i = i.replace(/\{ID\}/g, line_item.id)).replace(/\{URL\}/g, line_item.url))
+//                                     .replace(/\{TITLE\}/g, ella_dropdown_cart.translateText(line_item.product_title)))
+                               .replace(/\{TITLE\}/g, line_item.product_title))
+                          .replace(/\{VARIANT\}/g, line_item.variant_title || "")).replace(/\{QUANTITY\}/g, line_item.quantity)).replace(/\{IMAGE\}/g, Shopify.resizeImage(line_item.image, "160x"))).replace(/\{PRICE\}/g, Shopify.formatMoney(line_item.price, window.money_format)).replace(/\{BUNDLE_ID\}/g, bundle_id), $dropdown_cart_list.append(i)
+              }
+            }
+            else if (line_item.properties && line_item.properties._bundle_id){
+              var bundle_id = line_item.properties._bundle_id;
+              var i = '<li class="item" id="cart-item-{ID}" data-bundle-id="{BUNDLE_ID}" data-product-id="{ID}"><a href="{URL}" title="{TITLE}" class="product-image"><img src="{IMAGE}" alt="{TITLE}"></a><div class="product-details"><a href="javascript:void(0)" title="Remove This Item" class="btn-remove"><svg aria-hidden="true" data-prefix="fal" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-times fa-w-10 fa-2x"><path fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z" class=""></path></svg></a><a class="product-name" href="{URL}">{TITLE}</a><div class="option"><small>{VARIANT}</small></div><div class="cart-collateral"><span class="qtt">{QUANTITY} X </span><span class="price">{PRICE}</span></div></div></li>';
+              i = (i = (i = (i = (i = (i = (i = i.replace(/\{ID\}/g, line_item.id)).replace(/\{URL\}/g, line_item.url))
+//                                   .replace(/\{TITLE\}/g, ella_dropdown_cart.translateText(line_item.product_title)))
+                             .replace(/\{TITLE\}/g, line_item.product_title))
+                        .replace(/\{VARIANT\}/g, line_item.variant_title || "")).replace(/\{QUANTITY\}/g, line_item.quantity)).replace(/\{IMAGE\}/g, Shopify.resizeImage(line_item.image, "160x"))).replace(/\{PRICE\}/g, Shopify.formatMoney(line_item.price, window.money_format)).replace(/\{BUNDLE_ID\}/g, bundle_id), $dropdown_cart_list.append(i)
+            }
+            else {
+              var i = '<li class="item" id="cart-item-{ID}" data-product-id="{ID}"><a href="{URL}" title="{TITLE}" class="product-image"><img src="{IMAGE}" alt="{TITLE}"></a><div class="product-details"><a href="javascript:void(0)" title="Remove This Item" class="btn-remove"><svg aria-hidden="true" data-prefix="fal" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-times fa-w-10 fa-2x"><path fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z" class=""></path></svg></a><a class="product-name" href="{URL}">{TITLE}</a><div class="option"><small>{VARIANT}</small></div><div class="cart-collateral"><span class="qtt">{QUANTITY} X </span><span class="price">{PRICE}</span></div></div></li>';
+              i = (i = (i = (i = (i = (i = (i = i.replace(/\{ID\}/g, line_item.id)).replace(/\{URL\}/g, line_item.url))
+//                                   .replace(/\{TITLE\}/g, ella_dropdown_cart.translateText(line_item.product_title)))
+                             .replace(/\{TITLE\}/g, line_item.product_title))
+                        .replace(/\{VARIANT\}/g, line_item.variant_title || "")).replace(/\{QUANTITY\}/g, line_item.quantity)).replace(/\{IMAGE\}/g, Shopify.resizeImage(line_item.image, "160x"))).replace(/\{PRICE\}/g, Shopify.formatMoney(line_item.price, window.money_format)), $dropdown_cart_list.append(i)
+            }
+          }
+          ella_dropdown_cart.removeItemDropdownCart(t)
+          
+//           , ella_dropdown_cart.checkNeedToConvertCurrency() && Currency.convertAll(window.shop_currency, $("#currencies .active").attr("data-currency"), "#dropdown-cart span.money", "money_format")
+          
+        }
+        else {
+          $("[data-cart-count]").addClass("hidden").attr("hidden", true);
+        }
+      }
+      ella_dropdown_cart.checkItemsInDropdownCart()
+    }
+  };
+  
+  ella_dropdown_cart.dropdownCart();
+
+</script>

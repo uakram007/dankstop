@@ -1,0 +1,29 @@
+ 
+
+{% assign product_to_check = product %}
+ <span style="display: none;" >{{ product_to_check1.variants |  json }}</span> 
+<div class="cc-market-price--wrapper  {% if product_to_check.metafields.custom.member_price == blank or product_to_check.metafields.custom.member_price == 0 %} no_member_price {% endif %} {% if product_to_check.metafields.custom.elite_price == blank or product_to_check.metafields.custom.elite_price == 0 %} no_elite_price {% endif %}">
+  <div class="cc-market-price">
+    <span class="price-label">Market</span>
+    <span class="price-value">{{ product.price | money }}</span>
+  </div>
+  
+  
+  {% if product.variants.size > 1 %}
+    {% assign product_to_check = product.variants.first %}
+  {% endif %}
+  
+  {% if product_to_check.metafields.custom.member_price != blank and product_to_check.metafields.custom.member_price > 0 %}
+    <div class="cc-market-price member">
+      <span class="price-label">Member</span>
+      <span class="price-value">{{ product_to_check.metafields.custom.member_price | times: 100 | money }}</span>
+    </div>
+  {% endif %}
+  
+  {% if product_to_check.metafields.custom.elite_price != blank and product_to_check.metafields.custom.elite_price > 0 %}
+    <div class="cc-market-price elite">
+      <span class="price-label">Elite</span>
+      <span class="price-value">{{ product_to_check.metafields.custom.elite_price | times: 100 | money }}</span>
+    </div>
+  {% endif %}
+</div>

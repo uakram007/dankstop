@@ -1,0 +1,45 @@
+{%- layout 'supernav' -%}
+{%- comment -%}
+{%- include 'bold-ro' -%}
+{%- endcomment -%}
+
+{%- if settings.product_layout == "default" -%} 
+
+{%- include 'product-default' -%}
+
+{%- elsif settings.product_layout == "grouped" -%}
+
+{%- include 'product-grouped' -%}
+
+{%- elsif settings.product_layout == "slider" -%}
+
+{%- include 'product-slider' -%}
+
+{%- elsif settings.product_layout == "gallery" -%}
+
+{%- include 'product-gallery' -%}
+
+{%- elsif settings.product_layout == "full_with" -%}
+
+{%- include 'product-full-width' -%}
+
+{%- endif -%}
+
+
+{%- include 'product-schema-json-ld'  -%}
+
+
+{%- comment -%}
+{%- if template contains 'product' -%}
+<div class="footbar-fixed footbar-fixed-product">
+  {%- comment -%}
+  {%- section 'someone-purchased' -%}
+  {%- section 'GDPR-modal' -%}
+  {%- endcomment -%}
+
+  {%- if settings.display_sticky -%} 
+  {%- include 'sticky-add-to-cart' -%}
+  {%- endif -%}
+</div>
+{%- endif -%}
+{%- endcomment -%}

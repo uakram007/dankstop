@@ -1,0 +1,519 @@
+{%- include 'lazyload-placeholder' -%} 
+{%- assign lazyload_pgi = settings.enable_lazy_load -%}
+
+{%- comment -%}
+  PGI-Variant - Variant Grid Item
+{%- endcomment -%}
+{%- assign selected_variant_id = variant-grid-item | abs | times: 1 -%}
+{%- assign variant_to_display = product.variants[0] -%}
+{%- for product_variant in product.variants -%}
+  {%- if product_variant.id == selected_variant_id -%}
+    {%- assign variant_to_display = product_variant -%}
+  {%- endif -%}
+{%- endfor -%}
+
+
+
+{%- comment -%}
+	Set product variable basics
+{%- endcomment -%}
+{%- assign shop_url = shop.url -%}
+{%- unless product-grid-item -%}
+  {%- assign pgi_product = product -%}
+{%- else -%}
+  {%- assign pgi_product = product-grid-item -%}
+{%- endunless -%}
+{%- assign pgi_product_id = pgi_product.id -%}
+{%- assign pgi_product_handle = pgi_product.handle -%}
+{%- assign pgi_product_url = pgi_product.url -%}
+
+
+
+{%- comment -%}
+  Variant Availibility
+{%- endcomment -%}
+{%- if variant_to_display.inventory_management == "shopify" -%}
+  {%- assign pgi_product_available = variant_to_display.available -%}
+{%- else -%}
+  {%- assign pgi_product_available = pgi_product.available -%}
+{%- endif -%}
+{%- assign pgi_product_options = pgi_product.options -%}
+{%- assign pgi_product_variants = pgi_product.variants -%}
+{%- assign pgi_product_tags = pgi_product.tags -%}
+{%- assign pgi_product_collections = pgi_product.collections -%}
+{%- assign pgi_product_images = pgi_product.images -%}
+
+{%- comment -%}
+  Variant Image
+{%- endcomment -%}
+{%- if variant_to_display.featured_image and variant_to_display.featured_image.src -%}
+  {%- assign pgi_product_featured_image = variant_to_display.featured_image -%}
+{%- else -%}
+  {%- assign pgi_product_featured_image = pgi_product.featured_image -%}
+{%- endif -%}
+{%- assign pgi_product_featured_image_src = pgi_product_featured_image.src -%}
+{%- assign pgi_product_featured_image_alt = pgi_product_featured_image.alt -%}
+
+
+
+{%- comment -%}
+  Variant Title
+{%- endcomment -%}
+{%- if pgi_product.variants.size > 1 and variant_to_display.title != "Default" and variant_to_display.title != "Default Title" -%}
+  {%- assign pgi_product_title = variant_to_display.title | append: " " | append: pgi_product.title -%}
+{%- else -%}
+  {%- assign pgi_product_title = pgi_product.title -%}
+{%- endif -%}
+{%- assign pgi_product_title_excaped = pgi_product_title | escape -%}
+{%- assign pgi_product_vendor = pgi_product.vendor -%}
+{%- assign pgi_product_vendor_handle = pgi_product_vendor | handleize -%}
+{%- assign pgi_product_type = pgi_product.type -%}
+{%- assign pgi_product_description = pgi_product.description -%}
+{%- assign pgi_product_description_no_html = pgi_product_description | strip_html -%}
+{%- assign pgi_product_description_escaped = pgi_product_description | escape -%}
+{%- assign pgi_product_type_handle = pgi_product_type | handleize -%}
+
+
+
+{%- comment -%}
+  Variant Price
+{%- endcomment -%}
+{%- if variant_to_display.price -%}
+  {%- assign pgi_product_price = variant_to_display.price -%}
+  {%- assign product.price = variant_to_display.price -%}
+
+{%- else -%}
+  {%- assign pgi_product_price = pgi_product.price -%}
+{%- endif -%}
+{%- assign pgi_product_price_min = pgi_product.price_min -%}
+{%- assign pgi_product_price_max = pgi_product.price_max -%}
+
+
+
+{%- comment -%}
+  Variant Compare-at-price
+{%- endcomment -%}
+{%- if variant_to_display.compare_at_price -%}
+  {%- assign pgi_compare_at_price = variant_to_display.compare_at_price -%}
+{%- else -%}
+  {%- assign pgi_compare_at_price = pgi_product.compare_at_price -%}
+{%- endif -%}
+{%- assign pgi_compare_at_price_min = pgi_product.compare_at_price_min -%}
+{%- assign pgi_compare_at_price_max = pgi_product.compare_at_price_max -%}
+{%- assign pgi_product_price_varies = pgi_product.price_varies -%}
+{%- assign pgi_compare_at_price_varies = pgi_product.compare_at_price_varies -%}
+{%- assign pgi_selected_or_first_available_variant = pgi_product.selected_or_first_available_variant -%}
+{%- assign pgi_selected_or_first_available_variant_featured_image = pgi_selected_or_first_available_variant.featured_image -%}
+{%- assign pgi_link_title = 'products.pgi.link_title' | t: product_title: pgi_product_title | escape -%}
+
+
+
+
+{% assign on_sale = false %}
+{% if product.compare_at_price_min > product.price_min %}
+  {% assign on_sale = true %}
+{% endif %}
+
+{% assign sold_out = true %}
+{% if product.available  %}
+  {% assign sold_out = false %}
+{% endif %}
+
+
+{% assign is_subscribable = false %}
+{% assign subscribable_tag = settings.subscribable_tag %}
+{% assign subscribable_collection = settings.subscribable_collection %}
+{% if product.tags contains subscribable_tag %}
+  {% assign is_subscribable = true %}
+{% else %}
+  {% for collection in product.collections %}
+    {% if collection.handle == subscribable_collection %}
+      {% assign is_subscribable = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+
+<!-- new product -->
+{%- assign custom_label = false -%}
+{%- assign made_in_usa = false -%}
+{%- assign free_gift_tag_start = settings.free_gifts_tag_start -%}
+{%- assign free_gift_tag = false -%}
+
+{%- for tag in product.tags -%}
+  {% assign tag_handle = tag | handle %}
+  {% if tag_handle == 'label' %}
+  {% assign custom_label = true %}
+  {% endif %}
+
+  {%- comment -%}
+    PGI Made In USA sticker
+  {%- endcomment -%}
+  {%- if tag contains 'made in_USA' or tag contains 'made in_usa' -%}
+    {%- assign made_in_usa = true -%}
+  {%- endif -%}
+
+  {%- comment -%}
+    PGI Free Gift Progress
+  {%- endcomment -%}
+  {%- if tag contains free_gift_tag_start -%}
+    {%- assign free_gift_tag = tag -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<div class="inner product-item col-6{% if sold_out %} sold-out{% endif %}{% if on_sale %} on-sale{% endif %}" data-product-id="product-{{ product.id }}">
+  <div class="inner-top">
+    <div class="product-top">
+      <div class="product-image{% if product.images.size > 1 and settings.image_swap %} image-swap{% endif %}">
+        <a href="{{ product.url | within: collection }}" class="product-grid-image" data-collections-related="/collections/{{collection.handle}}?view=related">
+          {%- assign pgi_width = '162' -%}
+          {%- assign pgi_width_x = pgi_width | append: 'x' -%}
+          
+          {%- assign image_quality_multiplier = 1 -%}
+          {%- if settings.image_quality_multiplier != blank -%}
+          {%- assign image_quality_multiplier = settings.image_quality_multiplier | abs | times: 1 -%}
+          {%- endif -%}
+          {%- assign pgi_img_width = pgi_width | times: image_quality_multiplier -%}
+          {%- assign pgi_img_width_x = pgi_img_width | append: 'x' -%}
+
+          {%- assign img_pr = product.featured_image.src | product_img_url: pgi_img_width_x -%}
+          {%- assign img_pr_1 = product.featured_image.src | product_img_url: '300x' -%}
+          {%- assign img_pr_2 = product.featured_image.src | product_img_url: '400x' -%}
+          {%- assign img_pr_3 = product.featured_image.src | product_img_url: '800x' -%}
+          
+          {%- assign img_0 = product.images[0].src | product_img_url: pgi_img_width_x -%}
+          {%- assign img_01 = product.images[0].src | product_img_url: '300x' -%}
+          {%- assign img_02 = product.images[0].src | product_img_url: '400x' -%}
+          {%- assign img_03 = product.images[0].src | product_img_url: '800x' -%}
+          
+          {%- assign img_1 = product.images[1].src | product_img_url: pgi_img_width_x -%}
+          {%- assign img_11 = product.images[1].src | product_img_url: '300x' -%}
+          {%- assign img_12 = product.images[1].src | product_img_url: '400x' -%}
+          {%- assign img_13 = product.images[1].src | product_img_url: '800x' -%}
+          
+          {%- comment -%}
+               data-widths="[{{ pgi_img_width }}, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+          {%- endcomment -%}
+          {%- assign img_data_widths = pgi_width -%}
+          {%- for i in (1..10) -%}
+            {%- assign pgi_img_width_multiplied = pgi_width | times: i -%}
+            {%- assign img_data_widths = img_data_widths | append: ', ' | append: pgi_img_width_multiplied -%}
+          {%- endfor -%}
+          
+          {% if product.images.size > 1 and settings.image_swap %}
+          <img 
+               {% if lazyload_pgi %}
+               src="{{ lazyload_logo_placeholder }}"
+               class="images-one lazyload"
+               {%- else -%}
+               src="{{ product.images[0].src | product_img_url: pgi_img_width_x }}" alt="{{ product.images[0].alt | escape }}"
+               class="images-one"
+               {%- endif -%}
+               data-src="{{ img_0 }}"
+               data-srcie="{{ img_01 }}"
+               data-srcief="{{ img_02 }}"
+               data-widths="[{{ img_data_widths }}]"
+               data-aspectratio="{{ product.featured_image.aspect_ratio }}"
+               data-sizes="auto">
+
+          <span class="images-two">
+            <img 
+                 {% if lazyload_pgi %}
+                 src="{{ lazyload_logo_placeholder }}"
+                 class="lazyload"
+                 {%- else -%}
+                 src="{{ product.images[1].src | product_img_url: pgi_img_width_x }}" alt="{{ product.images[1].alt | escape }}"
+                 {%- endif -%}
+                 data-src="{{ img_1 }}"
+                 data-srcie="{{ img_11 }}"
+                 data-srcief="{{ img_12 }}"
+                 data-widths="[{{ img_data_widths }}]"
+                 data-aspectratio="{{ product.featured_image.aspect_ratio }}"
+                 data-sizes="auto">
+
+          </span>	
+          {% else %}
+          <img 
+               {% if lazyload_pgi %}
+               src="{{ lazyload_logo_placeholder }}"
+               class="lazyload"
+               {%- else -%}
+               src="{{ product.featured_image.src | product_img_url: pgi_img_width_x }}" alt="{{ product.featured_image.alt | escape }}"             
+               {%- endif -%}
+               data-src="{{ img_pr }}"
+               data-srcie="{{ img_pr_1 }}"
+               data-srcief="{{ img_pr_2 }}"
+               data-widths="[{{ img_data_widths }}]"
+               data-aspectratio="{{ product.featured_image.aspect_ratio }}"
+               data-sizes="auto">       
+          {% endif %}
+        </a>
+      </div>
+
+      {%- if made_in_usa -%}
+      {%- assign made_in_usa_t_string = 'products.product.made_in_usa' | t -%}
+      <div class="product-label-left">
+        {%- if made_in_usa_t_string == '🇺🇸' -%}
+        <strong class="label made-in-usa-label flag-only" title="Made In the USA! 🇺🇸">
+          <span>{{- made_in_usa_t_string -}}</span>
+        </strong>
+        {%- else -%}
+        <strong class="label made-in-usa-label" title="Made In the USA! 🇺🇸">
+          {{- made_in_usa_t_string -}}
+        </strong>
+        {%- endif -%}
+      </div>
+      {%- endif -%}
+
+      {%- if on_sale or sold_out or custom_label or is_subscribable -%}
+      <div class="product-label">  
+        
+        {% if sold_out %}
+        <strong class="label sold-out-label" {% if settings.enable_multilang %}data-translate="products.product.sold_out"{% endif %}>
+          {{ 'products.product.sold_out' | t }}
+        </strong>
+        <br>
+        {% else %}
+        
+          {% if on_sale %}
+          <strong class="label sale-label" {% if settings.enable_multilang %}data-translate="products.product.sale"{% endif %}>
+            {{ 'products.product.sale' | t }}
+          </strong>
+          <br>
+          {% endif %}
+        
+          {% if is_subscribable %}
+          <strong class="label subscribable-label" {% if settings.enable_multilang %}data-translate="products.product.subscribable"{% endif %}>
+            {{ 'products.product.subscribable' | t }}
+          </strong>
+          <br>
+          {% endif %}
+        
+        {% endif %}
+        
+        
+        {% if custom_label %}
+        <strong class="label custom-label" {% if settings.enable_multilang %}data-translate="products.product.custom_label"{% endif %} >
+          {{ 'products.product.custom_label' | t }}
+        </strong>
+        {% endif %}
+      </div>
+      {%- endif -%}
+      
+      {%- comment -%} Use for productGrid {%- endcomment -%}
+      <div class="product-des abs-center">
+        {% include 'wishlist-product' %}
+
+        {% if settings.display_button %}
+        <div class="action">
+          {% assign variantCount = product.variants | size %}
+          <form action="/cart/add" method="post" class="variants" data-id="product-actions-{{ product.id }}" enctype="multipart/form-data">
+            {% if sold_out %}
+            <button class="btn add-to-cart-btn" type="submit" disabled="disabled" {% if settings.enable_multilang %}data-translate="products.product.unavailable"{% endif %}>
+              {{ 'products.product.unavailable' | t }}
+            </button>
+            {% else %}
+            {% if variantCount > 1 %}
+            <a class="btn" href="{{ product.url }}" title="{{ product.title }}" {% if settings.enable_multilang %}data-translate="products.product.select_options"{% endif %}>
+              {{ 'products.product.select_options' | t }}
+            </a>
+            {% else %}
+            <input type="hidden" name="id" value="{{ product.variants[0].id }}" /> 
+
+            <button data-btn-addToCart class="btn add-to-cart-btn" type="submit" {% if settings.enable_multilang %}data-translate="products.product.add_to_cart"{% endif %}>
+              {{ 'products.product.add_to_cart' | t }}
+            </button>
+            {% endif %}
+            {% endif %}
+          </form>
+        </div>
+        {% endif %}
+
+        {% if settings.display_product_reviews %}
+        <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+        {% endif %}
+      </div>
+        
+      {%- if settings.display_item_size or settings.enable_quick_view -%}
+      <div class="product-des abs-bottom">
+        {% if settings.display_item_size %}
+        {% include 'items-size' %}
+        {% endif %}
+
+        {% if settings.enable_quick_view %}
+        <a class="quickview-button" href="javascript:void(0)" id="{{ product.handle }}" title="{{ 'products.product.quick_view' | t }}" {% if settings.enable_multilang %}data-translate="products.product.quick_view" translate-item="title"{% endif %}>
+          <span {% if settings.enable_multilang %}data-translate="products.product.quick_view"{% endif %}>
+            {{ 'products.product.quick_view' | t }}
+          </span>
+        </a>
+        {% endif %}
+      </div>   
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Use for productGrid {%- endcomment -%}
+    <div class="product-bottom">
+
+      {% if settings.show_vendor %}
+      <div class="product-vendor">
+        {{ product.vendor | link_to_vendor }}
+      </div>
+      {% endif %}
+      
+      <a class="product-title" href="{{ product.url | within: collection }}" title="{{ product.title }}">
+        {% include 'multilang' with product.title %}
+      </a>
+      
+      
+      {%- comment -%}
+        Product Reviews / Stars
+      {%- endcomment -%}
+      {%- include 'product-reviews', reviewed_item: product -%}
+
+      
+      <div class="price-box">
+
+        {% if on_sale %}
+        <div class="price-sale">
+          <span class="old-price">{{ product.compare_at_price_min | money }}</span>
+          <span class="special-price">{% if product.price_varies %}{% include 'varies_from' %}{% endif %}{{ product.price_min | money }}</span>
+        </div>
+        {% else %}
+        <div class="price-regular">
+          <span>{% if product.price_varies %}{% include 'varies_from' %}{% endif %}{{ product.price_min | money }}</span>
+        </div>
+        {% endif %}
+
+        {%- comment -%}
+          Payment plan - ViaBill or Sezzle
+        {%- endcomment -%}
+        {%- include 'product-grid-item-payment-plan' -%}
+
+      </div>
+      
+      {%- comment -%}
+        Product warranty eligibility
+      {%- endcomment -%}
+      {%- include 'product-warranty-eligibility' -%}
+
+
+      {%- comment -%}
+        Item option variants swatch
+      {%- endcomment -%}
+      {% if settings.display_item_swatch %}
+      {% include 'item-swatch' %}
+      {% endif %}
+
+      
+      {%- comment -%}
+        Free Gift System
+      {%- endcomment -%}
+      {%- if free_gift_tag -%}
+        {%- include 'free-gift-progress' -%}
+      {%- endif -%}
+      
+    </div> 
+    
+    {%- if settings.pgi_display_details -%}
+    {%- comment -%} Use for productList {%- endcomment -%}
+    <div class="product-details">
+      {% if settings.show_vendor %}
+      <div class="product-vendor">
+        {{ product.vendor | link_to_vendor }}
+      </div>
+      {% endif %}
+
+      <a class="product-title" href="{{ product.url | within: collection }}" title="{{ product.title }}">
+        {% include 'multilang' with product.title %}
+      </a>
+      
+      {% if settings.display_product_reviews %}
+      <span class="shopify-product-reviews-badge" data-id="{{ product.id }}" style="min-height: 20px; display: block; margin-bottom: 9px;"></span>
+           <div class="yotpo bottomLine" data-product-id="{{ product.id }}"></div>
+
+      {% endif %}
+      
+      <div class="short-description">
+        {% if product.description contains '[countdown]' %}
+        {% assign des = product.description | split:'[/countdown]' | last %}
+        {% else %}
+        {% assign des = product.description %}
+        {% endif %}
+        
+        {% if settings.enable_multilang and des contains '[lang2]' %}
+        <div class="lang1">
+          {{ des | split: '[lang2]' | first | strip_html | truncatewords: 40 }}
+        </div>
+        <div class="lang2">
+          {{ des | split: '[lang2]' | last | strip_html | truncatewords: 40 }}
+        </div>
+        {% else %}
+        <div>
+          {{ des | split: '[lang2]' | first | strip_html | truncatewords: 40 }}
+        </div>
+        {% endif %}
+      </div>
+      
+      <div class="price-box">
+        
+        {% if on_sale %}
+        <div class="price-sale">
+          <span class="old-price">{{ product.compare_at_price_min | money }}</span>
+          <span class="special-price">{% if product.price_varies %}{% include 'varies_from' %}{% endif %}{{ product.price_min | money }}</span>
+        </div>
+        {% else %}
+        <div class="price-regular">
+          <span>{% if product.price_varies %}{% include 'varies_from' %}{% endif %}{{ product.price_min | money }}</span>
+        </div>
+        {% endif %}
+
+        {%- comment -%}
+          Payment plan - ViaBill or Sezzle
+        {%- endcomment -%}
+        {%- include 'product-grid-item-payment-plan' -%}
+
+      </div>
+      
+      
+      {%- comment -%}
+        Product Reviews / Stars
+      {%- endcomment -%}
+      {%- include 'product-reviews', reviewed_item: product -%}
+
+
+      {% if settings.display_item_swatch %}
+      {% include 'item-swatch' %}
+      {% endif %}
+
+      
+      {% if settings.display_button %}
+      <div class="action">
+        {% assign variantCount = product.variants | size %}
+        <form action="/cart/add" method="post" class="variants" data-id="product-actions-{{ product.id }}" enctype="multipart/form-data">
+          {% if sold_out %}
+          <button class="btn add-to-cart-btn" type="submit" disabled="disabled" {% if settings.enable_multilang %}data-translate="products.product.unavailable"{% endif %}>
+            {{ 'products.product.unavailable' | t }}
+          </button>
+          {% else %}
+          {% if variantCount > 1 %}
+          <a class="btn" href="{{ product.url }}" title="{{ product.title }}" {% if settings.enable_multilang %}data-translate="products.product.select_options"{% endif %}>
+            {{ 'products.product.select_options' | t }}
+          </a>
+          {% else %}
+          <input type="hidden" name="id" value="{{ product.variants[0].id }}" /> 
+
+          <button data-btn-addToCart class="btn add-to-cart-btn" type="submit" {% if settings.enable_multilang %}data-translate="products.product.add_to_cart"{% endif %}>
+            {{ 'products.product.add_to_cart' | t }}
+          </button>
+          {% endif %}
+          {% endif %}
+        </form>
+      </div>
+      {% endif %}
+      
+      {% include 'wishlist-product' %}      
+    </div>
+    {%- endif -%}
+  </div>        
+</div>

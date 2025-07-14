@@ -1,0 +1,35 @@
+{%- comment -%}
+  A loop to catch and filter out the different tag categories. //Where?
+  This is mainly for advanced tagging, but will also help us strip
+  out any tag categories from our tags (E.g. remove BRAND_ from BRAND_tag)
+  "Type, Brand, Color, and then the rest. "
+{%- endcomment -%}
+{%- if template contains 'collection' and collection.all_tags.size > 0 -%}
+  {%- assign excluded_category_filters = settings.excluded_category_filters -%}
+  {%- assign pre_categories = '' -%}
+  {%- assign categories = '' -%}
+  {%- assign type_cat_name = '' -%}
+  {%- assign brand_cat_name = '' -%}
+  {%- assign color_cat_name = '' -%}
+  {%- for tag in collection.all_tags -%}
+    {%- if tag contains '_' -%}
+      {%- capture cat_name -%}{{ tag | split: '_' | first }}{%- endcapture -%}
+	  {%- unless excluded_category_filters contains cat_name -%}
+        {%- if pre_categories contains cat_name -%}
+          {%- if cat_name == 'type' -%}
+            {%- assign type_cat_name = cat_name | append: '|' -%}
+          {%- elsif cat_name == 'brand' -%}
+            {%- assign brand_cat_name = cat_name | append: '|' -%}
+          {%- elsif cat_name == 'color' -%}
+            {%- assign color_cat_name = cat_name | append: '|' -%}
+          {%- else -%}
+            {%- capture categories -%}{%- unless categories == blank  -%}{{ categories }}|{%- endunless -%}{{ cat_name }}{%- endcapture -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endunless -%}
+      {%- capture pre_categories -%}{{ pre_categories }}{{ cat_name }}{%- endcapture -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- capture categories -%}{{ type_cat_name }}{{ brand_cat_name }}{{ color_cat_name }}{{ categories }}{%- endcapture -%}
+  {%- assign cat_array = categories | split: '|' | uniq -%}
+{%- endif -%}

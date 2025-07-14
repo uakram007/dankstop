@@ -1,0 +1,427 @@
+{%- comment -%}
+
+  Image Module 
+
+  Takes an image shopify object (or URL), and outputs a processed image URL/src, srcset, or full img tag.
+  -- widths and hegihts
+  -- alt and title
+  -- id and class 
+  -- extra properties (eg, data-fun="yes")
+  -- src, srcset, and sizes
+  -- lazyload, for src, srcset, and sizes
+  -- correct aspect ratio, lightweight, no-call lazyload placeholder
+
+  /*============================================================================
+  (c) Copyright 2014-19 Andre Bulatov LLC / DS Distribution Inc. 
+  Author: Andre Bulatov (@andrebulatov). All Rights Reserved.
+  ==============================================================================*/
+
+  Parameters:
+  - bg_img: whether image-module class will get a image-module-bg class, true or false
+  - im_a: image alt, string
+  - im_t: image title, will use alt if not title provided, string
+  - srcset: srcset, provide a string of up to 5 widths separated by commas, ex: '130,204,220,220,220'
+  - ss_sizes: srcset "sizes" attribute, string of 3 media queries with image widths, separated by commas, ex: '130,204,220'
+  - url: main image url, asset_url or simply {{object}}.src, string
+  - url_only: output image url only, not the full html image module, true or false, default false
+   
+  Examples: 
+  {%- include 'image-module', im_lazy: false, im_src: product.image, im_id: 'img-43', im_dt_ws: '600,810,960' -%}
+  {%- include 'image-module', im_src: item.image, im_iep: 'data-fun="1"', im_id: 'fun-i-2', im_dt_ws: '600,810,960,600,810,960' -%}
+
+
+  srcset="
+    {% include 'imgix' src:feat_img_url w:320 auto:'format' %} 320w,
+    {% include 'imgix' src:feat_img_url w:640 auto:'format' %} 640w,
+    {% include 'imgix' src:feat_img_url w:960 auto:'format' %} 960w,
+    {% include 'imgix' src:feat_img_url w:1280 auto:'format' %} 1280w,
+    {% include 'imgix' src:feat_img_url w:1600 auto:'format' %} 1600w"
+
+  sizes="(max-width: {{ breakpoint_small }}) 130px, (min-width: {{ breakpoint_postSmall }}) and (max-width: {{ breakpoint_medium }}) 130px, (min-width: {{ breakpoint_large }}) 130px, 220px"
+  $small: 480px;
+  $medium: 768px;
+  $large: 769px;
+    'small' '(max-width: #{$small})',
+    'medium' '(min-width: #{$postSmall}) and (max-width: #{$medium})',
+    'medium-down' '(max-width: #{$medium})',
+    'large' '(min-width: #{$large})'
+
+{%- endcomment -%}
+
+
+
+{%- comment -%}
+  Lazyloader Status
+{%- endcomment -%}
+{%- if settings.enable_lazy_load -%}
+{%- unless im_lazy == false -%}
+
+  {%- assign im_lazyload = true -%}
+
+  {%- comment -%}
+    Lazy Loader Placeholder -- im_p
+  {%- unless im_pl -%}
+    {%- if settings.lazyload_placeholder_gif != blank -%}
+      {%- assign im_placeholder = settings.lazyload_placeholder_gif -%}
+      {%- assign im_placeholder_src = im_placeholder | img_url -%}
+    {%- else -%}
+      {%- assign im_placeholder_src = 'lazyload-placeholder.gif' | asset_url -%}
+    {%- endif -%}
+  {%- else -%}
+    {%- assign im_placeholder_src = im_pl -%}
+  {%- endunless -%}
+  {%- endcomment -%}
+
+  {%- assign lazyload_svg_placeholder = "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20${width}%20${height}'%3E%3C/svg%3E" -%} 
+  {%- assign lazyload_svg_placeholder_1 = "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20" -%} 
+  {%- assign lazyload_svg_placeholder_2 = "'%3E%3C/svg%3E" -%} 
+
+{%- endunless -%}
+{%- endif -%}
+
+
+
+
+
+{%- comment -%}
+  Data widths
+{%- endcomment -%}
+{%- if im_dt_ws -%}
+  {%- assign im_data_widths = im_dt_ws -%}
+{%- else -%}
+  {%- assign im_data_widths = '180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048' -%}
+{%- endif -%}
+
+
+
+{%- comment -%}
+  Srcset processing
+{%- endcomment -%}
+{%- assign srcset_widths_array = false -%}
+{%- if srcset_ws -%}
+  {%- assign srcset_widths_array = srcset_ws | split: ',' -%}
+{%- elsif im_data_widths -%}
+  {%- assign srcset_widths_array = im_data_widths | split: ',' -%}
+{%- endif -%}
+
+
+
+{%- comment -%}
+  Image Size
+{%- endcomment -%}
+{%- if size -%}
+  {%- assign im_size = size -%}
+{%- else -%}
+  {%- assign im_size = 'master' -%}
+{%- endif -%}
+
+
+
+{%- comment -%}
+  Set Img url
+  Non-compressed original Shopify served image Src
+  either img_url or asset_url
+{%- if src and src != blank -%}
+  {%- assign im_src = src -%}
+{%- endif -%}
+{%- endcomment -%}
+{%- if im_src and im_src.src != blank -%}
+  {%- assign im_obj = im_src -%}
+  {%- assign im_url = im_src.src | img_url: im_size -%}
+
+  {%- comment -%}
+  {%- assign im_rias_placeholder = im_src.src | img_url: im_size | replace: '.jpg', '_{width}x.jpg' -%}
+  {%- endcomment -%}
+
+{%- else -%}
+  {%- assign external_src = true -%}
+  {%- assign im_url = im_src -%}
+{%- endif -%}
+
+
+
+{%- comment -%}
+  Image Width
+{%- endcomment -%}
+{%- if width -%}
+  {%- assign im_w = width | abs | ceil -%}
+{%- else -%}
+
+  {%- if external_src -%}
+    {%- assign im_w = 137 -%}
+  {%- else -%}
+    {%- assign im_w = im_obj.width -%}
+  {%- endif -%}
+
+{%- endif -%}
+
+
+
+{%- comment -%}
+  Aspect Ratio and Height
+{%- endcomment -%}
+{%- if height -%}
+
+  {%- assign im_h = height -%}
+  {%- assign im_ratio = '1x1' -%}
+
+{%- else -%}
+
+  {%- if ratio -%}
+
+    {%- assign im_ratio = ratio -%}
+    {%- assign ratio_w = ratio | split: 'x' | first | abs -%}
+    {%- assign ratio_h = ratio | split: 'x' | last | abs -%}
+    {%- assign im_h = im_w | divided_by: ratio_w | times: ratio_h | ceil -%}
+
+  {%- else -%}
+
+    {%- assign im_ratio = '1x1' -%}
+
+    {%- if external_src -%}
+      {%- assign im_h = 137 -%}
+    {%- else -%}
+      {%- assign scale_factor = im_obj.width | divided_by: im_w | round: 5 -%}
+      {%- assign im_h = im_obj.height | divided_by: scale_factor -%}
+    {%- endif -%}
+
+  {%- endif -%}
+
+{%- endif -%}
+
+
+
+{%- if im_ratio -%}
+
+  {%- assign im_ratio = im_ratio -%}
+
+{%- endif -%}
+
+
+
+{%- assign im_srcset = false -%}
+{%- if srcset_widths_array -%}
+  {%- for srcset_width in srcset_widths_array -%}
+    {%- assign srcset_w = srcset_width | strip -%}
+    {%- assign shopify_img_w = srcset_w | append: 'x' -%}
+    {%- assign im_srcset_string = im_obj.src | img_url: shopify_img_w -%}
+    {%- if forloop.first -%}
+      {%- assign im_srcset = im_srcset_string | append: ' ' | append: srcset_w | append: "w" -%}
+    {%- else -%}
+      {%- assign im_srcset = im_srcset | append: im_srcset_string | append: ' ' | append: srcset_w | append: "w" -%}
+    {%- endif -%}
+    {%- unless forloop.last -%}
+      {%- assign im_srcset = im_srcset | append: ', ' -%}
+    {%- endunless -%}
+  {%- endfor -%}
+{%- endif -%}
+
+
+
+{%- assign breakpoint_small = '480px' -%}
+{%- assign breakpoint_postSmall = '481px' -%}
+{%- assign breakpoint_medium = '768px' -%}
+{%- assign breakpoint_large = '769px' -%}
+{%- assign breakpoint_desktop = '1200px' -%}
+{%- comment -%}
+  Srcset Sizes
+{%- endcomment -%}
+{%- assign im_ss_sizes = false -%}
+{%- if ss_sizes -%}
+  {%- if ss_sizes == true -%}
+    {%- assign im_ss_sizes = ss_sizes -%}
+  {%- else -%}
+    {%- assign ss_sizes_array = srcset_widths_array -%}
+    {%- if ss_sizes_array.size < 4 -%}
+      {%- assign default_fourth_size = im_w | append: 'px,' | split: ',' -%}
+      {%- assign ss_sizes_array = ss_sizes_array | concat: default_fourth_size -%}
+    {%- endif -%}
+    {%- capture im_ss_sizes -%}(max-width: {{ breakpoint_small }}) {{ ss_sizes_array[0] | strip }}px, (min-width: {{ breakpoint_postSmall }}) and (max-width: {{ breakpoint_medium }}) {{ ss_sizes_array[1] | strip }}px, (min-width: {{ breakpoint_large }}) {{ ss_sizes_array[2] | strip }}px, (min-width: {{ breakpoint_desktop }}) {{ ss_sizes_array[3] | strip }}px, {{ ss_sizes_array[4] | strip }}px{%- endcapture -%}
+    {%- assign im_ss_sizes_placeholder = im_ss_sizes -%}
+    {%- endif -%}
+{%- else -%}
+    {%- assign im_ss_sizes = 'auto' -%}
+    {%- capture im_ss_sizes_placeholder -%}(min-width: 100px) {{ srcset_widths_array[0] | strip }}px{%- endcapture -%}
+{%- endif -%}
+
+
+
+{%- comment -%}
+  Alt "Tag" Property
+{%- endcomment -%}
+{%- if im_a -%}
+  {%- assign im_alt = im_a | escape -%}
+{%- else -%}
+  {%- if external_src -%}
+    {%- assign im_alt = '' -%}
+  {%- else -%}
+    {%- assign im_alt = im_obj.alt | escape -%}
+  {%- endif -%}
+{%- endif -%}
+
+
+{%- comment -%}
+  Title "Tag" Property
+{%- endcomment -%}
+{%- if im_t -%}
+  {%- assign im_title = im_t | escape -%}
+{%- else -%}
+  {%- if external_src or im_alt -%}
+    {%- assign im_title = im_alt -%}
+  {%- else -%}
+    {%- assign im_title = '' -%}
+  {%- endif -%}
+{%- endif -%}
+
+
+
+{%- comment -%}
+  Extra Image Class
+{%- endcomment -%}
+{%- if im_ic -%}
+  {%- assign im_img_class = im_ic -%}
+{%- else -%}
+  {%- assign im_img_class = '' -%}
+{%- endif -%}
+
+
+{%- comment -%}
+  Background Lazy Loaded Imges
+{%- endcomment -%}
+{%- if im_bg -%}
+  {%- assign im_module_class = ' image-module-bg' -%}
+{%- else -%}
+  {%- assign im_module_class = '' -%}
+{%- endif -%}
+
+
+{%- comment -%}
+  Image Extra Properties - im_iep
+{%- endcomment -%}
+{%- if im_iep -%}
+  {%- assign im_extra_properties = im_iep -%}
+{%- else -%}
+  {%- assign im_extra_properties = '' -%}
+{%- endif -%}
+
+
+
+{%- if url_only -%}
+
+  {{- im_url -}}
+
+{%- elsif srcset_only -%}
+
+  {{- im_srcset -}}
+
+{%- else -%}
+
+<div class="imod ar--{{- im_ratio -}}{{-' '-}}{{- im_module_class -}}">
+  
+  {%- if im_lazyload -%}
+  
+  {%- assign im_lazy_svg_pl = lazyload_svg_placeholder_1 | append: im_w | append: '%20' | append: im_h | append: lazyload_svg_placeholder_2 -%}
+  
+  <img width="{{ im_w }}" height="{{ im_h }}" 
+       
+       {%- if im_id %}
+       {{-' '-}}
+       id="{{ im_id }}"
+       {%- endif -%}
+
+       {{-' '-}}
+       {% if cIndex <=4 %}
+       class="{{- im_img_class -}} yyyy" 
+
+       {% else %}
+       class="lazyload{{-' '-}}{{- im_img_class }} yyy" 
+
+       {% endif %}
+       {{-' '-}}
+       alt="{{ im_alt }}" title="{{ im_title }}" 
+       
+       {{-' '-}}
+       {{- im_extra_properties -}} 
+       
+       {{-' '-}}
+       {%- comment -%}
+       src="{{ im_placeholder_src }}" 
+       {%- endcomment -%}
+       {% if cIndex <=4 %}
+       src="{{ im_url }}" 
+
+      {% else %}
+       src="{{ im_lazy_svg_pl }}" 
+       {% endif %}
+       {{-' '-}}
+       data-src="{{ im_url }}" 
+       
+       {%- if im_srcset -%}
+       {%- comment -%}
+       {{-' '-}}
+       srcset="{{ lazyload_placeholder }} {{ srcset_widths_array[0] }}w" 
+       {{-' '-}}
+       srcset="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAzIDInPjwvc3ZnPg== 50000w" 
+       {%- endcomment -%}
+       
+       {{-' '-}}
+       data-srcset="{{ im_srcset }}"
+       {%- endif -%}
+       
+       {%- if im_ss_sizes %}{{-' '-}}data-sizes="{{ im_ss_sizes }}"{%- endif -%}
+       
+       {{-' '-}}
+       data-aspectratio="{{ im_obj.aspect_ratio }}"
+       
+       {%- comment -%}
+       {{-' '-}}
+       data-widths="[{{ im_data_widths }}]"
+       {{-' '-}}
+       data-absurl="false"
+       {{-' '-}}
+       data-parent-fit="cover"
+
+       {{-' '-}}
+       data-image
+       {%- endcomment -%}
+       {% if cIndex >4 %}
+       loading="lazy"
+       {% endif %}
+       />
+  {{-' '-}}
+  <noscript><img {{-' '-}}{%- unless im_img_class == blank -%}class="{{ im_img_class }}"{{-' '-}}{%- endunless -%} src="{{ im_url }}" alt="{{ im_alt }}" title="{{ im_title }}" loading="lazy"/></noscript>
+  
+  {%- else -%}
+  
+  <img width="{{ im_w }}" height="{{ im_h }}" class="{{ im_img_class }} hhhh" src="{{ im_url }}" alt="{{ im_alt }}" title="{{ im_title }}" 
+       {{-' '-}}
+       {{- im_extra_properties -}} 
+       {%- if im_srcset -%}
+       {{-' '-}}
+       srcset="{{ im_srcset }}" 
+       {%- endif -%}
+       {%- if im_ss_sizes %} 
+       {{-' '-}}       
+       sizes="{{ im_ss_sizes }}"
+       {%- endif -%}
+       {{-' '-}}
+       data-aspectratio="{{ im_obj.aspect_ratio }}" data-image loading="lazy"/>
+  
+  {%- endif -%}
+  
+</div>
+
+{%- endif -%}
+
+
+{%- comment -%}
+  Reset some values, just in case Shopify
+{%- endcomment -%}
+{%- assign im_obj = false -%}
+{%- assign im_lazyload = false -%}
+{%- assign im_srcset = false -%}
+{%- assign im_ss_sizes = false -%}
+{%- assign im_a = false -%}
+{%- assign im_t = false -%}
+{%- assign im_pl = false -%}
+{%- assign im_ic = false -%}

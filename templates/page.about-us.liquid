@@ -1,0 +1,143 @@
+{% include 'shogun-products', content: page %}
+<!-- CSS ================================================== -->
+
+{{ 'pages.scss.css' | asset_url | stylesheet_tag }}
+
+
+<!-- Content ================================================== -->
+
+{% include 'breadcrumb' %}
+
+<div class="page-content {{ page.title | handle }}">
+  
+  <h1>{{ 'about_us.page_title' | t }}</h1>
+  <div class="section sec-1">
+    <h2>{{ 'about_us.about_us_title' | t }}</h2>
+    <div class="section--inner">
+      <p>{{ 'about_us.about_us_text_1_html' | t }}</p>
+      <p>{{ 'about_us.about_us_text_2_html' | t }}</p>
+      <p>{{ 'about_us.about_us_text_3_html' | t }}</p>
+      <p>{{ 'about_us.about_us_text_4_html' | t }}</p>
+      <p>
+        {{ 'about_us.about_us_text_5_a_html' | t }}
+        {{ 'about_us.about_us_text_5_b_html' | t }}
+        {{ 'about_us.about_us_text_5_c_html' | t }}
+        {{ 'about_us.about_us_text_5_d_html' | t }}
+      </p>
+      <p>
+        {{ 'about_us.about_us_text_6_a_html' | t }}
+        {{ 'about_us.about_us_text_6_b_html' | t }}
+        {{ 'about_us.about_us_text_6_c_html' | t }}
+        {{ 'about_us.about_us_text_6_d_html' | t }}
+        {{ 'about_us.about_us_text_6_e_html' | t }}
+        {{ 'about_us.about_us_text_6_f_html' | t }}
+      </p>
+      <p>{{ 'about_us.about_us_text_7_html' | t }}</p>
+      <p>{{ 'about_us.about_us_text_8_html' | t }}</p>
+      <p>{{ 'about_us.about_us_text_9_html' | t }}</p>
+      <p>{{ 'about_us.about_us_text_10_html' | t }}</p>
+    </div>
+  </div>
+  <div class="section alt-bg sec-2">
+    <div class="section--inner">
+      <div>
+        <h2>{{ 'about_us.based_in_title' | t }}</h2>
+        <div class="about-us--map">
+          {% assign au_map_w = '229' %}
+          {% assign au_map_size = 'large' %}
+          {% assign au_map_ratio = '9x17' %}
+          {% assign au_map_srcset = '229,229,229' %}
+          {% assign au_map_ss_sizes = '229,229,229' %}
+          {% assign au_map_alt = 'based in New Jersey' %}
+          {% assign au_map_src = 'dankstop-online-headshop--origin.gif' | file_url %}
+          {% assign au_map_src = 'dankstop-online-headshop--origin-2.png' | file_url %}
+          {% include 'image-module' url:au_map_src, width:au_map_w, srcset:au_map_srcset, ss_sizes:au_map_ss_sizes, size:au_map_size, ratio: au_map_ratio, im_a:au_map_alt %}
+        </div>
+        <p>{{ 'about_us.based_in_text' | t }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="section sec-3">
+    <div class="section--inner">
+      <h2>{{ 'about_us.guarantee_title_html' | t }}</h2>
+      <div>
+        {% assign gi_w = '283' %}
+        {% assign gi_size = 'large' %}
+        {% assign gi_srcset = '283,283,283' %}
+        {% assign gi_ss_sizes = '283,283,283' %}
+        <div>
+          {% assign gi_alt_1 = 'about_us.guarantee_alt_1' | t %}
+          {% assign guarantee_img_src_1 = 'dankstop-online-headshop-guarantee--packing.png' | file_url %}
+          {% include 'image-module' url:guarantee_img_src_1, width:gi_w, srcset:gi_srcset, ss_sizes:gi_ss_sizes, size:gi_size, im_a:gi_alt_1 %}
+          <p>{{ 'about_us.guarantee_1' | t }}</p>
+        </div>
+        <div>
+          {% assign gi_alt_2 = 'about_us.guarantee_alt_2' | t %}
+          {% assign guarantee_img_src_2 = 'dankstop-online-headshop-guarantee--shipping.png' | file_url %}
+          {% include 'image-module' url:guarantee_img_src_2, width:gi_w, srcset:gi_srcset, ss_sizes:gi_ss_sizes, size:gi_size, im_a:gi_alt_2 %}
+          <p>{{ 'about_us.guarantee_2' | t }}</p>
+        </div>
+        <div>
+          {% assign gi_alt_3 = 'about_us.guarantee_alt_3' | t %}
+          {% assign guarantee_img_src_3 = 'dankstop-online-headshop-guarantee--satisfaction.png' | file_url %}
+          {% include 'image-module' url:guarantee_img_src_3, width:gi_w, srcset:gi_srcset, ss_sizes:gi_ss_sizes, size:gi_size, im_a:gi_alt_3 %}
+          <p>{{ 'about_us.guarantee_3' | t }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% comment %}
+  <div class="section alt-bg sec-4">
+    <div class="section--inner">
+      <h2>{{ 'about_us.the_team_title' | t }}</h2>
+      <div class="the-team">
+        <div>
+          <img src="https://cdn.shopify.com/s/files/1/1085/8818/files/dankstop-online-headshop-guarantee--satisfaction.png" alt="" />
+          <div>{{ 'about_us.team_member_1' | t }}</div>
+          <div>{{ 'about_us.team_member_role_1' | t }}</div>
+        </div>
+        <div>
+          <img src="https://cdn.shopify.com/s/files/1/1085/8818/files/dankstop-online-headshop-guarantee--satisfaction.png" alt="" />
+          <div>{{ 'about_us.team_member_2' | t }}</div>
+          <div>{{ 'about_us.team_member_role_2' | t }}</div>
+        </div>
+        <div>
+          <img src="https://cdn.shopify.com/s/files/1/1085/8818/files/dankstop-online-headshop-guarantee--satisfaction.png" alt="" />
+          <div>{{ 'about_us.team_member_3' | t }}</div>
+          <div>{{ 'about_us.team_member_role_3' | t }}</div>
+        </div>
+        <div>
+          <img src="https://cdn.shopify.com/s/files/1/1085/8818/files/dankstop-online-headshop-guarantee--satisfaction.png" alt="" />
+          <div>{{ 'about_us.team_member_4' | t }}</div>
+          <div>{{ 'about_us.team_member_role_4' | t }}</div>
+        </div>
+        <div>
+          <img src="https://cdn.shopify.com/s/files/1/1085/8818/files/dankstop-online-headshop-guarantee--satisfaction.png" alt="" />
+          <div>{{ 'about_us.team_member_5' | t }}</div>
+          <div>{{ 'about_us.team_member_role_5' | t }}</div>
+        </div>
+        <div>
+          <img src="https://cdn.shopify.com/s/files/1/1085/8818/files/dankstop-online-headshop-guarantee--satisfaction.png" alt="" />
+          <div>{{ 'about_us.team_member_6' | t }}</div>
+          <div>{{ 'about_us.team_member_role_6' | t }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section sec-5">
+    <div class="section--inner">
+      <h2><img src="https://cdn.shopify.com/s/files/1/1085/8818/files/dankstop-online-headshop-quotation-marks.png" alt="Quote About DankStop" /></h2>
+      <div>
+        <div>{{ 'about_us.quote_text' | t }}</div>
+        <div>{{ 'about_us.quote_by' | t }}</div>
+      </div>
+    </div>
+  </div>
+  {% endcomment %}
+  <div class="section sec-6">
+    <div class="section--inner">
+      <h2>{{ 'about_us.more_bigger_better' | t }}</h2>
+    </div>
+  </div>
+  
+</div>

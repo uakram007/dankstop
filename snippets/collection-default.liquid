@@ -1,0 +1,30 @@
+<div class="collection-template collection-template-default">
+  <div class="container">
+  	{%- include 'breadcrumb' -%}
+    
+    <div class="halo-collection-content">
+      <div class="row">
+
+        {%- comment -%}
+        <div class="col-sidebar lazybit lazybit-load" data-lazy-url="{{ request.path }}?view=sidebar-filter"></div>
+        {%- section 'sidebar-filter' -%}
+        {%- endcomment -%}
+        {%- include 'sidebar-filter-lazy' -%}
+
+        {%- section 'collection-template-default' -%}
+
+      </div>
+      
+      {%- comment -%}
+      {%- section 'recently-viewed-products' -%}
+      {%- endcomment -%}
+      <div class="lazybit lazybit-load" data-lazy-url="{{ shop.url }}?view=recently-viewed-products"></div>
+      
+      {%- comment -%}
+      {%- section 'collection--articles' -%}
+      {%- endcomment -%}
+      <div class="lazybit lazybit-load" data-lazy-url="{{ request.path }}?view=related-articles"></div>
+      
+    </div>   
+  </div>
+</div>

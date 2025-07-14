@@ -1,0 +1,97 @@
+{%- comment -%}
+{%- endcomment -%}
+
+{% layout settings.customer_layout %}
+
+{%- include 'customers-head' -%}
+
+<div class="account-page custom-acc-page">
+  <div class="container">
+    <header class="page-header">
+      <h1 {% if settings.enable_multilang %}data-translate="customer.account.title"{%endif%}>
+        {{ 'watchlist_page.title' | t }}
+      </h1>
+    </header>
+    
+    <div class="grid-item large--two-thirds push--large--one-sixth">
+      <div class="wish-list--product-grid row">
+
+        {%- assign products_in_customer_watchlist = 0 -%}
+        {%- if customer -%}
+
+          {%- if customer.metafields.watchlist -%}
+
+            {%- if customer.metafields.watchlist.products and customer.metafields.watchlist.products != blank and customer.metafields.watchlist.products != ',' and customer.metafields.watchlist.products != 'NULL' -%}
+
+            {%- assign watchlist_product_array = customer.metafields.watchlist.products | split: ',' -%}
+            {%- for wl_prod_pair in watchlist_product_array -%}
+            {%- assign wl_prod_handle = wl_prod_pair | split: ':' | first -%}
+            {%- assign wl_variant_id = wl_prod_pair | split: ':' | last -%}
+
+            {%- unless wl_prod_handle == blank -%}
+            {%- assign products_in_customer_watchlist = products_in_customer_watchlist | plus: 1 -%}
+            {%- endunless -%}
+            {%- endfor -%}
+
+            {%- if products_in_customer_watchlist >= 1 -%}
+            {%- for wl_prod_pair in watchlist_product_array -%}
+              {%- assign wl_prod_handle = wl_prod_pair | split: ':' | first -%}
+              {%- assign wl_variant_id = wl_prod_pair | split: ':' | last -%}
+              {%- unless wl_prod_handle == blank -%}
+                {%- assign product = all_products[wl_prod_handle] -%}
+        
+        {%- comment -%}
+        {%- include 'variant-grid-item' with wl_variant_id -%}
+        {%- include 'product-grid-item' with wl_variant_id -%}
+        {%- endcomment -%}
+        
+        {%- include 'variant-grid-item' with wl_variant_id -%}
+        
+                {%- unless product.title == blank -%}      
+                {%- endunless -%}
+              {%- endunless -%}
+            {%- endfor -%}
+            {%- endif -%}
+
+            {%- endif -%}
+
+          {%- endif -%}
+
+        {%- endif -%}
+
+        {%- unless products_in_customer_watchlist >= 1 -%}
+        <div class="grid-item">
+          <h2 class="h2">{{ 'watchlist_page.empty_subtitle' | t }}</h2>
+          <p>{{ 'watchlist_page.empty_message' | t }}</p>
+        </div>
+        {%- endunless -%}
+
+      </div>
+    </div>
+
+    <div id="settings" class="grid-item large--two-thirds push--large--one-sixth">
+      <input id="client_shop" type="hidden" value="{{ shop.permanent_domain }}" />
+      <div class="grid">
+        <div class="section-header">
+          <h2 class="h2">{{ 'watchlist_page.settings_title' | t }}</h2>
+        </div>
+        <div class="email-sec grid-item">
+          <p><label class="isn--contact" for="isnEmail"><span>{{- 'products.watchlist.by_email' | t -}} &nbsp;</span></label>
+            <input id="isnEmail" type="email" name="email" value="{%- if customer.metafields.watchlist.email != blank && customer.metafields.watchlist.email != 'false' -%}{{customer.metafields.watchlist.email}}{%-endif-%}" placeholder="{%- if customer.metafields.watchlist.email != blank && customer.metafields.watchlist.email != 'false' -%}{{customer.metafields.watchlist.email}}{%-endif-%}"></p>
+        </div>
+        <div class="phone-sec grid-item">
+          <p><label class="isn--contact" for="isnPhone"><span>{{- 'products.watchlist.via_text' | t -}} &nbsp;</span></label>
+            <input id="isnPhone" type="text" name="phone" value="{%- if customer.metafields.watchlist.phone != blank && customer.metafields.watchlist.phone != 'false' -%}{{customer.metafields.watchlist.phone}}{%-endif-%}" placeholder="{%- if customer.metafields.watchlist.phone != blank && customer.metafields.watchlist.phone != 'false' -%}{{customer.metafields.watchlist.phone}}{%-endif-%}"></p>
+        </div>
+        <div class="grid-item one-half push--one-half">
+          <span id="updateWatchlist" class="update-watchlist btn">
+            <span class="btn-text">{{ 'watchlist_page.update_settings_btn' | t }}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+

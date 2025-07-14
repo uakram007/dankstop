@@ -1,0 +1,134 @@
+<div class="list-categories list-categories-default">
+  
+  <div class="row">
+    {%- for link in linklists['categories-top'].links -%}   
+    {%- assign collection = link.object -%}
+	
+    {%- if forloop.index < 4 -%}
+    {%- include 'list-collection-item' -%}
+    {%- else -%}
+    {%- include 'list-collection-item', list_collection_results_per_row: '4' -%}
+    {%- endif -%}
+    {%- endfor -%}
+  </div>
+  
+  {%- assign top_level_categories = "Bongs | mobile-collection-nav-bongs" 
+  	| append: ",Dab Rigs | mobile-collection-nav-dab-rigs-and-oil-rigs"
+  	| append: ",Glass Pipes | mobile-collection-nav-glass-pipes" 
+    | split: ","
+  -%}
+
+  {%- for top_level_category in top_level_categories -%}   
+  
+  {%- assign top_level_category_title = top_level_category | split: "|" | first | strip -%}
+  {%- assign top_level_category_linklist_handle = top_level_category | split: "|" | last | strip -%}
+  <div class="container">
+    <h2>{{ top_level_category_title }}</h2>
+    <div class="row" data-list-handle="{{ top_level_category_linklist_handle }}">
+
+      {%- for link in linklists[top_level_category_linklist_handle].links -%}   
+      {%- assign collection = link.object -%}
+
+      {%- include 'list-collection-item', list_collection_results_per_row: '6' -%}
+      {%- endfor -%}
+    </div>
+  </div>
+  
+  {%- endfor -%}  
+  
+  
+  
+  {%- comment -%}	    
+  <div class="row">
+    {% if section.settings.style_categories == 'style_show_all' %}
+    {% for collection in collections %}
+    {% if collection.handle != 'frontpage' and collection.all_products_count > 0 %}
+    {% include 'list-collection-item' %}
+    {% endif %}
+    {% endfor %}
+
+    {% else %}
+
+    {% for block in section.blocks %}
+    {% assign collection = collections[block.settings.collection] %}
+    {% include 'list-collection-item' %}
+    {% endfor %}
+    {% endif %}
+  </div>
+  {%- endcomment -%}	    
+
+</div>
+
+{% schema %}
+  {
+    "name": "List Collections-1-GRID",
+    "settings": [	   
+	   {
+        "type": "select",
+        "id": "list_collection_results_per_row",
+        "label": "Products per row",
+        "default": "3",
+        "options": [
+          {
+            "value": "2",
+            "label": "2"
+          },
+          {
+            "value": "3",
+            "label": "3"
+          },
+          {
+            "value": "4",
+            "label": "4"
+          }
+        ]
+      },
+	  {
+		"type": "text",
+		"id": "list_collection_title_size",
+		"label": "Collection Title Font Size",
+		"default": "20"
+	  },
+	  {
+        "type": "radio",
+        "id": "style_categories",
+        "label": "Show all \/ Only a few categories",
+        "options": [
+          {
+            "value": "style_show_all",
+            "label": "Show all"
+          },
+          {
+            "value": "style_little",
+            "label": "Only a few categories"
+          }
+        ]
+      }
+	  
+	],
+    "blocks": [
+      {
+        "type": "collection",
+        "name": "Collection",
+        "settings": [
+		  {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "label": "Collection",
+            "id": "collection",
+            "type": "collection"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+<style>
+  .collections-wrapper .collection-title {
+    font-size: {{ section.settings.list_collection_title_size }}px;
+  }
+</style>

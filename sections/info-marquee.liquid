@@ -1,0 +1,65 @@
+<section class="marquee-section">
+  <p class="marquee text-styling">
+     Cannabis seeds are now available at DankStop! <a href="/collections/cannabis-seeds">Click here</a> to shop now
+  </p>
+</section>
+<style>
+  @-webkit-keyframes marquee {
+    0% {
+      margin-left: 100%;
+      transform: translateX(0%);
+    }
+    100% {
+      margin-left: 0;
+      transform: translateX(-100%);
+    }
+  }
+  @keyframes marquee {
+    0% {
+      margin-left: 100%;
+      transform: translateX(0%);
+    }
+    100% {
+      margin-left: 0;
+      transform: translateX(-100%);
+    }
+  }
+  .marquee-section {
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    background-color: #52c939;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    padding-block: 10px;
+  }
+  .marquee-section .marquee {
+    -webkit-animation: marquee 20s linear infinite;
+    animation: marquee 20s linear infinite;
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .marquee-section .marquee:hover {
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused;
+  }
+
+  .text-styling {
+    color: #fff;
+    font-weight: 600;
+    font-size: 16px;
+  }
+</style>
+{% schema %}
+{
+  "name": "Info Marquee",
+  "settings": []
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

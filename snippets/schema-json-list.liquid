@@ -1,0 +1,18 @@
+{%- comment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": [
+    {%- for shopify_object in shopify_objects %}
+    {
+      "@type": "ListItem",
+      "position": {{ forloop.index }},
+      "url": "{{ shopify_object.url }}"
+    }{%- unless forloop.last -%},{%- endunless %}
+    {%- endfor %}
+  ]
+}
+</script>
+{%- endcomment %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{%- for shopify_object in shopify_objects %}{"@type":"ListItem","position":{{ forloop.index }},"url":"{{ shopify_object.url }}"}{%- unless forloop.last -%},{%- endunless %}{%- endfor %}]}</script>

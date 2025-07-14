@@ -1,0 +1,11 @@
+{%- layout none -%}
+{%- for t in current_tags -%}
+{%- assign tag = t | strip -%}
+{%- assign tag_value = tag | handleize -%}
+<li>
+    <input type="checkbox" value="{{ tag_value }}" {% if current_tags contains tag %}checked{% endif %}/>
+    <a href="{{tag_value}}" class="selected-tag">
+        {{ tag | replace: "_", ": " | capitalize }}<span>&nbsp;X</span>
+    </a>
+</li>
+{%- endfor -%}

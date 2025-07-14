@@ -1,0 +1,87 @@
+<div class="sticky_form" data-sticky-add-to-cart>
+    <div class="container">
+        <div class="row align-items-center">
+            {% if settings.display_countdown and product.description contains '[countdown]' %}
+
+            {% assign count_down_first = product.description | split:'[/countdown]' | first %}
+            {% assign count_down_final = count_down_first | split:'[countdown]' | last %}
+
+            <div class="col-12 col-lg-3">
+                <div class="sticky-countdown sticky-item">
+                    <div class="sticky_icon">
+                        <i class="fa fa-clock-o" aria-hidden="true"></i>
+                    </div>
+                    <div class="countdown-item" data-countdown-normal data-countdown-value="{{ count_down_final }}"></div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="col-12{% if settings.display_countdown and product.description contains '[countdown]' %} col-lg-9{% else %} col-lg-12{% endif %}">
+                {% form 'product', product, id: "form-sticky" %}
+                    <div class="row align-items-center">
+                        <div class="col-12 col-md-4 col-xl-3 col-img-title">
+                            <div class="pr-img sticky-item">
+                              
+                              <img width="45" height="56" class="lazyload"
+                                   src="{{ lazyload_placeholder }}"
+                                   data-src="{{ product.featured_image.src | img_url: '90x' }}"
+                                   title="{{ product.title | escape }}" 
+                                   alt="{{ product.title | escape }}">
+
+                                <div class="product-title">
+                                    {% include 'multilang' with product.title %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-sm-7 col-md-5 col-xl-6 col-variant">                           
+                            <div class="sticky-item sticky_group">
+                                {% assign variantCount = product.variants | size %}
+                                {% if variantCount > 1 and product.available %}
+                                <div class="pr-selectors">
+                                    <a href="javascript:void(0)" class="pr-active" data-value="{{ product.selected_or_first_available_variant.id }}">
+                                        {{ product.selected_or_first_available_variant.title }} - {{ product.selected_or_first_available_variant.price | money }}
+                                    </a>
+
+                                    <ul>
+                                        {% for variant in product.variants %}
+                                        {% assign value = variant.options[option_index] %}
+                                        <li>
+                                            <a {% if variant.image != null %} data-img="{{ variant.image.src | product_img_url: 'compact' }}"{% else %} data-img="{{ product.featured_image.src | product_img_url: 'compact' }}"{% endif %} data-value="{{ variant.id }}" class="pr-swatch {% if variant.available == false %}sold-out{% endif %}" {% if variant.available == false %}disabled="disabled"{% endif %} href="javascript:void(0)">
+                                                {{ variant.title }} - {{ variant.price | money }}
+                                            </a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% endif %}
+
+                                {% if product.available %}
+                                <div class="quantity">
+                                    <div class="qty-group">
+                                      <label for="quantity__sticky-atc" class="visually-hidden">Quantity: </label>
+                                        <a href="#" data-minus-qtt class="minus button" title="Increase quantity by one" aria-label="Increase quantity by one"><span class="visually-hidden">Increase quantity by one</span></a>
+                                        <input type="text" id="quantity__sticky-atc" data-qtt-id="quantity__{{ product.id }}" name="quantity" value="1">
+                                        <a href="#" data-plus-qtt class="plus button" title="Decrease quantity by one" aria-label="Decrease quantity by one"><span class="visually-hidden">Decrease quantity by one</span></a>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>                                                        
+                        </div>
+
+                        <div class="col-6 col-sm-5 col-md-2 col-xl-3 col-actions">
+                            <div class="action sticky-item">
+                                {% if product.selected_or_first_available_variant.available %}
+                                <input type="hidden" name="id" value="{{ product.variants[0].id }}" /> 
+                                <input data-sticky-btn-addToCart type="submit" name="add" class="btn sticky-add-to-cart" {% if settings.enable_multilang %}data-translate="products.product.add_to_cart"{%endif%} value="{{ 'products.product.add_to_cart' | t }}">          
+                                {% else %} 
+                                <input type="submit" name="add" class="btn sticky-add-to-cart" {% if settings.enable_multilang %}data-translate="products.product.unavailable"{%endif%} disabled value="{{ 'products.product.unavailable' | t }}">          
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endform %}
+            </div>
+        </div>
+    </div>
+</div>

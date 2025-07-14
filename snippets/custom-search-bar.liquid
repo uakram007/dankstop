@@ -1,0 +1,357 @@
+<!-- /snippets/custom-search-bar.liquid -->
+
+<style>
+  .recent-searches-div{
+    width:100%;
+  }
+  .custom-search-bar {
+      width:100%
+  }
+  .search-product-content{
+    width:100%;
+  }
+  .search-product-content h5 {
+    text-align:left
+  }
+   .search-item,
+  .recent-item {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    border: 1px solid #efefef;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: black;
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+
+  .search-item:hover,
+  .recent-item:hover {
+    background: #f9f9f9;
+  }
+
+  .search-item img,
+  .recent-item img {
+    width: 60px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+
+  .item-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .item-title {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  .popup {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 600px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: none;
+    max-height: 450px;
+    overflow-y: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+  }
+
+  .popup-container,
+  #recentSearches {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 15px;
+  }
+
+  .popup-main-container {
+    display: flex;
+  }
+
+  .popup-main-container > div {
+    padding: 0px 15px 15px;
+  }
+  .popup-main-container > .popup-collections-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f8f8;
+    max-width: 200px;
+  }
+
+  .popup-search {
+    position: absolute;
+    top:50px;
+    width: 600px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: none;
+    max-height: 450px;
+    height: auto;
+    overflow-y: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+  }
+  .search-heading {
+    text-align:left;
+  }
+
+  @media (max-width: 1024px) {
+    .popup-search {
+      width: 400px;
+    }
+  }
+
+   @media (max-width: 1024px) {
+    .popup-search {
+      width: 400px;
+    }
+  }
+  @media (max-width: 768px) {
+    .popup-search {
+      position: fixed;
+      left: 0;
+      right: 0;
+      margin-inline: auto;
+    }
+    .search-heading {
+      color: #000;
+    }
+  }
+  @media (max-width: 480px) {
+    .popup-search {
+              top: 95px;
+      max-width: 90%;
+      margin-inline: auto;
+      left: 0;
+      right: 0;
+      height: 70vh !important;
+      max-height: 70vh !important;
+    }
+    .popup-main-container {
+      display: flex;
+      display: flex;
+      flex-direction: column-reverse;
+    }
+    .popup-collections-container {
+      width: 100%;
+      max-width: none !important;
+    }
+  }
+    #searchedCollections, #searchedPages {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #searchedCollections a, #searchedPages a {
+    font-size: small;
+    margin-bottom: 6px;
+  }
+</style>
+
+<div class="new_search_form custom-search-bar">
+  <input
+    type="text"
+    class="input-group-field header-search__input custom-searchbar-input"
+    placeholder="Search"
+    value=""
+    id="searchInput"
+    autocomplete="off"
+  >
+  <button type="submit" class="btn icon-search" id="searchIconCustom" title="Perform search" aria-label="Perform search">
+    <svg aria-hidden="true" focusable="false" role="img">
+      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#searchIcon"></use>
+    </svg>
+  </button>
+  <div class="popup-search" id="searchPopupCustom">
+    <div class="popup-main-container">
+      <div class="popup-collections-container">
+        <h4 class="search-heading">Collections</h4>
+        <div id="searchedCollections"></div>
+
+        <h4 class="search-heading">Pages</h4>
+        <div id="searchedPages"></div>
+      </div>
+      <div class="recent-searches-div" id="recentSearchesContainer">
+        <h4 class="search-heading">Products</h4>
+        <div id="searchedProducts"></div>
+
+        <!--
+          <h4 class="search-heading">Recent Searches</h4>
+          <div id="recentSearches"></div>
+        -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const searchApiBaseUrl = 'https://search.cabanaclubusa.com/api';
+
+  
+  // document.getElementById('searchInput').addEventListener('keyup', function (event) {
+  //   console.log('Search Input Value:', event.target.value);
+  // });
+
+    document.querySelectorAll('.custom-searchbar-input').forEach(input => {
+  input.addEventListener('keyup', debounce(async function (event) {
+
+    const inputValue = input.value.toLowerCase();
+    const popup = input.closest('.custom-search-bar').querySelector('.popup-search');
+    const searchedProducts = popup.querySelector('#searchedProducts');
+    const collectionsElement = popup.querySelector('#searchedCollections');
+    const pagesElement = popup.querySelector('#searchedPages');
+
+    if (inputValue.length === 0) {
+      popup.style.display = 'none';
+      return;
+    }
+
+    try {
+      const storeId = '6800d8acd4c157503d75f8eb';
+      const resp = await fetch(
+        `${searchApiBaseUrl}/product/autocomplete?storeId=${storeId}&search=${inputValue}&limit=10&page=1`,
+        { headers: { 'Content-type': 'application/json' } }
+      );
+      const respData = await resp.json();
+      const { collections, pages, products } = respData;
+
+      collectionsElement.innerHTML = collections.length === 0
+        ? '<div style="color:#000">No results found</div>'
+        : collections.map(c => `<a class="sm-title" href='/collections/${c.handle}'>${c.title}</a>`).join('');
+
+      pagesElement.innerHTML = pages.length === 0
+        ? '<div style="color:#000">No results found</div>'
+        : pages.map(p => `<a class="sm-title" href='/pages/${p.handle}'>${p.title}</a>`).join('');
+
+
+
+      const container = document.createElement('div');
+container.className = 'popup-container';
+
+products.forEach(item => {
+  if (!item.variants?.length) return;
+
+  const variant = item.variants[0];
+
+  const div = document.createElement('div');
+  div.className = 'search-item';
+
+  div.innerHTML = `
+    <img src='${item.media[0]?.url}' alt='${item.title.split(' ')[0]}'/>
+    <div class="search-product-content">
+      <h5 style="margin: 0;font-size:16px">${item.title}</h5>
+      <div class="cc-market-price--wrapper">
+        <div class="cc-market-price">
+          <span class="price-label">Market</span>
+          <span class="price-value">$${variant.marketPrice.toFixed(2)}</span>
+        </div>
+        <div class="cc-market-price member">
+          <span class="price-label">Member</span>
+          <span class="price-value">$${variant.memberPrice.toFixed(2)}</span>
+        </div>
+        <div class="cc-market-price elite">
+          <span class="price-label">Elite</span>
+          <span class="price-value">$${variant.elitePrice.toFixed(2)}</span>
+        </div>
+      </div>
+    </div>`;
+
+  // Attach click handler directly
+  div.addEventListener('click', () => {
+    selectItem(item.title, item.handle);
+  });
+
+  container.appendChild(div);
+});
+
+searchedProducts.innerHTML = '';
+searchedProducts.appendChild(container);
+      
+      popup.style.display = 'block';
+    } catch (error) {
+      console.log('Error fetching search results:', error);
+    }
+  }, 300));
+});
+
+  
+  function debounce(func, delay) {
+    let timeout;
+    return function (...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), delay);
+    };
+  }
+
+
+   function selectItem(title, handle) {
+   document.querySelectorAll('.custom-searchbar-input, .searchbar-input-mobile').forEach(input => {
+    input.value = title;
+  });
+    document.getElementById('searchPopup').style.display = 'none';
+    window.location.href = `/products/${handle}`;
+  }
+
+  document.getElementById('searchInput').addEventListener('focus', function () {
+    console.log("HELLO LISTENER")
+  const popup = document.getElementById('searchPopupCustom');
+  const inputValue = this.value.trim();
+
+  if (inputValue.length > 0 && popup.innerHTML.trim() !== '') {
+    popup.style.display = 'block';
+  }
+});
+  document.querySelectorAll('.custom-searchbar-input').forEach(input => {
+
+  input.addEventListener('keyup', function (event) {
+    if (event.key === 'Enter') {
+      redirectToSearchPage(input.value);
+    }
+  });
+
+ 
+  const searchButton = document.getElementById('searchIconCustom');
+  const searchButtonMobile = document.getElementById('searchIconMobile');
+  searchButton.addEventListener('click', function () {
+    redirectToSearchPage(input.value);
+  });
+  searchButtonMobile.addEventListener('click', function () {
+    redirectToSearchPage(input.value);
+  });
+
+  
+  function redirectToSearchPage(query) {
+    if (query.trim().length > 0) {
+      window.location.href = `/search?type=product&q=${encodeURIComponent(query.trim())}`;
+    }
+  }
+});
+
+  document.addEventListener('click', function (event) {
+    const popup = document.getElementById('searchPopupCustom');
+    const searchInput = document.getElementById('searchInput');
+
+    
+    if (popup.style.display === 'block') {
+
+      const isClickInsideInput = searchInput.contains(event.target);
+      const isClickInsidePopup = popup.contains(event.target);
+
+      if (!isClickInsideInput && !isClickInsidePopup) {
+        popup.style.display = 'none';
+      }
+    }
+  });
+
+</script>

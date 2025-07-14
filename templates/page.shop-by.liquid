@@ -1,0 +1,59 @@
+{% comment %}
+<div class="container">
+</div>
+{% endcomment %}
+
+{% include 'breadcrumb' %}
+
+
+<div class="grid">
+
+  <div class="grid-item large--two-thirds push--large--one-sixth">
+
+    <h1>{{ 'shop_by.page_title' | t }}</h1>
+
+    {% assign category_collections_total = 8 %}
+    <div class="collection-categories-container">
+    
+      {% for i in (1..category_collections_total) %}
+      
+        {% assign linklist_title_t_string_ref = 'shop_by.cat_title_' | append: i %}
+        {% assign linklist_name = 'z_shop_by-' | append: i %}
+      
+        <div class="collection-category collection-category--{% if i == 5 or i == 8 %}whole{% else %}half{% endif %}">
+            <div class="collection-category--left collection-category--{% if i == 5 or i == 8 %}one-quarter{% else %}one-half{% endif %}">
+              {% assign first_link = linklists[linklist_name].links | first %}
+              {% assign first_link_image = first_link.object.image %}
+              {% include 'image-module' url: first_link_image, qlty:75, width:286, ratio: '4x5', size: image_size, im_a:alt_tag, im_ic:image_class %}
+            </div>
+            <div class="collection-category--right collection-category--{% if i == 5 or i == 8 %}three-quarters{% else %}one-half{% endif %}">
+              <h2>{{ linklist_title_t_string_ref | t }}</h2>
+              <ul class="">
+                {% for link in linklists[linklist_name].links %}
+                  {% assign link_title = link.title | handleize %}
+                    <li class="collection-category--link">
+                      {% assign first_link = linklists[linklist_name].links | first %}
+                      {% assign category_link_img = link.object.image %}
+                      {% capture category_link_img_src %}{% include 'image-module' url_only:true, url:category_link_img, qlty:75, width:286, ratio: '4x5', size: image_size %}{% endcapture %}
+                      <a class="collection-category--link-anchor" href="{{ link.url }}" title="{{ link_title }}" data-image="{{ category_link_img_src }}" data-original="{{ category_link_img_src }}">
+                        <div class="collection-category--link-title-cont">
+                          <span class="collection-category--link-title">
+                            {{ link.title }}
+                          </span>
+                        </div>
+                      </a>
+                    </li>
+                {% endfor %}
+              </ul>
+            </div>
+        </div>
+      {% endfor %}
+      
+      
+    <div class="rte">
+      {{ page.content }}
+    </div>
+
+  </div>
+
+</div>

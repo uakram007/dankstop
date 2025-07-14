@@ -1,0 +1,338 @@
+{%- layout none -%}
+
+{%- comment -%}
+<div class="quickSearchResultsWrap" style="display: none;">
+{%- endcomment -%}
+  <div class="custom-scrollbar">
+    <div class="container">
+      {% if settings.enable_search_trending %}
+      <div class="header-block header-search__trending">
+        <div class="box-title">
+          {% include 'multilang' with settings.trending_search_title %}
+        </div>
+
+        <ul class="list-item">
+          {% if settings.trending_search_item_1 != blank %}
+
+          {% assign handle_1 = settings.trending_search_item_1 | split: '|' | first | strip | handleize %}
+
+          <li class="item">
+            <a href="/search?q={{handle_1}}*&amp;type=product" title="" class="highlight">
+              <i class="fa fa-search" aria-hidden="true"></i>
+              {% include 'multilang' with settings.trending_search_item_1 %}
+            </a>
+          </li>
+          {% endif %}
+
+          {% if settings.trending_search_item_2 != blank %}
+
+          {% assign handle_2 = settings.trending_search_item_2 | split: '|' | first | strip | handleize %}
+
+          <li class="item">
+            <a href="/search?q={{handle_2}}*&amp;type=product" title="" class="highlight">
+              <i class="fa fa-search" aria-hidden="true"></i>
+              {% include 'multilang' with settings.trending_search_item_2 %}
+            </a>
+          </li>
+          {% endif %}
+
+          {% if settings.trending_search_item_3 != blank %}
+
+          {% assign handle_3 = settings.trending_search_item_3 | split: '|' | first | strip | handleize %}
+          <li class="item">
+            <a href="/search?q={{handle_3}}*&amp;type=product" title="" class="highlight">
+              <i class="fa fa-search" aria-hidden="true"></i>
+              {% include 'multilang' with settings.trending_search_item_3 %}
+            </a>
+          </li>
+          {% endif %}
+
+          {% if settings.trending_search_item_4 != blank %}
+
+          {% assign handle_4 = settings.trending_search_item_4 | split: '|' | first | strip | handleize %}
+          <li class="item">
+            <a href="/search?q={{handle_4}}*&amp;type=product" title="" class="highlight">
+              <i class="fa fa-search" aria-hidden="true"></i>
+              {% include 'multilang' with settings.trending_search_item_4 %}
+            </a>
+          </li>
+          {% endif %}
+
+          {% if settings.trending_search_item_5 != blank %}
+
+          {% assign handle_5 = settings.trending_search_item_5 | split: '|' | first | strip | handleize %}
+          <li class="item">
+            <a href="/search?q={{handle_5}}*&amp;type=product" title="" class="highlight">
+              <i class="fa fa-search" aria-hidden="true"></i>
+              {% include 'multilang' with settings.trending_search_item_5 %}
+            </a>
+          </li>
+          {% endif %}
+
+          {% if settings.trending_search_item_6 != blank %}
+
+          {% assign handle_6 = settings.trending_search_item_6 | split: '|' | first | strip | handleize %}
+          <li class="item">
+            <a href="/search?q={{handle_6}}*&amp;type=product" title="" class="highlight">
+              <i class="fa fa-search" aria-hidden="true"></i>
+              {% include 'multilang' with settings.trending_search_item_6 %}
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+      {% endif %}
+
+      {% if settings.enable_search_popular_products %}
+      <div class="header-block header-search__product">
+        <div class="box-title">
+          {% include 'multilang' with settings.popular_products_search_title %}
+        </div>
+
+        <div class="search__products">
+          <div class="products-grid row">
+            {% for product in collections[settings.popular_products_collection].products limit:settings.popular_products_limit %}
+              {%  assign hideitem2 = true %}
+{% if product.has_only_default_variant %}
+    {% if product.metafields.custom.member_price != blank and product.metafields.custom.elite_price != blank %}
+        {% if product.metafields.custom.member_price != 0.0 and product.metafields.custom.elite_price != 0.0 %}
+            {% assign hideitem2 = false %}
+            {% assign clubEliteVariant = product %}
+        {% endif %}
+    {%  elsif product.variants.first.metafields.custom.member_price != blank and product.variants.first.metafields.custom.elite_price != blank %}
+      {% if product.variants.first.metafields.custom.member_price != 0.0 and product.variants.first.metafields.custom.elite_price != 0.0 %}
+          {% assign hideitem2 = false %}
+          {% assign clubEliteVariant = product.variants.first %}
+      {% endif %}
+    {% endif %}
+{% else %}
+    {% assign hideitem2 = true %}
+    {% for variant in product.variants %}
+        {% if variant.metafields.custom.member_price != blank and variant.metafields.custom.elite_price != blank %}
+            {% if variant.metafields.custom.member_price != 0.0 and variant.metafields.custom.elite_price != 0.0 %}
+                {% assign clubEliteVariant = variant %}
+                {% assign hideitem2 = false %}
+                {% break %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endif %} 
+
+
+{% if hideitem2 == false %}
+            <div class="grid-item col-6 col-sm-4">
+              {% include 'sidebar-product-grid' %}
+            </div>
+{% endif %}
+            {% endfor %}
+          </div>                    
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="header-search__results-wrapper"></div>          
+    </div>
+  </div>
+{%- comment -%}
+</div>
+{%- endcomment -%}
+
+{%- comment -%}
+{%- include 'search-autocomplete' -%}
+{%- endcomment -%}
+{%- include 'search-results-template' -%}
+
+<script>
+/*
+ * Search Auto Complete 
+ */
+hsjs.searchAutoComplete = {
+  
+  temp7Url: "https://cdnjs.cloudflare.com/ajax/libs/template7/1.4.0/template7.js",
+  
+  handler: function(){
+
+    (function ($) {
+      var pluginName = 'Search',
+          namespace = 'plugin_' + pluginName;
+
+      function Plugin(element) {
+        this.headerSearch = $(element);
+//         this.headerSearchForm = this.headerSearch.find('.header-search__form');
+        this.headerSearchForm = this.headerSearch;
+        this.headerInput = this.headerSearch.find('.header-search__input');
+        this.headerSearchResults = this.headerSearch.find('.header-search__results-wrapper');
+        this.searchResultsTemplate = Template7.compile($('#search-results-template').html());
+        this.PopularProducts = this.headerSearch.find(".header-search__product");
+        this.searchMode = "product";
+        this.searchTrending = $(".quickSearchResultsWrap .header-search__trending .item");
+        this.trending = $(".header-search__trending");
+        this.searchWrapper = this.headerSearch.find('.quickSearchResultsWrap');
+
+        this.headerInput.off('focus').on('focus', function(e){
+          e.stopPropagation();
+
+//           $(this).closest('.header-search').find('.quickSearchResultsWrap').show();
+          $(this).closest('.search-form').find('.quickSearchResultsWrap').show();
+        });
+
+        $(document).off('mouseup').on('mouseup', function (e) {
+          var container = $(".search-form");
+
+          if (!container.is(e.target) && container.has(e.target).length === 0){
+            container.find('.quickSearchResultsWrap').hide();
+          }
+        });
+
+        this.headerInput.off('focusin').on('focusin', $.proxy(this._focusin, this));
+
+
+        this.headerInput.off('keyup').on('keyup', $.proxy(this._initSearch, this));
+      };
+
+      Plugin.prototype._initSearch = function(event) {
+        var target = $(event.currentTarget);
+
+        if ((event.keyCode ? event.keyCode : event.which) != 13) {
+          clearTimeout(target.data('timeout'));
+          target.data('timeout', setTimeout($.proxy(this._doSearch, this), 250));
+        }
+      };
+
+      Plugin.prototype._doSearch = function(event) {
+
+        if (this.headerInput.val().trim() === '') {
+          this.headerSearchResults.empty();
+          this.searchTrending.show();
+          this.PopularProducts.show();
+          this.searchWrapper.show();
+          this.trending.show();
+
+          return; 
+        }
+        else {
+          this.headerSearchResults.html(this.searchResultsTemplate({is_loading: true}));
+        }
+
+        if (this.headerInput.val().length > 2) {
+          this.searchWrapper.hide();
+          this._doCompleteSearch();
+        }
+        else {
+          this.headerSearchResults.html(this.searchResultsTemplate({is_show: false}));
+          this.searchTrending.show();
+          this.PopularProducts.show();
+          this.searchWrapper.show();
+        }
+
+        if(this.searchTrending.css('display') == 'none') {
+          this.trending.hide();
+        } else {
+          this.trending.show();
+        }
+      };
+
+      Plugin.prototype._doCompleteSearch = function(event) {
+        var self = this;
+
+        $.ajax({
+          method: 'GET',
+          url: '/search?view=json',
+          dataType: 'json',
+          data: {
+            q: this.headerInput.val() + '*',
+            type: this.searchMode
+          }
+        }).then(function(data) {
+
+          self.headerSearchResults.html(self.searchResultsTemplate({
+            is_show: true,
+            is_loading: false,
+            results: data['results'],
+            has_results: (data['results'].length > 0),
+            results_count: data['results_count'],
+            results_label: data['results_label'],
+            results_url: (data['url'] + '&type=' + self.searchMode)
+          }));
+
+          self.PopularProducts.hide();
+
+
+          var value = self.headerInput.val().toLowerCase();
+          if (data && data.length) {
+            self.searchTrending.filter(function(e) {
+              $(this).toggle($(this).find('.highlight span').text().toLowerCase().indexOf(value) > -1);
+            });
+            self.trending.show();
+          }
+          else {
+            self.trending.hide();
+          }
+
+          self.searchWrapper.show();
+        });
+      };
+
+      $.fn[pluginName] = function(options) {
+        var method = false,
+            methodArgs = arguments;
+
+        if (typeof options == 'string') {
+          method = options;
+        }
+
+        return this.each(function() {
+          var plugin = $.data(this, namespace);
+
+          if (!plugin && !method) {
+            $.data(this, namespace, new Plugin(this, options));
+          } else if (method) {
+            callMethod(plugin, method, Array.prototype.slice.call(methodArgs, 1));
+          }
+        });
+      };
+    }(jQuery));
+
+    $(function() {
+//       $('[data-ajax-search]').Search();
+      $(".search-form").Search();
+    });
+    
+  },
+
+  attachHandler: function(){
+  
+    hsjs.tools.waitForJSObject(
+      "Template7",
+      function(){
+        hsjs.tools.waitForElement(
+          ".header-search__results-wrapper",
+          hsjs.searchAutoComplete.handler,
+          7300
+        )
+      },
+      7300
+    );
+    
+  },
+  
+  load: function(){
+    
+    hsjs.tools.downloadJS(
+      hsjs.searchAutoComplete.temp7Url, 
+      hsjs.searchAutoComplete.attachHandler
+    );
+    
+  },
+  
+  init: function(){
+  
+    this.load();
+    
+  }
+
+}
+  
+hsjs.searchAutoComplete.init();
+
+</script>

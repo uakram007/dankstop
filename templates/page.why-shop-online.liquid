@@ -1,0 +1,230 @@
+{% assign number_of_comments = article.comments_count %}
+
+{% if comment and comment.created_at %}
+  {% assign number_of_comments = article.comments_count | plus: 1 %}
+{% endif %}
+
+
+<div class="container">
+
+  {% include 'breadcrumb' %}
+  
+  
+  {% comment %}
+  <aside class="sidebar grid-item large--one-fifth grid-border--right">
+    <div class="sidebar-inner">
+      <section>
+        <h4>{{- 'blogs.sidebar.recent_articles' | t -}}</h4>
+        <ul>
+          {%- for article in blogs.wiki.articles limit:6 -%}
+          <li>
+            <a href="{{ article.url }}">{{ article.title }}</a>
+            <br>
+            <time pubdate datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+              <em class="text-light">{{ article.published_at | date: format: 'month_day_year' }}</em>
+            </time>
+          </li>
+          {%- endfor -%}
+        </ul>
+      </section>
+      {%- if blogs.wiki.all_tags.size > 0 -%}
+      <section>  
+        <h4>{{- 'blogs.sidebar.categories' | t -}}</h4>
+        <ul>
+          {%- for tag in blogs.wiki.all_tags -%}
+            {%- if current_tags contains tag -%}
+            <li>{{- tag -}}</li>
+            {%- else -%}
+            <li>{{- tag | link_to_tag: tag | replace: '/pages/why-shop-at-an-online-smoke-shop/', '/blogs/wiki/tagged/' -}}</li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </section>
+      {%- endif -%}
+    </div>
+  </aside>
+  {% endcomment %}
+
+
+  <div class="grid-item large--four-fifths">
+    <div id="why-shop-page">
+      <h1>{{ 'why_shop_online.page_title' | t }}</h1>
+      <div class="section selection-section">
+        <div class="section-heading">
+          <img src="{{ 'why-shop-online-headshop--headerbong.png' | file_url }}">
+          <h2>{{ 'why_shop_online.section_1_title' | t }}</h2>
+        </div>
+        <p>{{ 'why_shop_online.section_1_p1_html' | t }}</p>
+        <div class="group">
+          <p>{{ 'why_shop_online.section_1_p2_html' | t }}</p>
+          <p>{{ 'why_shop_online.section_1_p3_html' | t }}</p>
+        </div>
+        <div class="sub-section">
+          {% comment %}
+          <div class="section-left product-display">
+            <ul class="carousel-wrapper">
+              {% assign why_shop_featured_collection = 'staff-picks' %}
+              {% for product in collections[why_shop_featured_collection].products limit: 7 %}
+              <li>
+                {%- include 'product-grid-item', pgi_w: 'one-whole' -%}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endcomment %}
+          <div class="section-middle">
+            <span>{{ 'why_shop_online.we_offer' | t }}</span>
+            <ul>
+              <li>{{ 'why_shop_online.we_offer_li_1_html' | t }}</li>
+              <li>{{ 'why_shop_online.we_offer_li_2_html' | t }}</li>
+              <li>{{ 'why_shop_online.we_offer_li_3_html' | t }}</li>
+              <li>{{ 'why_shop_online.we_offer_li_4_html' | t }}</li>
+              <li>{{ 'why_shop_online.we_offer_li_5_html' | t }}</li>
+              <li>{{ 'why_shop_online.we_offer_li_6_html' | t }}</li>
+              <li class="desktop"></li>
+              <li>{{ 'why_shop_online.we_offer_li_7_html' | t }}</li>
+              <li>{{ 'why_shop_online.we_offer_li_8_html' | t }}</li>
+              <li>{{ 'why_shop_online.we_offer_li_9_html' | t }}</li>
+              <li>{{ 'why_shop_online.we_offer_li_10_html' | t }}</li>
+              <li>{{ 'why_shop_online.we_offer_li_11_html' | t }}</li>
+            </ul>
+          </div>
+          <div class="section-right">
+            <img src="{{ 'why-shop-online-headshop--bong2.png' | file_url }}" alt="Huge Selection of Dab Rigs"> 
+            <img src="{{ 'why-shop-online-headshop--bong1.png' | file_url }}" alt="Huge Selection of Bongs"> 
+            <img src="{{ 'why-shop-online-headshop--bong3.png' | file_url }}" alt="Huge Selection of Vaporizers">
+          </div>
+        </div>
+      </div>
+      <div class="section prices-section">
+        <div class="section-heading">
+          <img src="{{ 'why-shop-online-headshop--headermoney.png' | file_url }}" alt="{{ 'why_shop_online.section_2_title' | t }}">
+          <h2>{{ 'why_shop_online.section_2_title' | t }}</h2>
+        </div>
+        <div class="section-left">
+          <img src="{{ 'why-shop-online-headshop--piggybank.png' | file_url }}" alt="Piggy Bank, Savings">
+        </div>
+        <div class="section-right">
+          <div class="group-top">
+            <h3>How do we get you the lowest prices?</h3>
+            <p>Online pricing is always extremely competitive and usually cheaper than in-store prices for numerous reasons. &nbsp;</p>
+          </div>
+          <div class="group-bottom">
+            <h3>Online Stores:</h3>
+            <ul>
+              <li>Do not need to pay the fees to open a physical location (Rent, Utilities, etc.)</li>
+              <li>Do not need to staff more employees for in-store locations</li>
+            </ul>
+            <p>DankStop focuses on delivering quality products at cheap prices to all customers.&nbsp; We are able to provide great prices by developing strong relationships with the artists and people around us!&nbsp; We work together to supply the glass community with the perfect product at an affordable price (Not to mention our free shipping on all orders policy).</p>
+          </div>
+        </div>
+      </div>
+      <div class="section shipping-section">
+        <div class="section-heading">
+          <img src="{{ 'why-shop-online-headshop--headershipping.png' | file_url }}" alt="{{ 'why_shop_online.section_3_title' | t }}">
+          <h2>{{ 'why_shop_online.section_3_title' | t }}</h2>
+        </div>
+        <div class="sub-section clock">
+          <p>There’s nothing worse than making a purchase online and having to wait an eternity for it to show up...</p>
+          <img src="{{ 'why-shop-online-headshop--clock.png' | file_url }}" alt="Fast Shipping">
+        </div>
+        <div class="sub-section map">
+          <div class="section-left">
+            <span>Average Shipping Time</span> 
+            <img src="{{ 'why-shop-online-headshop--shippingmap.png' | file_url }}" alt="Free Shipping in the USA"> <span>Our average delivery time is just 3 days!</span>
+          </div>
+          <div class="section-right">
+            <p>At DankStop we:</p>
+            <ul>
+              <li>Focus on packing and shipping out all orders within a day of placement to ensure a quick and easily delivery (Average 3-5 days until arrival)</li>
+              <li>Have free shipping on all orders (With the option to upgrade; fee included)</li>
+              <li>Package all of our orders carefully to minimize the risk of broken products</li>
+              <li>Utilize discreet shipping&nbsp;</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="section service-section">
+        <div class="section-heading">
+          <img src="{{ 'why-shop-online-headshop--headercustomerservice.png' | file_url }}" alt="{{ 'why_shop_online.section_4_title' | t }}">
+          <h2>{{ 'why_shop_online.section_4_title' | t }}</h2>
+        </div>
+        <p>Customer service is one of the most useful and helpful parts of being a consumer.&nbsp; You can ask any question you would like to help finalize your decision on the perfect product for you. Whether you need help choosing what type of glass is right for you, or what would be a good gift option for a friend, we are here to service you needs. Our customer service team is devised of knowledgeable employees who are ready to assist you in any way possible.&nbsp;</p>
+        <div class="sub-section">
+          <ul>
+            <li>
+              <span class="span-left">Telephone service</span><span class="span-right"><a href="tel:%281-844-326-5786" target="_blank">1-844-326-5786</a></span>
+            </li>
+            <li>
+              <span class="span-left">Live chat service</span><span class="span-right"><a href="/contact/" target="_blank">Check on our webpage!</a></span>
+            </li>
+            <li>
+              <span class="span-left">Email service</span><span class="span-right"><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;tf=1&amp;to=info@DankStop.com" target="_blank">info@DankStop.com</a></span>
+            </li>
+          </ul>
+          <img src="{{ 'why-shop-online-headshop--customerservicelady.png' | file_url }}" alt="Customer Service Rep">
+        </div>
+      </div>
+      <div class="section convenient-section">
+        <div class="section-heading">
+          <img src="{{ 'why-shop-online-headshop--headershoppingcart.png' | file_url }}" alt="{{ 'why_shop_online.section_5_title' | t }}">
+          <h2>{{ 'why_shop_online.section_5_title' | t }}</h2>
+        </div>
+        <p>There is nothing easier than shopping online.&nbsp; Going into physical store locations to shop for smoking accessories can be a long and strenuous process due to travel time, store hour restrictions and other possible interruptions.</p>
+        <div class="sub-section">
+          <span>Shopping online allows the customer to:</span>
+          <ul>
+            <li>Shop any time you want</li>
+            <li>Shop from wherever you want</li>
+            <li>Enjoy delivery to your doorstep</li>
+            <li>Edit your order &amp; more!</li>
+          </ul>
+          <img src="{{ 'why-shop-online-headshop--computerbanner.png' | file_url }}" alt="Shopping Online on Computer">
+        </div>
+      </div>
+      <div class="section quality-section">
+        <div class="section-heading">
+          <img src="{{ 'why-shop-online-headshop--headerqualitycontrol.png' | file_url }}" alt="{{ 'why_shop_online.section_6_title' | t }}">
+          <h2>{{ 'why_shop_online.section_6_title' | t }}</h2>
+        </div>
+        <div class="section-top">
+          <div class="section-left">
+            <h3>Eight Steps Of Quality Assurance Before Your Order Reaches You</h3>
+            <p>Product quality is always a huge factor when making a purchase.&nbsp; At DankStop, we have a very high standard for quality. Every item goes through a rigorous process to check for any defects so the customer receives the best quality products.</p>
+            <p>Wouldn't you hate to wait anxiously for your shipment, and when it arrives, have a defected item?</p>
+          </div>
+          <div class="section-right">
+            <p>When you shop with DankStop, there is no need to worry!</p>
+            <img src="{{ 'why-shop-online-headshop--bong1.png' | file_url }}" alt="Quality Assurance Guaranteed">
+          </div>
+        </div>
+        <div class="section-bottom">
+          <div class="quality-step">
+            <img src="{{ 'why-shop-online-headshop--qualitycontrolstep1.png' | file_url }}" alt="Quality Control - Step 1"> <span>1. Product Arrives</span>
+          </div>
+          <div class="quality-step">
+            <img src="{{ 'why-shop-online-headshop--qualitycontrolstep2.png' | file_url }}" alt="Quality Control - Step 2"> <span>2. Inspected</span>
+          </div>
+          <div class="quality-step">
+            <img src="{{ 'why-shop-online-headshop--qualitycontrolstep3.png' | file_url }}" alt="Quality Control - Step 3"> <span>3. Shelved</span>
+          </div>
+          <div class="quality-step">
+            <img src="{{ 'why-shop-online-headshop--qualitycontrolstep4.png' | file_url }}" alt="Quality Control - Step 4"> <span>4. You Place Your Order</span>
+          </div>
+          <div class="quality-step">
+            <img src="{{ 'why-shop-online-headshop--qualitycontrolstep5.png' | file_url }}" alt="Quality Control - Step 5"> <span>5. Reinspected</span>
+          </div>
+          <div class="quality-step">
+            <img src="{{ 'why-shop-online-headshop--qualitycontrolstep6.png' | file_url }}" alt="Quality Control - Step 6"> <span>6. Packed Lovingly</span>
+          </div>
+          <div class="quality-step">
+            <img src="{{ 'why-shop-online-headshop--qualitycontrolstep7.png' | file_url }}" alt="Quality Control - Step 7"> <span>7. Product Shipped</span>
+          </div>
+          <div class="quality-step">
+            <img src="{{ 'why-shop-online-headshop--qualitycontrolstep8.png' | file_url }}g" alt="Quality Control - Step 8"> <span>8. Happy Customer :)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

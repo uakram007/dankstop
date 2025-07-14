@@ -1,0 +1,33 @@
+{% comment %}
+
+  MailChimp is the go-to newsletter service for Shopify.
+  Use the link below to find your MailChimp "form action"
+  and insert it in your site settings.
+
+  MailChimp newsletter integration and requirement:
+   - http://docs.shopify.com/support/configuration/store-customization/where-do-i-get-my-mailchimp-form-action
+
+{%- form 'customer', action: newsletter_form_action, class: 'input-group' -%}
+    <input type="hidden" name="contact[tags]" value="newsletter">
+
+    <input class="input-group-field" type="email" name="contact[email]" {% if settings.enable_multilang %}data-translate="general.newsletter_form.newsletter_text" translate-item="placeholder"{%endif%} aria-label="Email Address" placeholder="{{ 'general.newsletter_form.newsletter_text' | t }}" required="required">
+    <input class="btn" type="submit" value="{{ 'general.newsletter_form.submit' | t }}">
+{%- endform -%}
+
+<div hidden><form id="email_signup" class="klaviyo_styling klaviyo_gdpr_embed_LIST_ID" action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
+  </form></div>
+{% endcomment %}
+
+
+
+{%- capture newsletter_form_action -%}/contact#shopify-section-{{ section.id }}{%- endcapture -%}
+{%- capture newsletter_form -%}
+
+{%- form 'customer', class: 'input-group' -%}
+    <input type="hidden" name="contact[tags]" value="newsletter">
+
+    <input class="input-group-field" type="email" name="contact[email]" {% if settings.enable_multilang %}data-translate="general.newsletter_form.newsletter_text" translate-item="placeholder"{%endif%} aria-label="Email Address" placeholder="{{ 'general.newsletter_form.newsletter_text' | t }}" required="required">
+    <input class="btn" type="submit" value="{{ 'general.newsletter_form.submit' | t }}">
+{%- endform -%}
+{%- endcapture -%}
+{{- newsletter_form -}}

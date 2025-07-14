@@ -1,0 +1,10 @@
+<script>
+  BOLD.common.eventEmitter.on("BOLD_RECURRING_ORDERS_widget_loaded",function(e){
+    $(".bold-ro__prepaid-checkbox-lbl").click(function(){
+      $(".bold-ro__prepaid-checkbox").trigger("click");
+    })
+    $(".bold-ro__prepaid-gift-lbl").click(function(){
+      $(".bold-ro__prepaid-gift-checkbox").trigger("click");
+    })
+  });
+</script>

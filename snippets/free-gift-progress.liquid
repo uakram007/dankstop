@@ -1,0 +1,52 @@
+{%- if settings.display_free_gift_progress -%}
+<div class="free-gift-progress">
+
+  {%- assign free_gift_amount = free_gift_tag | replace: free_gift_tag_start, '' | times: 1.00 -%}
+  {%- assign cart_total_cents = cart.total_price | times: 1 -%}  
+  {%- assign cart_total = cart_total_cents | divided_by: 100.00 -%}  
+  {%- assign cart_total_for_comparison = cart_total -%}  
+
+  {%- if cart_display -%}
+    {%- assign product = item.product -%}  
+    {%- assign product_price = product.price_min | divided_by: 100.00 -%}  
+    {%- assign cart_total_without_item = cart_total | minus: product_price -%}  
+    {%- assign cart_total_for_comparison = cart_total_without_item -%}  
+  {%- endif -%}
+  
+  {%- assign amount_to_free = free_gift_amount | minus: cart_total_for_comparison -%}  
+  {%- assign free_gift_progress = cart_total_for_comparison | divided_by: free_gift_amount | times: 100.00 | round: 2 | at_most: 100.00 -%}  
+  {%- assign free_gift_progress_rounded = free_gift_progress | round -%} 
+
+
+  
+  
+  {%- comment -%}
+  {%- endcomment -%}
+  <div class="andre hidden">item_total_discount: {{ item_total_discount }}</div>
+  <div class="andre hidden">free_gift_progress: {{ free_gift_progress }}</div>
+  <div class="andre hidden">free_gift_progress_rounded: {{ free_gift_progress_rounded }}</div>
+  
+  
+  
+  
+  
+  {%- unless item_total_discount == 0 and free_gift_progress_rounded == 100 -%}
+    <div class="progress">
+      <div class="progress-bar bg-color-primary" role="progressbar" style="width: {{ free_gift_progress }}%" aria-valuenow="{{ free_gift_progress }}" aria-valuemin="0" aria-valuemax="100">
+        <span>{{ free_gift_progress_rounded }}%</span>
+      </div>
+    </div>
+
+    {%- if cart_total_for_comparison > free_gift_amount -%}
+      <div class="free-gift-product color-primary">
+        <span>{{ 'free_gifts.free_product' | t }}</span>
+      </div>
+    {%- else -%}
+      <div class="add-to-get-free">
+        <span>{{ 'free_gifts.add_to_get_free_html' | t: amount_to_free: amount_to_free }}</span>
+      </div>
+    {%- endif -%}
+  {%- endunless -%}
+
+</div>
+{%- endif -%}

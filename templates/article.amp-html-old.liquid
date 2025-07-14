@@ -1,0 +1,475 @@
+{% layout none %}
+<!doctype html>
+<html ⚡ amp lang="en">
+  <head>
+    {%- comment -%}
+    <!-- AMP Tags and Order =============== -->
+    {%- endcomment -%}
+    <meta charset="utf-8">
+    <script async src="https://cdn.ampproject.org/v0.js"></script>    
+    <title>
+      {{ page_title }}{% if current_tags %}{% assign current_tags_joined = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags_joined }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &#124; {{ shop.name }}{% endunless %}
+    </title>
+
+    {%- comment -%}
+    <!-- Favicon =========================================================== -->
+    {%- endcomment -%}
+    <link rel="icon" type="image/png" href="{{ 'favicon-32x32.png' | asset_url }}" sizes="32x32">
+
+    <link rel="canonical" href="{{ canonical_url }}">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
+    <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+    <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
+    
+    {%- comment -%}
+    <!-- Org + Website + Search Schema.org ================================================== -->
+    {%- endcomment -%}
+    {%- include 'site-schema-json-ld'  -%}
+    {%- comment -%}
+    <!-- Article JSON Schema =============== -->
+    {%- endcomment -%}
+    {%- include 'article-schema-json' -%}
+
+    {%- comment -%}
+    <!-- AMP Tags and Order =============== -->
+    {%- endcomment -%}
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    {%- comment -%}
+    <!-- Custom AMP Styles ============================================= -->
+    {%- endcomment -%}
+    <style amp-custom>.img-float{min-width:120px;max-width:100%;width:100%}body{font-family:'HelveticaNeue','Helvetica Neue',Helvetica,Arial,sans-serif}.grid.grid-border{max-width:1080px;margin:0 auto}a{color:#39b54a;text-decoration:none}p{text-rendering:optimizeLegibility;font-weight:400;font-style:normal;color:rgba(0,0,0,.8);font-size:18px;line-height:1.58;letter-spacing:-.004em}amp-img>img{position:relative;height:auto}img,amp-img{object-fit:contain;max-width:650px;margin:0 auto;display:table}.left{float:left}.right{float:right}p > span{text-rendering:optimizeLegibility;font-family:'HelveticaNeue','Helvetica Neue',Helvetica,Arial,sans-serif;letter-spacing:.01rem;font-weight:400;font-style:normal;color:rgba(0,0,0,.8);font-size:18px;line-height:1.58;letter-spacing:-.004em}@media screen and (max-width:768px){.large--four-fifths,.large--eight-tenths{padding:0 15px}}@media screen and (min-width:769px){.large--four-fifths,.large--eight-tenths{float:none;margin:0 auto}}@media screen and (max-width:1080px){.grid.grid-border{max-width:768px}}.breadcrumb ul{list-style-type:none;font-size:13px;padding:0 15px;display:inline-block}.breadcrumb ul>*{display:inline;padding-right:5px}.social-sharing{display:inline-block}.social-sharing a{display:inline-block;color:#fff;border-radius:2px;margin:0 10px 10px 0;padding:4px;height:20px;width:100px;line-height:22px;text-decoration:none;font-weight:400}.social-sharing a &:hover{color:#fff}.social-sharing span{display:inline-block;vertical-align:top;height:22px;line-height:22px;font-size:12px}.social-sharing .svg-icon &:before{line-height:22px}.social-sharing .svg-icon svg{height:15px;width:28px;padding:0;fill:#fff;vertical-align:middle}.share-title{font-weight:900;font-size:12px;padding-right:10px}.share-title .is-large &{padding-right:16px}.share-facebook{background-color:#3b5998}.share-facebook &:hover{background-color:darken(#3b5998,10%)}.share-twitter{background-color:#00aced}.share-twitter &:hover{background-color:darken(#00aced,10%)}.share-pinterest{background-color:#cb2027}.share-pinterest &:hover{background-color:darken(#cb2027,10%)}.share-fancy{background-color:#4999dc}.share-fancy &:hover{background-color:darken(#4999dc,10%)}.share-google{background-color:#dd4b39}.share-google &:hover{background-color:darken(#dd4b39,10%)}.share-count{position:relative;background-color:#fff;padding:0 8px;margin-right:-2px;font-size:14px;line-height:22px - 2;color:#333;border-radius:0 2px 2px 0;border:1px solid #ececec;opacity:0}.share-count &.is-loaded{opacity:1}.share-count &:before,.share-count &:after{content:'';display:block;position:absolute;top:50%;margin-top:-6px;width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-right:6px solid}.share-count &:before{left:-6px;border-right-color:#ececec}.share-count &:after{left:-5px;border-right-color:#fff}.share-count a:hover &{background-color:darken(#fff,4%)}.share-count a:hover &:after{border-right-color:darken(#fff,4%)}.share-count .is-large &{font-size:18px;padding:0 14px}.social-sharing.is-clean a span{height:30px;line-height:30px;font-size:13px}.social-sharing.is-clean a &:hover{background-color:#f9f9f9}.social-sharing.is-clean a &:hover .share-count{background-color:#fff}.social-sharing.is-clean a &:hover .share-count &:after{border-right-color:#fff}.social-sharing.is-clean a .share-title{font-weight:400}.social-sharing.is-clean .share-count{top:-1px}.social-sharing.is-clean .icon-facebook{color:#3b5998}.social-sharing.is-clean .icon-twitter{color:#00aced}.social-sharing.is-clean .icon-pinterest{color:#cb2027}.social-sharing.is-clean .icon-fancy{color:#4999dc}.social-sharing.is-clean .icon-google{color:#dd4b39}iframe{width:560px;height:315px;max-width:100%}.article--tag-list{padding:0}.article--tag-list li{display:inline-block;line-height:22px;font-family:medium-ui-sans-serif-text-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;font-weight:400;font-style:normal;color:rgba(0,0,0,.44);font-size:13px;letter-spacing:0;text-decoration:none;background:#fafafa;border-radius:3px;border:1px solid #f0f0f0;padding:5px 10px;margin-right:8px;margin-bottom:8px;border:none;background:rgba(0,0,0,.05)}.article--tag-list li a{color:rgba(0,0,0,.6);text-decoration:none}.article--comments-link{margin-top:10px;color:rgba(0,0,0,.44);float:right}.article--comments-link svg{fill:rgba(0,0,0,.6);vertical-align:middle}.article--comments-link &:hover{color:rgba(0,0,0,.6)}.article--comments-link &:hover svg{fill:rgba(0,0,0,.8)}.text-left{margin-bottom:0}.text-light{margin-top:0;line-height:1em}.text-light span{font-family:'HelveticaNeue','Helvetica Neue',Helvetica,Arial,sans-serif;color:rgba(0,0,0,.44);font-size:12px;font-weight:400}.article--published-by,p.article--published-by span{font-size:10px;font-style:italic}.clearfix .left,.clearfix .right{padding-bottom:20px}.mobile-nav .mn-logo-cont{background:#fff;-webkit-flex:1 0 40%;-moz-flex:1 0 40%;-ms-flex:1 0 40%;-o-flex:1 0 40%;flex:1 0 40%}.mn-logo-cont{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;flex-direction:column;width:auto;align-items:center;justify-content:center;margin:0 auto;height:fit-content;padding:15px;color:rgb(53,53,53)}.mn-logo-cont span:first-child{font-size:17px}.mn-logo-cont>span,.mn-logo-cont>a{margin-bottom:5px}.mn-logo-cont .svg-cont{width:auto;display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;-webkit-box-direction:normal;-webkit-box-orient:horizontal;-webkit-box-align:center;-ms-flex-align:center;-webkit-box-pack:justify;-ms-flex-pack:justify}.mn-logo-cont .svg-cont svg:first-of-type{margin:0 3px 0 auto;width:17%;height:30px;fill:#39b54a}.mn-logo-cont .svg-cont svg:last-of-type{height:28px;width:auto}.mn-logo-cont .header_search_button{width:100%;max-width:350px;margin-top:5px}.mn-logo-cont .header_search_button button{border:1px solid #353535;padding:8px;border-radius:5px;background:#fff;font-size:13px;width:100%}.dankstop_link{display:flex;align-items:center;font-size:23px;color:rgb(53,53,53);-webkit-font-smoothing:antialiased}.read_on_site{font-size:20px;text-align:center;padding:20px 0}.amp-carousel-button{display:none}@-webkit-keyframes fadeInOut{0%{opacity:0;top:0;visibility:hidden}10%{opacity:1;top:0;visibility:visible}80%{opacity:-.8;top:0;visibility:visible}100%{opacity:-.8;top:0;visibility:hidden}}.ds-benefits>*{-webkit-animation:fadeInOut 9s infinite;-moz-animation:fadeInOut 9s infinite;-ms-animation:fadeInOut 9s infinite;-o-animation:fadeInOut 9s infinite;animation:fadeInOut 9s infinite}.dsb-1{display:inline;position:relative;top:0}.dsb-2{opacity:0;display:inline;position:relative;-webkit-animation-delay:3s;-moz-animation-delay:3s;-ms-animation-delay:3s;-o-animation-delay:3s;animation-delay:3s}.dsb-3{opacity:0;display:inline;position:relative;-webkit-animation-delay:6s;-moz-animation-delay:6s;-ms-animation-delay:6s;-o-animation-delay:6s;animation-delay:6s}.ds-benefits{display:flex;width:100%;height:20px;background:#353535;text-align:center;position:relative}.ds-benefits>div{display:flex;justify-content:center;position:absolute;width:100%;color:#fff;font-size:11px;text-transform:uppercase;align-items:center;height:20px}li{display:inline-block;}.svg-inline--fa.fa-tag{width:10px;height:10px;}</style>
+    {%- comment -%}
+    <!-- Product meta ================================================== -->
+    {%- endcomment -%}
+    {%- comment -%}
+    <!-- Facebook Open Graph -->
+    {%- endcomment -%}
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ article.title | strip_html | escape }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    {%- if article.image -%}
+    <meta property="og:image" content="http:{{ article | img_url: 'grande' }}">
+    <meta property="og:image:secure_url" content="https:{{ article | img_url: 'grande' }}">
+    {%- endif -%}
+    {%- if page_description -%}
+    <meta property="og:description" content="{{ page_description | escape }}">
+    {%- endif -%}
+    <meta property="og:site_name" content="{{ shop.name }}">
+    {%- comment -%}
+    <!-- Twitter user name of the site, based on theme settings -->
+    {%- endcomment -%}
+    <meta name="twitter:card" content="summary">
+    {%- unless settings.social_twitter_link == blank -%}
+    <meta name="twitter:site" content="@{{ settings.social_twitter_link | split: 'twitter.com/' | last }}">
+    {%- endunless -%}
+    <meta name="twitter:title" content="{{ article.title | strip_html | escape }}">
+    <meta name="twitter:description" content="{{ article.excerpt_or_content | strip_html | truncatewords: 140, '' | escape }}">
+    {%- if article.image -%}
+    <meta property="twitter:image" content="https:{{ article | img_url: 'medium' }}">
+    {%- endif -%}
+  </head>
+  <body>
+    
+    <div hidden class="hidden">{{ content_for_layout }}</div>
+
+    <amp-analytics type="googleanalytics" id="google_analytics_01">
+    <script type="application/json">
+      {
+        "vars": {
+          "account": "UA-49184307-1"
+        },
+        "triggers": {
+          "trackPageview": {
+            "on": "visible",
+            "request": "pageview"
+          }
+        }
+      }
+    </script>
+    </amp-analytics>
+
+    <a href="/" class="mn-logo-cont">
+      {%- if settings.logo_use_image -%}
+      {%- assign logo_img_src = 'logo.png' | asset_url -%}
+      {%- assign logo_img_alt = shop.name -%}
+      {%- assign logo_img_title = 'general.dankstop.long_title' | t -%}
+      {%- assign logo_img_size = 'small' -%}
+      <span>Shop on</span>
+      <span class="svg-cont">
+        <svg id="dsLeafLogoPrimary" class="dankstop-logo-svg" fill="#39b54a" width="100%" height="100%" viewBox="0 0 197 243" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><g class="dankstop-logo-svg--g"><path d="M99.6,12.3l-4-3.8l-4,3.8c-1.7,1.6-22,21-42.5,46.2l0.3,0.3c-5.5,8.8-6,17.5-4.8,24.6c0.4,2.5,1,4.7,1.8,6.8 c2.2,6.2,5.8,11.9,10.9,17l40,40c-4.3-0.1-7.4,0.4-8.2,0.6c-21.5,3.2-37.6,22.1-37.4,43.9c0.1,8.1,2.3,15.8,6.4,22.4 c2.1,3.4,4.6,6.6,7.6,9.4C72.7,230,81.4,234,90.8,235c1.5,0.2,3.1,0.3,4.7,0.3c0.1,0,0.1,0,0.2,0c0,0,0,0,0,0 c50.1,0,90.9-40.8,90.9-90.9C186.5,95.4,103.2,15.6,99.6,12.3z M127.9,193.7c-1.2,15.9-14,28.6-30,29.7c-0.3,0-0.6,0-0.9,0 c-0.8,0-1.6,0.1-2.4,0c-0.1,0-0.3,0-0.4,0c-1.4,0-2.9-0.1-4.3-0.2c-0.5,0.1-1,0.1-1.5,0.2c-6.3,0.4-12.3-1-17.7-4 c6.1,2,12.5,3.3,19.2,3.8c0.3,0,0.7-0.1,1-0.1c-9.3-1.3-17.6-6.6-23-15.2c-0.8-1.3-1.6-2.7-2.1-4.2c-8.3-20.7,5.3-41.7,25.1-44.6 l0.3-0.1c0.1,0,0.3,0,0.6-0.1c0.8-0.1,2.5-0.3,4.7-0.3c5.1,0,13.1,1.1,19.6,7.1l1.5,1.5l0,0C124.8,174.1,128.6,183.7,127.9,193.7z M133.2,214.1c3.5-5.8,5.8-12.4,6.3-19.5c1-13.4-4-26.2-13.6-35.3c-0.6-0.7-1.2-1.3-1.9-1.9L65.5,98.9c-3.8-3.8-6.6-8.1-8.1-12.6 c-3.2-9.1-1.7-17.5,4.5-25l0,0c13.9-16.6,27.3-30.3,33.7-36.7c7.1,7.1,22.7,23,38.1,41.9c26.9,33,41.1,59.9,41.1,77.8 C174.8,174.5,158,200.7,133.2,214.1z"></path><path d="M44.4,204.7c-17.1-14.5-28-36.2-28-60.3c0-12.9,7.4-30.4,21.7-51.6c-0.4-0.9-0.7-1.7-1-2.6 c-1.3-3.7-2.3-8.2-2.3-13.1c-16.4,22.8-30,47.5-30,67.3c0,35,21.2,66.6,50.3,81.7c0,0-4.5-5.2-7.6-11.6 C45.4,210.3,44.4,204.7,44.4,204.7z"></path></g></svg>
+        <span class="dankstop_link">dankstop.com</span>
+      </span>
+      <span class="header_search_button">
+        <button>Search Bongs, Dab Rigs, Vaporizers, etc.</button>
+      </span>
+      {%- else -%}
+      <span>{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
+
+    <div class="ds-benefits">
+        <div class="dsb-1">Free Same-Day Shipping</div>
+        <div class="dsb-2">Discreet Packaging</div>
+        <div class="dsb-3">Hassle-Free Returns</div>
+    </div>
+
+    <div class="grid grid-border">
+      <div class="grid-item large--four-fifths">
+        
+        <header class="section-header">
+          <div class="section-header--left">
+            <h1 class="text-left">{{ article.title }}</h1>
+            <p class="text-light">
+              {%- assign date_published_ISO = article.published_at | date: '%Y-%m-%d' -%}
+              {%- assign date_published_standard = article.published_at | date: format: 'month_day_year' -%}
+              {%- capture date -%}<time datetime="{{ date_published_ISO }}">{{ date_published_standard }}</time>{%- endcapture -%}
+              {%- capture author -%}{{ article.author }}{%- endcapture -%}
+              {%- comment -%}
+              {{ 'blogs.article.author_on_date_html' | t: author: author, date: date }}
+              {%- endcomment -%}
+              <span class="article--author">{{ author }}&nbsp; &#8226;</span>
+              <span class="article--published-date"><span class="dot-sep"></span>{{ date }}<!-- &nbsp; &#8226; --></span>
+              {%- comment -%}
+              <span class="article--time-to-read"><span class="dot-sep"></span>&nbsp;{{ minutes_to_read }}&nbsp;{{ 'blogs.article.min_to_read' | t }}</span>
+              {%- endcomment -%}
+            </p>
+          </div>
+        </header>
+        
+        <div class="rte">
+          {%- comment -%}
+          <!-- Remove CSS styles attributes -->
+          {%- endcomment -%}
+          {%- assign article_content_raw = article.content -%}
+          {%- assign style_attr_array = article_content_raw | split: 'style="' -%}
+          {%- assign style_attr_count = style_attr_array.size -%}
+          {%- for i in (1..style_attr_count) -%}
+            {%- assign value_of_style_attr = '' -%}
+            {%- assign style_attr_with_value = '' -%}
+            {%- assign replace_with_value = '' -%}
+            {%- if i == 1 -%}
+              {%- assign content_split_at_style = article_content_raw | split: ' style="' -%}
+              {%- assign content_post_first_style = content_split_at_style[1] -%}
+              {%- assign value_of_style_attr = content_post_first_style | split: '"' | first -%}
+              {%- assign style_attr_with_value = ' style="' | append: value_of_style_attr | append: '"' -%}
+              {%- assign article_content_AMP = article_content_raw | replace: style_attr_with_value, '' -%}
+            {%- else -%}
+              {%- assign content_split_at_style = article_content_AMP | split: ' style="' -%}
+              {%- assign content_post_first_style = content_split_at_style[1] -%}
+              {%- assign value_of_style_attr = content_post_first_style | split: '"' | first -%}
+              {%- assign style_attr_with_value = ' style="' | append: value_of_style_attr | append: '"' -%}
+              {%- if value_of_style_attr contains 'float: right' or value_of_style_attr contains 'float:right' -%}
+                {%- assign replace_with_value = ' class="img-float img-fr"' -%}
+              {%- elsif value_of_style_attr contains 'float: left' or value_of_style_attr contains 'float:left' -%}
+                {%- assign replace_with_value = ' class="img-float img-fl"' -%}
+              {%- endif -%}
+              {%- assign article_content_AMP = article_content_AMP | replace: style_attr_with_value, replace_with_value -%}
+            {%- endif -%}
+            {%- assign styles_leftover_array = article_content_AMP | split: 'style="' -%}
+            {%- assign styles_leftover_count = styles_leftover_array.size -%}
+            {%- if styles_leftover_count < 2 -%}
+              {%- break -%}
+            {%- else -%}
+            {%- endif -%}
+          {%- endfor -%}
+          
+          
+          {%- comment -%}
+          <!-- Remove CSS style tags -->
+          {%- endcomment -%}
+          {%- assign tag_to_remove_start = '<style>' -%}
+          {%- assign tag_to_remove_end = '</style>' -%}
+          {%- assign tag_attr_array = article_content_AMP | split: tag_to_remove_start -%}
+          {%- assign tag_attr_count = tag_attr_array.size | minus: 1 -%}
+          {%- for i in (1..tag_attr_count) -%}
+            {%- assign content_split_at_tag = article_content_AMP | split: tag_to_remove_start | join: '' -%}
+            {%- assign article_content_AMP = content_split_at_tag | split: tag_to_remove_end | last -%}
+          {%- endfor -%}
+          
+          
+          {%- comment -%}
+          <!-- Process iFrame tags -->
+          {%- endcomment -%}
+          {%- assign iframe_closing_tag_replacement = '</amp-iframe>' -%}
+          {%- assign tag_to_process_start = '<iframe ' -%}
+          {%- assign tag_to_process_end = '</iframe>' -%}
+          {%- assign tag_attr_array = article_content_AMP | split: tag_to_process_start -%}
+          {%- assign tag_attr_count = tag_attr_array.size | minus: 1 -%}
+          {%- for i in (1..tag_attr_count) -%}
+            {%- assign content_split_at_tag = article_content_AMP | split: tag_to_process_start -%}
+            {%- assign content_of_tag = content_split_at_tag[1] | split: tag_to_process_end | first -%}
+            {%- assign original_tag = tag_to_process_start | append: content_of_tag | append: tag_to_process_end -%}
+          
+            {%- if content_of_tag contains 'youtube.com' -%}
+              {%- assign iframe_start_tag_replacement = '<amp-iframe layout="responsive" sandbox="allow-scripts allow-same-origin allow-popups" frameborder="0"' -%}
+            {%- else -%}
+              {%- assign iframe_start_tag_replacement = '<amp-iframe style="top:75vh;" layout="responsive" sandbox="allow-scripts allow-same-origin allow-popups" frameborder="0"' -%}
+            {%- endif -%}
+            {%- assign replacement_tag = iframe_start_tag_replacement | append: content_of_tag | append: iframe_closing_tag_replacement -%}
+          
+            {%- assign article_content_AMP = article_content_AMP | replace: original_tag, replacement_tag -%}
+          {%- endfor -%}
+
+          
+          {%- comment -%}
+          <!-- Remove prohibited percentages off width/height attributes -->
+          {%- endcomment -%}
+          {%- assign percentage_attr_value_selector = '%"' -%}
+          {%- assign percentage_attr_value_replc = '"' -%}
+          {%- assign article_content_AMP = article_content_AMP | replace: percentage_attr_value_selector, percentage_attr_value_replc -%}
+          
+          
+          
+          {%- comment -%}
+          <!-- Remove prohibited percentages off width/height attributes -->
+          {%- endcomment -%}
+          {%- assign percentage_attr_value_selector = '%"' -%}
+          {%- assign percentage_attr_value_replc = '"' -%}
+          {%- assign article_content_AMP = article_content_AMP | replace: percentage_attr_value_selector, percentage_attr_value_replc -%}
+          
+          
+          
+          {%- comment -%}
+          <!-- Remove prohibited percentages off width/height attributes -->
+          {%- endcomment -%}
+          {%- assign empty_target = 'target=""' -%}
+          {%- assign target_blank = 'target="_blank" rel="noopener"' -%}
+          {%- assign article_content_AMP = article_content_AMP | replace: empty_target, target_blank -%}
+          
+          
+          
+          {%- comment -%}
+          <!-- Remove Disallowed Properties -->
+          {%- endcomment -%}
+          {%- assign strings_to_remove_string = 'mce-data-marked="1", bis_skin_checked="1"' -%}
+          {%- assign strings_to_remove_array = strings_to_remove_string | split: ', ' -%}
+          {%- for string_to_remove in strings_to_remove_array -%}
+          {%- assign article_content_AMP = article_content_AMP | replace: string_to_remove, '' -%}
+          {%- endfor -%}
+          
+          
+          
+          {%- comment -%}
+          <!-- Append Disallowed Properties that are difficult to target -->
+          {%- endcomment -%}
+          {%- assign strings_to_replace_string = 'natural-width=, natural-height=' -%}
+          {%- assign strings_to_replace_array = strings_to_replace_string | split: ', ' -%}
+          {%- for string_to_replace in strings_to_replace_array -%}
+          {%- comment -%}
+          {%- assign string_to_replace_with = "data-" | append: string_to_replace -%}
+          {%- endcomment -%}
+          {%- assign string_to_replace_with = string_to_replace | replace: "natural-", ""-%}
+          {%- assign article_content_AMP = article_content_AMP | replace: string_to_replace, string_to_replace_with -%}
+          {%- endfor -%}
+          
+          
+          {%- comment -%}
+          <!-- Append Disallowed Properties that are difficult to target -->
+          {%- endcomment -%}
+          {%- assign strings_to_append_string = 'color="' -%}
+          {%- assign strings_to_append_array = strings_to_append_string | split: ', ' -%}
+          {%- for string_to_append in strings_to_append_array -%}
+          {%- assign string_to_replace_with = "data-" | append: string_to_append -%}
+          {%- assign article_content_AMP = article_content_AMP | replace: string_to_append, string_to_replace_with -%}
+          {%- endfor -%}
+          
+          
+
+          {%- comment -%}
+          <!-- Remove JS script tags -->
+          {%- endcomment -%}
+          {%- assign elements_to_remove_string = 'script,font' -%}
+          {%- assign elems_array = elements_to_remove_string | split: ',' -%}
+          {%- assign article_content_raw = article.content -%}
+          {%- for element in elems_array -%}
+            {%- assign tag_to_remove_start = '<' | append: element | append: ' ' -%}
+            {%- assign tag_to_remove_end = '</' | append: element | append: '>' -%}
+            {%- assign tag_attr_array = article_content_raw | split: tag_to_remove_start -%}
+            {%- assign tag_attr_count = tag_attr_array.size -%}
+            {%- for i in (1..tag_attr_count) -%}
+              {%- assign value_of_tag_attr = '' -%}
+              {%- assign tag_attr_with_value = '' -%}
+              {%- assign replace_with_value = '' -%}
+              {%- if i == 1 -%}
+                {%- assign content_split_at_tag = article_content_AMP | split: tag_to_remove_start -%}
+                {%- assign content_post_first_tag = content_split_at_tag[1] -%}
+                {%- assign value_of_tag_attr = content_post_first_tag | split: tag_to_remove_end | first -%}
+                {%- assign tag_attr_with_value = tag_to_remove_start | append: value_of_tag_attr | append: tag_to_remove_end -%}
+                {%- assign article_content_AMP = article_content_AMP | replace: tag_attr_with_value, '' -%}
+              {%- else -%}
+                {%- assign content_split_at_tag = article_content_AMP | split: tag_to_remove_start -%}
+                {%- assign content_post_first_tag = content_split_at_tag[1] -%}
+                {%- assign value_of_tag_attr = content_post_first_tag | split: tag_to_remove_end | first -%}
+                {%- assign tag_attr_with_value = tag_to_remove_start | append: value_of_tag_attr | append: tag_to_remove_end -%}
+                {%- assign article_content_AMP = article_content_AMP | replace: tag_attr_with_value, replace_with_value -%}
+              {%- endif -%}
+              {%- assign tag_leftover_array = article_content_AMP | split: tag_to_remove_start -%}
+              {%- assign tag_leftover_count = tag_leftover_array.size -%}
+              {%- if tag_leftover_count < 2 -%}
+                {%- break -%}
+              {%- else -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endfor -%}
+          
+          {%- comment -%}
+          <!-- Remove JS script tags -->
+          {%- endcomment -%}
+          {%- assign tag_to_remove_start = '<script>' -%}
+          {%- assign tag_to_remove_end = '</script>' -%}
+          {%- assign article_content_raw = article.content -%}
+          {%- assign tag_attr_array = article_content_raw | split: tag_to_remove_start -%}
+          {%- assign tag_attr_count = tag_attr_array.size -%}
+          {%- for i in (1..tag_attr_count) -%}
+            {%- assign value_of_tag_attr = '' -%}
+            {%- assign tag_attr_with_value = '' -%}
+            {%- assign replace_with_value = '' -%}
+            {%- if i == 1 -%}
+              {%- assign content_split_at_tag = article_content_AMP | split: tag_to_remove_start -%}
+              {%- assign content_post_first_tag = content_split_at_tag[1] -%}
+              {%- assign value_of_tag_attr = content_post_first_tag | split: tag_to_remove_end | first -%}
+              {%- assign tag_attr_with_value = tag_to_remove_start | append: value_of_tag_attr | append: tag_to_remove_end -%}
+              {%- assign article_content_AMP = article_content_AMP | replace: tag_attr_with_value, '' -%}
+            {%- else -%}
+              {%- assign content_split_at_tag = article_content_AMP | split: tag_to_remove_start -%}
+              {%- assign content_post_first_tag = content_split_at_tag[1] -%}
+              {%- assign value_of_tag_attr = content_post_first_tag | split: tag_to_remove_end | first -%}
+              {%- assign tag_attr_with_value = tag_to_remove_start | append: value_of_tag_attr | append: tag_to_remove_end -%}
+              {%- assign article_content_AMP = article_content_AMP | replace: tag_attr_with_value, replace_with_value -%}
+            {%- endif -%}
+            {%- assign tag_leftover_array = article_content_AMP | split: tag_to_remove_start -%}
+            {%- assign tag_leftover_count = tag_leftover_array.size -%}
+            {%- if tag_leftover_count < 2 -%}
+              {%- break -%}
+            {%- else -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          
+          
+          {%- comment -%}
+          <!-- Process Imgs -- make into AMP tags + IMGIX compressed source -->
+          {%- endcomment -%}
+          {%- assign responsive_amp_imgs = true -%}
+          {%- if responsive_amp_imgs -%}
+          {%- assign imt_tag_AMP_start = '<amp-img layout="responsive" ' -%}
+          {%- assign imt_tag_AMP_width = 1.6 -%}
+          {%- assign imt_tag_AMP_height = 1 -%}
+          {%- else -%}
+          {%- assign imt_tag_AMP_start = '<amp-img layout="intrinsic" ' -%}
+          {%- assign imt_tag_AMP_width = 320 -%}
+          {%- assign imt_tag_AMP_height = 200 -%}
+          {%- endif -%}
+          {%- assign imt_tag_AMP_start_with_dimensions = imt_tag_AMP_start | append: 'width="' | append: imt_tag_AMP_width | append: '" height="' | append: imt_tag_AMP_height | append: '" ' -%}
+          {%- assign imt_tag_AMP_end = '></amp-img>' -%}
+          
+          {%- assign imt_tag_array = article_content_AMP | split: '<img ' -%}
+          {%- assign imt_tag_count = imt_tag_array.size -%}
+          {%- for i in (1..imt_tag_count) -%}
+            {%- assign img_tag_full = '' -%}
+            {%- assign style_attr_with_value = '' -%}
+            {%- assign content_split_at_img = article_content_AMP | split: '<img ' -%}
+            {%- assign img_2nd_part = content_split_at_img[1] -%}
+            {%- assign img_content = img_2nd_part | split: '>' | first -%}
+            {%- assign img_tag_HTML = '<img ' | append: img_content | append: '>' -%}
+          
+            {%- comment -%}
+            <!-- Replacing SRC with IMGIX Src -->
+            {%- endcomment -%}
+            {%- if enableImgix -%}
+            {%- assign shopify_cdn_url = 'cdn.shopify.com' -%}
+            {%- assign imgix_cdn_url = 'dankstop.imgix.net' -%}
+            {%- assign imgix_params = 'auto=compress%2Cformat&q=50&w=' | append: imt_tag_AMP_width -%}
+            {%- assign imgix_params_concatenator = '&' -%}
+            {%- assign img_content_src = img_content | split: 'src="' | last | strip -%}
+            {%- assign img_content_src = img_content_src | split: '"' | first -%}
+            {%- assign img_content_src = img_content_src | split: '?' | first -%}
+            {%- unless img_content_src contains '?' -%}
+              {%- assign imgix_params_concatenator = '?' -%}
+            {%- endunless -%}
+            {%- assign img_content_IMGIX_src = img_content_src | replace: shopify_cdn_url, imgix_cdn_url | append: imgix_params_concatenator | append: imgix_params -%}
+            {%- assign img_content = img_content | replace: img_content_src, img_content_IMGIX_src -%}
+            {%- endif -%}
+            
+            {%- comment -%}
+            <!-- Creating Final AMP-Img tag -->
+            {%- endcomment -%}
+            {%- if img_content contains 'width="' -%}
+            {%- assign img_tag_AMP = imt_tag_AMP_start | append: img_content | append: imt_tag_AMP_end -%}
+            {%- else -%}
+            {%- assign img_tag_AMP = imt_tag_AMP_start_with_dimensions | append: img_content | append: imt_tag_AMP_end -%}
+            {%- endif -%}          
+            {%- assign article_content_AMP = article_content_AMP | replace: img_tag_HTML, img_tag_AMP -%}
+          {%- endfor -%}
+
+          
+          {%- comment -%}
+          <!-- Removing stray <img> tags -->
+          {%- endcomment -%}
+          {%- assign article_content_AMP = article_content_AMP | replace: '<img>', '' -%}
+          
+          
+          {%- comment -%}
+          <!-- Removing excessive meta tags -->
+          {%- endcomment -%}
+          {%- assign article_content_AMP_final = article_content_AMP | split: '<meta charset="utf-8">' | join: " " -%}
+          {{- article_content_AMP_final -}}
+
+          <p class="article--published-by">
+            - published by <span>{{ shop.name }}</span>
+          </p>
+        </div>
+
+        <div class="read_on_site">
+          <span> Read on <a href="{{ article.url }}">DankStop.com</a></span>
+        </div>
+        
+        {%- if settings.social_sharing_blog -%}
+        <hr class="hr--clear">
+        <h3>{{ 'blogs.article.share_this_post' | t }}</h3>
+        {%- include 'social-sharing' -%}
+        <hr>
+        {%- endif -%}
+        
+        <div>
+          {%- comment -%}
+            {%- if blog.comments_enabled? -%}
+              <a href="#comments" class="article--comments-link">
+                <svg class="comment-bubble" width="29" height="29" viewBox="0 0 29 29"><path d="M21.27 20.058c1.89-1.826 2.754-4.17 2.754-6.674C24.024 8.21 19.67 4 14.1 4 8.53 4 4 8.21 4 13.384c0 5.175 4.53 9.385 10.1 9.385 1.007 0 2-.14 2.95-.41.285.25.592.49.918.7 1.306.87 2.716 1.31 4.19 1.31.276-.01.494-.14.6-.36a.625.625 0 0 0-.052-.65c-.61-.84-1.042-1.71-1.282-2.58a5.417 5.417 0 0 1-.154-.75zm-3.85 1.324l-.083-.28-.388.12a9.72 9.72 0 0 1-2.85.424c-4.96 0-8.99-3.706-8.99-8.262 0-4.556 4.03-8.263 8.99-8.263 4.95 0 8.77 3.71 8.77 8.27 0 2.25-.75 4.35-2.5 5.92l-.24.21v.32c0 .07 0 .19.02.37.03.29.1.6.19.92.19.7.49 1.4.89 2.08-.93-.14-1.83-.49-2.67-1.06-.34-.22-.88-.48-1.16-.74z"></path></svg>
+                {{ 'blogs.comments.comments_with_count' | t: count: number_of_comments }}
+              </a>
+            {%- endif -%}
+          {%- endcomment -%}
+          {%- include 'tags-article' -%}
+        </div>
+        
+        {%- if blog.next_article or blog.previous_article -%}
+        <hr>
+        <p class="clearfix">
+          {%- if blog.previous_article -%}
+          <span class="left">
+            {{ 'blogs.article.older_post' | t | prepend: '← ' | link_to: blog.previous_article }}
+          </span>
+          {%- endif -%}
+          {%- if blog.next_article -%}
+          <span class="right">
+            {{ 'blogs.article.newer_post' | t | append: ' →' | link_to: blog.next_article }}
+          </span>
+          {%- endif -%}
+        </p>
+        {%- endif -%}
+      </div>
+      
+      
+      {%- comment -%}
+      <aside class="sidebar grid-item large--one-fifth grid-border--left">
+        {%- include 'blog-sidebar' -%}
+      </aside>  
+      {%- endcomment -%}
+
+      
+    </div>
+    
+  </body>
+</html>

@@ -1,0 +1,63 @@
+{%- include 'lazyload-placeholder' -%} 
+
+{%- if image.aspect_ratio < 1 -%}
+  {%- assign max_width = height | times: image.aspect_ratio -%}
+  {%- if image.height < height -%}
+    {%- assign max_height = image.height -%}
+    {%- assign max_width = image.width -%}
+  {%- else -%}
+    {%- assign max_height = height -%}
+  {%- endif -%}
+{%- else -%}
+  {%- assign max_height = width | divided_by: image.aspect_ratio -%}
+  {%- if image.width < width -%}
+    {%- assign max_height = image.height -%}
+    {%- assign max_width = image.width -%}
+  {%- else -%}
+    {%- assign max_width = width -%}
+  {%- endif -%}
+{%- endif -%}
+
+
+{%- comment -%}
+{%- assign img = image -%}
+{%- endcomment -%}
+{%- assign img_aspect_ratio = img.aspect_ratio -%}
+{%- assign img_w = 100 -%}
+{%- assign img_h = img_w -%}
+{%- assign x_by_y = img_w | append: 'x' | append: img_h -%}
+{%- assign x_only_string = '_' | append: img_w | append: 'x.' -%}
+{%- assign img_url = img | img_url: x_by_y -%}
+{%- if size == blank -%}
+{%- assign img_width_only_url = img | img_url: '1x1' | replace: '_1x1.', x_only_string -%}
+{%- assign img_url = img_width_only_url -%}
+{%- else -%}
+{%- assign img_url = img | img_url: size -%}
+{%- endif -%}
+{%- assign img_url_small = img | img_url: 'small' -%}
+{%- assign img_alt = img.alt | escape -%}
+
+{%- if img_wrapper == true -%}
+{%- if img_ratio == blank -%}
+  {%- assign img_ratio = img.aspect_ratio -%}
+{%- endif -%}
+<span class="imod ar--{{ img_ratio }}">
+{%- endif -%}
+
+  <img class="lazyload {{ img_class }}"
+     {%- comment -%}{{-" "-}}
+     src="{{ img_url_small }}"
+     {%- endcomment -%}{{-" "-}}
+     src="{{ lazyload_placeholder }}"
+     data-src="{{ img_url }}"
+     width="{{ img.width }}"
+     height="{{ img.height }}"
+     alt="{{ img_alt }}"
+     data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+     data-aspectratio="{{ img_aspect_ratio }}"
+     data-sizes="auto"
+     >
+
+{%- if img_wrapper == true -%}
+</span>
+{%- endif -%}
