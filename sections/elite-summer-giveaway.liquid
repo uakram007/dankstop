@@ -1,0 +1,221 @@
+{%  style  %} 
+.giveaway-main {
+    padding: 70px 0;
+    overflow: hidden;
+    {% if section.settings.bg_img %}
+        background: url({{ section.settings.bg_img | img_url: 'master' }}) no-repeat center center;
+        background-size: cover;
+    {% else %}
+        background: var(--Color-Elite-Blue-900, #031546);
+    {% endif %}
+    position: relative;
+    .cc-mm-best-value-elite-row{
+        position:unset;
+        background: unset;
+    }
+    .wrapper{
+        max-width:1440px;
+        margin:0 auto;
+    }
+    .white{
+        color: #FFFFFF;
+    }
+    &.cc-mm-best-value-elite-section:before {
+        background: linear-gradient(118deg, #ab7917 8.15%, #ffdf6e, #ab7917 91.85%);
+        content: "";
+        position: absolute;
+        top: 0;
+        height: 8px;
+        width: 100%;
+    }
+    &.cc-mm-best-value-elite-section:after{
+        display: none;
+    }
+    .cc-mm-best-value-elite-wrap{
+        justify-content:unset;
+        padding: 0 ;
+    }
+}
+.heading-giveaway{
+    margin:20px 0;
+    font-weight: 600;
+}
+.subheading-giveaway{
+    font-weight:600; 
+    margin-top:0 !important;
+}
+.goldenheading-giveaway{
+    background: linear-gradient(117.84deg, #E2A123 8.15%, #FFE793 50%, #E2A123 91.85%); 
+    font-size:40px;
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    font-weight: 700;
+    max-width: 400px;
+    margin-bottom: 40px !important;
+    margin-top: 20px;
+}
+.giveaway-info{ 
+    margin-top: 30px;
+    *{
+        font-weight: 400; 
+        font-size: 14px; 
+        line-height: 150%;
+        letter-spacing: 0%;
+        color: #FFFFFF;
+        margin: 0;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .giveaway-main {
+        padding: 50px 0;
+        {% if section.settings.bg_img %}
+            background: url({{ section.settings.bg_img_mb | img_url: 'master' }}) no-repeat center center;
+            background-size: cover;
+        {% else %}
+            background: var(--Color-Elite-Blue-900, #031546);
+        {% endif %}
+        .wrapper{
+            padding:0;
+        }
+        .cc-mm-best-value-elite-wrap{
+            gap: 0;
+            padding-bottom: 0;
+        }
+    }
+    .goldenheading-giveaway{
+        font-size: 30px;
+        max-width: 300px;
+        text-align:center;
+    }
+    .cc-mm-best-value-elite-buttons{
+        position: relative;
+        z-index: 2;
+        + img{
+            position: relative;
+            top: -80px;
+            z-index: 0;
+        }
+    }
+    .giveaway-info{
+        margin-top: 0;
+        text-align:center;
+        padding:0 15px;
+        *{ 
+            font-size: 10px;  
+        }
+    }
+}
+{% endstyle %}
+<section class="cc-mm-best-value-elite-section giveaway-main" id="cc-mm-best-value-elite-section">
+        <div class="cc-mm-best-value-elite-row">
+            <div class="saving-label">GIVEAWAY</div>
+            <div class="wrapper">
+                <div class="cc-mm-best-value-elite-wrap">
+                    <div class="cc-mm-best-value-text">
+                        <img src="{{ 'cc-elite-logo.png' | file_url }}" class="img-responsive">
+                        <p class="h2 white heading-giveaway">
+                            {{ section.settings.heading  }}
+                        </p>
+
+                        <p class="h3 white subheading-giveaway">
+                            {{ section.settings.subheading }}
+                        </p>
+
+                        <p class="h2 goldenheading-giveaway">
+                            {{ section.settings.goldheading }}
+                        </p>
+                        
+                       
+                        
+                        <div class="cc-mm-best-value-elite-buttons">
+                          {% if customer.tags contains "elite_member" %}
+                             {% else %}  
+                              <a href="javascript:void(0);" 
+                                data-id="{{ settings.elite_product.selected_or_first_available_variant.id }}"
+                                class="{% if customer.tags contains 'elite_member' %} cc-already-elite-member {% elsif customer %} SSO_popup_elite_upgrade {% else %} SSO_popup_elite_join {% endif %} cc-elite-button cc-mm-best-value-elite-btn2">
+                                {{ section.settings.btn_text_2 }}
+                              </a> 
+                          {% endif %}  
+                        </div>
+                         <img src="{{ section.settings.mbl_img | img_url:'master' }}" class="img-responsive desktop-hide"> 
+                    </div>
+                    <div class="cc-mm-best-value-image">
+                        <img src="{{ section.settings.image | img_url:'master' }}" class="img-responsive mobile-hide">
+                    </div>
+                </div> 
+                <div class="giveaway-info">
+                          {{ section.settings.giveaway_info }}
+                </div>
+            </div>
+        </div>
+    </section>
+    
+{% schema %}
+  {
+    "name": "Summer Giveaway",
+    "settings": [
+        {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image Here"
+        }, 
+        {
+            "type": "image_picker",
+            "id": "mbl_img",
+            "label": "Image Mobile"
+        }, 
+        {
+            "type": "image_picker",
+            "id": "bg_img",
+            "label": "Image Background"
+        }, 
+        {
+            "type": "image_picker",
+            "id": "bg_img_mb",
+            "label": "Image Background Mobile"
+        }, 
+        {
+          "type": "text",
+          "label": "Heading",
+          "id": "heading",
+          "default": "SUMMER GIVEAWAY*"
+        },
+        {
+          "type": "text",
+          "label": "Sub Heading",
+          "id": "subheading",
+          "default": "Get a Chance to Win"
+        },
+        {
+          "type": "text",
+          "label": "Gold Heading",
+          "id": "goldheading",
+          "default": "Bose noise cancelling headphones"
+        },
+        {
+          "type": "text",
+          "label": "Button Text 2",
+          "id": "btn_text_2",
+          "default": "Join ELITE"
+        },
+        {
+          "type": "url",
+          "label": "Button Link 2",
+          "id": "btn_url_2"
+        },
+        {
+            "type":"richtext",
+            "id":"giveaway_info",
+            "label":"Giveaway Info",
+            "default": "<p>*No purchase necessary. Contest period ends at 11:59 pm EST on the 17th day of September. Liability waiver required. Accessory Provider prize of one (1) Bose noise cancelling headphones valued at $350 each contest period. CBD Provider prize of one (1) Red Light Therapy Mask valued at $250 each contest period. A separate entry must be completed for each prize. Odds of winning depend on total number of entries received during each contest period. Entries received in one contest period do not carry over to any subsequent contest period. Only available to residents of the United States, United Kingdom, and European Union. Residents of the United States must be 21 years of age or older to enter. Residents of the UK and EU must be 18 years of age to enter. A skill testing question must be completed where required by law. Full rules available at Giveaway Terms & Conditions.</p>"
+        }
+    ],
+    "presets": [
+      {
+        "name": "Summer Giveaway"
+      }
+    ]
+  }
+{% endschema %}

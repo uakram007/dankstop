@@ -126,11 +126,11 @@ Product Head
     </div>
 
     <div class="col-md-6 product-shop">
-      <div class="row">
+      {% comment %} <div class="row">
         <span class="link-to-vendor col-6">
           <a href="/collections/{{ product_vendor_handle }}" title="See all {{ product_vendor | escape }}">See all {{ product_vendor }}</a>
         </span>
-      </div>
+      </div> {% endcomment %}
 
       <h1 class="product-title">{{- product.title -}}</h1>
 

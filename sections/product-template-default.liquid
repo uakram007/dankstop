@@ -142,14 +142,12 @@
 
     <div class="col-md-6 product-shop">
       <div class="row">
-        <span class="link-to-vendor col-6">
-          {%- comment -%}
+        {% comment %} <span class="link-to-vendor col-6"> 
           <a href="/collections/vendors?q={{ product.vendor | escape }}" title="{{ product.vendor | escape }}">
             See all {{ product.vendor }}
-          </a>
-          {%- endcomment -%}
+          </a> 
           <a href="/collections/{{ product_vendor_handle }}" title="See all {{ product_vendor | escape }}">See all {{ product_vendor }}</a>
-        </span>
+        </span> {% endcomment %}
 
         {%- include 'warranty-eligibility' -%}
         {%- if warranty_eligible -%}

@@ -1,5 +1,9 @@
 <style>
-    .new-js-buy{
+    .new-js-buy{ 
+        width: 100%; 
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
         .product-item{
             padding: 10px 10px 0;
             max-width: 200px;
@@ -25,6 +29,11 @@
         }
         .btn{
             width: 100%;
+        }
+        .cc-market-price--wrapper 
+        {
+            margin-left: 0;
+            margin-right: 0;
         }
     }
 </style>
@@ -64,6 +73,7 @@
         </a>
         <div class="product-bottom">
         <a class="product-title" href="{{ product.url }}" title="{{ product.title | escape }}">{{- product.title -}}</a>
+        {% render 'cc-pricing-card-table',product:clubEliteVariant %}
         <div class="pgi-atc-container pgi-action">
             {% form 'product', product, class: "pgi-atc-form" %}
             <div class="row align-items-center justify-content-center text-center">
@@ -72,7 +82,7 @@
                 {%- if product.has_only_default_variant -%}
                 <input type="hidden" name="id" value="{%- if product.has_only_default_variant -%} {{- product.first_available_variant.id -}} {%- else -%} {{- clubEliteVariant.id -}} {%- endif -%}" /> 
                 {% else %}
-                    <select name="id">
+                    <select name="id"> 
                         {% for variant in product.variants %}
                             {% if variant.available and variant.metafields.custom.member_price != blank and variant.metafields.custom.elite_price != blank %}
                                 <option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %}selected{% endif %}>{{ variant.title }}</option>

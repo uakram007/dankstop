@@ -74,6 +74,21 @@
         "image": "shopify:\/\/shop_images\/IMG_2bcd2d99-83a1-4b73-91ee-6c1ec412df47.png"
       }
     },
+    "elite_member_summer_abcdef": {
+      "type": "elite-summer-giveaway",
+      "settings": {
+        "image": "shopify:\/\/shop_images\/Headphone_Value_Callout.png",
+        "mbl_img": "shopify:\/\/shop_images\/Headphone_Value_Callout_Mobile_1.png",
+        "bg_img": "shopify:\/\/shop_images\/Backgraound_Desktop.png",
+        "bg_img_mb": "shopify:\/\/shop_images\/Background_-_Mobile.png",
+        "heading": "SUMMER GIVEAWAY*",
+        "subheading": "Get a Chance to Win",
+        "goldheading": "Bose noise cancelling headphones",
+        "btn_text_2": "Join ELITE",
+        "btn_url_2": "",
+        "giveaway_info": "<p>*No purchase necessary. Contest period ends at 11:59 pm EST on the 17th day of September. Liability waiver required. Accessory Provider prize of one (1) Bose noise cancelling headphones valued at $350 each contest period. CBD Provider prize of one (1) Red Light Therapy Mask valued at $250 each contest period. A separate entry must be completed for each prize. Odds of winning depend on total number of entries received during each contest period. Entries received in one contest period do not carry over to any subsequent contest period. Only available to residents of the United States, United Kingdom, and European Union. Residents of the United States must be 21 years of age or older to enter. Residents of the UK and EU must be 18 years of age to enter. A skill testing question must be completed where required by law. Full rules available at Giveaway Terms & Conditions.<\/p>"
+      }
+    },
     "cc_mm_pricing_table_Memzmw": {
       "type": "cc-mm-pricing-table",
       "settings": {}
@@ -192,6 +207,7 @@
     "cc_elite_membership_offers_MLKedn",
     "cc_mm_hero_banner1_BKmnJh",
     "cc_mm_hero_banner2_9F9ACq",
+    "elite_member_summer_abcdef",
     "cc_mm_pricing_table_Memzmw",
     "cc_mm_sites_access_rhUzJb",
     "cc_mm_unbeatable_R3rmAD",
